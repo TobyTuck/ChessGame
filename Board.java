@@ -3,11 +3,13 @@ import java.awt.*;  // used for Dimension
 import java.awt.event.*;
 
 public class Board extends JFrame 
-                   implements ActionListener{
+                   /* implements ActionListener */{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
+
     // individual squares of the chessboard
+    private JPanel square0;
     private JPanel square1;
     private JPanel square2;
     private JPanel square3;
@@ -17,6 +19,7 @@ public class Board extends JFrame
     private JPanel square7;
     private JPanel square8;
     private JPanel square9;
+
     private JPanel square10;
     private JPanel square11;
     private JPanel square12;
@@ -27,6 +30,7 @@ public class Board extends JFrame
     private JPanel square17;
     private JPanel square18;
     private JPanel square19;
+
     private JPanel square20;
     private JPanel square21;
     private JPanel square22;
@@ -37,6 +41,7 @@ public class Board extends JFrame
     private JPanel square27;
     private JPanel square28;
     private JPanel square29;
+
     private JPanel square30;
     private JPanel square31;
     private JPanel square32;
@@ -47,6 +52,7 @@ public class Board extends JFrame
     private JPanel square37;
     private JPanel square38;
     private JPanel square39;
+
     private JPanel square40;
     private JPanel square41;
     private JPanel square42;
@@ -57,6 +63,7 @@ public class Board extends JFrame
     private JPanel square47;
     private JPanel square48;
     private JPanel square49;
+
     private JPanel square50;
     private JPanel square51;
     private JPanel square52;
@@ -67,7 +74,11 @@ public class Board extends JFrame
     private JPanel square57;
     private JPanel square58;
     private JPanel square59;
+
     private JPanel square60;
+    private JPanel square61;
+    private JPanel square62;
+    private JPanel square63;
 
     // No-arg constructor that  creates the board
     public Board(){
@@ -80,9 +91,31 @@ public class Board extends JFrame
         this.setSize(screenSize.width, screenSize.height);
         this.setLayout(new BorderLayout());
         getContentPane().setBackground(Color.green);
-        this.setVisible(true);
 
         // build the board
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         board.setPreferredSize(screenSize.width * 0.75, screenSize.height * 0.75);
+
+        // instantiate and add components of each square
+        int remainder;
+        for(int index = 0; index < 64; ++index){
+            "square" + index = new JPanel();
+
+            // test if index is even or odd
+            remainder = index % 2;
+
+            // even
+            if(remainder == 0){
+                "square" + index.setBackground(Color.white);}
+
+            // odd
+            else{
+                "square" + index.setBackground(Color.black);}
+
+            // add components to board
+            board.add("square" + index);}
+
+        this.add(board);
+        this.setVisible(true);
+    }
 }
