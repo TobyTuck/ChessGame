@@ -1,15 +1,15 @@
 /**
     The purpose of this class is to provide the general
-    Tools necessary to build a queque data structure
+    Tools necessary to build a list data structure
 */
-public class Queque{
+public class List{
 
     private Link _head;
     private int _size;
 
-    public Queque(){
+    public List(){
         _head = null;
-        _size == 0;
+        _size = 0;
     }
 
     /** 
@@ -19,8 +19,9 @@ public class Queque{
         Link next = new Link();
         next.setData(nextData);
 
-        if(_size = 0)
-            _head = next;
+        if(_size == 0){
+            _head = new Link();
+            _head = next;}
 
         else{
             Link tail = _head;
@@ -32,12 +33,12 @@ public class Queque{
     }
 
     /**
-        Method that retrieves the data of the top of the 
-        Structure w/o deletion
+        Method that retrieves the data at a specified 
+        Location in the structure w/o deletion
     */
-    public Object pop(){
+    public Object pop(int target){
         Link tail = _head;
-        for(int index = 0; _index < _size; ++index){
+        for(int index = 0; index < target; ++index){
            tail = tail.getNext();}
         return tail.getData();
     }

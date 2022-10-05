@@ -1,0 +1,204 @@
+import javax.swing.*;
+import java.awt.*;  // used for Dimension
+import java.awt.event.*;
+
+public class Board extends JFrame 
+                   /* implements ActionListener */{
+
+    // JPanel that consists of the entire 8 * 8 chessboard
+    private JPanel board;
+
+    //holds all the individual squares
+    List list;
+
+    // individual squares of the chessboard
+    private JPanel square0;
+    private JPanel square1;
+    private JPanel square2;
+    private JPanel square3;
+    private JPanel square4;
+    private JPanel square5;
+    private JPanel square6;
+    private JPanel square7;
+    private JPanel square8;
+    private JPanel square9;
+
+    private JPanel square10;
+    private JPanel square11;
+    private JPanel square12;
+    private JPanel square13;
+    private JPanel square14;
+    private JPanel square15;
+    private JPanel square16;
+    private JPanel square17;
+    private JPanel square18;
+    private JPanel square19;
+
+    private JPanel square20;
+    private JPanel square21;
+    private JPanel square22;
+    private JPanel square23;
+    private JPanel square24;
+    private JPanel square25;
+    private JPanel square26;
+    private JPanel square27;
+    private JPanel square28;
+    private JPanel square29;
+
+    private JPanel square30;
+    private JPanel square31;
+    private JPanel square32;
+    private JPanel square33;
+    private JPanel square34;
+    private JPanel square35;
+    private JPanel square36;
+    private JPanel square37;
+    private JPanel square38;
+    private JPanel square39;
+
+    private JPanel square40;
+    private JPanel square41;
+    private JPanel square42;
+    private JPanel square43;
+    private JPanel square44;
+    private JPanel square45;
+    private JPanel square46;
+    private JPanel square47;
+    private JPanel square48;
+    private JPanel square49;
+
+    private JPanel square50;
+    private JPanel square51;
+    private JPanel square52;
+    private JPanel square53;
+    private JPanel square54;
+    private JPanel square55;
+    private JPanel square56;
+    private JPanel square57;
+    private JPanel square58;
+    private JPanel square59;
+
+    private JPanel square60;
+    private JPanel square61;
+    private JPanel square62;
+    private JPanel square63;
+
+    /**
+    No-arg constructor that  creates the board
+    */
+    public Board(){
+        // build the JFrame
+        this.setDefaultCloseOperation
+            (JFrame.EXIT_ON_CLOSE);
+        // get the screen size
+        Dimension screenSize = 
+            Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize.width, screenSize.height);
+        this.setLayout(new BorderLayout());
+        getContentPane().setBackground(Color.green);
+
+        // build the board
+        board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        board.setPreferredSize(new Dimension
+            (screenSize.width * 0.75, screenSize.height * 0.75));
+
+        // add components of each square to the list
+        list = new List();
+
+        square0 = new JPanel();
+        list.push(square0);
+        list.push(square1);
+        list.push(square2);
+        list.push(square3);
+        list.push(square4);
+        list.push(square5);
+        list.push(square6);
+        list.push(square7);
+        list.push(square8);
+        list.push(square9);
+
+        list.push(square10);
+        list.push(square11);
+        list.push(square12);
+        list.push(square13);
+        list.push(square14);
+        list.push(square15);
+        list.push(square16);
+        list.push(square17);
+        list.push(square18);
+        list.push(square19);
+
+        list.push(square20);
+        list.push(square21);
+        list.push(square22);
+        list.push(square23);
+        list.push(square24);
+        list.push(square25);
+        list.push(square26);
+        list.push(square27);
+        list.push(square28);
+        list.push(square29);
+
+        list.push(square30);
+        list.push(square31);
+        list.push(square32);
+        list.push(square33);
+        list.push(square34);
+        list.push(square35);
+        list.push(square36);
+        list.push(square37);
+        list.push(square38);
+        list.push(square39);
+
+        list.push(square40);
+        list.push(square41);
+        list.push(square42);
+        list.push(square43);
+        list.push(square44);
+        list.push(square45);
+        list.push(square46);
+        list.push(square47);
+        list.push(square48);
+        list.push(square49);
+
+        list.push(square50);
+        list.push(square51);
+        list.push(square52);
+        list.push(square53);
+        list.push(square54);
+        list.push(square55);
+        list.push(square56);
+        list.push(square57);
+        list.push(square58);
+        list.push(square59);
+
+        list.push(square60);
+        list.push(square61);
+        list.push(square62);
+        list.push(square63);
+
+        // Instantiate and set properties of all the items
+        // in the List
+        int remainder;
+        for(int index = 0; index < list.getSize(); ++index){
+            list[index].pop(index) = new JPanel();
+
+            // test if index is even or odd
+            remainder = index % 2;
+
+            // even
+            if(remainder == 0){
+                list[index].pop(index)
+                    .setBackground(Color.white);}
+
+            // odd
+            else{
+                list[index].pop(index).setBackground(Color.black);}
+
+            // add components to board
+            board.add(list[index].pop(index));}
+
+        this.add(board);
+        this.setVisible(true);
+    }
+}
