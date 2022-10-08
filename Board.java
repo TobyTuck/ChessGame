@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;  // used for Dimension
 import java.awt.event.*;
-// import java.lang.Math;
 
 public class Board extends JFrame 
                    /* implements ActionListener */{
@@ -100,9 +99,8 @@ public class Board extends JFrame
 
         // build the board
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        board.setPreferredSize(new Dimension
-            (Math.round(screenSize.width * 0.75), 
-            Math.round(screenSize.height * 0.75)));
+        board.setPreferredSize(new Dimension(
+            round(screenSize.width * 0.75), round(screenSize.height * 0.75)));
 
         // add components of each square to the list
         list = new List();
@@ -181,22 +179,35 @@ public class Board extends JFrame
         // Instantiate and set properties of all the items
         // in the List
         int remainder;
+        Object generic;
+        JPanel jpanel;
         for(int index = 0; index < list.getSize(); ++index){
             // test if index is even or odd
             remainder = index % 2;
 
+            // type conversions
+            generic = list.pop(index);
+            jpanel = (JPanel)generic;
+
             // even
-            if(remainder == 0){
-                list.pop(index).setBackground(Color.white);}
+            if(remainder == 0)
+                jpanel.setBackground(Color.white);
 
             // odd
-            else{
-                list.pop(index).setBackground(Color.black);}
+            else
+                jpanel.setBackground(Color.black);
 
             // add components to board
-            board.add(list.pop(index));}
+            board.add(jpanel);}
 
         this.add(board, BorderLayout.CENTER);
         this.setVisible(true);
+    }
+
+    /**
+    Private helper method to convert longs to ints
+    */
+    private int round(double number){
+        return (int)number;
     }
 }

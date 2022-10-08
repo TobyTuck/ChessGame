@@ -18,14 +18,15 @@ public class List{
     public void push(Object nextData){
         Link next = new Link();
         next.setData(nextData);
+        next.setNext(null);
 
-        if(_size == 0){
+        if(_head == null){
             _head = new Link();
             _head = next;}
 
         else{
             Link tail = _head;
-            for(int index = 0; index < _size; ++index){
+            for(Link index = _head; index.getNext() != null; index.getNext()){
                tail = tail.getNext();}
             tail.setNext(next);}
 
