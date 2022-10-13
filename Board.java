@@ -182,12 +182,16 @@ public class Board extends JFrame
         Object generic;
         JPanel jpanel;
         for(int index = 0; index < list.getSize(); ++index){
-            // test if index is even or odd
-            remainder = index % 2;
-
             // type conversions
             generic = list.pop(index);
             jpanel = (JPanel)generic;
+               
+            // set size of the JPanel
+            jpanel.setSize(new Dimension(round(screenSize.width * 0.01171875), 
+                                         round(screenSize.height * 0.01171875)));
+ 
+            // test if index is even or odd
+            remainder = index % 2;
 
             // even
             if(remainder == 0)

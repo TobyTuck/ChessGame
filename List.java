@@ -16,18 +16,15 @@ public class List{
         Method that inserts at the back of the structure
     */
     public void push(Object nextData){
-        Link next = new Link();
-        next.setData(nextData);
-        next.setNext(null);
+        Link next = new Link(null, nextData);
 
-        if(_head == null){
-            _head = new Link();
-            _head = next;}
+        if(_size == 0)
+            _head = next;
 
         else{
             Link tail = _head;
-            for(Link index = _head; index.getNext() != null; index.getNext()){
-               tail = tail.getNext();}
+            for(int index = 0; index < _size - 1; ++index){
+                tail = tail.getNext();}
             tail.setNext(next);}
 
         ++_size;
