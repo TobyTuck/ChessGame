@@ -100,29 +100,28 @@ public class Board extends JFrame
             (JFrame.EXIT_ON_CLOSE);
         this.setSize(screenSize.width, screenSize.height);
         this.setLayout(new BorderLayout());
-        getContentPane().setBackground(Color.green);
 
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         // ensure the board is square
-        int boardHeight = (int)(screenSize.height * 0.75);
-        int boardWidth = boardHeight;
-        board.setPreferredSize(new Dimension(boardWidth, boardHeight));
+        int boardHeight = (int)(screenSize.height * 0.9);
+        board.setPreferredSize(new Dimension(boardHeight, boardHeight));
 
         // build supporting panels
+        int length = boardHeight;
         north = new JPanel();
-        north.setPreferredSize(new Dimension(screenSize.width, (int)((0.125 * screenSize.height))));
-        north.setBackground(Color.red);
+        north.setPreferredSize(new Dimension(screenSize.width, (int)(0.5 * (screenSize.height - boardHeight))));
+        north.setBackground(Color.green);
         south = new JPanel();
-        south.setPreferredSize(south.getSize());
-        south.setBackground(Color.blue);
+        south.setPreferredSize(new Dimension(screenSize.width, (int)(0.5 * (screenSize.height - boardHeight))));
+        south.setBackground(Color.green);
 
         west = new JPanel();
-        west.setPreferredSize(new Dimension((int)(screenSize.width - (0.375 * screenSize.height)), (int)(0.75 * screenSize.height)));
+        west.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - screenSize.height)), length));
         west.setBackground(Color.green);
         east = new JPanel();
-        east.setPreferredSize(west.getSize());
-        east.setBackground(Color.yellow);
+        east.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - screenSize.height)), length));
+        east.setBackground(Color.green);
 
         // add components of each square to the list
         list = new List();
@@ -209,8 +208,8 @@ public class Board extends JFrame
             jpanel = (JPanel)generic;
                
             // set size of the JPanel
-            jpanel.setSize(new Dimension((int)(round(screenSize.width) * 10.01171875), 
-                                         (int)(round(screenSize.height) * 10.01171875)));
+            jpanel.setSize(new Dimension((int)(screenSize.width * ((double)length / 64)), 
+                                         (int)(screenSize.height * ((double)length / 64))));
  
             // test if index is even or odd
             remainder = index % 2;
@@ -232,12 +231,5 @@ public class Board extends JFrame
         this.add(west, BorderLayout.WEST);
         this.add(east, BorderLayout.EAST);
         this.setVisible(true);
-    }
-
-    /**
-    Private helper method to convert longs to ints
-    */
-    private int round(long number){
-        return (int)number;
     }
 }
