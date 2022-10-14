@@ -102,6 +102,10 @@ public class Board extends JFrame
         board.setPreferredSize(new Dimension(
             round(screenSize.width * 0.75), round(screenSize.height * 0.75)));
 
+        // Delete
+        System.out.println(screenSize.width + "\n" +
+                           screenSize.length);
+
         // add components of each square to the list
         list = new List();
 
