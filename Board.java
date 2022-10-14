@@ -7,6 +7,10 @@ public class Board extends JFrame
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
+    private JPanel south;
+    private JPanel north;
+    private JPanel east;
+    private JPanel west;
 
     //holds all the individual squares
     List list;
@@ -87,24 +91,38 @@ public class Board extends JFrame
     No-arg constructor that  creates the board
     */
     public Board(){
+        // get screen dimensions
+        Dimension screenSize = 
+            Toolkit.getDefaultToolkit().getScreenSize();
+
         // build the JFrame
         this.setDefaultCloseOperation
             (JFrame.EXIT_ON_CLOSE);
-        // get the screen size
-        Dimension screenSize = 
-            Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setLayout(new BorderLayout());
         getContentPane().setBackground(Color.green);
 
-        // build the board
+        // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        board.setPreferredSize(new Dimension(
-            round(screenSize.width * 0.75), round(screenSize.height * 0.75)));
+        // ensure the board is square
+        int boardHeight = (int)(screenSize.height * 0.75);
+        int boardWidth = boardHeight;
+        board.setPreferredSize(new Dimension(boardWidth, boardHeight));
 
-        // Delete
-        System.out.println(screenSize.width + "\n" +
-                           screenSize.length);
+        // build supporting panels
+        north = new JPanel();
+        north.setPreferredSize(new Dimension(screenSize.width, (int)((0.125 * screenSize.height))));
+        north.setBackground(Color.red);
+        south = new JPanel();
+        south.setPreferredSize(south.getSize());
+        south.setBackground(Color.blue);
+
+        west = new JPanel();
+        west.setPreferredSize(new Dimension((int)(screenSize.width - (0.375 * screenSize.height)), (int)(0.75 * screenSize.height)));
+        west.setBackground(Color.green);
+        east = new JPanel();
+        east.setPreferredSize(west.getSize());
+        east.setBackground(Color.yellow);
 
         // add components of each square to the list
         list = new List();
@@ -191,8 +209,8 @@ public class Board extends JFrame
             jpanel = (JPanel)generic;
                
             // set size of the JPanel
-            jpanel.setSize(new Dimension(round(screenSize.width * 0.01171875), 
-                                         round(screenSize.height * 0.01171875)));
+            jpanel.setSize(new Dimension((int)(round(screenSize.width) * 10.01171875), 
+                                         (int)(round(screenSize.height) * 10.01171875)));
  
             // test if index is even or odd
             remainder = index % 2;
@@ -209,13 +227,17 @@ public class Board extends JFrame
             board.add(jpanel);}
 
         this.add(board, BorderLayout.CENTER);
+        this.add(north, BorderLayout.NORTH);
+        this.add(south, BorderLayout.SOUTH);
+        this.add(west, BorderLayout.WEST);
+        this.add(east, BorderLayout.EAST);
         this.setVisible(true);
     }
 
     /**
     Private helper method to convert longs to ints
     */
-    private int round(double number){
+    private int round(long number){
         return (int)number;
     }
 }
