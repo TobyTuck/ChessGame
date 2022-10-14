@@ -208,8 +208,8 @@ public class Board extends JFrame
             jpanel = (JPanel)generic;
                
             // set size of the JPanel
-            jpanel.setSize(new Dimension((int)(screenSize.width * ((double)length / 64)), 
-                                         (int)(screenSize.height * ((double)length / 64))));
+            jpanel.setSize(new Dimension((int)(screenSize.width * ((double)length / 64.0)), 
+                                         (int)(screenSize.height * ((double)length / 64.0))));
  
             // test if index is even or odd
             remainder = index % 2;
