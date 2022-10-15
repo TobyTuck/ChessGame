@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;  // used for Dimension
 import java.awt.event.*;
 
-public class Board extends JFrame 
+public class ChessBoard extends JFrame 
                    /* implements ActionListener */{
 
     // JPanel that consists of the entire 8 * 8 chessboard
@@ -90,7 +90,7 @@ public class Board extends JFrame
     /**
     No-arg constructor that  creates the board
     */
-    public Board(){
+    public ChessBoard(){
         // get screen dimensions
         Dimension screenSize = 
             Toolkit.getDefaultToolkit().getScreenSize();
@@ -110,17 +110,21 @@ public class Board extends JFrame
         // build supporting panels
         int length = boardHeight;
         north = new JPanel();
-        north.setPreferredSize(new Dimension(screenSize.width, (int)(0.5 * (screenSize.height - boardHeight))));
+        north.setPreferredSize(new Dimension(screenSize.width, 
+                                             (int)(0.5 * (screenSize.height - boardHeight))));
         north.setBackground(Color.green);
         south = new JPanel();
-        south.setPreferredSize(new Dimension(screenSize.width, (int)(0.5 * (screenSize.height - boardHeight))));
+        south.setPreferredSize(new Dimension(screenSize.width, 
+                                             (int)(0.5 * (screenSize.height - boardHeight))));
         south.setBackground(Color.green);
 
         west = new JPanel();
-        west.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - screenSize.height)), length));
+        west.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - screenSize.height)), 
+                                            length));
         west.setBackground(Color.green);
         east = new JPanel();
-        east.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - screenSize.height)), length));
+        east.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - screenSize.height)), 
+                                            length));
         east.setBackground(Color.green);
 
         // add components of each square to the list
@@ -199,31 +203,44 @@ public class Board extends JFrame
 
         // Instantiate and set properties of all the items
         // in the List
-        int remainder;
+        int rowRemainder,
+            cellRemainder;
         Object generic;
         JPanel jpanel;
-        for(int index = 0; index < list.getSize(); ++index){
-            // type conversions
-            generic = list.pop(index);
-            jpanel = (JPanel)generic;
+        for(int index = 0; index < Math.sqrt(list.getSize()); ++index){
+            for(int count = 0; count < Math.sqrt(list.getSize()); ++ count){
+                // type conversions
+                generic = list.pop(count);
+                jpanel = (JPanel)generic;
                
-            // set size of the JPanel
-            jpanel.setSize(new Dimension((int)(screenSize.width * ((double)length / 64.0)), 
-                                         (int)(screenSize.height * ((double)length / 64.0))));
- 
-            // test if index is even or odd
-            remainder = index % 2;
+                // set size of the JPanel
+                jpanel.setPreferredSize(new Dimension((int)((double)length / 8.0), 
+                                                      (int)((double)length / 8.0)));
 
-            // even
-            if(remainder == 0)
-                jpanel.setBackground(Color.white);
+                rowRemainder = index % 2;
+                cellRemainder = count % 2;
+                if(rowRemainder == 0){
+                    // test if index is even or odd
+                    // even
+                    if(cellRemainder == 0)
+                        jpanel.setBackground(Color.white);
 
-            // odd
-            else
-                jpanel.setBackground(Color.black);
+                    // odd
+                    else
+                        jpanel.setBackground(Color.black);}
 
-            // add components to board
-            board.add(jpanel);}
+                else{
+                    // test if index is even or odd
+                    // even
+                    if(cellRemainder == 0)
+                        jpanel.setBackground(Color.black);
+
+                    // odd
+                    else
+                        jpanel.setBackground(Color.white);}
+
+                // add components to board
+                board.add(jpanel);} }
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
