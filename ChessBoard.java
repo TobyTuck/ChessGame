@@ -226,26 +226,30 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
             jpanel.setPreferredSize(new Dimension((int)(length / 8.0), 
                                                   (int)(length / 8.0)));
 
+            // make the two colors of the chessboard
+            Color tan = new Color(210, 180, 140);
+            Color brown = new Color(139, 69, 19);
+
             cellRemainder = index % 2;
             if((int)(count / 8) % 2 == 0){
                 // test if index is even or odd
                 // even
                 if(cellRemainder == 0)
-                    jpanel.setBackground(Color.white);
+                    jpanel.setBackground(tan);
 
                 // odd
                 else
-                    jpanel.setBackground(Color.black);}
+                    jpanel.setBackground(brown);}
 
             else{
                 // test if index is even or odd
                 // even
                 if(cellRemainder == 0)
-                    jpanel.setBackground(Color.black);
+                    jpanel.setBackground(brown);
 
                 // odd
                 else
-                    jpanel.setBackground(Color.white);}
+                    jpanel.setBackground(tan);}
 
             // add components to board
             board.add(jpanel);
