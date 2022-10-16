@@ -1,3 +1,6 @@
+/**
+Class that provides tool to build a general-purpose Linked List
+*/
 public class Link{
 
     private Link _next;
