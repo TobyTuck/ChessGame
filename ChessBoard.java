@@ -1,10 +1,9 @@
 import javax.swing.*;
-import java.awt.*;  // used for Dimension
+import java.awt.*;  // used for Dimension, GraphicsEnvironment, GraphicsDevice
 import java.awt.event.*;
 import java.util.Random;
 
-public class ChessBoard extends JFrame 
-                   /* implements ActionListener */{
+public class ChessBoard extends JFrame /* implements ActionListener */{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
@@ -102,12 +101,11 @@ public class ChessBoard extends JFrame
         GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = graphics.getDefaultScreenDevice();
         device.setFullScreenWindow(this);
-        // this.setSize(screenSize.width, screenSize.height);
-        // this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLayout(new BorderLayout());
 
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         int boardHeight;
@@ -117,33 +115,26 @@ public class ChessBoard extends JFrame
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
 
+        // build a dark green color for side panels
+        Color darkGreen = new Color(0, 100, 0);
+
         // build supporting panels
         int length = boardHeight;
         north = new JPanel();
         north.setPreferredSize(new Dimension(screenSize.width, 
                                              (int)(0.5 * (screenSize.height - length))));
-        // Delete
-        System.out.println(screenSize.width + "\n" + screenSize.height);
-        System.out.println(length);
-        System.out.println(screenSize.width + "\t" + 0.5 * (screenSize.height - length));
-        north.setBackground(Color.green);
+        north.setBackground(darkGreen);
         south = new JPanel();
         south.setPreferredSize(new Dimension(screenSize.width, 
                                              (int)(0.5 * (screenSize.height - length))));
-        // Delete
-        System.out.println(screenSize.width + "\t" + 0.5 * (screenSize.height - length));
-        south.setBackground(Color.red);
+        south.setBackground(darkGreen);
 
         west = new JPanel();
         west.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - length)), length));
-        // Delete
-        System.out.println(0.5 * (screenSize.width - length) + "\t" + length);
-        west.setBackground(Color.blue);
+        west.setBackground(darkGreen);
         east = new JPanel();
         east.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - length)), length));
-        // Delete
-        System.out.println(0.5 * (screenSize.width - length) + "\t" + length);
-        east.setBackground(Color.yellow);
+        east.setBackground(darkGreen);
 
         // add components of each square to the list
         list = new List();
@@ -219,51 +210,46 @@ public class ChessBoard extends JFrame
         square62 = new JPanel(); list.push(square62);
         square63 = new JPanel(); list.push(square63);
 
-        // Instantiate and set properties of all the items
+        //Set properties of all the items
         // in the List
-        int rowRemainder,
-            cellRemainder,
+        int cellRemainder,
             count = 0;
         Object generic;
         JPanel jpanel;
 
-        // Delete
-        System.out.println((int)(length / 8.0));
-
         for(int index = 0; index < list.getSize(); ++index){
-            /*for(int count = 0; count < Math.sqrt(list.getSize()); ++ count){*/
-                // type conversions
-                generic = list.pop(index);
-                jpanel = (JPanel)generic;
-               
-                // set size of the JPanel- (8.57, 8.56)
-                jpanel.setPreferredSize(new Dimension((int)(length / 8.0), 
-                                                      (int)(length / 8.0)));
+            // type conversions
+            generic = list.pop(index);
+            jpanel = (JPanel)generic;
+              
+            // set size of the JPanel- (8.57, 8.56)
+            jpanel.setPreferredSize(new Dimension((int)(length / 8.0), 
+                                                  (int)(length / 8.0)));
 
-                rowRemainder = index % 2;
-                // cellRemainder = count % 2;
-                if((int)(count / 8) % 2 == 0){
-                    // test if index is even or odd
-                    // even
-                    if(rowRemainder == 0)
-                        jpanel.setBackground(Color.white);
+            cellRemainder = index % 2;
+            if((int)(count / 8) % 2 == 0){
+                // test if index is even or odd
+                // even
+                if(cellRemainder == 0)
+                    jpanel.setBackground(Color.white);
 
-                    // odd
-                    else
-                        jpanel.setBackground(Color.black);}
+                // odd
+                else
+                    jpanel.setBackground(Color.black);}
 
-                else{
-                    // test if index is even or odd
-                    // even
-                    if(rowRemainder == 0)
-                        jpanel.setBackground(Color.black);
+            else{
+                // test if index is even or odd
+                // even
+                if(cellRemainder == 0)
+                    jpanel.setBackground(Color.black);
 
-                    // odd
-                    else
-                        jpanel.setBackground(Color.white);}
+                // odd
+                else
+                    jpanel.setBackground(Color.white);}
 
-                // add components to board
-                board.add(jpanel); ++count;}
+            // add components to board
+            board.add(jpanel);
+            ++count;}
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
@@ -274,8 +260,14 @@ public class ChessBoard extends JFrame
     }
 
     /**
-    Method to return size of a random chess square
+    Methods that return dimensions of different portions of the JFrame and its panels
+    Purpose: testing the values are as expected
+    Note: Currently the screen dimension given by the Dimension class appears to be too large,
+          however, the JPanel porportions are correct; both laptop and desktop have shown the
+          chessboard to have the correct proportions; the following bash command will give the user
+          the true dimensions of the screen: xrandr | grep '*' | awk '{ print $1 }'
     */
+    // Method to return size of a random chess square
     public Dimension getCellDimension(){
         Random random = new Random();
         int index = random.nextInt(64);
@@ -285,41 +277,32 @@ public class ChessBoard extends JFrame
         return jpanel.getSize();
     }
 
-    /**
-    Method to return size of the chessboard
-    */
+    // Method to return size of the chessboard
     public Dimension getBoardDimension(){
         return board.getSize();
     }
 
-    /**
-    Method to return size of 'north' portion of the JFrame
-    */
+    // Method to return size of 'north' portion of the JFrame
     public Dimension getNorthDimension(){
         return north.getSize();
     }
 
-    /**
-    Method to return size of 'south' portion of the JFrame
-    */
+    // Method to return size of 'south' portion of the JFrame
     public Dimension getSouthDimension(){
         return south.getSize();
     }
 
-    /**
-    Method to return to size of 'west' portion of the JFrame
-    */
+    // Method to return to size of 'west' portion of the JFrame
     public Dimension getWestDimension(){
         return west.getSize();
     }
 
-    /**
-    Method to return the size of the 'east' portion of the JFrame
-    */
+    // Method to return the size of the 'east' portion of the JFrame
     public Dimension getEastDimension(){
         return east.getSize();
     }
 
+    // Method to return the dimensions of the entire JFrame
     public Dimension getWindowSize(){
         return this.getSize();
     }
