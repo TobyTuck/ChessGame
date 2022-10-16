@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;  // used for Dimension
 import java.awt.event.*;
-import java.util.Random;
 
 public class ChessBoard extends JFrame 
                    /* implements ActionListener */{
@@ -99,15 +98,11 @@ public class ChessBoard extends JFrame
         // build the JFrame
         this.setDefaultCloseOperation
             (JFrame.EXIT_ON_CLOSE);
-        GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice device = graphics.getDefaultScreenDevice();
-        device.setFullScreenWindow(this);
-        // this.setSize(screenSize.width, screenSize.height);
-        // this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setSize(screenSize.width, screenSize.height);
         this.setLayout(new BorderLayout());
 
         // build the chessboard
-        board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        board = new JPanel(new FlowLayout(FlowLayout.LEADING, 0, 0));
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         int boardHeight;
@@ -123,7 +118,6 @@ public class ChessBoard extends JFrame
         north.setPreferredSize(new Dimension(screenSize.width, 
                                              (int)(0.5 * (screenSize.height - length))));
         // Delete
-        System.out.println(screenSize.width + "\n" + screenSize.height);
         System.out.println(length);
         System.out.println(screenSize.width + "\t" + 0.5 * (screenSize.height - length));
         north.setBackground(Color.green);
@@ -226,19 +220,15 @@ public class ChessBoard extends JFrame
             count = 0;
         Object generic;
         JPanel jpanel;
-
-        // Delete
-        System.out.println((int)(length / 8.0));
-
         for(int index = 0; index < list.getSize(); ++index){
             /*for(int count = 0; count < Math.sqrt(list.getSize()); ++ count){*/
                 // type conversions
                 generic = list.pop(index);
                 jpanel = (JPanel)generic;
                
-                // set size of the JPanel- (8.57, 8.56)
-                jpanel.setPreferredSize(new Dimension((int)(length / 8.0), 
-                                                      (int)(length / 8.0)));
+                // set size of the JPanel
+                jpanel.setPreferredSize(new Dimension((int)(length / 8.57), 
+                                                      (int)(length / 8.40)));
 
                 rowRemainder = index % 2;
                 // cellRemainder = count % 2;
@@ -271,56 +261,5 @@ public class ChessBoard extends JFrame
         this.add(west, BorderLayout.WEST);
         this.add(east, BorderLayout.EAST);
         this.setVisible(true);
-    }
-
-    /**
-    Method to return size of a random chess square
-    */
-    public Dimension getCellDimension(){
-        Random random = new Random();
-        int index = random.nextInt(64);
-
-        Object obj = list.pop(index);
-        JPanel jpanel = (JPanel)obj;
-        return jpanel.getSize();
-    }
-
-    /**
-    Method to return size of the chessboard
-    */
-    public Dimension getBoardDimension(){
-        return board.getSize();
-    }
-
-    /**
-    Method to return size of 'north' portion of the JFrame
-    */
-    public Dimension getNorthDimension(){
-        return north.getSize();
-    }
-
-    /**
-    Method to return size of 'south' portion of the JFrame
-    */
-    public Dimension getSouthDimension(){
-        return south.getSize();
-    }
-
-    /**
-    Method to return to size of 'west' portion of the JFrame
-    */
-    public Dimension getWestDimension(){
-        return west.getSize();
-    }
-
-    /**
-    Method to return the size of the 'east' portion of the JFrame
-    */
-    public Dimension getEastDimension(){
-        return east.getSize();
-    }
-
-    public Dimension getWindowSize(){
-        return this.getSize();
     }
 }
