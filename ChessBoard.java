@@ -262,7 +262,7 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
 
         label.setPreferredSize(jpainel.getPreferredSize());
 
-        WhitePawn pawn = new WhitePawn();
+        BlackPawn pawn = new BlackPawn();
         label.setIcon(new ImageIcon(pawn.getImage()));
 
         jpainel.add(label);

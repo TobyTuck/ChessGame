@@ -6,13 +6,13 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 
-public class WhitePawn{
+public class BlackPawn{
     
     private BufferedImage _image;
 
-    public WhitePawn(){
+    public BlackPawn(){
         try{
-            _image = ImageIO.read(new File("WPawn.png"));
+            _image = ImageIO.read(new File("BPawn.png"));
         }catch(IOException exception){
             System.out.println("Error locating file");
         }
