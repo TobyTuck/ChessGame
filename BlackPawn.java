@@ -1,5 +1,5 @@
 /**
-This is a class that models a White Pawn chesspiece
+This is a class that models a Black Pawn chesspiece
 */
 
 import java.awt.image.BufferedImage;

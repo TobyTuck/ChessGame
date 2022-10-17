@@ -255,6 +255,9 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
             board.add(jpanel);
             ++count;}
 
+        // add chess pieces at their defualt positions
+        
+
         // test ability to add images to the JFrame
         JLabel label = new JLabel();
         Object generaic = list.pop(20);

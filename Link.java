@@ -1,24 +1,45 @@
 /**
-Class that provides tool to build a general-purpose Linked List
+Class that provides tools to build Linked List w/ 4 pointers- a quarterly-linked list
 */
 public class Link{
 
-    private Link _next;
+    private Link _right;
+    private Link _left;
+    private Link _up;
+    private Link _down;
     private Object _data;
 
     public Link(){
-        _next = null;
+        _right = null;
+        _left = null;
+        _up = null;
+        _down = null;
         _data = null;
     }
 
-    public Link(Link next, Object data){
-        _next = next;
+    public Link(Link right, Link left, Link up, Link down, Object data){
+        _right = right;
+        _left = left;
+        _up = up;
+        _down = down;
         _data = data;
     }
 
     // Mutator methods
-    public void setNext(Link next){
-        _next = next;
+    public void setRight(Link right){
+        _right = right;
+    }
+
+    public void setLeft(Link left){
+        _left = left;
+    }
+
+    public void setUp(Link up){
+        _up = up;
+    }
+
+    public void setDown(Link down){
+        _down = down;
     }
 
     public void setData(Object data){
@@ -26,8 +47,20 @@ public class Link{
     }
 
     // Accessor methods
-    public Link getNext(){
-        return _next;
+    public Link getRight(){
+        return _right;
+    }
+
+    public Link getLeft(){
+        return _left;
+    }
+
+    public Link getUp(){
+        return _up;
+    }
+
+    public Link getDown(){
+        return _down;
     }
 
     public Object getData(){

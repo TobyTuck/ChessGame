@@ -24,8 +24,8 @@ public class List{
         else{
             Link tail = _head;
             for(int index = 0; index < _size - 1; ++index){
-                tail = tail.getNext();}
-            tail.setNext(next);}
+                tail = tail.getRight();}
+            tail.setRight(next);}
 
         ++_size;
     }
@@ -37,7 +37,7 @@ public class List{
     public Object pop(int target){
         Link tail = _head;
         for(int index = 0; index < target; ++index){
-           tail = tail.getNext();}
+           tail = tail.getRight();}
         return tail.getData();
     }
 
