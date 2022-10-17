@@ -1,6 +1,10 @@
 /**
     The purpose of this class is to provide the general
-    Tools necessary to build a list data structure
+    Tools necessary to build a list data structure that is
+    Quarterly linked- twice horizontally (forward and back)
+    And vertically (upward and down)
+    NOTE: Horizontally the list is 8 nodes wide; then a new
+          Layer will be added to the list
 */
 public class List{
 
