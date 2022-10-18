@@ -260,15 +260,23 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
 
         // test ability to add images to the JFrame
         JLabel label = new JLabel();
-        Object generaic = list.pop(20);
-        JPanel jpainel = (JPanel) generaic;
+        JLabel label2 = new JLabel();
 
-        label.setPreferredSize(jpainel.getPreferredSize());
+        Object x = list.pop(20);
+        JPanel y = (JPanel) x;
+        Object w = list.pop(24);
+        JPanel n = (JPanel) w;
+
+        label.setPreferredSize(y.getPreferredSize());
+        label2.setPreferredSize(n.getPreferredSize());
 
         BlackPawn pawn = new BlackPawn();
         label.setIcon(new ImageIcon(pawn.getImage()));
+        WhitePawn pawn2 = new WhitePawn();
+        label2.setIcon(new ImageIcon(pawn2.getImage()));
 
-        jpainel.add(label);
+        y.add(label);
+        n.add(label2);
         
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);

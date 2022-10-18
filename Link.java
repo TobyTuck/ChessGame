@@ -17,6 +17,11 @@ public class Link{
         _data = null;
     }
 
+    public Link(Link right, Object data){
+        _right = right;
+        _data = data;
+    }
+
     public Link(Link right, Link left, Link up, Link down, Object data){
         _right = right;
         _left = left;
