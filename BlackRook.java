@@ -1,18 +1,18 @@
 /**
-This is a class that models a Black Pawn chesspiece
+This is a class that models a Black Rook chesspiece
 */
 
 import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 
-public class BlackPawn{
-    
+public class BlackRook{
+
     private BufferedImage _image;
 
-    public BlackPawn(){
+    public BlackRook(){
         try{
-            _image = ImageIO.read(new File("BlackPawn.png"));
+            _image = ImageIO.read(new File("BlackRook.png"));
         }catch(IOException exception){
             System.out.println("Error locating file");
         }

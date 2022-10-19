@@ -12,7 +12,7 @@ public class WhitePawn{
 
     public WhitePawn(){
         try{
-            _image = ImageIO.read(new File("WPawn.png"));
+            _image = ImageIO.read(new File("WhitePawn.png"));
         }catch(IOException exception){
             System.out.println("Error locating file");
         }
