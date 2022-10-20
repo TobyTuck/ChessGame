@@ -259,6 +259,7 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         JLabel label1 = new JLabel();
         JLabel label2 = new JLabel();
         JLabel label3 = new JLabel();
+        JLabel label4 = new JLabel();
 
         Object a = list.pop(0);
         JPanel b = (JPanel) a;
@@ -269,9 +270,13 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         Object e = list.pop(2);
         JPanel f = (JPanel) e;
 
+        Object g = list.pop(3);
+        JPanel h = (JPanel) g;
+
         label1.setPreferredSize(b.getPreferredSize());
         label2.setPreferredSize(d.getPreferredSize());
         label3.setPreferredSize(f.getPreferredSize());
+        label4.setPreferredSize(h.getPreferredSize());
 
         BlackPawn pawn1 = new BlackPawn();
         label1.setIcon(new ImageIcon(pawn1.getImage()));
@@ -282,9 +287,13 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         BlackRook rook1 = new BlackRook();
         label3.setIcon(new ImageIcon(rook1.getImage()));
 
+        WhiteRook rook2 = new WhiteRook();
+        label4.setIcon(new ImageIcon(rook2.getImage()));
+
         b.add(label1);
         d.add(label2);
         f.add(label3);
+        h.add(label4);
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
