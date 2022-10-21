@@ -261,6 +261,13 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         JLabel label3 = new JLabel();
         JLabel label4 = new JLabel();
         JLabel label5 = new JLabel();
+        JLabel label6 = new JLabel();
+        JLabel label7 = new JLabel();
+        JLabel label8 = new JLabel();
+        JLabel label9 = new JLabel();
+        JLabel label10 = new JLabel();
+        JLabel label11 = new JLabel();
+        JLabel label12 = new JLabel();
 
         Object a = list.pop(0);
         JPanel b = (JPanel) a;
@@ -277,11 +284,39 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         Object i = list.pop(4);
         JPanel j = (JPanel) i;
 
+        Object k = list.pop(5);
+        JPanel l = (JPanel) k;
+
+        Object m = list.pop(6);
+        JPanel n = (JPanel) m;
+
+        Object o = list.pop(7);
+        JPanel p = (JPanel) o;
+
+        Object q = list.pop(8);
+        JPanel r = (JPanel) q;
+
+        Object s = list.pop(9);
+        JPanel t = (JPanel) s;
+
+        Object u = list.pop(10);
+        JPanel v = (JPanel) u;
+
+        Object w = list.pop(11);
+        JPanel x = (JPanel) w;
+
         label1.setPreferredSize(b.getPreferredSize());
         label2.setPreferredSize(d.getPreferredSize());
         label3.setPreferredSize(f.getPreferredSize());
         label4.setPreferredSize(h.getPreferredSize());
         label5.setPreferredSize(j.getPreferredSize());
+        label6.setPreferredSize(l.getPreferredSize());
+        label7.setPreferredSize(n.getPreferredSize());
+        label8.setPreferredSize(p.getPreferredSize());
+        label9.setPreferredSize(r.getPreferredSize());
+        label10.setPreferredSize(t.getPreferredSize());
+        label11.setPreferredSize(v.getPreferredSize());
+        label12.setPreferredSize(x.getPreferredSize());
 
         BlackPawn pawn1 = new BlackPawn();
         label1.setIcon(new ImageIcon(pawn1.getImage()));
@@ -298,11 +333,39 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         BlackKnight knight1 = new BlackKnight();
         label5.setIcon(new ImageIcon(knight1.getImage()));
 
+        WhiteKnight knight2 = new WhiteKnight();
+        label6.setIcon(new ImageIcon(knight2.getImage()));
+
+        BlackBishop bishop1 = new BlackBishop();
+        label7.setIcon(new ImageIcon(bishop1.getImage()));
+
+        WhiteBishop bishop2 = new WhiteBishop();
+        label8.setIcon(new ImageIcon(bishop2.getImage()));
+
+        BlackQueen queen1 = new BlackQueen();
+        label9.setIcon(new ImageIcon(queen1.getImage()));
+
+        WhiteQueen queen2 = new WhiteQueen();
+        label10.setIcon(new ImageIcon(queen2.getImage()));
+
+        BlackKing king1 = new BlackKing();
+        label11.setIcon(new ImageIcon(king1.getImage()));
+
+        WhiteKing king2 = new WhiteKing();
+        label12.setIcon(new ImageIcon(king2.getImage()));
+
         b.add(label1);
         d.add(label2);
         f.add(label3);
         h.add(label4);
         j.add(label5);
+        l.add(label6);
+        n.add(label7);
+        p.add(label8);
+        r.add(label9);
+        t.add(label10);
+        v.add(label11);
+        x.add(label12);
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
