@@ -38,16 +38,24 @@ public class List{
 
         else{
             Link tail = _head;
-            Link tail = _head;
+            Link link = _head;
             int factor = _size / _layerWidth;
             int modulus = _size % _layerWidth;
 
-            for(Link tail = _head; tail.get; ++index){
-                tail.setUp(link);
-                tail = tail.getDown();} 
+            for(int factor = 0; factor < _size; ++factor){
+                    tail = tail.getDown();
                  
-                for(int index = 0; index < modulus - 2; ++index){
+                for(int index = 0; index < _layerwidth; ++index){
+                    if(factor > 1){
+                        for(int count = 0; count < _layerWidth;
+                            ++count){
+                            link = tail.getLeft();}
+                        tail.setUp(link);
+                        link.setDown(tail);
+
                     tail = tail.getRight();}
+
+                tail.setUp(link);
 
             Link previous = tail.getLeft(); 
             tail.setLeft(trailing);
