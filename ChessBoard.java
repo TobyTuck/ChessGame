@@ -137,7 +137,7 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         east.setBackground(darkGreen);
 
         // add components of each square to the list
-        list = new List();
+        list = new List(8);
 
         square0 = new JPanel(); list.push(square0);
         square1 = new JPanel(); list.push(square1);

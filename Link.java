@@ -17,17 +17,32 @@ public class Link{
         _data = null;
     }
 
-    public Link(Link right, Object data){
-        _right = right;
+    public Link(Object data){
         _data = data;
+        _right = null;
+        _left = null;
+        _up = null;
+        _down = null;
+        _data = null;
     }
 
-    public Link(Link right, Link left, Link up, Link down, Object data){
-        _right = right;
-        _left = left;
-        _up = up;
-        _down = down;
-        _data = data;
+    // method that compares other Link fields
+    public boolean equals(Link other){
+        // compare only the 'data' field
+        if(other == null){
+            if(_data == null)
+                return true;
+            else
+                return false;}
+
+        // compare every field
+        else{
+            if(other.getData().equals(_data) && /* other.getUp().equals(_up) &&
+               other.getDown().equals(_down) && */other.getRight().equals(_right) /*&&
+               other.getLeft().equals(_left) */ )
+                return true;
+            else{
+                return false;} }
     }
 
     // Mutator methods

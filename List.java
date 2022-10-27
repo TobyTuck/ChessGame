@@ -3,16 +3,18 @@
     Tools necessary to build a list data structure that is
     Quarterly linked- twice horizontally (forward and back)
     And vertically (upward and down)
-e    NOTE: Horizontally the list is 8 nodes wide; then a new
-          Layer will be added to the list
+    NOTE: Horizontally the list is x nodes wide as determined by the constructor; 
+          Then a new layer will be added to the list
 */
 public class List{
 
     private Link _head;
+    private int _layerWidth;
     private int _size;
 
-    public List(){
+    public List(int layerWidth){
         _head = null;
+        _layerWidth = layerWidth;
         _size = 0;
     }
 
@@ -20,16 +22,44 @@ public class List{
         Method that inserts at the back of the structure
     */
     public void push(Object nextData){
-        Link next = new Link(null, nextData);
+        Link next = new Link(nextData);
 
-        if(_size == 0)
-            _head = next;
+        if(_size == 0){
+            next.setRight(null);
+            next.setLeft(null);
+            next.setUp(null);
+            next.setDown(null);
+            _head = next;}
+
+        else if(_size == 1){
+            _head.setRight(next);
+            next.setLeft(_head);
+        }
 
         else{
             Link tail = _head;
-            for(int index = 0; index < _size - 1; ++index){
-                tail = tail.getRight();}
+            Link tail = _head;
+            int factor = _size / _layerWidth;
+            int modulus = _size % _layerWidth;
+
+            for(Link tail = _head; tail.get; ++index){
+                tail.setUp(link);
+                tail = tail.getDown();} 
+                 
+                for(int index = 0; index < modulus - 2; ++index){
+                    tail = tail.getRight();}
+
+            Link previous = tail.getLeft(); 
+            tail.setLeft(trailing);
             tail.setRight(next);}
+
+            if(_size > _layerWidth){
+                Link link = next;
+                for(int index = 0; index < _layerWidth; ++index){
+                    link = link.getLeft();}
+
+                next.setUp(link);
+                link.setDown(next);} }
 
         ++_size;
     }
@@ -40,10 +70,27 @@ public class List{
     */
     public Object pop(int target){
         Link tail = _head;
-        for(int index = 0; index < target; ++index){
-           tail = tail.getRight();}
+        int factor = _size / _layerWidth;
+        int modulus = _size % _layerWidth;
+
+        for(int index = 0; index < factor; ++index){
+            tail = tail.getDown();}
+
+        for(int index = 0; index < modulus; ++index){
+            tail.getRight();}
+
         return tail.getData();
     }
+
+    /**
+        Recursive method that retrieves the data at a specified location in the 
+        Structure w/o deletion
+    
+    public Object pop(int target){
+        if(target != 0)
+            return pop(target - 1);
+        return 
+    */
 
     /**
         Method that returns the size of the array
