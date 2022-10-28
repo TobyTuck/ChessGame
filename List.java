@@ -42,7 +42,8 @@ public class List{
                 if(tail.getIndex() > _layerWidth && 
                    tail.getIndex() < _size - _layerWidth &&
                    tail.getDown() == (null)){
-                       for(Link e = _head; e.getIndex() == (tail.getIndex() + _layerWidth); e = e.getRight()){
+                       for(Link e = _head; e.getIndex() == (tail.getIndex() + _layerWidth); 
+                           e = e.getRight()){
                             tail.setDown(e);
                             e.setUp(tail);} }
 
