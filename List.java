@@ -43,7 +43,7 @@ public class List{
             int modulus = _size % _layerWidth;
 
             for(int factor = 0; factor < _size; ++factor){
-                    tail = tail.getDown();
+                tail = tail.getDown();
                  
                 for(int index = 0; index < _layerwidth; ++index){
                     if(factor > 1){
@@ -60,14 +60,6 @@ public class List{
             Link previous = tail.getLeft(); 
             tail.setLeft(trailing);
             tail.setRight(next);}
-
-            if(_size > _layerWidth){
-                Link link = next;
-                for(int index = 0; index < _layerWidth; ++index){
-                    link = link.getLeft();}
-
-                next.setUp(link);
-                link.setDown(next);} }
 
         ++_size;
     }
