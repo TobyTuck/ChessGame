@@ -23,6 +23,7 @@ public class List{
     */
     public void push(Object nextData){
         Link next = new Link(nextData);
+        next.setIndex(_size - 1);
 
         if(_size == 0){
             next.setRight(null);
@@ -31,35 +32,24 @@ public class List{
             next.setDown(null);
             _head = next;}
 
-        else if(_size == 1){
-            _head.setRight(next);
-            next.setLeft(_head);
-        }
-
         else{
             Link tail = _head;
-            Link link = _head;
             int factor = _size / _layerWidth;
             int modulus = _size % _layerWidth;
 
-            for(int factor = 0; factor < _size; ++factor){
-                tail = tail.getDown();
-                 
-                for(int index = 0; index < _layerwidth; ++index){
-                    if(factor > 1){
-                        for(int count = 0; count < _layerWidth;
-                            ++count){
-                            link = tail.getLeft();}
-                        tail.setUp(link);
-                        link.setDown(tail);
+            for(int index = 0; index < _size - 2; ++index){
+                // set 'Down' + 'Up' fields if necessary
+                if(tail.getIndex() > _layerWidth && 
+                   tail.getIndex() < _size - _layerWidth &&
+                   tail.getDown() == (null)){
+                       for(Link e = _head; e.getIndex() == (tail.getIndex() + _layerWidth); e = e.getRight()){
+                            tail.setDown(e);
+                            e.setUp(tail);} }
 
-                    tail = tail.getRight();}
-
-                tail.setUp(link);
-
-            Link previous = tail.getLeft(); 
-            tail.setLeft(trailing);
-            tail.setRight(next);}
+                tail = tail.getRight();}
+                
+            tail.setRight(next);
+            next.setLeft(tail);}
 
         ++_size;
     }
@@ -70,8 +60,11 @@ public class List{
     */
     public Object pop(int target){
         Link tail = _head;
-        int factor = _size / _layerWidth;
-        int modulus = _size % _layerWidth;
+        int factor = target / _layerWidth;
+        int modulus = target % _layerWidth;
+        int 
+
+        if((target * (_layerWidth + 1)) - ) < 
 
         for(int index = 0; index < factor; ++index){
             tail = tail.getDown();}
@@ -83,19 +76,38 @@ public class List{
     }
 
     /**
-        Recursive method that retrieves the data at a specified location in the 
-        Structure w/o deletion
-    
-    public Object pop(int target){
-        if(target != 0)
-            return pop(target - 1);
-        return 
-    */
-
-    /**
-        Method that returns the size of the array
+    Method that returns the size of the array
     */
     public int getSize(){
         return _size;
+    }
+
+    /**
+    Method that returns the position of an element in an erray
+    */
+    public int getIndex(Link other){
+        Link link = _head;
+        for(int index = 0; index < _size; ++index){
+            if(other.equals(link))
+                return index;
+            link = link.getRight();}
+        
+        return 0;
+    }
+
+    /**
+    Recursive method that tests to see if two nodes are equal
+    A node is equal to another if they share the same data
+    */
+    public boolean equals(Link other){
+        Link link = _head;
+        for(int index = 0; index < _size; ++index){
+            // equality test
+            if(other.getData().equals(link.getData()))
+                return true;
+
+            link = link.getRight();}
+
+        return false;
     }
 }

@@ -8,11 +8,17 @@ import javax.imageio.ImageIO;
 
 public class BlackBishop{
 
+    private BufferedImage _image;
+
     public BlackBishop(){
         try{
             _image = ImageIO.read(new File("BlackBishop.png"));
         }catch(IOException exception){
             System.out.println("Error locating file");
         }
+    }
+
+    public BufferedImage getImage(){
+        return _image;
     }
 }

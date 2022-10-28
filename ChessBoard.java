@@ -222,6 +222,9 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
             generic = list.pop(index);
             jpanel = (JPanel)generic;
               
+            // delete
+            System.out.println(index);
+
             // set size of the JPanel- (8.57, 8.56)
             jpanel.setPreferredSize(new Dimension((int)(length / 8.0), 
                                                   (int)(length / 8.0)));

@@ -8,6 +8,7 @@ public class Link{
     private Link _up;
     private Link _down;
     private Object _data;
+    private int _index;
 
     public Link(){
         _right = null;
@@ -15,6 +16,7 @@ public class Link{
         _up = null;
         _down = null;
         _data = null;
+        _index = 0;
     }
 
     public Link(Object data){
@@ -24,6 +26,7 @@ public class Link{
         _up = null;
         _down = null;
         _data = null;
+        _index = 0;
     }
 
     // method that compares other Link fields
@@ -66,6 +69,10 @@ public class Link{
         _data = data;
     }
 
+    public void setIndex(int index){
+        _index = index;
+    }
+
     // Accessor methods
     public Link getRight(){
         return _right;
@@ -85,5 +92,9 @@ public class Link{
 
     public Object getData(){
         return _data;
+    }
+
+    public int getIndex(){
+        return _index;
     }
 }
