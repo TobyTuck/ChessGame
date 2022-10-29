@@ -6,6 +6,9 @@
     NOTE: Horizontally the list is x nodes wide as determined by the constructor; 
           Then a new layer will be added to the list
 */
+
+import java.lang.Math; // used for absolute value function
+
 public class List{
 
     private Link _head;
@@ -61,17 +64,27 @@ public class List{
     */
     public Object pop(int target){
         Link tail = _head;
-        int factor = target / _layerWidth;
-        int modulus = target % _layerWidth;
-        int 
+        int upperLimit = (target / _layerWidth) + 1;
+        int lowerLimit = target / _layerWidth;
 
-        if((target * (_layerWidth + 1)) - ) < 
+        if(target == 0)
+            return _head.getData();
 
-        for(int index = 0; index < factor; ++index){
-            tail = tail.getDown();}
+        // instance where the shortest option is from the "top"
+        if((target * lowerLimit) < (target * upperLimit)){
+            for(int index = 0; index < lowerLimit; ++index){
+                tail = tail.getDown();}
 
-        for(int index = 0; index < modulus; ++index){
-            tail.getRight();}
+            for(int index = 0; index < (_layerWidth % target); ++index){
+                tail.getRight();} }
+
+        // instance where the shortest option is from the "bottom"
+        else{
+            for(int index = 0; index < upperLimit; ++index){
+                tail = tail.getDown();}
+
+            for(int index = 0; index < (target % _layerWidth); ++index){
+                tail = tail.getLeft();} }
 
         return tail.getData();
     }
