@@ -26,67 +26,67 @@ public class List{
     */
     public void push(Object nextData){
         Link next = new Link(nextData);
-        next.setIndex(_size - 1);
 
+        // special case- inserting the first node into the list
         if(_size == 0){
-            next.setRight(null);
-            next.setLeft(null);
-            next.setUp(null);
-            next.setDown(null);
             _head = next;}
 
+        // case 2- general case for inserting any node at a position greater than 1 
         else{
             Link tail = _head;
-            int factor = _size / _layerWidth;
-            int modulus = _size % _layerWidth;
 
-            for(int index = 0; index < _size - 2; ++index){
-                // set 'Down' + 'Up' fields if necessary
-                if(tail.getIndex() > _layerWidth && 
-                   tail.getIndex() < _size - _layerWidth &&
-                   tail.getDown() == (null)){
-                       for(Link e = _head; e.getIndex() == (tail.getIndex() + _layerWidth); 
-                           e = e.getRight()){
-                            tail.setDown(e);
-                            e.setUp(tail);} }
-
+            // traverse down the structure as far as possible
+            for(Link index = _head; index.getDown() != null; index = index.getDown()){
+                tail = tail.getDown();}
+            
+            // traverse right until the end of the link is reached
+            for(Link count = tail; count.getRight() != null; count = count.getRight()){
                 tail = tail.getRight();}
                 
+            // set 'left', 'right' fields
             tail.setRight(next);
-            next.setLeft(tail);}
+            next.setLeft(tail);
+        
+            // if necessary, traverse up to set 'up' field of inserted node
+            if(_size > _layerWidth){
+                for(int index = 0; index < _layerWidth; ++index){
+                    tail = tail.getLeft();}
+                next.setUp(tail);
+                tail.setDown(next);} }
 
         ++_size;
     }
 
     /**
-        Method that retrieves the data at a specified 
-        Location in the structure w/o deletion
+        Method that retrieves the data at a specified location in the structure w/o deletion
     */
     public Object pop(int target){
         Link tail = _head;
-        int upperLimit = (target / _layerWidth) + 1;
         int lowerLimit = target / _layerWidth;
+        int upperLimit = lowerLimit + 1;
 
-        if(target == 0)
-            return _head.getData();
-
-        // instance where the shortest option is from the "top"
-        if((target * lowerLimit) < (target * upperLimit)){
+        // instance where the shortest route to the target is from the 1st node of the same row 
+        if((target - (lowerLimit * _layerWidth)) < ((upperLimit * _layerWidth) - target)){
             for(int index = 0; index < lowerLimit; ++index){
                 tail = tail.getDown();}
 
-            for(int index = 0; index < (_layerWidth % target); ++index){
-                tail.getRight();} }
+            for(int index = 0; index < (target % _layerWidth); ++index){
+                tail = tail.getRight();} 
 
-        // instance where the shortest option is from the "bottom"
+            // delete
+            System.out.println("Lower route used!");
+
+            return tail.getData();}
+
+        // instance where the shortest route is from the 1st node of the row below the target
         else{
             for(int index = 0; index < upperLimit; ++index){
                 tail = tail.getDown();}
 
-            for(int index = 0; index < (target % _layerWidth); ++index){
-                tail = tail.getLeft();} }
+            for(int index = 0; index < (_layerWidth - (target % _layerWidth)); ++index){
+                tail = tail.getLeft();} 
 
-        return tail.getData();
+            return tail.getData();}
     }
 
     /**
@@ -94,34 +94,5 @@ public class List{
     */
     public int getSize(){
         return _size;
-    }
-
-    /**
-    Method that returns the position of an element in an erray
-    */
-    public int getIndex(Link other){
-        Link link = _head;
-        for(int index = 0; index < _size; ++index){
-            if(other.equals(link))
-                return index;
-            link = link.getRight();}
-        
-        return 0;
-    }
-
-    /**
-    Recursive method that tests to see if two nodes are equal
-    A node is equal to another if they share the same data
-    */
-    public boolean equals(Link other){
-        Link link = _head;
-        for(int index = 0; index < _size; ++index){
-            // equality test
-            if(other.getData().equals(link.getData()))
-                return true;
-
-            link = link.getRight();}
-
-        return false;
     }
 }

@@ -219,13 +219,10 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
 
         for(int index = 0; index < list.getSize(); ++index){
 
-            // delete
-            System.out.println(index);
-
             // type conversions
             generic = list.pop(index);
             jpanel = (JPanel)generic;
-              
+            
             // delete
             System.out.println(index);
 
