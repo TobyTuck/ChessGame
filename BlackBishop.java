@@ -2,23 +2,17 @@
 This is a class that models a Black Bishop chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // needed for ImageIcon class (et al.)
 
 public class BlackBishop{
 
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public BlackBishop(){
-        try{
-            _image = ImageIO.read(new File("BlackBishop.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("BlackBishop.png");
     }
 
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

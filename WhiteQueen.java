@@ -2,26 +2,20 @@
 This is a class that models the White Queen chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // needed for ImageIcon class (et al.)
 
 public class WhiteQueen{
 
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public WhiteQueen(){
-        try{
-            _image = ImageIO.read(new File("WhiteQueen.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("WhiteQueen.png");
     }
 
     /**
     Method to return the image associated w/ a White Queen chesspiece
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

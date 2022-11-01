@@ -2,26 +2,20 @@
 This is a class that models a Black Knight chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // need ImageIcon class (et al.)
 
 public class BlackKnight{
 
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public BlackKnight(){
-        try{
-            _image = ImageIO.read(new File("BlackKnight.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("BlackKnight.png");
     }
 
     /**
     Method to return the image associated with a Black Knight
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

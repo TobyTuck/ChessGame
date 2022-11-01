@@ -2,26 +2,20 @@
 This is a class that models a Black Pawn chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // need ImageIcon class (et al.)
 
 public class BlackPawn{
     
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public BlackPawn(){
-        try{
-            _image = ImageIO.read(new File("BlackPawn.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("BlackPawn.png");
     }
 
     /**
     Method to return the image
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

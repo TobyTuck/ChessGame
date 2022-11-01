@@ -2,26 +2,20 @@
 This is a class that models a Black Queen chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // needed for ImageIcon class (et al.)
 
 public class BlackQueen{
     
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public BlackQueen(){
-        try{
-            _image = ImageIO.read(new File("BlackQueen.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("BlackQueen.png");
     }
 
     /**
     Method to return the image associated w/ a Black Queen chesspiece
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

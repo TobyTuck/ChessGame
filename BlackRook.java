@@ -2,26 +2,20 @@
 This is a class that models a Black Rook chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // needed for ImageIcon class (et al.)
 
 public class BlackRook{
 
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public BlackRook(){
-        try{
-            _image = ImageIO.read(new File("BlackRook.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("BlackRook.png");
     }
 
     /**
     Method to return the image
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

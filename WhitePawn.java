@@ -2,26 +2,20 @@
 This is a class that models a White Pawn chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // need ImageIcon class (et al.)
 
 public class WhitePawn{
 
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public WhitePawn(){
-        try{
-            _image = ImageIO.read(new File("WhitePawn.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("WhitePawn.png");
     }
 
     /**
     Method to return the image
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

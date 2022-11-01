@@ -2,26 +2,20 @@
 This is a class that models a White King chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // needed for ImageIcon class (et al.)
 
 public class WhiteKing{
 
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public WhiteKing(){
-        try{
-            _image = ImageIO.read(new File("WhiteKing.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("WhiteKing.png");
     }
 
     /**
     Method to return the image associated w/ a White King chesspiece
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

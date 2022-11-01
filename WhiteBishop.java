@@ -2,26 +2,20 @@
 This is a class that models a White Bishop chesspiece
 */
 
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
+import javax.swing.*;  // needed for ImageIcon class (et al.)
 
 public class WhiteBishop{
 
-    private BufferedImage _image;
+    private ImageIcon _image;
 
     public WhiteBishop(){
-        try{
-            _image = ImageIO.read(new File("WhiteBishop.png"));
-        }catch(IOException exception){
-            System.out.println("Error locating file");
-        }
+        _image = new ImageIcon("WhiteBishop.png");
     }
 
     /**
     Method to return the image associated w/ a White Bishop chesspiece
     */
-    public BufferedImage getImage(){
+    public ImageIcon getImage(){
         return _image;
     }
 }

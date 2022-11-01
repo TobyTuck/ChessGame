@@ -259,19 +259,21 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
             board.add(jpanel);
             ++count;}
 
-        // add chesspieces to the board
-        JLabel label1 = new JLabel(); JLabel label2 = new JLabel(); JLabel label3 = new JLabel();
-        JLabel label4 = new JLabel(); JLabel label5 = new JLabel(); JLabel label6 = new JLabel();
-        JLabel label7 = new JLabel(); JLabel label8 = new JLabel(); JLabel label9 = new JLabel();
-        JLabel label10 = new JLabel(); JLabel label11 = new JLabel(); JLabel label12 = new JLabel();
-        JLabel label13 = new JLabel(); JLabel label14 = new JLabel(); JLabel label15 = new JLabel();
-        JLabel label16 = new JLabel(); JLabel label17 = new JLabel(); JLabel label18 = new JLabel();
-        JLabel label19 = new JLabel(); JLabel label20 = new JLabel(); JLabel label21 = new JLabel();
-        JLabel label22 = new JLabel(); JLabel label23 = new JLabel(); JLabel label24 = new JLabel();
-        JLabel label25 = new JLabel(); JLabel label26 = new JLabel(); JLabel label27 = new JLabel();
-        JLabel label28 = new JLabel(); JLabel label29 = new JLabel(); JLabel label30 = new JLabel();
-        JLabel label31 = new JLabel(); JLabel label32 = new JLabel();
+        // instantiate the necessary chesspieces 
+        BlackPawn bPawn = new BlackPawn();
+        WhitePawn wPawn = new WhitePawn();
+        BlackRook bRook = new BlackRook();
+        WhiteRook wRook = new WhiteRook();
+        BlackKnight bKnight = new BlackKnight();
+        WhiteKnight wKnight = new WhiteKnight();
+        BlackBishop bBishop = new BlackBishop();
+        WhiteBishop wBishop = new WhiteBishop();
+        BlackQueen bQueen = new BlackQueen();
+        WhiteQueen wQueen = new WhiteQueen();
+        BlackKing bKing = new BlackKing();
+        WhiteKing wKing = new WhiteKing();
 
+        // pull panels from the list 
         JPanel jpanel1 = (JPanel) list.pop(0); JPanel jpanel2 = (JPanel) list.pop(1);
         JPanel jpanel3 = (JPanel) list.pop(2); JPanel jpanel4 = (JPanel) list.pop(3);
         JPanel jpanel5 = (JPanel) list.pop(4); JPanel jpanel6 = (JPanel) list.pop(5);
@@ -289,6 +291,41 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         JPanel jpanel29 = (JPanel) list.pop(60); JPanel jpanel30 = (JPanel) list.pop(61);
         JPanel jpanel31 = (JPanel) list.pop(62); JPanel jpanel32 = (JPanel) list.pop(63);
 
+        // instantiate the labels
+        JLabel label1 = new JLabel(bRook.getImage(), JLabel.CENTER);
+        JLabel label2 = new JLabel(bKnight.getImage(), JLabel.CENTER);
+        JLabel label3 = new JLabel(bBishop.getImage(), JLabel.CENTER);
+        JLabel label4 = new JLabel(bQueen.getImage(), JLabel.CENTER);
+        JLabel label5 = new JLabel(bKing.getImage(), JLabel.CENTER);
+        JLabel label6 = new JLabel(bBishop.getImage(), JLabel.CENTER);
+        JLabel label7 = new JLabel(bKnight.getImage(), JLabel.CENTER);
+        JLabel label8 = new JLabel(bRook.getImage(), JLabel.CENTER);
+        JLabel label9 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label10 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label11 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label12 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label13 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label14 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label15 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label16 = new JLabel(bPawn.getImage(), JLabel.CENTER);
+        JLabel label17 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label18 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label19 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label20 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label21 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label22 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label23 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label24 = new JLabel(wPawn.getImage(), JLabel.CENTER);
+        JLabel label25 = new JLabel(wRook.getImage(), JLabel.CENTER);
+        JLabel label26 = new JLabel(wKnight.getImage(), JLabel.CENTER);
+        JLabel label27 = new JLabel(wBishop.getImage(), JLabel.CENTER);
+        JLabel label28 = new JLabel(wQueen.getImage(), JLabel.CENTER);
+        JLabel label29 = new JLabel(wKing.getImage(), JLabel.CENTER);
+        JLabel label30 = new JLabel(wBishop.getImage(), JLabel.CENTER);
+        JLabel label31 = new JLabel(wKnight.getImage(), JLabel.CENTER);
+        JLabel label32 = new JLabel(wRook.getImage(), JLabel.CENTER);
+
+        // set size of each label equal to the panel 
         label1.setPreferredSize(jpanel1.getPreferredSize()); 
         label2.setPreferredSize(jpanel2.getPreferredSize());
         label3.setPreferredSize(jpanel3.getPreferredSize());
@@ -322,96 +359,42 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         label31.setPreferredSize(jpanel31.getPreferredSize());
         label32.setPreferredSize(jpanel32.getPreferredSize());
 
-        // set the pawn image to the appropriate jpanels
-        BlackPawn bPawn1 = new BlackPawn();
-        label9.setIcon(new ImageIcon(bPawn1.getImage()));
-        BlackPawn bPawn2 = new BlackPawn();
-        label10.setIcon(new ImageIcon(bPawn2.getImage()));
-        BlackPawn bPawn3 = new BlackPawn();
-        label11.setIcon(new ImageIcon(bPawn3.getImage()));
-        BlackPawn bPawn4 = new BlackPawn();
-        label12.setIcon(new ImageIcon(bPawn4.getImage()));
-        BlackPawn bPawn5 = new BlackPawn();
-        label13.setIcon(new ImageIcon(bPawn5.getImage()));
-        BlackPawn bPawn6 = new BlackPawn();
-        label14.setIcon(new ImageIcon(bPawn6.getImage()));
-        BlackPawn bPawn7 = new BlackPawn();
-        label15.setIcon(new ImageIcon(bPawn7.getImage()));
-        BlackPawn bPawn8 = new BlackPawn();
-        label16.setIcon(new ImageIcon(bPawn8.getImage()));
+        // insert pieces at their starting locations 
+        jpanel1.add(label1, BorderLayout.CENTER);
+        jpanel2.add(label2, BorderLayout.CENTER);
+        jpanel3.add(label3, BorderLayout.CENTER);
+        jpanel4.add(label4, BorderLayout.CENTER);
+        jpanel5.add(label5, BorderLayout.CENTER);
+        jpanel6.add(label6, BorderLayout.CENTER);
+        jpanel7.add(label7, BorderLayout.CENTER);
+        jpanel8.add(label8, BorderLayout.CENTER);
+        jpanel9.add(label9, BorderLayout.CENTER);
+        jpanel10.add(label10, BorderLayout.CENTER);
+        jpanel11.add(label11, BorderLayout.CENTER);
+        jpanel12.add(label12, BorderLayout.CENTER);
+        jpanel13.add(label13, BorderLayout.CENTER);
+        jpanel14.add(label14, BorderLayout.CENTER);
+        jpanel15.add(label15, BorderLayout.CENTER);
+        jpanel16.add(label16, BorderLayout.CENTER);
+        jpanel17.add(label17, BorderLayout.CENTER);
+        jpanel18.add(label18, BorderLayout.CENTER);
+        jpanel19.add(label19, BorderLayout.CENTER);
+        jpanel20.add(label20, BorderLayout.CENTER);
+        jpanel21.add(label21, BorderLayout.CENTER);
+        jpanel22.add(label22, BorderLayout.CENTER);
+        jpanel23.add(label23, BorderLayout.CENTER);
+        jpanel24.add(label24, BorderLayout.CENTER);
+        jpanel25.add(label25, BorderLayout.CENTER);
+        jpanel26.add(label26, BorderLayout.CENTER);
+        jpanel27.add(label27, BorderLayout.CENTER);
+        jpanel28.add(label28, BorderLayout.CENTER);
+        jpanel29.add(label29, BorderLayout.CENTER);
+        jpanel30.add(label30, BorderLayout.CENTER);
+        jpanel31.add(label31, BorderLayout.CENTER);
+        jpanel32.add(label32, BorderLayout.CENTER);
 
-        WhitePawn wPawn1 = new WhitePawn();
-        label17.setIcon(new ImageIcon(wPawn1.getImage()));
-        WhitePawn wPawn2 = new WhitePawn();
-        label18.setIcon(new ImageIcon(wPawn2.getImage()));
-        WhitePawn wPawn3 = new WhitePawn();
-        label19.setIcon(new ImageIcon(wPawn3.getImage()));
-        WhitePawn wPawn4 = new WhitePawn();
-        label20.setIcon(new ImageIcon(wPawn4.getImage()));
-        WhitePawn wPawn5 = new WhitePawn();
-        label21.setIcon(new ImageIcon(wPawn5.getImage()));
-        WhitePawn wPawn6 = new WhitePawn();
-        label22.setIcon(new ImageIcon(wPawn6.getImage()));
-        WhitePawn wPawn7 = new WhitePawn();
-        label23.setIcon(new ImageIcon(wPawn7.getImage()));
-        WhitePawn wPawn8 = new WhitePawn();
-        label24.setIcon(new ImageIcon(wPawn8.getImage()));
-
-        // set the rook image to the appropriate jpanels
-        BlackRook bRook1 = new BlackRook();
-        label1.setIcon(new ImageIcon(bRook1.getImage()));
-        BlackRook bRook2 = new BlackRook();
-        label8.setIcon(new ImageIcon(bRook2.getImage()));
-
-        WhiteRook wRook1 = new WhiteRook();
-        label25.setIcon(new ImageIcon(wRook1.getImage()));
-        WhiteRook wRook2 = new WhiteRook();
-        label32.setIcon(new ImageIcon(wRook2.getImage()));
-
-        // set the knight image to the appropriate jpanels
-        BlackKnight bKnight1 = new BlackKnight();
-        label2.setIcon(new ImageIcon(bKnight1.getImage()));
-        BlackKnight bKnight2 = new BlackKnight();
-        label7.setIcon(new ImageIcon(bKnight2.getImage()));
-
-        WhiteKnight wKnight1 = new WhiteKnight();
-        label26.setIcon(new ImageIcon(wKnight1.getImage()));
-        WhiteKnight wKnight2 = new WhiteKnight();
-        label31.setIcon(new ImageIcon(wKnight2.getImage()));
-
-        // set the bishop image to the appropriate jpanels
-        BlackBishop bBishop1 = new BlackBishop();
-        label3.setIcon(new ImageIcon(bBishop1.getImage()));
-        BlackBishop bBishop2 = new BlackBishop();
-        label6.setIcon(new ImageIcon(bBishop2.getImage()));
-
-        WhiteBishop wBishop1 = new WhiteBishop();
-        label27.setIcon(new ImageIcon(wBishop1.getImage()));
-        WhiteBishop wBishop2 = new WhiteBishop();
-        label30.setIcon(new ImageIcon(wBishop2.getImage()));
-
-        // set the queen image to the appropriate jpanels
-        BlackQueen bQueen = new BlackQueen();
-        label4.setIcon(new ImageIcon(bQueen.getImage()));
-
-        WhiteQueen wQueen = new WhiteQueen();
-        label28.setIcon(new ImageIcon(wQueen.getImage()));
-
-        // set the king image to the appropriate jpanels
-        BlackKing bKing = new BlackKing();
-        label5.setIcon(new ImageIcon(bKing.getImage()));
-
-        WhiteKing wKing = new WhiteKing();
-        label29.setIcon(new ImageIcon(wKing.getImage()));
-
-        jpanel1.add(label1); jpanel2.add(label2); jpanel3.add(label3); jpanel4.add(label4);
-        jpanel5.add(label5); jpanel6.add(label6); jpanel7.add(label7); jpanel8.add(label8);
-        jpanel9.add(label9); jpanel10.add(label10); jpanel11.add(label11); jpanel12.add(label12);
-        jpanel13.add(label13); jpanel14.add(label14); jpanel15.add(label15); jpanel16.add(label16);
-        jpanel17.add(label17); jpanel18.add(label18); jpanel19.add(label19); jpanel20.add(label20);
-        jpanel21.add(label21); jpanel22.add(label22); jpanel23.add(label23); jpanel24.add(label24);
-        jpanel25.add(label25); jpanel26.add(label26); jpanel27.add(label27); jpanel28.add(label28);
-        jpanel29.add(label29); jpanel30.add(label30); jpanel31.add(label31); jpanel32.add(label32);
+        // delete
+        System.out.println(label1.getSize());
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
