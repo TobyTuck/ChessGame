@@ -49,7 +49,7 @@ public class List{
         
             // if necessary, traverse up to set 'up' field of inserted node
             if(_size > _layerWidth){
-                for(int index = 0; index < _layerWidth; ++index){
+                for(int index = 0; index < (_layerWidth - 1); ++index){
                     tail = tail.getLeft();}
                 next.setUp(tail);
                 tail.setDown(next);} }
@@ -61,6 +61,32 @@ public class List{
         Method that retrieves the data at a specified location in the structure w/o deletion
     */
     public Object pop(int target){
+
+        Link tail = _head;
+
+        for(int index = 0; index < target; ++index){
+            tail = tail.getRight();}
+
+        return tail.getData();
+
+        /*
+        Link tail = _head;
+        int limit = target / _layerWidth;
+        int remainder = target % _layerWidth;
+
+        for(int index = 0; index < limit; ++index){
+            tail = tail.getDown();}
+
+        for(int index = 0; index < remainder; ++index){
+            tail = tail.getRight();}
+
+        // delete
+        System.out.println(limit);
+
+        return tail.getData();
+        */
+        
+        /*
         // special case- target is larger than the size of the list
         if(_size < target)
             return null;
@@ -93,6 +119,7 @@ public class List{
                 tail = tail.getLeft();} 
 
             return tail.getData();}
+        */
     }
 
     /**

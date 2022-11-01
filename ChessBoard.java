@@ -259,117 +259,159 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
             board.add(jpanel);
             ++count;}
 
-        // test ability to add images to the JFrame
-        JLabel label1 = new JLabel();
-        JLabel label2 = new JLabel();
-        JLabel label3 = new JLabel();
-        JLabel label4 = new JLabel();
-        JLabel label5 = new JLabel();
-        JLabel label6 = new JLabel();
-        JLabel label7 = new JLabel();
-        JLabel label8 = new JLabel();
-        JLabel label9 = new JLabel();
-        JLabel label10 = new JLabel();
-        JLabel label11 = new JLabel();
-        JLabel label12 = new JLabel();
+        // add chesspieces to the board
+        JLabel label1 = new JLabel(); JLabel label2 = new JLabel(); JLabel label3 = new JLabel();
+        JLabel label4 = new JLabel(); JLabel label5 = new JLabel(); JLabel label6 = new JLabel();
+        JLabel label7 = new JLabel(); JLabel label8 = new JLabel(); JLabel label9 = new JLabel();
+        JLabel label10 = new JLabel(); JLabel label11 = new JLabel(); JLabel label12 = new JLabel();
+        JLabel label13 = new JLabel(); JLabel label14 = new JLabel(); JLabel label15 = new JLabel();
+        JLabel label16 = new JLabel(); JLabel label17 = new JLabel(); JLabel label18 = new JLabel();
+        JLabel label19 = new JLabel(); JLabel label20 = new JLabel(); JLabel label21 = new JLabel();
+        JLabel label22 = new JLabel(); JLabel label23 = new JLabel(); JLabel label24 = new JLabel();
+        JLabel label25 = new JLabel(); JLabel label26 = new JLabel(); JLabel label27 = new JLabel();
+        JLabel label28 = new JLabel(); JLabel label29 = new JLabel(); JLabel label30 = new JLabel();
+        JLabel label31 = new JLabel(); JLabel label32 = new JLabel();
 
-        Object a = list.pop(0);
-        JPanel b = (JPanel) a;
+        JPanel jpanel1 = (JPanel) list.pop(0); JPanel jpanel2 = (JPanel) list.pop(1);
+        JPanel jpanel3 = (JPanel) list.pop(2); JPanel jpanel4 = (JPanel) list.pop(3);
+        JPanel jpanel5 = (JPanel) list.pop(4); JPanel jpanel6 = (JPanel) list.pop(5);
+        JPanel jpanel7 = (JPanel) list.pop(6); JPanel jpanel8 = (JPanel) list.pop(7);
+        JPanel jpanel9 = (JPanel) list.pop(8); JPanel jpanel10 = (JPanel) list.pop(9);
+        JPanel jpanel11 = (JPanel) list.pop(10); JPanel jpanel12 = (JPanel) list.pop(11);
+        JPanel jpanel13 = (JPanel) list.pop(12); JPanel jpanel14 = (JPanel) list.pop(13);
+        JPanel jpanel15 = (JPanel) list.pop(14); JPanel jpanel16 = (JPanel) list.pop(15);
+        JPanel jpanel17 = (JPanel) list.pop(48); JPanel jpanel18 = (JPanel) list.pop(49);
+        JPanel jpanel19 = (JPanel) list.pop(50); JPanel jpanel20 = (JPanel) list.pop(51);
+        JPanel jpanel21 = (JPanel) list.pop(52); JPanel jpanel22 = (JPanel) list.pop(53);
+        JPanel jpanel23 = (JPanel) list.pop(54); JPanel jpanel24 = (JPanel) list.pop(55);
+        JPanel jpanel25 = (JPanel) list.pop(56); JPanel jpanel26 = (JPanel) list.pop(57);
+        JPanel jpanel27 = (JPanel) list.pop(58); JPanel jpanel28 = (JPanel) list.pop(59);
+        JPanel jpanel29 = (JPanel) list.pop(60); JPanel jpanel30 = (JPanel) list.pop(61);
+        JPanel jpanel31 = (JPanel) list.pop(62); JPanel jpanel32 = (JPanel) list.pop(63);
 
-        Object c = list.pop(1);
-        JPanel d = (JPanel) c;
+        label1.setPreferredSize(jpanel1.getPreferredSize()); 
+        label2.setPreferredSize(jpanel2.getPreferredSize());
+        label3.setPreferredSize(jpanel3.getPreferredSize());
+        label4.setPreferredSize(jpanel4.getPreferredSize());
+        label5.setPreferredSize(jpanel5.getPreferredSize());
+        label6.setPreferredSize(jpanel6.getPreferredSize());
+        label7.setPreferredSize(jpanel7.getPreferredSize());
+        label8.setPreferredSize(jpanel8.getPreferredSize());
+        label9.setPreferredSize(jpanel9.getPreferredSize());
+        label10.setPreferredSize(jpanel10.getPreferredSize());
+        label11.setPreferredSize(jpanel11.getPreferredSize());
+        label12.setPreferredSize(jpanel12.getPreferredSize());
+        label13.setPreferredSize(jpanel13.getPreferredSize());
+        label14.setPreferredSize(jpanel14.getPreferredSize());
+        label15.setPreferredSize(jpanel15.getPreferredSize());
+        label16.setPreferredSize(jpanel16.getPreferredSize());
+        label17.setPreferredSize(jpanel17.getPreferredSize());
+        label18.setPreferredSize(jpanel18.getPreferredSize());
+        label19.setPreferredSize(jpanel19.getPreferredSize());
+        label20.setPreferredSize(jpanel20.getPreferredSize());
+        label21.setPreferredSize(jpanel21.getPreferredSize());
+        label22.setPreferredSize(jpanel22.getPreferredSize());
+        label23.setPreferredSize(jpanel23.getPreferredSize());
+        label24.setPreferredSize(jpanel24.getPreferredSize());
+        label25.setPreferredSize(jpanel25.getPreferredSize());
+        label26.setPreferredSize(jpanel26.getPreferredSize());
+        label27.setPreferredSize(jpanel27.getPreferredSize());
+        label28.setPreferredSize(jpanel28.getPreferredSize());
+        label29.setPreferredSize(jpanel29.getPreferredSize());
+        label30.setPreferredSize(jpanel30.getPreferredSize());
+        label31.setPreferredSize(jpanel31.getPreferredSize());
+        label32.setPreferredSize(jpanel32.getPreferredSize());
 
-        Object e = list.pop(2);
-        JPanel f = (JPanel) e;
+        // set the pawn image to the appropriate jpanels
+        BlackPawn bPawn1 = new BlackPawn();
+        label9.setIcon(new ImageIcon(bPawn1.getImage()));
+        BlackPawn bPawn2 = new BlackPawn();
+        label10.setIcon(new ImageIcon(bPawn2.getImage()));
+        BlackPawn bPawn3 = new BlackPawn();
+        label11.setIcon(new ImageIcon(bPawn3.getImage()));
+        BlackPawn bPawn4 = new BlackPawn();
+        label12.setIcon(new ImageIcon(bPawn4.getImage()));
+        BlackPawn bPawn5 = new BlackPawn();
+        label13.setIcon(new ImageIcon(bPawn5.getImage()));
+        BlackPawn bPawn6 = new BlackPawn();
+        label14.setIcon(new ImageIcon(bPawn6.getImage()));
+        BlackPawn bPawn7 = new BlackPawn();
+        label15.setIcon(new ImageIcon(bPawn7.getImage()));
+        BlackPawn bPawn8 = new BlackPawn();
+        label16.setIcon(new ImageIcon(bPawn8.getImage()));
 
-        Object g = list.pop(3);
-        JPanel h = (JPanel) g;
+        WhitePawn wPawn1 = new WhitePawn();
+        label17.setIcon(new ImageIcon(wPawn1.getImage()));
+        WhitePawn wPawn2 = new WhitePawn();
+        label18.setIcon(new ImageIcon(wPawn2.getImage()));
+        WhitePawn wPawn3 = new WhitePawn();
+        label19.setIcon(new ImageIcon(wPawn3.getImage()));
+        WhitePawn wPawn4 = new WhitePawn();
+        label20.setIcon(new ImageIcon(wPawn4.getImage()));
+        WhitePawn wPawn5 = new WhitePawn();
+        label21.setIcon(new ImageIcon(wPawn5.getImage()));
+        WhitePawn wPawn6 = new WhitePawn();
+        label22.setIcon(new ImageIcon(wPawn6.getImage()));
+        WhitePawn wPawn7 = new WhitePawn();
+        label23.setIcon(new ImageIcon(wPawn7.getImage()));
+        WhitePawn wPawn8 = new WhitePawn();
+        label24.setIcon(new ImageIcon(wPawn8.getImage()));
 
-        Object i = list.pop(4);
-        JPanel j = (JPanel) i;
+        // set the rook image to the appropriate jpanels
+        BlackRook bRook1 = new BlackRook();
+        label1.setIcon(new ImageIcon(bRook1.getImage()));
+        BlackRook bRook2 = new BlackRook();
+        label8.setIcon(new ImageIcon(bRook2.getImage()));
 
-        Object k = list.pop(5);
-        JPanel l = (JPanel) k;
+        WhiteRook wRook1 = new WhiteRook();
+        label25.setIcon(new ImageIcon(wRook1.getImage()));
+        WhiteRook wRook2 = new WhiteRook();
+        label32.setIcon(new ImageIcon(wRook2.getImage()));
 
-        Object m = list.pop(6);
-        JPanel n = (JPanel) m;
+        // set the knight image to the appropriate jpanels
+        BlackKnight bKnight1 = new BlackKnight();
+        label2.setIcon(new ImageIcon(bKnight1.getImage()));
+        BlackKnight bKnight2 = new BlackKnight();
+        label7.setIcon(new ImageIcon(bKnight2.getImage()));
 
-        Object o = list.pop(7);
-        JPanel p = (JPanel) o;
+        WhiteKnight wKnight1 = new WhiteKnight();
+        label26.setIcon(new ImageIcon(wKnight1.getImage()));
+        WhiteKnight wKnight2 = new WhiteKnight();
+        label31.setIcon(new ImageIcon(wKnight2.getImage()));
 
-        Object q = list.pop(8);
-        JPanel r = (JPanel) q;
+        // set the bishop image to the appropriate jpanels
+        BlackBishop bBishop1 = new BlackBishop();
+        label3.setIcon(new ImageIcon(bBishop1.getImage()));
+        BlackBishop bBishop2 = new BlackBishop();
+        label6.setIcon(new ImageIcon(bBishop2.getImage()));
 
-        Object s = list.pop(9);
-        JPanel t = (JPanel) s;
+        WhiteBishop wBishop1 = new WhiteBishop();
+        label27.setIcon(new ImageIcon(wBishop1.getImage()));
+        WhiteBishop wBishop2 = new WhiteBishop();
+        label30.setIcon(new ImageIcon(wBishop2.getImage()));
 
-        Object u = list.pop(10);
-        JPanel v = (JPanel) u;
+        // set the queen image to the appropriate jpanels
+        BlackQueen bQueen = new BlackQueen();
+        label4.setIcon(new ImageIcon(bQueen.getImage()));
 
-        Object w = list.pop(11);
-        JPanel x = (JPanel) w;
+        WhiteQueen wQueen = new WhiteQueen();
+        label28.setIcon(new ImageIcon(wQueen.getImage()));
 
-        label1.setPreferredSize(b.getPreferredSize());
-        label2.setPreferredSize(d.getPreferredSize());
-        label3.setPreferredSize(f.getPreferredSize());
-        label4.setPreferredSize(h.getPreferredSize());
-        label5.setPreferredSize(j.getPreferredSize());
-        label6.setPreferredSize(l.getPreferredSize());
-        label7.setPreferredSize(n.getPreferredSize());
-        label8.setPreferredSize(p.getPreferredSize());
-        label9.setPreferredSize(r.getPreferredSize());
-        label10.setPreferredSize(t.getPreferredSize());
-        label11.setPreferredSize(v.getPreferredSize());
-        label12.setPreferredSize(x.getPreferredSize());
+        // set the king image to the appropriate jpanels
+        BlackKing bKing = new BlackKing();
+        label5.setIcon(new ImageIcon(bKing.getImage()));
 
-        BlackPawn pawn1 = new BlackPawn();
-        label1.setIcon(new ImageIcon(pawn1.getImage()));
+        WhiteKing wKing = new WhiteKing();
+        label29.setIcon(new ImageIcon(wKing.getImage()));
 
-        WhitePawn pawn2 = new WhitePawn();
-        label2.setIcon(new ImageIcon(pawn2.getImage()));
-
-        BlackRook rook1 = new BlackRook();
-        label3.setIcon(new ImageIcon(rook1.getImage()));
-
-        WhiteRook rook2 = new WhiteRook();
-        label4.setIcon(new ImageIcon(rook2.getImage()));
-
-        BlackKnight knight1 = new BlackKnight();
-        label5.setIcon(new ImageIcon(knight1.getImage()));
-
-        WhiteKnight knight2 = new WhiteKnight();
-        label6.setIcon(new ImageIcon(knight2.getImage()));
-
-        BlackBishop bishop1 = new BlackBishop();
-        label7.setIcon(new ImageIcon(bishop1.getImage()));
-
-        WhiteBishop bishop2 = new WhiteBishop();
-        label8.setIcon(new ImageIcon(bishop2.getImage()));
-
-        BlackQueen queen1 = new BlackQueen();
-        label9.setIcon(new ImageIcon(queen1.getImage()));
-
-        WhiteQueen queen2 = new WhiteQueen();
-        label10.setIcon(new ImageIcon(queen2.getImage()));
-
-        BlackKing king1 = new BlackKing();
-        label11.setIcon(new ImageIcon(king1.getImage()));
-
-        WhiteKing king2 = new WhiteKing();
-        label12.setIcon(new ImageIcon(king2.getImage()));
-
-        b.add(label1);
-        d.add(label2);
-        f.add(label3);
-        h.add(label4);
-        j.add(label5);
-        l.add(label6);
-        n.add(label7);
-        p.add(label8);
-        r.add(label9);
-        t.add(label10);
-        v.add(label11);
-        x.add(label12);
+        jpanel1.add(label1); jpanel2.add(label2); jpanel3.add(label3); jpanel4.add(label4);
+        jpanel5.add(label5); jpanel6.add(label6); jpanel7.add(label7); jpanel8.add(label8);
+        jpanel9.add(label9); jpanel10.add(label10); jpanel11.add(label11); jpanel12.add(label12);
+        jpanel13.add(label13); jpanel14.add(label14); jpanel15.add(label15); jpanel16.add(label16);
+        jpanel17.add(label17); jpanel18.add(label18); jpanel19.add(label19); jpanel20.add(label20);
+        jpanel21.add(label21); jpanel22.add(label22); jpanel23.add(label23); jpanel24.add(label24);
+        jpanel25.add(label25); jpanel26.add(label26); jpanel27.add(label27); jpanel28.add(label28);
+        jpanel29.add(label29); jpanel30.add(label30); jpanel31.add(label31); jpanel32.add(label32);
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
