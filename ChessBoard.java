@@ -291,39 +291,45 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         JPanel jpanel29 = (JPanel) list.pop(60); JPanel jpanel30 = (JPanel) list.pop(61);
         JPanel jpanel31 = (JPanel) list.pop(62); JPanel jpanel32 = (JPanel) list.pop(63);
 
+        // delete
+        double rate = ((int)(length / 8.0) * .5) / bRook.getHeight();
+        bRook.scaleImage(rate);
+        System.out.println("Here I am: " + bRook.getHeight());
+        System.out.println("Here I am: " + bPawn.getHeight());
+
         // instantiate the labels
-        JLabel label1 = new JLabel(bRook.getImage(), JLabel.CENTER);
-        JLabel label2 = new JLabel(bKnight.getImage(), JLabel.CENTER);
-        JLabel label3 = new JLabel(bBishop.getImage(), JLabel.CENTER);
-        JLabel label4 = new JLabel(bQueen.getImage(), JLabel.CENTER);
-        JLabel label5 = new JLabel(bKing.getImage(), JLabel.CENTER);
-        JLabel label6 = new JLabel(bBishop.getImage(), JLabel.CENTER);
-        JLabel label7 = new JLabel(bKnight.getImage(), JLabel.CENTER);
-        JLabel label8 = new JLabel(bRook.getImage(), JLabel.CENTER);
-        JLabel label9 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label10 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label11 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label12 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label13 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label14 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label15 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label16 = new JLabel(bPawn.getImage(), JLabel.CENTER);
-        JLabel label17 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label18 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label19 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label20 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label21 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label22 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label23 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label24 = new JLabel(wPawn.getImage(), JLabel.CENTER);
-        JLabel label25 = new JLabel(wRook.getImage(), JLabel.CENTER);
-        JLabel label26 = new JLabel(wKnight.getImage(), JLabel.CENTER);
-        JLabel label27 = new JLabel(wBishop.getImage(), JLabel.CENTER);
-        JLabel label28 = new JLabel(wQueen.getImage(), JLabel.CENTER);
-        JLabel label29 = new JLabel(wKing.getImage(), JLabel.CENTER);
-        JLabel label30 = new JLabel(wBishop.getImage(), JLabel.CENTER);
-        JLabel label31 = new JLabel(wKnight.getImage(), JLabel.CENTER);
-        JLabel label32 = new JLabel(wRook.getImage(), JLabel.CENTER);
+        JLabel label1 = new JLabel(bRook.toImageIcon(), JLabel.CENTER);
+        JLabel label2 = new JLabel(bKnight.toImageIcon(), JLabel.CENTER);
+        JLabel label3 = new JLabel(bBishop.toImageIcon(), JLabel.CENTER);
+        JLabel label4 = new JLabel(bQueen.toImageIcon(), JLabel.CENTER);
+        JLabel label5 = new JLabel(bKing.toImageIcon(), JLabel.CENTER);
+        JLabel label6 = new JLabel(bBishop.toImageIcon(), JLabel.CENTER);
+        JLabel label7 = new JLabel(bKnight.toImageIcon(), JLabel.CENTER);
+        JLabel label8 = new JLabel(bRook.toImageIcon(), JLabel.CENTER);
+        JLabel label9 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label10 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label11 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label12 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label13 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label14 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label15 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label16 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label17 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label18 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label19 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label20 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label21 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label22 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label23 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label24 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
+        JLabel label25 = new JLabel(wRook.toImageIcon(), JLabel.CENTER);
+        JLabel label26 = new JLabel(wKnight.toImageIcon(), JLabel.CENTER);
+        JLabel label27 = new JLabel(wBishop.toImageIcon(), JLabel.CENTER);
+        JLabel label28 = new JLabel(wQueen.toImageIcon(), JLabel.CENTER);
+        JLabel label29 = new JLabel(wKing.toImageIcon(), JLabel.CENTER);
+        JLabel label30 = new JLabel(wBishop.toImageIcon(), JLabel.CENTER);
+        JLabel label31 = new JLabel(wKnight.toImageIcon(), JLabel.CENTER);
+        JLabel label32 = new JLabel(wRook.toImageIcon(), JLabel.CENTER);
 
         // set size of each label equal to the panel 
         label1.setPreferredSize(jpanel1.getPreferredSize()); 
@@ -392,9 +398,6 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         jpanel30.add(label30, BorderLayout.CENTER);
         jpanel31.add(label31, BorderLayout.CENTER);
         jpanel32.add(label32, BorderLayout.CENTER);
-
-        // delete
-        System.out.println(label1.getSize());
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);

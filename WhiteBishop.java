@@ -2,11 +2,21 @@
 This is a class that models a White Bishop chesspiece
 */
 
-import javax.swing.*;  // needed for ImageIcon class (et al.)
+import java.awt.image.BufferedImage;
+import java.io.*;  // used for File and IOException classes
+import javax.imageio.ImageIO;
 
 public class WhiteBishop extends ChessPiece{
 
     public WhiteBishop(){
-        super(new ImageIcon("WhiteBishop.png"));
+        try{
+            // open image file
+            BufferedImage image = ImageIO.read(new File
+            ("WhiteBishop.png"));
+
+            // pass image to parent class
+            super.setImage(image);
+        }catch(IOException exception){
+            System.out.println("Error locating White Bishop image file");}
     }
 }
