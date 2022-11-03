@@ -293,12 +293,12 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
 
         // find the rate at which we want to scale each chesspiece
         // NOTE: white chesspieces have the same dimenstions as black chesspieces
-        double pawnRate = ((length / 8.0) * 0.7) / bPawn.getHeight();
-        double rookRate = ((length / 8.0) * 0.7) / bRook.getHeight();
-        double knightRate = ((length / 8.0) * 0.7) / bKnight.getHeight();
-        double bishopRate = ((length / 8.0) * 0.7) / bBishop.getHeight();
-        double queenRate = ((length / 8.0) * 0.7) / bQueen.getHeight();
-        double kingRate = ((length / 8.0) * 0.7) / bKing.getHeight();
+        int pawnRate = (int)((length / 8.0) * 0.7);
+        int rookRate = (int)((length / 8.0) * 0.7);
+        int knightRate = (int)((length / 8.0) * 0.7);
+        int bishopRate = (int)((length / 8.0) * 0.7);
+        int queenRate = (int)((length / 8.0) * 0.7);
+        int kingRate = (int)((length / 8.0) * 0.7);
 
         // rescale images to fit their jpanels
         bPawn.scaleImage(pawnRate);
@@ -315,7 +315,7 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         wKing.scaleImage(kingRate);
 
         // delete
-        System.out.println("Here I am: " + bRook.getHeight() + " " + bPawn.getHeight());
+        System.out.println("Here I am: " + bRook.getHeight() + " " + bRook.getWidth());
         System.out.println("Here I am: " + rookRate);
         System.out.println("Here I am: " + (int)(length / 8.0));
         System.out.println(length + " " + (int)(length / 8.0));
@@ -355,7 +355,7 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         JLabel label32 = new JLabel(wRook.toImageIcon(), JLabel.CENTER);
 
         // set size of each label equal to the panel 
-        label1.setPreferredSize(jpanel1.getPreferredSize()); 
+        /* label1.setPreferredSize(jpanel1.getPreferredSize()); 
         label2.setPreferredSize(jpanel2.getPreferredSize());
         label3.setPreferredSize(jpanel3.getPreferredSize());
         label4.setPreferredSize(jpanel4.getPreferredSize());
@@ -386,7 +386,7 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         label29.setPreferredSize(jpanel29.getPreferredSize());
         label30.setPreferredSize(jpanel30.getPreferredSize());
         label31.setPreferredSize(jpanel31.getPreferredSize());
-        label32.setPreferredSize(jpanel32.getPreferredSize());
+        label32.setPreferredSize(jpanel32.getPreferredSize());*/
 
         // insert pieces at their starting locations 
         jpanel1.add(label1, BorderLayout.CENTER);
