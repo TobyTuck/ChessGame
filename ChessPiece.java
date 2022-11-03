@@ -18,12 +18,15 @@ public class ChessPiece{
     public void scaleImage(double rate){
         int width = _image.getWidth();
         int height = _image.getHeight();
-        BufferedImage scaled = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        BufferedImage scaled = 
+            new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         AffineTransform at = new AffineTransform();
         at.scale(rate, rate);
         AffineTransformOp scaleOp = new AffineTransformOp
             (at, AffineTransformOp.TYPE_BILINEAR);
         scaled = scaleOp.filter(_image, scaled);
+
         _image = scaled;
     }
 

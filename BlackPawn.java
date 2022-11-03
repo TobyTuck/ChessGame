@@ -16,16 +16,6 @@ public class BlackPawn extends ChessPiece{
             BufferedImage image = ImageIO.read(new File
             ("BlackPawn.png"));
            
-            /* int w = image.getWidth();
-            int h = image.getHeight();
-            BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-            AffineTransform at = new AffineTransform();
-            at.scale(1.5, 1.5);
-            AffineTransformOp scaleOp =
-                new AffineTransformOp
-                (at, AffineTransformOp.TYPE_BILINEAR);
-            after = scaleOp.filter(image, after); */
-
             // pass image to parent class 
             super.setImage(image);
         }catch(IOException exception){

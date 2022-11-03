@@ -292,10 +292,11 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         JPanel jpanel31 = (JPanel) list.pop(62); JPanel jpanel32 = (JPanel) list.pop(63);
 
         // delete
-        double rate = ((int)(length / 8.0) * .5) / bRook.getHeight();
+        double rate = ((length / 8.0) * 0.7) / bRook.getHeight();
         bRook.scaleImage(rate);
         System.out.println("Here I am: " + bRook.getHeight());
-        System.out.println("Here I am: " + bPawn.getHeight());
+        System.out.println("Here I am: " + rate);
+        System.out.println("Here I am: " + (int)(length / 8.0));
 
         // instantiate the labels
         JLabel label1 = new JLabel(bRook.toImageIcon(), JLabel.CENTER);
