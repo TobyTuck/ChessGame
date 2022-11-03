@@ -291,12 +291,34 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         JPanel jpanel29 = (JPanel) list.pop(60); JPanel jpanel30 = (JPanel) list.pop(61);
         JPanel jpanel31 = (JPanel) list.pop(62); JPanel jpanel32 = (JPanel) list.pop(63);
 
+        // find the rate at which we want to scale each chesspiece
+        // NOTE: white chesspieces have the same dimenstions as black chesspieces
+        double pawnRate = ((length / 8.0) * 0.7) / bPawn.getHeight();
+        double rookRate = ((length / 8.0) * 0.7) / bRook.getHeight();
+        double knightRate = ((length / 8.0) * 0.7) / bKnight.getHeight();
+        double bishopRate = ((length / 8.0) * 0.7) / bBishop.getHeight();
+        double queenRate = ((length / 8.0) * 0.7) / bQueen.getHeight();
+        double kingRate = ((length / 8.0) * 0.7) / bKing.getHeight();
+
+        // rescale images to fit their jpanels
+        bPawn.scaleImage(pawnRate);
+        wPawn.scaleImage(pawnRate);
+        bRook.scaleImage(rookRate);
+        wRook.scaleImage(rookRate);
+        bKnight.scaleImage(knightRate);
+        wKnight.scaleImage(knightRate);
+        bBishop.scaleImage(bishopRate);
+        wBishop.scaleImage(bishopRate);
+        bQueen.scaleImage(queenRate);
+        wQueen.scaleImage(queenRate);
+        bKing.scaleImage(kingRate);
+        wKing.scaleImage(kingRate);
+
         // delete
-        double rate = ((length / 8.0) * 0.7) / bRook.getHeight();
-        bRook.scaleImage(rate);
-        System.out.println("Here I am: " + bRook.getHeight());
-        System.out.println("Here I am: " + rate);
+        System.out.println("Here I am: " + bRook.getHeight() + " " + bPawn.getHeight());
+        System.out.println("Here I am: " + rookRate);
         System.out.println("Here I am: " + (int)(length / 8.0));
+        System.out.println(length + " " + (int)(length / 8.0));
 
         // instantiate the labels
         JLabel label1 = new JLabel(bRook.toImageIcon(), JLabel.CENTER);
