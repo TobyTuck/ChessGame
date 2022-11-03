@@ -28,6 +28,7 @@ public class ChessPiece{
         scaled = scaleOp.filter(_image, scaled);
 
         _image = scaled;
+
     }
 
     /** 
