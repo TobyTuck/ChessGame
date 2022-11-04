@@ -15,44 +15,30 @@ public class ChessPiece{
     private BufferedImage _image; 
 
     /**
-    Method used to scale the image
+    Method used to scale the image to a new width and height as specified in the 
+    parameters
     */
-    public void scaleImage(int rate){
-        /* int width = _image.getWidth();
-        int height = _image.getHeight();
-
-        BufferedImage scaled = 
-            new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        AffineTransform at = new AffineTransform();
-        at.scale(rate, rate);
-        AffineTransformOp scaleOp = new AffineTransformOp
-            (at, AffineTransformOp.TYPE_BILINEAR);
-        scaled = scaleOp.filter(_image, scaled);
-
-        _image = scaled; */
-
+    public void scaleImage(int newWidth, int newHeight){
         // Make sure the aspect ratio is maintained, so the image is not distorted
-        int newHeight,
-            newWidth;
 
-        double thumbRatio = (double) rate / (double) rate;
-        int imageWidth = _image.getWidth(null);
-        int imageHeight = _image.getHeight(null);
+        double thumbRatio = (double) newWidth / (double) newHeight;
+        int imageWidth = _image.getWidth();
+        int imageHeight = _image.getHeight();
         double aspectRatio = (double) imageWidth / (double) imageHeight;
 
-        if (thumbRatio < aspectRatio) {
-            newHeight = (int) (rate / aspectRatio);
+        /* if (thumbRatio < aspectRatio) {
+            newHeight = (int) (newWidth / aspectRatio);
         } else {
-            newWidth = (int) (rate * aspectRatio);
-        }
+            newWidth = (int) (newHeight * aspectRatio);
+        } */
 
         // Draw the scaled image
-        BufferedImage newImage = new BufferedImage(rate, rate, 
+        BufferedImage newImage = new BufferedImage(newWidth, newHeight, 
                                  BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics2D = newImage.createGraphics();
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
             RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.drawImage(_image, 0, 0, rate, rate, null);
+        graphics2D.drawImage(_image, 0, 0, newWidth, newHeight, null);
 
         _image =  newImage;
 
