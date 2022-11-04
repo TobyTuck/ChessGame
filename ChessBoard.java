@@ -7,10 +7,16 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
+
+    // supporting panels that cover the bottom, left, top, and right of the screen board isn't
     private JPanel south;
     private JPanel north;
     private JPanel east;
     private JPanel west;
+
+    // panels that fit insde the east and west panels, w/ the purpose of holding captured chesspieces
+    private JPanel northWest;
+    private JPanel southEast;
 
     //holds all the individual squares
     List list;
@@ -119,22 +125,49 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         Color darkGreen = new Color(0, 100, 0);
 
         // build supporting panels
+        // build panels above and below chessboard
         int length = boardHeight;
         north = new JPanel();
         north.setPreferredSize(new Dimension(screenSize.width, 
-                                             (int)(0.5 * (screenSize.height - length))));
+                                             (int) (0.5 * (screenSize.height - length))));
         north.setBackground(darkGreen);
         south = new JPanel();
         south.setPreferredSize(new Dimension(screenSize.width, 
-                                             (int)(0.5 * (screenSize.height - length))));
+                                             (int) (0.5 * (screenSize.height - length))));
         south.setBackground(darkGreen);
 
-        west = new JPanel();
-        west.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - length)), length));
+        // build panels to the left and right- with inner panels which will hold captured chesspieces
+        west = new JPanel(new BorderLayout());
+        west.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - length)), length));
         west.setBackground(darkGreen);
-        east = new JPanel();
-        east.setPreferredSize(new Dimension((int)(0.5 * (screenSize.width - length)), length));
+        northWest = new JPanel();
+        JPanel filler1 = new JPanel();
+        JPanel filler2 = new JPanel();
+        northWest.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - length)), length));
+        filler1.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
+        filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
+        northWest.setBackground(darkGreen);
+        filler1.setBackground(darkGreen);
+        filler2.setBackground(darkGreen);
+        west.add(filler1, BorderLayout.EAST);
+        west.add(filler2, BorderLayout.WEST);
+        west.add(northWest, BorderLayout.CENTER);
+
+        east = new JPanel(new BorderLayout());
+        east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - length)), length));
         east.setBackground(darkGreen);
+        southEast = new JPanel();
+        JPanel filler3 = new JPanel();
+        JPanel filler4 = new JPanel();
+        southEast.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - length)), length));
+        filler3.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
+        filler4.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
+        southEast.setBackground(darkGreen);
+        filler3.setBackground(darkGreen);
+        filler4.setBackground(darkGreen);
+        east.add(filler3, BorderLayout.WEST);
+        east.add(filler4, BorderLayout.EAST);
+        east.add(southEast, BorderLayout.CENTER);
 
         // add components of each square to the list
         list = new List(8);
@@ -299,10 +332,10 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         int pawnHeight = (int) ((length / 8.0) * 0.6);
         int pawnWidth = (int) ((double) (bPawn.getWidth() * 
                               ((double) pawnHeight / (double) bPawn.getHeight())));
-        int rookHeight = (int) ((length / 8.0) * 0.8);
+        int rookHeight = (int) ((length / 8.0) * 0.75);
         int rookWidth = (int) ((double) (bRook.getWidth() * 
                               ((double) rookHeight / (double) bRook.getHeight())));
-        int knightHeight = (int) ((length / 8.0) * 0.7);
+        int knightHeight = (int) ((length / 8.0) * 0.75);
         int knightWidth = (int) ((double) (bKnight.getWidth() * 
                               ((double) knightHeight / (double) bKnight.getHeight())));
         int bishopHeight = (int) ((length / 8.0) * 0.8);
