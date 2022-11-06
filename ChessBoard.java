@@ -2,8 +2,9 @@ import javax.swing.*;
 import java.awt.*;  // used for Dimension, GraphicsEnvironment, GraphicsDevice
 import java.awt.event.*;
 import java.util.Random;
+import java.awt.image.BufferedImage;
 
-public class ChessBoard extends JFrame /* implements ActionListener */{
+public class ChessBoard extends JFrame implements MouseListener{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
@@ -470,6 +471,102 @@ public class ChessBoard extends JFrame /* implements ActionListener */{
         this.add(west, BorderLayout.WEST);
         this.add(east, BorderLayout.EAST);
         this.setVisible(true);
+    }
+
+    @Override
+    /**
+    Method that waits for a mouse event to occur before the method may conclude
+    Chess rules that apply to piece movements are the following:
+        1.In order to move a chesspiece, the piece moved must first be clicked, then the square to
+          which the user wants to move
+        2.A chesspiece may not be moved to any square in which a piece of the same color resides
+        3.Each chesspiece has a certain pattern they are able to move in, as defined in their
+          respective classes
+        4.If a chesspiece is moved onto a square occupied by a chesspiece of the opposite color,
+          the latter is deemed 'captured' and removed from the board, while the former now 
+          occupies that square
+        5.If a king is put in check, he is required to remove himself from this situation if possible
+        6.If a chesspiece is in a position that blocks his King from being in check, that piece is 
+          unable to be moved by his player
+    */
+
+    public void mouseClicked(MouseEvent e){
+
+        /* square1.addMouseListener(e);
+        square2.addMouseListener(e);
+        square3.addMouseListener(e);
+        square4.addMouseListener(e);
+        square5.addMouseListener(e);
+        square6.addMouseListener(e);
+        square7.addMouseListener(e);
+        square8.addMouseListener(e);
+        square9.addMouseListener(e);
+        square10.addMouseListener(e);
+        square11.addMouseListener(e);
+        square12.addMouseListener(e);
+        square13.addMouseListener(e);
+        square14.addMouseListener(e);
+        square15.addMouseListener(e);
+        square16.addMouseListener(e);
+        square17.addMouseListener(e);
+        square18.addMouseListener(e);
+        square19.addMouseListener(e);
+        square20.addMouseListener(e);
+        square21.addMouseListener(e);
+        square22.addMouseListener(e);
+        square23.addMouseListener(e);
+        square24.addMouseListener(e);
+        square25.addMouseListener(e);
+        square26.addMouseListener(e);
+        square27.addMouseListener(e);
+        square28.addMouseListener(e);
+        square29.addMouseListener(e);
+        square30.addMouseListener(e);
+        square31.addMouseListener(e);
+        square32.addMouseListener(e); */
+
+        BufferedImage icon;
+        int clickCount = 0;
+
+        // board.addMouseListener();
+        Object click = e.getSource();
+        if(click == square0 || click == square1 || click == square2 || click == square3 ||
+           click == square4 || click == square5 || click == square6 || click == square7 ||
+           click == square8 || click == square9 || click == square10 || click == square11 ||
+           click == square12 || click == square13 || click == square14 || click == square15 ||
+           click == square16 || click == square17 || click == square18 || click == square19 ||
+           click == square20 || click == square21 || click == square22 || click == square23 ||
+           click == square24 || click == square25 || click == square26 || click == square27 ||
+           click == square28 || click == square29 || click == square30 || click == square31 ||
+           click == square32 || click == square33 || click == square34 || click == square35 ||
+           click == square36 || click == square37 || click == square38 || click == square39 ||
+           click == square40 || click == square41 || click == square42 || click == square43 ||
+           click == square44 || click == square45 || click == square46 || click == square47 ||
+           click == square48 || click == square49 || click == square50 || click == square51 ||
+           click == square52 || click == square53 || click == square54 || click == square55 ||
+           click == square56 || click == square57 || click == square58 || click == square59 ||
+           click == square60 || click == square61 || click == square62 || click == square63)
+
+        // if(click instanceof JPanel)
+            ++clickCount;
+
+        System.out.println("Click count: " + clickCount);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e){
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e){
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e){
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e){
     }
 
     /**
