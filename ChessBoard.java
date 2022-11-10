@@ -1,10 +1,10 @@
 import javax.swing.*;
 import java.awt.*;  // used for Dimension, GraphicsEnvironment, GraphicsDevice
-import java.awt.event.*;
+import java.awt.event.*;  // used for MouseAdapter and MouseEvent
 import java.util.Random;
 import java.awt.image.BufferedImage;
 
-public class ChessBoard extends JFrame implements MouseListener{
+public class ChessBoard extends JFrame /* implements MouseListener */{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
@@ -22,72 +22,39 @@ public class ChessBoard extends JFrame implements MouseListener{
     //holds all the individual squares
     List list;
 
-    // individual squares of the chessboard
-    private JPanel square0;
-    private JPanel square1;
-    private JPanel square2;
-    private JPanel square3;
-    private JPanel square4;
-    private JPanel square5;
-    private JPanel square6;
-    private JPanel square7;
-    private JPanel square8;
-    private JPanel square9;
+    // declare individual squares of the chessboard
+    private JPanel square0;         private JPanel square10;
+    private JPanel square1;         private JPanel square11;
+    private JPanel square2;         private JPanel square12;
+    private JPanel square3;         private JPanel square13;
+    private JPanel square4;         private JPanel square14;
+    private JPanel square5;         private JPanel square15;
+    private JPanel square6;         private JPanel square16;
+    private JPanel square7;         private JPanel square17;
+    private JPanel square8;         private JPanel square18;
+    private JPanel square9;         private JPanel square19;
 
-    private JPanel square10;
-    private JPanel square11;
-    private JPanel square12;
-    private JPanel square13;
-    private JPanel square14;
-    private JPanel square15;
-    private JPanel square16;
-    private JPanel square17;
-    private JPanel square18;
-    private JPanel square19;
+    private JPanel square20;        private JPanel square30;
+    private JPanel square21;        private JPanel square31;
+    private JPanel square22;        private JPanel square32;
+    private JPanel square23;        private JPanel square33;
+    private JPanel square24;        private JPanel square34;
+    private JPanel square25;        private JPanel square35;
+    private JPanel square26;        private JPanel square36;
+    private JPanel square27;        private JPanel square37;
+    private JPanel square28;        private JPanel square38;
+    private JPanel square29;        private JPanel square39;
 
-    private JPanel square20;
-    private JPanel square21;
-    private JPanel square22;
-    private JPanel square23;
-    private JPanel square24;
-    private JPanel square25;
-    private JPanel square26;
-    private JPanel square27;
-    private JPanel square28;
-    private JPanel square29;
-
-    private JPanel square30;
-    private JPanel square31;
-    private JPanel square32;
-    private JPanel square33;
-    private JPanel square34;
-    private JPanel square35;
-    private JPanel square36;
-    private JPanel square37;
-    private JPanel square38;
-    private JPanel square39;
-
-    private JPanel square40;
-    private JPanel square41;
-    private JPanel square42;
-    private JPanel square43;
-    private JPanel square44;
-    private JPanel square45;
-    private JPanel square46;
-    private JPanel square47;
-    private JPanel square48;
-    private JPanel square49;
-
-    private JPanel square50;
-    private JPanel square51;
-    private JPanel square52;
-    private JPanel square53;
-    private JPanel square54;
-    private JPanel square55;
-    private JPanel square56;
-    private JPanel square57;
-    private JPanel square58;
-    private JPanel square59;
+    private JPanel square40;        private JPanel square50;
+    private JPanel square41;        private JPanel square51;
+    private JPanel square42;        private JPanel square52;
+    private JPanel square43;        private JPanel square53;
+    private JPanel square44;        private JPanel square54;
+    private JPanel square45;        private JPanel square55;
+    private JPanel square46;        private JPanel square56;
+    private JPanel square47;        private JPanel square57;
+    private JPanel square48;        private JPanel square58;
+    private JPanel square49;        private JPanel square59;
 
     private JPanel square60;
     private JPanel square61;
@@ -310,24 +277,6 @@ public class ChessBoard extends JFrame implements MouseListener{
         BlackKing bKing = new BlackKing();
         WhiteKing wKing = new WhiteKing();
 
-        // pull panels from the list 
-        JPanel jpanel1 = (JPanel) list.pop(0); JPanel jpanel2 = (JPanel) list.pop(1);
-        JPanel jpanel3 = (JPanel) list.pop(2); JPanel jpanel4 = (JPanel) list.pop(3);
-        JPanel jpanel5 = (JPanel) list.pop(4); JPanel jpanel6 = (JPanel) list.pop(5);
-        JPanel jpanel7 = (JPanel) list.pop(6); JPanel jpanel8 = (JPanel) list.pop(7);
-        JPanel jpanel9 = (JPanel) list.pop(8); JPanel jpanel10 = (JPanel) list.pop(9);
-        JPanel jpanel11 = (JPanel) list.pop(10); JPanel jpanel12 = (JPanel) list.pop(11);
-        JPanel jpanel13 = (JPanel) list.pop(12); JPanel jpanel14 = (JPanel) list.pop(13);
-        JPanel jpanel15 = (JPanel) list.pop(14); JPanel jpanel16 = (JPanel) list.pop(15);
-        JPanel jpanel17 = (JPanel) list.pop(48); JPanel jpanel18 = (JPanel) list.pop(49);
-        JPanel jpanel19 = (JPanel) list.pop(50); JPanel jpanel20 = (JPanel) list.pop(51);
-        JPanel jpanel21 = (JPanel) list.pop(52); JPanel jpanel22 = (JPanel) list.pop(53);
-        JPanel jpanel23 = (JPanel) list.pop(54); JPanel jpanel24 = (JPanel) list.pop(55);
-        JPanel jpanel25 = (JPanel) list.pop(56); JPanel jpanel26 = (JPanel) list.pop(57);
-        JPanel jpanel27 = (JPanel) list.pop(58); JPanel jpanel28 = (JPanel) list.pop(59);
-        JPanel jpanel29 = (JPanel) list.pop(60); JPanel jpanel30 = (JPanel) list.pop(61);
-        JPanel jpanel31 = (JPanel) list.pop(62); JPanel jpanel32 = (JPanel) list.pop(63);
-
         // find the new dimensions we want to scale the images to 
         // NOTE: white chesspieces have the same dimenstions as black chesspieces
         int pawnHeight = (int) ((length / 8.0) * 0.6);
@@ -349,121 +298,39 @@ public class ChessBoard extends JFrame implements MouseListener{
         int kingWidth = (int) ((double) (bKing.getWidth() * 
                               ((double) kingHeight / (double) bKing.getHeight())));
 
-        // rescale images to fit their jpanels
-        bPawn.scaleImage(pawnWidth, pawnHeight);
-        wPawn.scaleImage(pawnWidth, pawnHeight);
-        bRook.scaleImage(rookWidth, rookHeight);
-        wRook.scaleImage(rookWidth, rookHeight);
-        bKnight.scaleImage(knightWidth, knightHeight);
-        wKnight.scaleImage(knightWidth, knightHeight);
-        bBishop.scaleImage(bishopWidth, bishopHeight);
-        wBishop.scaleImage(bishopWidth, bishopHeight);
-        bQueen.scaleImage(queenWidth, queenHeight);
-        wQueen.scaleImage(queenWidth, queenHeight);
-        bKing.scaleImage(kingWidth, kingHeight);
-        wKing.scaleImage(kingWidth, kingHeight);
-
-        // instantiate the labels
-        JLabel label1 = new JLabel(bRook.toImageIcon(), JLabel.CENTER);
-        JLabel label2 = new JLabel(bKnight.toImageIcon(), JLabel.CENTER);
-        JLabel label3 = new JLabel(bBishop.toImageIcon(), JLabel.CENTER);
-        JLabel label4 = new JLabel(bQueen.toImageIcon(), JLabel.CENTER);
-        JLabel label5 = new JLabel(bKing.toImageIcon(), JLabel.CENTER);
-        JLabel label6 = new JLabel(bBishop.toImageIcon(), JLabel.CENTER);
-        JLabel label7 = new JLabel(bKnight.toImageIcon(), JLabel.CENTER);
-        JLabel label8 = new JLabel(bRook.toImageIcon(), JLabel.CENTER);
-        JLabel label9 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label10 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label11 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label12 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label13 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label14 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label15 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label16 = new JLabel(bPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label17 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label18 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label19 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label20 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label21 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label22 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label23 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label24 = new JLabel(wPawn.toImageIcon(), JLabel.CENTER);
-        JLabel label25 = new JLabel(wRook.toImageIcon(), JLabel.CENTER);
-        JLabel label26 = new JLabel(wKnight.toImageIcon(), JLabel.CENTER);
-        JLabel label27 = new JLabel(wBishop.toImageIcon(), JLabel.CENTER);
-        JLabel label28 = new JLabel(wQueen.toImageIcon(), JLabel.CENTER);
-        JLabel label29 = new JLabel(wKing.toImageIcon(), JLabel.CENTER);
-        JLabel label30 = new JLabel(wBishop.toImageIcon(), JLabel.CENTER);
-        JLabel label31 = new JLabel(wKnight.toImageIcon(), JLabel.CENTER);
-        JLabel label32 = new JLabel(wRook.toImageIcon(), JLabel.CENTER);
-
-        // set size of each label equal to the panel 
-        label1.setPreferredSize(jpanel1.getPreferredSize()); 
-        label2.setPreferredSize(jpanel2.getPreferredSize());
-        label3.setPreferredSize(jpanel3.getPreferredSize());
-        label4.setPreferredSize(jpanel4.getPreferredSize());
-        label5.setPreferredSize(jpanel5.getPreferredSize());
-        label6.setPreferredSize(jpanel6.getPreferredSize());
-        label7.setPreferredSize(jpanel7.getPreferredSize());
-        label8.setPreferredSize(jpanel8.getPreferredSize());
-        label9.setPreferredSize(jpanel9.getPreferredSize());
-        label10.setPreferredSize(jpanel10.getPreferredSize());
-        label11.setPreferredSize(jpanel11.getPreferredSize());
-        label12.setPreferredSize(jpanel12.getPreferredSize());
-        label13.setPreferredSize(jpanel13.getPreferredSize());
-        label14.setPreferredSize(jpanel14.getPreferredSize());
-        label15.setPreferredSize(jpanel15.getPreferredSize());
-        label16.setPreferredSize(jpanel16.getPreferredSize());
-        label17.setPreferredSize(jpanel17.getPreferredSize());
-        label18.setPreferredSize(jpanel18.getPreferredSize());
-        label19.setPreferredSize(jpanel19.getPreferredSize());
-        label20.setPreferredSize(jpanel20.getPreferredSize());
-        label21.setPreferredSize(jpanel21.getPreferredSize());
-        label22.setPreferredSize(jpanel22.getPreferredSize());
-        label23.setPreferredSize(jpanel23.getPreferredSize());
-        label24.setPreferredSize(jpanel24.getPreferredSize());
-        label25.setPreferredSize(jpanel25.getPreferredSize());
-        label26.setPreferredSize(jpanel26.getPreferredSize());
-        label27.setPreferredSize(jpanel27.getPreferredSize());
-        label28.setPreferredSize(jpanel28.getPreferredSize());
-        label29.setPreferredSize(jpanel29.getPreferredSize());
-        label30.setPreferredSize(jpanel30.getPreferredSize());
-        label31.setPreferredSize(jpanel31.getPreferredSize());
-        label32.setPreferredSize(jpanel32.getPreferredSize());
-
-        // insert pieces at their starting locations 
-        jpanel1.add(label1, BorderLayout.CENTER);
-        jpanel2.add(label2, BorderLayout.CENTER);
-        jpanel3.add(label3, BorderLayout.CENTER);
-        jpanel4.add(label4, BorderLayout.CENTER);
-        jpanel5.add(label5, BorderLayout.CENTER);
-        jpanel6.add(label6, BorderLayout.CENTER);
-        jpanel7.add(label7, BorderLayout.CENTER);
-        jpanel8.add(label8, BorderLayout.CENTER);
-        jpanel9.add(label9, BorderLayout.CENTER);
-        jpanel10.add(label10, BorderLayout.CENTER);
-        jpanel11.add(label11, BorderLayout.CENTER);
-        jpanel12.add(label12, BorderLayout.CENTER);
-        jpanel13.add(label13, BorderLayout.CENTER);
-        jpanel14.add(label14, BorderLayout.CENTER);
-        jpanel15.add(label15, BorderLayout.CENTER);
-        jpanel16.add(label16, BorderLayout.CENTER);
-        jpanel17.add(label17, BorderLayout.CENTER);
-        jpanel18.add(label18, BorderLayout.CENTER);
-        jpanel19.add(label19, BorderLayout.CENTER);
-        jpanel20.add(label20, BorderLayout.CENTER);
-        jpanel21.add(label21, BorderLayout.CENTER);
-        jpanel22.add(label22, BorderLayout.CENTER);
-        jpanel23.add(label23, BorderLayout.CENTER);
-        jpanel24.add(label24, BorderLayout.CENTER);
-        jpanel25.add(label25, BorderLayout.CENTER);
-        jpanel26.add(label26, BorderLayout.CENTER);
-        jpanel27.add(label27, BorderLayout.CENTER);
-        jpanel28.add(label28, BorderLayout.CENTER);
-        jpanel29.add(label29, BorderLayout.CENTER);
-        jpanel30.add(label30, BorderLayout.CENTER);
-        jpanel31.add(label31, BorderLayout.CENTER);
-        jpanel32.add(label32, BorderLayout.CENTER);
+        // Add chesspieces to each necessary square w/ in list at the specified width and height
+        pin(bRook, (JPanel) list.pop(0), rookWidth, rookHeight);
+        pin(bKnight, (JPanel) list.pop(1), knightWidth, knightHeight);
+        pin(bBishop, (JPanel) list.pop(2), bishopWidth, bishopHeight);
+        pin(bQueen, (JPanel) list.pop(3), queenWidth, queenHeight);
+        pin(bKing, (JPanel) list.pop(4), kingWidth, kingHeight);
+        pin(bBishop, (JPanel) list.pop(5), bishopWidth, bishopHeight);
+        pin(bKnight, (JPanel) list.pop(6), knightWidth, knightHeight);
+        pin(bRook, (JPanel) list.pop(7), rookWidth, rookHeight);
+        pin(bPawn, (JPanel) list.pop(8), pawnWidth, pawnHeight);
+        pin(bPawn, (JPanel) list.pop(9), pawnWidth, pawnHeight);
+        pin(bPawn, (JPanel) list.pop(10), pawnWidth, pawnHeight);
+        pin(bPawn, (JPanel) list.pop(11), pawnWidth, pawnHeight);
+        pin(bPawn, (JPanel) list.pop(12), pawnWidth, pawnHeight);
+        pin(bPawn, (JPanel) list.pop(13), pawnWidth, pawnHeight);
+        pin(bPawn, (JPanel) list.pop(14), pawnWidth, pawnHeight);
+        pin(bPawn, (JPanel) list.pop(15), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(48), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(49), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(50), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(51), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(52), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(53), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(54), pawnWidth, pawnHeight);
+        pin(wPawn, (JPanel) list.pop(55), pawnWidth, pawnHeight);
+        pin(wRook, (JPanel) list.pop(56), rookWidth, rookHeight);
+        pin(wKnight, (JPanel) list.pop(57), knightWidth, knightHeight);
+        pin(wBishop, (JPanel) list.pop(58), bishopWidth, bishopHeight);
+        pin(wQueen, (JPanel) list.pop(59), queenWidth, queenHeight);
+        pin(wKing, (JPanel) list.pop(60), kingWidth, kingHeight);
+        pin(wBishop, (JPanel) list.pop(61), bishopWidth, bishopHeight);
+        pin(wKnight, (JPanel) list.pop(62), knightWidth, knightHeight);
+        pin(wRook, (JPanel) list.pop(63), rookWidth, rookHeight);
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
@@ -471,9 +338,83 @@ public class ChessBoard extends JFrame implements MouseListener{
         this.add(west, BorderLayout.WEST);
         this.add(east, BorderLayout.EAST);
         this.setVisible(true);
+
+        MouseAdapter ma = new MouseAdapter() {
+            private Point offset;
+            private Point clickPoint;
+            private JPanel clickedPanel;
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                // int x = e.getX();
+                // int y = e.getY();
+                // System.out.println(x + ", " + y);
+            // }
+
+                // Get the current clickPoint, this is used to determine if the
+                // mouseRelease event was part of a drag operation or not
+                clickPoint = e.getPoint();
+                // Determine if there is currently a selected panel or not
+                if (clickedPanel != null) {
+                    // Move the selected panel to a new location
+                    moveSelectedPanelTo(e.getPoint());
+                    // Reset all the other stuff we might other was have set eailer
+                    offset = null;
+                    clickedPanel = null;
+                } else {
+                    // Other wise, find which component was clicked
+                    findClickedComponent(e.getPoint());
+                }
+
+                north.setBackground(Color.blue);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                // Check to see if the current point is equal to the clickedPoint
+                // or not.  If it is, then this is part of a "clicked" operation
+                // meaning that the selected panel should remain "selected", otherwise
+                // it's part of drag operation and should be discarded
+                if (!e.getPoint().equals(clickPoint)) {
+                    clickedPanel = null;
+                }
+                clickPoint = null;
+            }
+
+            /* @Override
+            public void mouseDragged(MouseEvent e) {
+                // Drag the selected component to a new location...
+                if (clickedPanel != null) {
+                    moveSelectedPanelTo(e.getPoint());
+                }
+            } */
+
+            private void findClickedComponent(Point p) {
+                Component comp = getComponentAt(p);
+                if (comp instanceof JPanel && !comp.equals(east)) {
+                    clickedPanel = (JPanel) comp;
+                    int x = p.x - clickedPanel.getLocation().x;
+                    int y = p.y - clickedPanel.getLocation().y;
+                    offset = new Point(x, y);
+                }
+
+            }
+
+            private void moveSelectedPanelTo(Point p) {
+                if (clickedPanel != null) {
+                    int x = p.x - offset.x;
+                    int y = p.y - offset.y;
+                    System.out.println(x + "x" + y);
+                    clickedPanel.setLocation(x, y);
+                }
+            } 
+
+        };
+
+        addMouseListener(ma);
+        addMouseMotionListener(ma);
     }
 
-    @Override
     /**
     Method that waits for a mouse event to occur before the method may conclude
     Chess rules that apply to piece movements are the following:
@@ -490,7 +431,8 @@ public class ChessBoard extends JFrame implements MouseListener{
           unable to be moved by his player
     */
 
-    public void mouseClicked(MouseEvent e){
+    /*
+    public void mouseClicked(MouseEvent e){ */
 
         /* square1.addMouseListener(e);
         square2.addMouseListener(e);
@@ -525,7 +467,7 @@ public class ChessBoard extends JFrame implements MouseListener{
         square31.addMouseListener(e);
         square32.addMouseListener(e); */
 
-        BufferedImage icon;
+        /* BufferedImage icon;
         int clickCount = 0;
 
         // board.addMouseListener();
@@ -553,20 +495,32 @@ public class ChessBoard extends JFrame implements MouseListener{
         System.out.println("Click count: " + clickCount);
     }
 
-    @Override
     public void mousePressed(MouseEvent e){
     }
 
-    @Override
     public void mouseReleased(MouseEvent e){
     }
 
-    @Override
     public void mouseEntered(MouseEvent e){
     }
 
-    @Override
     public void mouseExited(MouseEvent e){
+     } */
+
+    /**
+    Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
+    */
+    public void pin(ChessPiece piece, JPanel panel, int width, int height){
+
+        // rescale image to fit its jpanel
+        piece.scaleImage(width, height);
+
+        // create the label and set preferrences
+        JLabel label = new JLabel(piece.toImageIcon(), JLabel.CENTER);
+        label.setPreferredSize(panel.getPreferredSize());
+
+        // pin JLabel onto JFrame
+        panel.add(label, BorderLayout.CENTER);
     }
 
     /**
