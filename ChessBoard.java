@@ -224,9 +224,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             generic = list.pop(index);
             jpanel = (JPanel)generic;
             
-            // delete
-            System.out.println(index);
-
             // set size of the JPanel- (8.57, 8.56)
             jpanel.setPreferredSize(new Dimension((int)(length / 8.0), 
                                                   (int)(length / 8.0)));
@@ -346,8 +343,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
             @Override
             public void mousePressed(MouseEvent e) {
-                // int x = e.getX();
-                // int y = e.getY();
+                int x = e.getX();
+                int y = e.getY();
                 // System.out.println(x + ", " + y);
             // }
 
@@ -361,12 +358,14 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                     // Reset all the other stuff we might other was have set eailer
                     offset = null;
                     clickedPanel = null;
+
                 } else {
                     // Other wise, find which component was clicked
                     findClickedComponent(e.getPoint());
-                }
 
-                north.setBackground(Color.blue);
+                    // delete
+                    north.setBackground(Color.blue);
+                }
             }
 
             @Override
@@ -391,11 +390,23 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
             private void findClickedComponent(Point p) {
                 Component comp = getComponentAt(p);
-                if (comp instanceof JPanel && !comp.equals(east)) {
+
+                // delete
+                System.out.println((comp instanceof JPanel) + " " + (!comp.equals(ChessBoard.this)));
+                System.out.println(comp.getClass());
+
+                // if(comp instanceof JRootPane)
+                    // JRootPane pane = (JRootPane) comp;
+                    // System.out.println(pane.getContentPane().getClass());
+
+                if (comp instanceof JPanel && !comp.equals(ChessBoard.this)) {
                     clickedPanel = (JPanel) comp;
                     int x = p.x - clickedPanel.getLocation().x;
                     int y = p.y - clickedPanel.getLocation().y;
                     offset = new Point(x, y);
+
+                    // delete
+                    clickedPanel.setBackground(Color.blue);
                 }
 
             }

@@ -92,6 +92,10 @@ public class MouseTest {
 
                 protected void findClickedComponent(Point p) {
                     Component comp = getComponentAt(p);
+
+                    // delete
+                    System.out.println(comp.getClass());
+
                     if (comp instanceof JPanel && !comp.equals(TestPane.this)) {
                         clickedPanel = (JPanel) comp;
                         int x = p.x - clickedPanel.getLocation().x;
