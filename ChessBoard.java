@@ -70,20 +70,14 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             Toolkit.getDefaultToolkit().getScreenSize();
 
         // build the JFrame
-        // this.setDefaultCloseOperation
-            // (JFrame.EXIT_ON_CLOSE);
-        /* GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        this.setDefaultCloseOperation
+            (JFrame.EXIT_ON_CLOSE);
+        GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = graphics.getDefaultScreenDevice();
-        device.setFullScreenWindow(this); */
+        device.setFullScreenWindow(this);
 
-        try{
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }catch (ClassNotFoundException | InstantiationException | IllegalAccessException | 
-                UnsupportedLookAndFeelException e){
-            e.printStackTrace();}
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.setSize(screenSize.width, screenSize.height);
 
         // delete
         System.out.println(this.getWidth() +  " " + this.getHeight());
@@ -95,8 +89,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         int eightDivisible = 0;
         int boardHeight;
         do{
-            // boardHeight = (int)(screenSize.height * 0.9) + eightDivisible;
-            boardHeight = (int)(this.getHeight() * 0.9) + eightDivisible;
+            boardHeight = (int)(screenSize.height * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
@@ -111,63 +104,52 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         // build panels above and below chessboard
         int length = boardHeight;
         north = new JPanel();
-        north.setPreferredSize(new Dimension(this.getWidth(), // screenSize.width, 
-                                             // (int) (0.5 * (screenSize.height - length))));
-                                             (int) (0.5 * (this.getHeight() - length))));
+        north.setPreferredSize(new Dimension(screenSize.width, 
+                                             (int) (0.5 * (screenSize.height - length))));
         north.setBackground(darkGreen);
         south = new JPanel();
-        south.setPreferredSize(new Dimension(this.getWidth(), // screenSize.width, 
-                                             // (int) (0.5 * (screenSize.height - length))));
-                                             (int) (0.5 * (this.getHeight() - length))));
+        south.setPreferredSize(new Dimension(screenSize.width, 
+                                             (int) (0.5 * (screenSize.height - length))));
         south.setBackground(darkGreen);
 
         // build panels to the left and right- with inner panels which will hold captured chesspieces
         west = new JPanel(new BorderLayout());
-        // west.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - length)), length));
-        west.setPreferredSize(new Dimension((int) (0.5 * (this.getWidth() - length)), length));
+        west.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - length)), length));
         west.setBackground(darkGreen);
         northWest = new JPanel();
         JPanel filler1 = new JPanel();
         JPanel filler2 = new JPanel();
-        /*
+        
         northWest.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - length)), length));
         filler1.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
         filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
-        */
-        // delete
-        // northWest.setPreferredSize(new Dimension((int) (0.4 * (this.getWidth() - length)), length));
-        // filler1.setPreferredSize(new Dimension((int) (0.05 * (this.getWidth() - length)), length));
-        // filler2.setPreferredSize(new Dimension((int) (0.05 * (this.getWidth() - length)), length));
+        
 
         northWest.setBackground(darkGreen);
         filler1.setBackground(darkGreen);
         filler2.setBackground(darkGreen);
-        // west.add(filler1, BorderLayout.EAST);
-        // west.add(filler2, BorderLayout.WEST);
-        // west.add(northWest, BorderLayout.CENTER);
+        west.add(filler1, BorderLayout.EAST);
+        west.add(filler2, BorderLayout.WEST);
+        west.add(northWest, BorderLayout.CENTER);
 
         east = new JPanel(new BorderLayout());
-        // east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - length)), length));
-        east.setPreferredSize(new Dimension((int) (0.5 * (this.getWidth() - length)), length));
+        east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - length)), length));
         east.setBackground(darkGreen);
         southEast = new JPanel();
         JPanel filler3 = new JPanel();
         JPanel filler4 = new JPanel();
-        /*
+        
         southEast.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - length)), length));
         filler3.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
         filler4.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - length)), length));
-        */
-        // southEast.setPreferredSize(new Dimension((int) (0.4 * (this.getWidth() - length)), length));
-        // filler3.setPreferredSize(new Dimension((int) (0.05 * (this.getWidth() - length)), length));
-        // filler4.setPreferredSize(new Dimension((int) (0.05 * (this.getWidth() - length)), length));
+        
 
         southEast.setBackground(darkGreen);
         filler3.setBackground(darkGreen);
         filler4.setBackground(darkGreen);
-        // east.add(filler3, BorderLayout.WEST);
-        // east.add(filler4, BorderLayout.EAST);
-        // east.add(southEast, BorderLayout.CENTER);
+        east.add(filler3, BorderLayout.WEST);
+        east.add(filler4, BorderLayout.EAST);
+        east.add(southEast, BorderLayout.CENTER);
 
         // add components of each square to the list
         list = new List(8);
@@ -375,6 +357,11 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
             @Override
             public void mousePressed(MouseEvent e) {
+
+                // delete
+                // JPanel lol = (JPanel)e.getSource();
+                // lol.setBackground(Color.white);
+
                 int x = e.getX();
                 int y = e.getY();
                 // System.out.println(x + ", " + y);
@@ -421,6 +408,9 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             } */
 
             private void findClickedComponent(Point p) {
+
+                // JPanel panel = (JPanel)evt.getSource();
+
                 Component comp = getComponentAt(p);
 
                 // delete
@@ -454,8 +444,12 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
         };
 
-        addMouseListener(ma);
-        addMouseMotionListener(ma);
+        // is my issue that I'm not adding a MouseListener to the JFrame or Board?
+        board.addMouseListener(ma);
+        board.addMouseMotionListener(ma);
+
+        // delete
+        System.out.println(square1.getClass());
     }
 
     /**
