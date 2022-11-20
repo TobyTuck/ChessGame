@@ -358,12 +358,21 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             @Override
             public void mousePressed(MouseEvent e) {
 
+                /* if(e.getSource() instanceof JPanel && e.getSource() == board){
+                    JPanel source = (JPanel) e.getSource();
+
+                    source.setBackground(Color.red);
+                    // pin(bKnight, source, knightWidth, knightHeight);
+
+                    System.out.println("Source is : " + e.getSource().getClass() + "\n" + 
+                                       "Size is: " + source.getPreferredSize());} */
+
                 // delete
                 // JPanel lol = (JPanel)e.getSource();
                 // lol.setBackground(Color.white);
 
-                int x = e.getX();
-                int y = e.getY();
+                // int x = e.getX();
+                // int y = e.getY();
                 // System.out.println(x + ", " + y);
             // }
 
@@ -374,16 +383,35 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                 if (clickedPanel != null) {
                     // Move the selected panel to a new location
                     moveSelectedPanelTo(e.getPoint());
+
                     // Reset all the other stuff we might other was have set eailer
                     offset = null;
                     clickedPanel = null;
-
+                    
+                // Other wise, find which component was clicked
                 } else {
-                    // Other wise, find which component was clicked
-                    findClickedComponent(e.getPoint());
+                    // findClickedComponent(e.getPoint());
 
-                    // delete
-                    north.setBackground(Color.blue);
+                    Point p = e.getPoint();
+
+                    Component parent = e.getComponent();
+                    Component comp = parent.getComponentAt(p);
+
+                    if (comp instanceof JPanel && comp != board) {
+                        clickedPanel = (JPanel) comp;
+
+                        Component[] componentList = clickedPanel.getComponents();
+
+                        // loop through components
+                        for(Component c : componentList){
+                            if(c instanceof JLabel){
+                                // remove
+                                clickedPanel.remove(c);
+                                System.out.println("We did it!");} }
+
+                        int x = p.x - clickedPanel.getLocation().x;
+                        int y = p.y - clickedPanel.getLocation().y;
+                        offset = new Point(x, y);}
                 }
             }
 
@@ -411,15 +439,15 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                 // JPanel panel = (JPanel)evt.getSource();
 
-                Component comp = getComponentAt(p);
+                /* Component comp = getComponentAt(p);
 
                 // delete
                 System.out.println((comp instanceof JPanel) + " " + (!comp.equals(ChessBoard.this)));
                 System.out.println(comp.getClass());
 
-                // if(comp instanceof JRootPane)
-                    // JRootPane pane = (JRootPane) comp;
-                    // System.out.println(pane.getContentPane().getClass());
+                if(comp instanceof JRootPane)
+                    JRootPane pane = (JRootPane) comp;
+                    System.out.println(pane.getContentPane().getClass());
 
                 if (comp instanceof JPanel && !comp.equals(ChessBoard.this)) {
                     clickedPanel = (JPanel) comp;
@@ -429,12 +457,16 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                     // delete
                     clickedPanel.setBackground(Color.blue);
-                }
+                }*/
 
             }
 
-            private void moveSelectedPanelTo(Point p) {
+            private void moveSelectedPanelTo(Point p, JLabel label) {
+                
+
                 if (clickedPanel != null) {
+                    pin(label, clickedPanel, rookWidth, rookHeight);
+
                     int x = p.x - offset.x;
                     int y = p.y - offset.y;
                     System.out.println(x + "x" + y);
@@ -450,6 +482,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
         // delete
         System.out.println(square1.getClass());
+        System.out.println(this.getClass());
     }
 
     /**
@@ -467,82 +500,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         6.If a chesspiece is in a position that blocks his King from being in check, that piece is 
           unable to be moved by his player
     */
-
-    /*
-    public void mouseClicked(MouseEvent e){ */
-
-        /* square1.addMouseListener(e);
-        square2.addMouseListener(e);
-        square3.addMouseListener(e);
-        square4.addMouseListener(e);
-        square5.addMouseListener(e);
-        square6.addMouseListener(e);
-        square7.addMouseListener(e);
-        square8.addMouseListener(e);
-        square9.addMouseListener(e);
-        square10.addMouseListener(e);
-        square11.addMouseListener(e);
-        square12.addMouseListener(e);
-        square13.addMouseListener(e);
-        square14.addMouseListener(e);
-        square15.addMouseListener(e);
-        square16.addMouseListener(e);
-        square17.addMouseListener(e);
-        square18.addMouseListener(e);
-        square19.addMouseListener(e);
-        square20.addMouseListener(e);
-        square21.addMouseListener(e);
-        square22.addMouseListener(e);
-        square23.addMouseListener(e);
-        square24.addMouseListener(e);
-        square25.addMouseListener(e);
-        square26.addMouseListener(e);
-        square27.addMouseListener(e);
-        square28.addMouseListener(e);
-        square29.addMouseListener(e);
-        square30.addMouseListener(e);
-        square31.addMouseListener(e);
-        square32.addMouseListener(e); */
-
-        /* BufferedImage icon;
-        int clickCount = 0;
-
-        // board.addMouseListener();
-        Object click = e.getSource();
-        if(click == square0 || click == square1 || click == square2 || click == square3 ||
-           click == square4 || click == square5 || click == square6 || click == square7 ||
-           click == square8 || click == square9 || click == square10 || click == square11 ||
-           click == square12 || click == square13 || click == square14 || click == square15 ||
-           click == square16 || click == square17 || click == square18 || click == square19 ||
-           click == square20 || click == square21 || click == square22 || click == square23 ||
-           click == square24 || click == square25 || click == square26 || click == square27 ||
-           click == square28 || click == square29 || click == square30 || click == square31 ||
-           click == square32 || click == square33 || click == square34 || click == square35 ||
-           click == square36 || click == square37 || click == square38 || click == square39 ||
-           click == square40 || click == square41 || click == square42 || click == square43 ||
-           click == square44 || click == square45 || click == square46 || click == square47 ||
-           click == square48 || click == square49 || click == square50 || click == square51 ||
-           click == square52 || click == square53 || click == square54 || click == square55 ||
-           click == square56 || click == square57 || click == square58 || click == square59 ||
-           click == square60 || click == square61 || click == square62 || click == square63)
-
-        // if(click instanceof JPanel)
-            ++clickCount;
-
-        System.out.println("Click count: " + clickCount);
-    }
-
-    public void mousePressed(MouseEvent e){
-    }
-
-    public void mouseReleased(MouseEvent e){
-    }
-
-    public void mouseEntered(MouseEvent e){
-    }
-
-    public void mouseExited(MouseEvent e){
-     } */
 
     /**
     Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
