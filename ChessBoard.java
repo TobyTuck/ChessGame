@@ -351,138 +351,83 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         this.setVisible(true);
 
         MouseAdapter ma = new MouseAdapter() {
-            private Point offset;
-            private Point clickPoint;
             private JPanel clickedPanel;
+            private BufferedImage chessImage;
 
             @Override
             public void mousePressed(MouseEvent e) {
 
-                /* if(e.getSource() instanceof JPanel && e.getSource() == board){
-                    JPanel source = (JPanel) e.getSource();
+                Component parent = e.getComponent();
+                Color color = Color.white;
 
-                    source.setBackground(Color.red);
-                    // pin(bKnight, source, knightWidth, knightHeight);
-
-                    System.out.println("Source is : " + e.getSource().getClass() + "\n" + 
-                                       "Size is: " + source.getPreferredSize());} */
-
-                // delete
-                // JPanel lol = (JPanel)e.getSource();
-                // lol.setBackground(Color.white);
-
-                // int x = e.getX();
-                // int y = e.getY();
-                // System.out.println(x + ", " + y);
-            // }
-
-                // Get the current clickPoint, this is used to determine if the
-                // mouseRelease event was part of a drag operation or not
-                clickPoint = e.getPoint();
-                // Determine if there is currently a selected panel or not
+                // Determine if there a panel has been selected before this action 
                 if (clickedPanel != null) {
-                    // Move the selected panel to a new location
-                    moveSelectedPanelTo(e.getPoint());
+                    // delete label from old panel
+                     Component[] jpanelComponents = clickedPanel.getComponents();
 
-                    // Reset all the other stuff we might other was have set eailer
-                    offset = null;
+                        // find JLabel "pinned" to JPanel 
+                        for(Component c : jpanelComponents){
+                            if(c instanceof JLabel){
+                                
+                                // get background color of jpanel
+                                color = c.getBackground();
+
+                                // locate the Icon of the jlabel
+                                JLabel label = (JLabel) c;
+                                Icon icon = label.getIcon();
+
+                                // convert Icon to BufferedImage 
+                                GraphicsEnvironment ge = 
+                                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+                                GraphicsDevice gd = ge.getDefaultScreenDevice();
+                                GraphicsConfiguration gc = gd.getDefaultConfiguration();
+                                chessImage = gc.createCompatibleImage
+                                    (icon.getIconWidth(), icon.getIconHeight());
+                                Graphics2D g = chessImage.createGraphics();
+                                icon.paintIcon(null, g, 0, 0);
+                                g.dispose();
+
+                                // remove label from its jpanel
+                                clickedPanel.remove(label);
+
+                                clickedPanel.revalidate();
+                                clickedPanel.repaint();} }
+
+                    // Move the ImageIcon w/ in panel to clicked panel 
+                    Component comp1 = parent.getComponentAt(e.getPoint()); 
+
+                    if(comp1 instanceof JPanel){
+                        clickedPanel = (JPanel) comp1;
+                        moveImageTo(chessImage, clickedPanel, color);}
+
+                    // Reset all the the fields 
                     clickedPanel = null;
+                    chessImage = null;
                     
                 // Other wise, find which component was clicked
-                } else {
-                    // findClickedComponent(e.getPoint());
-
-                    Point p = e.getPoint();
-
-                    Component parent = e.getComponent();
-                    Component comp = parent.getComponentAt(p);
-
-                    if (comp instanceof JPanel && comp != board) {
-                        clickedPanel = (JPanel) comp;
-
-                        Component[] componentList = clickedPanel.getComponents();
-
-                        // loop through components
-                        for(Component c : componentList){
-                            if(c instanceof JLabel){
-                                // remove
-                                clickedPanel.remove(c);
-                                System.out.println("We did it!");} }
-
-                        int x = p.x - clickedPanel.getLocation().x;
-                        int y = p.y - clickedPanel.getLocation().y;
-                        offset = new Point(x, y);}
                 }
+
+                else{
+                    Component comp2 = parent.getComponentAt(e.getPoint());
+
+                    if (comp2 instanceof JPanel) 
+                        clickedPanel = (JPanel) comp2;}
             }
 
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                // Check to see if the current point is equal to the clickedPoint
-                // or not.  If it is, then this is part of a "clicked" operation
-                // meaning that the selected panel should remain "selected", otherwise
-                // it's part of drag operation and should be discarded
-                if (!e.getPoint().equals(clickPoint)) {
-                    clickedPanel = null;
-                }
-                clickPoint = null;
-            }
-
-            /* @Override
-            public void mouseDragged(MouseEvent e) {
-                // Drag the selected component to a new location...
-                if (clickedPanel != null) {
-                    moveSelectedPanelTo(e.getPoint());
-                }
-            } */
-
-            private void findClickedComponent(Point p) {
-
-                // JPanel panel = (JPanel)evt.getSource();
-
-                /* Component comp = getComponentAt(p);
-
-                // delete
-                System.out.println((comp instanceof JPanel) + " " + (!comp.equals(ChessBoard.this)));
-                System.out.println(comp.getClass());
-
-                if(comp instanceof JRootPane)
-                    JRootPane pane = (JRootPane) comp;
-                    System.out.println(pane.getContentPane().getClass());
-
-                if (comp instanceof JPanel && !comp.equals(ChessBoard.this)) {
-                    clickedPanel = (JPanel) comp;
-                    int x = p.x - clickedPanel.getLocation().x;
-                    int y = p.y - clickedPanel.getLocation().y;
-                    offset = new Point(x, y);
-
-                    // delete
-                    clickedPanel.setBackground(Color.blue);
-                }*/
-
-            }
-
-            private void moveSelectedPanelTo(Point p, JLabel label) {
+            private void moveImageTo(BufferedImage chessImage, JPanel panel, Color color) {
                 
-
-                if (clickedPanel != null) {
-                    pin(label, clickedPanel, rookWidth, rookHeight);
-
-                    int x = p.x - offset.x;
-                    int y = p.y - offset.y;
-                    System.out.println(x + "x" + y);
-                    clickedPanel.setLocation(x, y);
-                }
+                if(clickedPanel != null && chessImage != null){
+                    JLabel label = new JLabel(new ImageIcon(chessImage), JLabel.CENTER);
+                    label.setBackground(Color.red);
+                    label.setOpaque(true);
+                    System.out.println(label.getBackground());
+                    clickedPanel.add(label, BorderLayout.CENTER);}
             } 
 
         };
 
-        // is my issue that I'm not adding a MouseListener to the JFrame or Board?
         board.addMouseListener(ma);
         board.addMouseMotionListener(ma);
-
-        // delete
-        System.out.println(square1.getClass());
-        System.out.println(this.getClass());
     }
 
     /**
