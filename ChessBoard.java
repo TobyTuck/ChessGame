@@ -353,12 +353,12 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         MouseAdapter ma = new MouseAdapter() {
             private JPanel clickedPanel;
             private BufferedImage chessImage;
+            private Color color;
 
             @Override
             public void mousePressed(MouseEvent e) {
 
                 Component parent = e.getComponent();
-                Color color = Color.white;
 
                 // Determine if there a panel has been selected before this action 
                 if (clickedPanel != null) {
@@ -369,9 +369,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         for(Component c : jpanelComponents){
                             if(c instanceof JLabel){
                                 
-                                // get background color of jpanel
-                                color = c.getBackground();
-
                                 // locate the Icon of the jlabel
                                 JLabel label = (JLabel) c;
                                 Icon icon = label.getIcon();
@@ -398,11 +395,14 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                     if(comp1 instanceof JPanel){
                         clickedPanel = (JPanel) comp1;
-                        moveImageTo(chessImage, clickedPanel, color);}
+
+                        color = clickedPanel.getBackground();
+                        moveImageTo(chessImage, clickedPanel);}
 
                     // Reset all the the fields 
                     clickedPanel = null;
                     chessImage = null;
+                    color = null;
                     
                 // Other wise, find which component was clicked
                 }
@@ -414,13 +414,15 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         clickedPanel = (JPanel) comp2;}
             }
 
-            private void moveImageTo(BufferedImage chessImage, JPanel panel, Color color) {
+            private void moveImageTo(BufferedImage chessImage, JPanel panel) {
                 
                 if(clickedPanel != null && chessImage != null){
                     JLabel label = new JLabel(new ImageIcon(chessImage), JLabel.CENTER);
-                    label.setBackground(Color.red);
-                    label.setOpaque(true);
-                    System.out.println(label.getBackground());
+
+                    if(color != null){
+                        label.setBackground(color);
+                        label.setOpaque(true);}
+
                     clickedPanel.add(label, BorderLayout.CENTER);}
             } 
 
