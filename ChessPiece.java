@@ -13,29 +13,18 @@ import java.awt.RenderingHints;
 public class ChessPiece{
 
     private BufferedImage _image; 
-    private int defaultWidth;
-    private int defaultHeight;
 
     /**
     Method used to scale the image to a new width and height as specified in the 
     parameters
     */
     public void scaleImage(int newWidth, int newHeight){
-        if(newWidth == 0 && newHeight == 0){
-            newWidth = defaultWidth;
-            newHeight = defaultHeight;}
 
         // Make sure the aspect ratio is maintained, so the image is not distorted
         double thumbRatio = (double) newWidth / (double) newHeight;
         int imageWidth = _image.getWidth();
         int imageHeight = _image.getHeight();
         double aspectRatio = (double) imageWidth / (double) imageHeight;
-
-        /* if (thumbRatio < aspectRatio) {
-            newHeight = (int) (newWidth / aspectRatio);
-        } else {
-            newWidth = (int) (newHeight * aspectRatio);
-        } */
 
         // Draw the scaled image
         BufferedImage newImage = new BufferedImage(newWidth, newHeight, 
