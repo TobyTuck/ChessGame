@@ -24,7 +24,7 @@ public class List{
     /** 
         Method that inserts at the back of the structure
     */
-    public void push(Object nextData){
+    public void push(Object nextData, Object component){
         Link next = new Link(nextData);
 
         // special case- inserting the first node into the list
@@ -43,9 +43,10 @@ public class List{
             for(Link count = tail; count.getRight() != null; count = count.getRight()){
                 tail = tail.getRight();}
                 
-            // set 'left', 'right' fields
+            // set 'left', 'right', 'component' pointers 
             tail.setRight(next);
             next.setLeft(tail);
+            next.setComponent(component);
         
             // if necessary, traverse up to set 'up' field of inserted node
             if(_size > _layerWidth){
@@ -120,6 +121,110 @@ public class List{
 
             return tail.getData();}
         */
+    }
+
+    /**
+    Method that adds a component to a link
+    */
+    public void addComponent(Object data, Object component){
+        
+        // special case
+        if(_head.getData().equals(data))
+            _head.setComponent(component);
+
+        Link myLink = _head;
+        for(Link index = _head; !index.getData().equals(data); 
+            index = index.getRight()){
+            myLink = index;}
+        myLink = myLink.getRight();
+
+        myLink.setComponent(component);
+    }
+
+    /**
+    Method that swaps the components of two links
+    */
+    public void swapComponent(Object data1, Object data2){
+        
+        Link myLink1 = _head;
+        Link myLink2 = null;
+
+        for(Link index = _head; !index.getData().equals(data1); 
+            index = index.getRight()){
+            myLink1 = index;
+
+            if(index.getData().equals(data2))
+                myLink2 = index;}
+        myLink1 = myLink1.getRight();
+
+        if(myLink2 == null){
+            for(Link index = myLink1; !index.getData().equals(data2); 
+                index = index.getRight()){
+                myLink2 = index;} }
+            myLink2 = myLink2.getRight();
+
+        Object component = myLink1.getComponent();
+
+        myLink1.setComponent(myLink2.getComponent());
+        myLink2.setComponent(component);
+    }
+
+    /**
+    Method that replaces the components of one link with another
+    The component of the latter will be set to null
+    */
+    public void replaceComponent(Object giver, Object taker){
+
+        Link myGiver = _head;
+        Link myTaker = null;
+
+        for(Link index = _head; !index.getData().equals(giver); 
+            index = index.getRight()){
+            myGiver = index;
+
+            if(index.getData().equals(taker))
+                myTaker = index;}
+        myGiver = myGiver.getRight();
+
+        if(myGiver == null){
+            for(Link index = myGiver; !index.getData().equals(taker); 
+                index = index.getRight()){
+                myTaker = index;}
+            myTaker = myTaker.getRight();}
+
+        myTaker.setComponent(myGiver.getComponent());
+        myGiver.setComponent(null);
+    }
+
+    /**
+    Method that returns the component field of a link
+    */
+    public Object getComponent(int target){
+        
+        Link myLink = _head;
+
+        for(int index = 0; index < target; ++index){
+            myLink = myLink.getRight();}
+
+        return myLink.getComponent();
+    }
+
+    /** 
+    Method that returns the component field using the data
+    */
+    public Object getComponent(Object data){
+        
+        if(_head.getData().equals(data))
+            return _head.getComponent();
+
+        Link myLink = _head;
+
+        for(Link index = _head; !index.getData().equals(data); 
+            index = index.getRight()){
+            myLink = index;}
+        myLink = myLink.getRight();
+
+        return myLink.getComponent();
     }
 
     /**

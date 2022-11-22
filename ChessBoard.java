@@ -154,76 +154,76 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         // add components of each square to the list
         list = new List(8);
 
-        square0 = new JPanel(); list.push(square0);
-        square1 = new JPanel(); list.push(square1);
-        square2 = new JPanel(); list.push(square2);
-        square3 = new JPanel(); list.push(square3);
-        square4 = new JPanel(); list.push(square4);
-        square5 = new JPanel(); list.push(square5);
-        square6 = new JPanel(); list.push(square6);
-        square7 = new JPanel(); list.push(square7);
-        square8 = new JPanel(); list.push(square8);
-        square9 = new JPanel(); list.push(square9);
+        square0 = new JPanel(); list.push(square0, null);
+        square1 = new JPanel(); list.push(square1, null);
+        square2 = new JPanel(); list.push(square2, null);
+        square3 = new JPanel(); list.push(square3, null);
+        square4 = new JPanel(); list.push(square4, null);
+        square5 = new JPanel(); list.push(square5, null);
+        square6 = new JPanel(); list.push(square6, null);
+        square7 = new JPanel(); list.push(square7, null);
+        square8 = new JPanel(); list.push(square8, null);
+        square9 = new JPanel(); list.push(square9, null);
         
-        square10 = new JPanel(); list.push(square10);
-        square11 = new JPanel(); list.push(square11);
-        square12 = new JPanel(); list.push(square12);
-        square13 = new JPanel(); list.push(square13);
-        square14 = new JPanel(); list.push(square14);
-        square15 = new JPanel(); list.push(square15);
-        square16 = new JPanel(); list.push(square16);
-        square17 = new JPanel(); list.push(square17);
-        square18 = new JPanel(); list.push(square18);
-        square19 = new JPanel(); list.push(square19);
+        square10 = new JPanel(); list.push(square10, null);
+        square11 = new JPanel(); list.push(square11, null);
+        square12 = new JPanel(); list.push(square12, null);
+        square13 = new JPanel(); list.push(square13, null);
+        square14 = new JPanel(); list.push(square14, null);
+        square15 = new JPanel(); list.push(square15, null);
+        square16 = new JPanel(); list.push(square16, null);
+        square17 = new JPanel(); list.push(square17, null);
+        square18 = new JPanel(); list.push(square18, null);
+        square19 = new JPanel(); list.push(square19, null);
 
-        square20 = new JPanel(); list.push(square20);
-        square21 = new JPanel(); list.push(square21);
-        square22 = new JPanel(); list.push(square22);
-        square23 = new JPanel(); list.push(square23);
-        square24 = new JPanel(); list.push(square24);
-        square25 = new JPanel(); list.push(square25);
-        square26 = new JPanel(); list.push(square26);
-        square27 = new JPanel(); list.push(square27);
-        square28 = new JPanel(); list.push(square28);
-        square29 = new JPanel(); list.push(square29);
+        square20 = new JPanel(); list.push(square20, null);
+        square21 = new JPanel(); list.push(square21, null);
+        square22 = new JPanel(); list.push(square22, null);
+        square23 = new JPanel(); list.push(square23, null);
+        square24 = new JPanel(); list.push(square24, null);
+        square25 = new JPanel(); list.push(square25, null);
+        square26 = new JPanel(); list.push(square26, null);
+        square27 = new JPanel(); list.push(square27, null);
+        square28 = new JPanel(); list.push(square28, null);
+        square29 = new JPanel(); list.push(square29, null);
 
-        square30 = new JPanel(); list.push(square30);
-        square31 = new JPanel(); list.push(square31);
-        square32 = new JPanel(); list.push(square32);
-        square33 = new JPanel(); list.push(square33);
-        square34 = new JPanel(); list.push(square34);
-        square35 = new JPanel(); list.push(square35);
-        square36 = new JPanel(); list.push(square36);
-        square37 = new JPanel(); list.push(square37);
-        square38 = new JPanel(); list.push(square38);
-        square39 = new JPanel(); list.push(square39);
+        square30 = new JPanel(); list.push(square30, null);
+        square31 = new JPanel(); list.push(square31, null);
+        square32 = new JPanel(); list.push(square32, null);
+        square33 = new JPanel(); list.push(square33, null);
+        square34 = new JPanel(); list.push(square34, null);
+        square35 = new JPanel(); list.push(square35, null);
+        square36 = new JPanel(); list.push(square36, null);
+        square37 = new JPanel(); list.push(square37, null);
+        square38 = new JPanel(); list.push(square38, null);
+        square39 = new JPanel(); list.push(square39, null);
 
-        square40 = new JPanel(); list.push(square40);
-        square41 = new JPanel(); list.push(square41);
-        square42 = new JPanel(); list.push(square42);
-        square43 = new JPanel(); list.push(square43);
-        square44 = new JPanel(); list.push(square44);
-        square45 = new JPanel(); list.push(square45);
-        square46 = new JPanel(); list.push(square46);
-        square47 = new JPanel(); list.push(square47);
-        square48 = new JPanel(); list.push(square48);
-        square49 = new JPanel(); list.push(square49);
+        square40 = new JPanel(); list.push(square40, null);
+        square41 = new JPanel(); list.push(square41, null);
+        square42 = new JPanel(); list.push(square42, null);
+        square43 = new JPanel(); list.push(square43, null);
+        square44 = new JPanel(); list.push(square44, null);
+        square45 = new JPanel(); list.push(square45, null);
+        square46 = new JPanel(); list.push(square46, null);
+        square47 = new JPanel(); list.push(square47, null);
+        square48 = new JPanel(); list.push(square48, null);
+        square49 = new JPanel(); list.push(square49, null);
 
-        square50 = new JPanel(); list.push(square50);
-        square51 = new JPanel(); list.push(square51);
-        square52 = new JPanel(); list.push(square52);
-        square53 = new JPanel(); list.push(square53);
-        square54 = new JPanel(); list.push(square54);
-        square55 = new JPanel(); list.push(square55);
-        square56 = new JPanel(); list.push(square56);
-        square57 = new JPanel(); list.push(square57);
-        square58 = new JPanel(); list.push(square58);
-        square59 = new JPanel(); list.push(square59);
+        square50 = new JPanel(); list.push(square50, null);
+        square51 = new JPanel(); list.push(square51, null);
+        square52 = new JPanel(); list.push(square52, null);
+        square53 = new JPanel(); list.push(square53, null);
+        square54 = new JPanel(); list.push(square54, null);
+        square55 = new JPanel(); list.push(square55, null);
+        square56 = new JPanel(); list.push(square56, null);
+        square57 = new JPanel(); list.push(square57, null);
+        square58 = new JPanel(); list.push(square58, null);
+        square59 = new JPanel(); list.push(square59, null);
 
-        square60 = new JPanel(); list.push(square60);
-        square61 = new JPanel(); list.push(square61);
-        square62 = new JPanel(); list.push(square62);
-        square63 = new JPanel(); list.push(square63);
+        square60 = new JPanel(); list.push(square60, null);
+        square61 = new JPanel(); list.push(square61, null);
+        square62 = new JPanel(); list.push(square62, null);
+        square63 = new JPanel(); list.push(square63, null);
 
         //Set properties of all the items
         // in the List
@@ -288,6 +288,40 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         BlackKing bKing = new BlackKing();
         WhiteKing wKing = new WhiteKing();
 
+        list.addComponent(list.pop(0), new BlackRook());
+        list.addComponent(list.pop(1), new BlackKnight());
+        list.addComponent(list.pop(2), new BlackBishop());
+        list.addComponent(list.pop(3), new BlackQueen());
+        list.addComponent(list.pop(4), new BlackKing());
+        list.addComponent(list.pop(5), new BlackBishop());
+        list.addComponent(list.pop(6), new BlackKnight());
+        list.addComponent(list.pop(7), new BlackRook());
+        list.addComponent(list.pop(8), new BlackPawn());
+        list.addComponent(list.pop(9), new BlackPawn());
+        list.addComponent(list.pop(10), new BlackPawn());
+        list.addComponent(list.pop(11), new BlackPawn());
+        list.addComponent(list.pop(12), new BlackPawn());
+        list.addComponent(list.pop(13), new BlackPawn());
+        list.addComponent(list.pop(14), new BlackPawn());
+        list.addComponent(list.pop(15), new BlackPawn());
+        list.addComponent(list.pop(48), new WhitePawn());
+        list.addComponent(list.pop(49), new WhitePawn());
+        list.addComponent(list.pop(50), new WhitePawn());
+        list.addComponent(list.pop(51), new WhitePawn());
+        list.addComponent(list.pop(52), new WhitePawn());
+        list.addComponent(list.pop(53), new WhitePawn());
+        list.addComponent(list.pop(54), new WhitePawn());
+        list.addComponent(list.pop(55), new WhitePawn());
+        list.addComponent(list.pop(56), new WhiteRook());
+        list.addComponent(list.pop(57), new WhiteKnight());
+        list.addComponent(list.pop(58), new WhiteBishop());
+        list.addComponent(list.pop(59), new WhiteQueen());
+        list.addComponent(list.pop(60), new WhiteKing());
+        list.addComponent(list.pop(61), new WhiteBishop());
+        list.addComponent(list.pop(62), new WhiteKnight());
+        list.addComponent(list.pop(63), new WhiteRook());
+
+        // find the new dimensions we want to sc
         // find the new dimensions we want to scale the images to 
         // NOTE: white chesspieces have the same dimenstions as black chesspieces
         int pawnHeight = (int) ((length / 8.0) * 0.6);
@@ -310,38 +344,30 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                               ((double) kingHeight / (double) bKing.getHeight())));
 
         // Add chesspieces to each necessary square w/ in list at the specified width and height
-        pin(bRook, (JPanel) list.pop(0), rookWidth, rookHeight);
-        pin(bKnight, (JPanel) list.pop(1), knightWidth, knightHeight);
-        pin(bBishop, (JPanel) list.pop(2), bishopWidth, bishopHeight);
-        pin(bQueen, (JPanel) list.pop(3), queenWidth, queenHeight);
-        pin(bKing, (JPanel) list.pop(4), kingWidth, kingHeight);
-        pin(bBishop, (JPanel) list.pop(5), bishopWidth, bishopHeight);
-        pin(bKnight, (JPanel) list.pop(6), knightWidth, knightHeight);
-        pin(bRook, (JPanel) list.pop(7), rookWidth, rookHeight);
-        pin(bPawn, (JPanel) list.pop(8), pawnWidth, pawnHeight);
-        pin(bPawn, (JPanel) list.pop(9), pawnWidth, pawnHeight);
-        pin(bPawn, (JPanel) list.pop(10), pawnWidth, pawnHeight);
-        pin(bPawn, (JPanel) list.pop(11), pawnWidth, pawnHeight);
-        pin(bPawn, (JPanel) list.pop(12), pawnWidth, pawnHeight);
-        pin(bPawn, (JPanel) list.pop(13), pawnWidth, pawnHeight);
-        pin(bPawn, (JPanel) list.pop(14), pawnWidth, pawnHeight);
-        pin(bPawn, (JPanel) list.pop(15), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(48), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(49), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(50), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(51), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(52), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(53), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(54), pawnWidth, pawnHeight);
-        pin(wPawn, (JPanel) list.pop(55), pawnWidth, pawnHeight);
-        pin(wRook, (JPanel) list.pop(56), rookWidth, rookHeight);
-        pin(wKnight, (JPanel) list.pop(57), knightWidth, knightHeight);
-        pin(wBishop, (JPanel) list.pop(58), bishopWidth, bishopHeight);
-        pin(wQueen, (JPanel) list.pop(59), queenWidth, queenHeight);
-        pin(wKing, (JPanel) list.pop(60), kingWidth, kingHeight);
-        pin(wBishop, (JPanel) list.pop(61), bishopWidth, bishopHeight);
-        pin(wKnight, (JPanel) list.pop(62), knightWidth, knightHeight);
-        pin(wRook, (JPanel) list.pop(63), rookWidth, rookHeight);
+        for(int index = 0; index < list.getSize(); ++index){
+            Object link;
+            Object component = list.getComponent(index);
+
+            if(component != null && component instanceof ChessPiece){
+
+                // height and width of image depends on the type of chesspiece
+                if(component instanceof BlackPawn || component instanceof WhitePawn)
+                    pin((ChessPiece) component, (JPanel) list.pop(index), pawnWidth, pawnHeight);
+
+                else if(component instanceof BlackRook || component instanceof WhiteRook)
+                    pin((ChessPiece) component, (JPanel) list.pop(index), rookWidth, rookHeight);
+
+                else if(component instanceof BlackKnight || component instanceof WhiteKnight)
+                    pin((ChessPiece) component, (JPanel) list.pop(index), knightWidth, knightHeight);
+
+                else if(component instanceof BlackBishop || component instanceof WhiteBishop) 
+                    pin((ChessPiece) component, (JPanel) list.pop(index), bishopWidth, bishopHeight);
+
+                else if(component instanceof BlackQueen || component instanceof WhiteQueen) 
+                    pin((ChessPiece) component, (JPanel) list.pop(index), queenWidth, queenHeight);
+
+                else{ 
+                    pin((ChessPiece) component, (JPanel) list.pop(index), kingWidth, kingHeight);} } }
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
@@ -364,6 +390,14 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                 if (clickedPanel != null) {
                     // delete label from old panel
                      Component[] jpanelComponents = clickedPanel.getComponents();
+
+                     JPanel panel;
+                        Object 
+
+                     for(int index = 0; index < list.getSize(); ++index){
+                        panel = list.pop(index);
+                        if(panel == clickedPanel)
+                            comp = list.getComponent(panel);
 
                         // find JLabel "pinned" to JPanel 
                         for(Component c : jpanelComponents){

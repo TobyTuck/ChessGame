@@ -8,6 +8,7 @@ public class Link{
     private Link _up;
     private Link _down;
     private Object _data;
+    private Object _component;
 
     public Link(){
         _right = null;
@@ -15,6 +16,7 @@ public class Link{
         _up = null;
         _down = null;
         _data = null;
+        _component = null;
     }
 
     public Link(Object data){
@@ -23,6 +25,7 @@ public class Link{
         _left = null;
         _up = null;
         _down = null;
+        _component = null;
     }
 
     // Mutator methods
@@ -46,6 +49,10 @@ public class Link{
         _data = data;
     }
 
+    public void setComponent(Object component){
+        _component = component;
+    }
+
     // Accessor methods
     public Link getRight(){
         return _right;
@@ -65,5 +72,9 @@ public class Link{
 
     public Object getData(){
         return _data;
+    }
+
+    public Object getComponent(){
+        return _component;
     }
 }
