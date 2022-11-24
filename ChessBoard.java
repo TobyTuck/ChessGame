@@ -320,7 +320,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         this.setVisible(true);
 
         MouseAdapter ma = new MouseAdapter() {
-            private JPanel clickedPanel;
+            private JPanel selectedPanel;
+            private ChessPiece selectedPiece;
             private BufferedImage chessImage;
             private Color color;
 
@@ -331,8 +332,9 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                 // Determine if there a panel has been selected before this action 
                 if (clickedPanel != null) {
+
                     // delete label from old panel
-                     Component[] jpanelComponents = clickedPanel.getComponents();
+                    Component[] jpanelComponents = clickedPanel.getComponents();
 
                         // find JLabel "pinned" to JPanel 
                         for(Component c : jpanelComponents){
@@ -340,10 +342,10 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 
                                 // locate the Icon of the jlabel
                                 JLabel label = (JLabel) c;
-                                Icon icon = label.getIcon();
+                                // Icon icon = label.getIcon(); 
 
                                 // convert Icon to BufferedImage 
-                                GraphicsEnvironment ge = 
+                                /* GraphicsEnvironment ge = 
                                     GraphicsEnvironment.getLocalGraphicsEnvironment();
                                 GraphicsDevice gd = ge.getDefaultScreenDevice();
                                 GraphicsConfiguration gc = gd.getDefaultConfiguration();
@@ -351,13 +353,13 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                     (icon.getIconWidth(), icon.getIconHeight());
                                 Graphics2D g = chessImage.createGraphics();
                                 icon.paintIcon(null, g, 0, 0);
-                                g.dispose();
+                                g.dispose(); */
 
                                 // remove label from its jpanel
-                                clickedPanel.remove(label);
+                                selectedPanel.remove(label);
 
-                                clickedPanel.revalidate();
-                                clickedPanel.repaint();} }
+                                selectedPanel.revalidate();
+                                selectedPanel.repaint();} }
 
                     // Move the ImageIcon w/ in panel to clicked panel 
                     Component comp1 = parent.getComponentAt(e.getPoint()); 
@@ -371,16 +373,22 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                     // Reset all the the fields 
                     clickedPanel = null;
                     chessImage = null;
-                    color = null;
+                    color = null;}
                     
                 // Other wise, find which component was clicked
-                }
-
                 else{
                     Component comp2 = parent.getComponentAt(e.getPoint());
 
                     if (comp2 instanceof JPanel) 
-                        clickedPanel = (JPanel) comp2;}
+                        JPanel clickedPanel = (JPanel) comp2;
+
+                    // sort through components in list of jpanels
+                    JPanel panel;
+                    for(int index =0; index < list.getSize(); ++index){
+                        panel = list.pop(index);
+                        if(panel == clickedPanel){
+                            selectedPanel = panel;
+                            selectedPiece = (ChessPiece) list.getComponent(index);} } }
             }
 
             private void moveImageTo(BufferedImage chessImage, JPanel panel) {
