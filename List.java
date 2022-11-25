@@ -198,7 +198,7 @@ public class List{
             myGiver = myGiver.getRight();
 
             _head.setComponent(myGiver.getComponent());
-            myTaker.setComponent(null);}
+            myGiver.setComponent(null);}
 
         else{
             myGiver = _head;

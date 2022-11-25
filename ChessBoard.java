@@ -337,37 +337,41 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                     // Determine if there a panel has been selected before this action 
                     if (selectedPanel1 != null) {
                         selectedPanel2 = clickedPanel;
+                        ChessPiece selectedPiece2 = (ChessPiece) list.getComponent(selectedPanel2);
 
-                        Component[] jcomponents = selectedPanel1.getComponents();
+                        // chesspiece can't capture chesspiece of same color
+                        if((!sameColor(selectedPiece, selectedPiece2)) || 
+                            selectedPiece == selectedPiece2){
+                            Component[] jcomponents = selectedPanel1.getComponents();
 
-                        // find JLabel "pinned" to first JPanel selected
-                        for(Component c : jcomponents){
-                            if(c instanceof JLabel){
-                                // remove label from its jpanel
-                                selectedPanel1.remove(c);
+                            // find JLabel "pinned" to first JPanel selected
+                            for(Component c : jcomponents){
+                                if(c instanceof JLabel){
+                                    // remove label from its jpanel
+                                    selectedPanel1.remove(c);
                                 
-                                selectedPanel1.revalidate();
-                                selectedPanel1.repaint();} }
+                                    selectedPanel1.revalidate();
+                                    selectedPanel1.repaint();} }
 
-                        Component[] scomponents = selectedPanel2.getComponents();
+                            Component[] scomponents = selectedPanel2.getComponents();
 
-                        // find JLabel "pinned" to second JPanel selected
-                        for(Component c : scomponents){
-                            // locate and remove the label
-                            if(c instanceof JLabel){
-                                selectedPanel2.remove(c);
+                            // find JLabel "pinned" to second JPanel selected
+                            for(Component c : scomponents){
+                                // locate and remove the label
+                                if(c instanceof JLabel){
+                                    selectedPanel2.remove(c);
 
-                                selectedPanel2.revalidate();
-                                selectedPanel2.repaint();} }
+                                    selectedPanel2.revalidate();
+                                    selectedPanel2.repaint();} }
 
-                        // add the chesspiece of the first selected panel to the next
-                        list.replaceComponent(selectedPanel1, selectedPanel2);
-                        pin(selectedPiece, selectedPanel2, 0, 0);
+                            // add the chesspiece of the first selected panel to the next
+                            list.replaceComponent(selectedPanel1, selectedPanel2);
+                            pin(selectedPiece, selectedPanel2, 0, 0);
 
-                        // Reset all the the fields 
-                        selectedPanel1 = null;
-                        selectedPanel2 = null;
-                        selectedPiece = null;}
+                            // Reset all the the fields 
+                            selectedPanel1 = null;
+                            selectedPanel2 = null;
+                            selectedPiece = null;} }
                     
                     // Other wise, find which component was clicked
                     else{
@@ -384,22 +388,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     }
 
     /**
-    Chess rules that apply to piece movements are the following:
-        1.In order to move a chesspiece, the piece moved must first be clicked, then the square to
-          which the user wants to move
-        2.A chesspiece may not be moved to any square in which a piece of the same color resides
-        3.Each chesspiece has a certain pattern they are able to move in, as defined in their
-          respective classes
-        4.If a chesspiece is moved onto a square occupied by a chesspiece of the opposite color,
-          the latter is deemed 'captured' and removed from the board, while the former now 
-          occupies that square
-        5.If a king is put in check, he is required to remove himself from this situation if possible
-        6.If a chesspiece is in a position that blocks his King from being in check, that piece is 
-          unable to be moved by his player
-    */
-
-    /**
     Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
+    Height and width of the image is specified by the parameters
     */
     private void pin(ChessPiece piece, JPanel panel, int width, int height){
                 
@@ -492,6 +482,56 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
         panel.revalidate();
         panel.repaint();
+    }
+
+    /**
+    Chess rules that apply to piece movements are the following:
+        1.In order to move a chesspiece, the piece moved must first be clicked, then the square to
+          which the user wants to move
+        2.A chesspiece may not be moved to any square in which a piece of the same color resides
+        3.Each chesspiece has a certain pattern they are able to move in, as defined in their
+          respective classes
+        4.If a chesspiece is moved onto a square occupied by a chesspiece of the opposite color,
+          the latter is deemed 'captured' and removed from the board, while the former now 
+          occupies that square
+        5.If a king is put in check, he is required to remove himself from this situation if possible
+        6.If a chesspiece is in a position that blocks his King from being in check, that piece is 
+          unable to be moved by his player
+    */
+    /*
+    Method that checks to see if two chesspieces are of the same color
+    */
+    private boolean sameColor(ChessPiece piece1, ChessPiece piece2){
+        // special cases- one of the pieces is null, while the other is not; or both are null
+        if((piece1 == null && piece2 != null) || (piece1 != null && piece2 == null) || 
+           (piece1 == null && piece2 == null))
+            return false;
+
+        // 2 possibilities- piece1 belongs to black color, or white
+        if(piece1 instanceof BlackPawn || piece1 instanceof BlackRook || 
+           piece1 instanceof BlackKnight || piece1 instanceof BlackBishop || 
+           piece1 instanceof BlackQueen || piece1 instanceof BlackKing){
+            // piece can be black
+            if(piece2 instanceof BlackPawn || piece2 instanceof BlackRook || 
+               piece2 instanceof BlackKnight || piece2 instanceof BlackBishop || 
+               piece2 instanceof BlackQueen || piece2 instanceof BlackKing)
+                return true;
+
+            // or white
+            else{
+                return false;} }
+
+        // piece is white
+        else{
+            // piece can be white
+            if(piece2 instanceof WhitePawn || piece2 instanceof WhiteRook || 
+               piece2 instanceof WhiteKnight || piece2 instanceof WhiteBishop || 
+               piece2 instanceof WhiteQueen || piece2 instanceof WhiteKing)
+                return true;
+
+            // or white
+            else{
+                return false;} }
     }
 
     /**
