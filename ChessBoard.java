@@ -96,7 +96,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         
         // build a dark green color for side panels
-        Color darkGreen = new Color(0, 100, 0);
+        // old green: 0, 100, 0
+        Color darkGreen = new Color(25, 45, 25);
 
         // build supporting panels
         // build panels above and below chessboard
