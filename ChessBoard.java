@@ -320,89 +320,62 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         this.setVisible(true);
 
         MouseAdapter ma = new MouseAdapter() {
-            private JPanel selectedPanel;
+            private JPanel selectedPanel1;
+            private JPanel selectedPanel2;
             private ChessPiece selectedPiece;
-            private BufferedImage chessImage;
-            private Color color;
 
             @Override
             public void mousePressed(MouseEvent e) {
 
                 Component parent = e.getComponent();
+                Component comp = parent.getComponentAt(e.getPoint());
 
-                // Determine if there a panel has been selected before this action 
-                if (clickedPanel != null) {
+                if(comp instanceof JPanel){
+                    JPanel clickedPanel = (JPanel) comp;
 
-                    // delete label from old panel
-                    Component[] jpanelComponents = clickedPanel.getComponents();
+                    // Determine if there a panel has been selected before this action 
+                    if (selectedPanel1 != null) {
+                        selectedPanel2 = clickedPanel;
 
-                        // find JLabel "pinned" to JPanel 
-                        for(Component c : jpanelComponents){
+                        Component[] jcomponents = selectedPanel1.getComponents();
+
+                        // find JLabel "pinned" to first JPanel selected
+                        for(Component c : jcomponents){
                             if(c instanceof JLabel){
-                                
-                                // locate the Icon of the jlabel
-                                JLabel label = (JLabel) c;
-                                // Icon icon = label.getIcon(); 
-
-                                // convert Icon to BufferedImage 
-                                /* GraphicsEnvironment ge = 
-                                    GraphicsEnvironment.getLocalGraphicsEnvironment();
-                                GraphicsDevice gd = ge.getDefaultScreenDevice();
-                                GraphicsConfiguration gc = gd.getDefaultConfiguration();
-                                chessImage = gc.createCompatibleImage
-                                    (icon.getIconWidth(), icon.getIconHeight());
-                                Graphics2D g = chessImage.createGraphics();
-                                icon.paintIcon(null, g, 0, 0);
-                                g.dispose(); */
-
                                 // remove label from its jpanel
-                                selectedPanel.remove(label);
+                                selectedPanel1.remove(c);
+                                
+                                selectedPanel1.revalidate();
+                                selectedPanel1.repaint();} }
 
-                                selectedPanel.revalidate();
-                                selectedPanel.repaint();} }
+                        Component[] scomponents = selectedPanel2.getComponents();
 
-                    // Move the ImageIcon w/ in panel to clicked panel 
-                    Component comp1 = parent.getComponentAt(e.getPoint()); 
+                        // find JLabel "pinned" to second JPanel selected
+                        for(Component c : scomponents){
+                            // locate and remove the label
+                            if(c instanceof JLabel){
+                                selectedPanel2.remove(c);
 
-                    if(comp1 instanceof JPanel){
-                        clickedPanel = (JPanel) comp1;
+                                selectedPanel2.revalidate();
+                                selectedPanel2.repaint();} }
 
-                        color = clickedPanel.getBackground();
-                        moveImageTo(chessImage, clickedPanel);}
+                        // add the chesspiece of the first selected panel to the next
+                        list.replaceComponent(selectedPanel1, selectedPanel2);
+                        pin(selectedPiece, selectedPanel2, 0, 0);
 
-                    // Reset all the the fields 
-                    clickedPanel = null;
-                    chessImage = null;
-                    color = null;}
+                        // Reset all the the fields 
+                        selectedPanel1 = null;
+                        selectedPanel2 = null;
+                        selectedPiece = null;}
                     
-                // Other wise, find which component was clicked
-                else{
-                    Component comp2 = parent.getComponentAt(e.getPoint());
-
-                    if (comp2 instanceof JPanel) 
-                        JPanel clickedPanel = (JPanel) comp2;
-
-                    // sort through components in list of jpanels
-                    JPanel panel;
-                    for(int index =0; index < list.getSize(); ++index){
-                        panel = list.pop(index);
-                        if(panel == clickedPanel){
-                            selectedPanel = panel;
-                            selectedPiece = (ChessPiece) list.getComponent(index);} } }
+                    // Other wise, find which component was clicked
+                    else{
+                        // check that panel selected by user has a chesspiece component
+                        if(list.getComponent(clickedPanel) != null){
+                            selectedPanel1 = clickedPanel;
+                            selectedPiece =  (ChessPiece) list.getComponent(selectedPanel1);
+                            outline(selectedPanel1, Color.red, 5);} } }  
             }
-
-            private void moveImageTo(BufferedImage chessImage, JPanel panel) {
-                
-                if(clickedPanel != null && chessImage != null){
-                    JLabel label = new JLabel(new ImageIcon(chessImage), JLabel.CENTER);
-
-                    if(color != null){
-                        label.setBackground(color);
-                        label.setOpaque(true);}
-
-                    clickedPanel.add(label, BorderLayout.CENTER);}
-            } 
-
         };
 
         board.addMouseListener(ma);
@@ -410,7 +383,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     }
 
     /**
-    Method that waits for a mouse event to occur before the method may conclude
     Chess rules that apply to piece movements are the following:
         1.In order to move a chesspiece, the piece moved must first be clicked, then the square to
           which the user wants to move
@@ -428,7 +400,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     /**
     Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
     */
-    public void pin(ChessPiece piece, JPanel panel, int width, int height){
+    private void pin(ChessPiece piece, JPanel panel, int width, int height){
                 
         // default height and width for each chesspiece
         if(width == 0 && height == 0){
@@ -472,6 +444,55 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
         // pin JLabel onto JFrame
         panel.add(label, BorderLayout.CENTER);
+    }
+
+    /**
+    Private helper method that outlines a jpanel chessquare with a color specified in the parameters
+    The width of this outline is specified w/ in the methods parameters
+    */
+    private void outline(JPanel panel, Color color, int depth){
+        panel.setLayout(new BorderLayout());
+
+        // get the contents of the current square
+        Component[] pComponents = panel.getComponents();
+        JLabel myLabel = null;
+        for(Component c : pComponents){
+            if(c instanceof JLabel)
+                myLabel = (JLabel) c;}
+
+        // create the jlabels that acts as the outline
+        JLabel northOutliner = new JLabel();
+        JLabel southOutliner = new JLabel();
+        JLabel eastOutliner = new JLabel();
+        JLabel westOutliner = new JLabel();
+
+        northOutliner.setBackground(color);
+        southOutliner.setBackground(color);
+        eastOutliner.setBackground(color);
+        westOutliner.setBackground(color);
+
+        // set Dimensions of the outline panels
+        northOutliner.setPreferredSize(new Dimension(panel.getWidth(), depth));
+        southOutliner.setPreferredSize(new Dimension(panel.getWidth(), depth));
+        eastOutliner.setPreferredSize(new Dimension(depth, panel.getHeight()));
+        westOutliner.setPreferredSize(new Dimension(depth, panel.getHeight()));
+        myLabel.setPreferredSize(new Dimension(panel.getWidth() - (2 * depth), 
+                                               panel.getWidth() - (2 * depth)));
+
+        northOutliner.setOpaque(true);
+        southOutliner.setOpaque(true);
+        eastOutliner.setOpaque(true);
+        westOutliner.setOpaque(true);
+
+        if(myLabel != null){
+            panel.add(myLabel, BorderLayout.CENTER);
+            panel.add(northOutliner, BorderLayout.NORTH);
+            panel.add(southOutliner, BorderLayout.SOUTH);
+            panel.add(eastOutliner, BorderLayout.EAST);
+            panel.add(westOutliner, BorderLayout.WEST);}
+
+        panel.revalidate();
+        panel.repaint();
     }
 
     /**

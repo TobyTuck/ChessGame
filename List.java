@@ -175,25 +175,55 @@ public class List{
     */
     public void replaceComponent(Object giver, Object taker){
 
-        Link myGiver = _head;
-        Link myTaker = null;
+        Link myGiver = _head,
+             myTaker = _head;
 
-        for(Link index = _head; !index.getData().equals(giver); 
-            index = index.getRight()){
-            myGiver = index;
-
-            if(index.getData().equals(taker))
-                myTaker = index;}
-        myGiver = myGiver.getRight();
-
-        if(myGiver == null){
-            for(Link index = myGiver; !index.getData().equals(taker); 
+        // special case
+        if(_head.getData().equals(giver)){
+            for(Link index = _head; !index.getData().equals(taker); 
                 index = index.getRight()){
                 myTaker = index;}
-            myTaker = myTaker.getRight();}
+            myTaker = myTaker.getRight();
 
-        myTaker.setComponent(myGiver.getComponent());
-        myGiver.setComponent(null);
+            myTaker.setComponent(_head.getComponent());
+            myGiver.setComponent(null);}
+
+        else if(_head.getData().equals(taker)){
+            for(Link index = _head; !index.getData().equals(giver); 
+                index = index.getRight()){
+                myGiver = index;}
+            myGiver = myGiver.getRight();
+
+            _head.setComponent(myGiver.getComponent());
+            myTaker.setComponent(null);}
+
+        else{
+            myGiver = _head;
+            myTaker = null;
+
+            for(Link index = _head; !index.getData().equals(giver); 
+                index = index.getRight()){
+                myGiver = index;
+
+                if(index.getData().equals(taker))
+                    myTaker = index;}
+            myGiver = myGiver.getRight();
+
+            // special case
+            if(taker == giver)
+                myTaker = myGiver;
+
+            else{
+                if(myTaker == null){
+                    for(Link index = myGiver; !index.getData().equals(taker); 
+                        index = index.getRight()){
+                        myTaker = index;}
+                    myTaker = myTaker.getRight();} }
+
+            if(!(myTaker.getComponent() == null && myGiver.getComponent() == null) &&
+               myTaker != myGiver){
+                myTaker.setComponent(myGiver.getComponent());
+                myGiver.setComponent(null);} }
     }
 
     /**
