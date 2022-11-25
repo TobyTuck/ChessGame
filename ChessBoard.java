@@ -477,8 +477,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         southOutliner.setPreferredSize(new Dimension(panel.getWidth(), depth));
         eastOutliner.setPreferredSize(new Dimension(depth, panel.getHeight()));
         westOutliner.setPreferredSize(new Dimension(depth, panel.getHeight()));
-        myLabel.setPreferredSize(new Dimension(panel.getWidth() - (2 * depth), 
-                                               panel.getWidth() - (2 * depth)));
 
         northOutliner.setOpaque(true);
         southOutliner.setOpaque(true);
