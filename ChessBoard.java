@@ -376,14 +376,28 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                             // add the captured piece to the corresponding location
                             // captured piece is black
+                            int capturedWidth,
+                                capturedHeight;
                             if(isBlack(selectedPiece2) && selectedPiece2 != null && 
-                               selectedPanel1 != selectedPanel2)
-                                pin(selectedPiece2, northWest, 0, 0, "FlowLayout", false); 
+                               selectedPanel1 != selectedPanel2){
+                                // determine height and width of the captured piece
+                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
+                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
+                                                ((double) capturedHeight / 
+                                                (double) selectedPiece2.getHeight())));
+                                pin(selectedPiece2, northWest, capturedWidth, capturedHeight, 
+                                    "FlowLayout", false);}
 
                             // captured piece is white
                             else if(isWhite(selectedPiece2) && selectedPiece2 != null && 
-                                    selectedPanel1 != selectedPanel2)
-                                pin(selectedPiece2, southEast, 0, 0, "FlowLayout", false);
+                                    selectedPanel1 != selectedPanel2){
+                                // determine height and width
+                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
+                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
+                                                ((double) capturedHeight / 
+                                                (double) selectedPiece2.getHeight())));
+                                pin(selectedPiece2, southEast, capturedWidth, capturedHeight, 
+                                    "FlowLayout", false);}
 
                             // add the chesspiece of the first selected panel to the next
                             list.replaceComponent(selectedPanel1, selectedPanel2);

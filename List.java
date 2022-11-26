@@ -173,9 +173,7 @@ public class List{
     Method that replaces the components of one link with another
     The component of the latter will be set to null
     */
-    // review for special cases, especially when giver is the head
-    // error: rook is moved out of its default square, then back in
-    //        when this occurs, it is now unable to move
+    // error: if select first link twice, it seems that the component is set to null
     public void replaceComponent(Object giver, Object taker){
 
         Link myGiver = _head,
