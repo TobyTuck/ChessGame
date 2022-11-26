@@ -112,18 +112,23 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
         // build panels to the left and right- with inner panels which will hold captured chesspieces
         west = new JPanel(new BorderLayout());
-        west.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)), boardHeight));
+        west.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)),
+                                                   boardHeight));
         west.setBackground(darkGreen);
         northWest = new JPanel();
         JPanel filler1 = new JPanel();
         JPanel filler2 = new JPanel();
         
-        northWest.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), boardHeight));
-        filler1.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), boardHeight));
-        filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), boardHeight));
+        northWest.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+                                                        boardHeight));
+        filler1.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+                                                      boardHeight));
+        filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+                                                      boardHeight));
         
 
         northWest.setBackground(darkGreen);
+        northWest.setLayout(new FlowLayout());
         filler1.setBackground(darkGreen);
         filler2.setBackground(darkGreen);
         west.add(filler1, BorderLayout.EAST);
@@ -131,18 +136,23 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         west.add(northWest, BorderLayout.CENTER);
 
         east = new JPanel(new BorderLayout());
-        east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)), boardHeight));
+        east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)), 
+                                                   boardHeight));
         east.setBackground(darkGreen);
         southEast = new JPanel();
         JPanel filler3 = new JPanel();
         JPanel filler4 = new JPanel();
         
-        southEast.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), boardHeight));
-        filler3.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), boardHeight));
-        filler4.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), boardHeight));
+        southEast.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+                                                        boardHeight));
+        filler3.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+                                                      boardHeight));
+        filler4.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+                                                      boardHeight));
         
 
         southEast.setBackground(darkGreen);
+        southEast.setLayout(new FlowLayout());
         filler3.setBackground(darkGreen);
         filler4.setBackground(darkGreen);
         east.add(filler3, BorderLayout.WEST);
@@ -311,7 +321,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             Object component = list.getComponent(index);
 
             if(component != null && component instanceof ChessPiece)
-                pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0);}
+                pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
         this.add(board, BorderLayout.CENTER);
         this.add(north, BorderLayout.NORTH);
@@ -364,9 +374,20 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                     selectedPanel2.revalidate();
                                     selectedPanel2.repaint();} }
 
+                            // add the captured piece to the corresponding location
+                            // captured piece is black
+                            if(isBlack(selectedPiece2) && selectedPiece2 != null && 
+                               selectedPanel1 != selectedPanel2)
+                                pin(selectedPiece2, northWest, 0, 0, "FlowLayout", false); 
+
+                            // captured piece is white
+                            else if(isWhite(selectedPiece2) && selectedPiece2 != null && 
+                                    selectedPanel1 != selectedPanel2)
+                                pin(selectedPiece2, southEast, 0, 0, "FlowLayout", false);
+
                             // add the chesspiece of the first selected panel to the next
                             list.replaceComponent(selectedPanel1, selectedPanel2);
-                            pin(selectedPiece, selectedPanel2, 0, 0);
+                            pin(selectedPiece, selectedPanel2, 0, 0, "BorderLayout", true);
 
                             // Reset all the the fields 
                             selectedPanel1 = null;
@@ -390,8 +411,11 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     /**
     Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
     Height and width of the image is specified by the parameters
+    'dimensionDecider' parameter determines if the label is set to the size of the panel or to the 
+    size of the image
     */
-    private void pin(ChessPiece piece, JPanel panel, int width, int height){
+    private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,
+                     boolean dimensionDecider){
                 
         // default height and width for each chesspiece
         if(width == 0 && height == 0){
@@ -431,10 +455,20 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
         // create the label and set preferrences
         JLabel label = new JLabel(piece.toImageIcon(), JLabel.CENTER);
-        label.setPreferredSize(panel.getPreferredSize());
 
-        // pin JLabel onto JFrame
-        panel.add(label, BorderLayout.CENTER);
+        // determine whether or not the label should be set to the size of the label or not
+        if(dimensionDecider == true)
+            label.setPreferredSize(panel.getPreferredSize());
+
+        else{
+            label.setPreferredSize(new Dimension(width, height));}
+
+        // use layout manager specified in the parameters
+        if(layoutDecider.equals("BorderLayout"))
+            panel.add(label, BorderLayout.CENTER);
+
+        else if(layoutDecider.equals("FlowLayout"))
+            panel.add(label);
     }
 
     /**
@@ -508,13 +542,9 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             return false;
 
         // 2 possibilities- piece1 belongs to black color, or white
-        if(piece1 instanceof BlackPawn || piece1 instanceof BlackRook || 
-           piece1 instanceof BlackKnight || piece1 instanceof BlackBishop || 
-           piece1 instanceof BlackQueen || piece1 instanceof BlackKing){
+        if(isBlack(piece1)){ 
             // piece can be black
-            if(piece2 instanceof BlackPawn || piece2 instanceof BlackRook || 
-               piece2 instanceof BlackKnight || piece2 instanceof BlackBishop || 
-               piece2 instanceof BlackQueen || piece2 instanceof BlackKing)
+            if(isBlack(piece2))
                 return true;
 
             // or white
@@ -524,14 +554,26 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         // piece is white
         else{
             // piece can be white
-            if(piece2 instanceof WhitePawn || piece2 instanceof WhiteRook || 
-               piece2 instanceof WhiteKnight || piece2 instanceof WhiteBishop || 
-               piece2 instanceof WhiteQueen || piece2 instanceof WhiteKing)
+            if(isWhite(piece2))
                 return true;
 
             // or white
             else{
                 return false;} }
+    }
+
+    private boolean isBlack(ChessPiece piece){
+        if(piece instanceof BlackPawn || piece instanceof BlackRook || piece instanceof BlackKnight ||
+           piece instanceof BlackBishop || piece instanceof BlackQueen || piece instanceof BlackKing)
+            return true;
+        return false;
+    }
+
+    private boolean isWhite(ChessPiece piece){
+        if(piece instanceof WhitePawn || piece instanceof WhiteRook || piece instanceof WhiteKnight ||
+           piece instanceof WhiteBishop || piece instanceof WhiteQueen || piece instanceof WhiteKing)
+            return true;
+        return false;
     }
 
     /**
