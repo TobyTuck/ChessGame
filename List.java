@@ -180,51 +180,52 @@ public class List{
              myTaker = _head;
 
         // special case
-        if(_head.getData().equals(giver)){
-            for(Link index = _head; !index.getData().equals(taker); 
-                index = index.getRight()){
-                myTaker = index;}
-            myTaker = myTaker.getRight();
-
-            myTaker.setComponent(_head.getComponent());
-            myGiver.setComponent(null);}
-
-        else if(_head.getData().equals(taker)){
-            for(Link index = _head; !index.getData().equals(giver); 
-                index = index.getRight()){
-                myGiver = index;}
-            myGiver = myGiver.getRight();
-
-            _head.setComponent(myGiver.getComponent());
-            myGiver.setComponent(null);}
+        if(giver == taker){/* do nothing */}
 
         else{
-            myGiver = _head;
-            myTaker = null;
-
-            for(Link index = _head; !index.getData().equals(giver); 
-                index = index.getRight()){
-                myGiver = index;
-
-                if(index.getData().equals(taker))
+            // special case
+            if(_head.getData().equals(giver)){
+                for(Link index = _head; !index.getData().equals(taker); 
+                    index = index.getRight()){
                     myTaker = index;}
-            myGiver = myGiver.getRight();
+                myTaker = myTaker.getRight();
+            
+                myTaker.setComponent(_head.getComponent());
+                myGiver.setComponent(null);}
 
             // special case
-            if(taker == giver)
-                myTaker = myGiver;
+            else if(_head.getData().equals(taker)){
+                for(Link index = _head; !index.getData().equals(giver); 
+                    index = index.getRight()){
+                    myGiver = index;}
+                myGiver = myGiver.getRight();
 
+                _head.setComponent(myGiver.getComponent());
+                myGiver.setComponent(null);}
+
+            // standard case
             else{
+                myGiver = _head;
+                myTaker = null;
+
+                for(Link index = _head; !index.getData().equals(giver); 
+                    index = index.getRight()){
+                    myGiver = index;
+
+                    if(index.getData().equals(taker))
+                        myTaker = index;}
+                myGiver = myGiver.getRight();
+
                 if(myTaker == null){
                     for(Link index = myGiver; !index.getData().equals(taker); 
                         index = index.getRight()){
                         myTaker = index;}
-                    myTaker = myTaker.getRight();} }
+                    myTaker = myTaker.getRight();}
 
-            if(!(myTaker.getComponent() == null && myGiver.getComponent() == null) &&
-               myTaker != myGiver){
-                myTaker.setComponent(myGiver.getComponent());
-                myGiver.setComponent(null);} }
+                if(!(myTaker.getComponent() == null && 
+                   myGiver.getComponent() == null) && myTaker != myGiver){
+                    myTaker.setComponent(myGiver.getComponent());
+                    myGiver.setComponent(null);} } }
     }
 
     /**

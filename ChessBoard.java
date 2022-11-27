@@ -81,9 +81,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        // delete
-        System.out.println(this.getWidth() +  " " + this.getHeight());
-
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         
@@ -125,7 +122,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                                       boardHeight));
         filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
                                                       boardHeight));
-        
 
         northWest.setBackground(darkGreen);
         northWest.setLayout(new FlowLayout());
@@ -139,25 +135,38 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)), 
                                                    boardHeight));
         east.setBackground(darkGreen);
-        southEast = new JPanel();
-        JPanel filler3 = new JPanel();
-        JPanel filler4 = new JPanel();
+
+        southEast = new JPanel(new FlowLayout());
+        JPanel filler4 = new JPanel(new BorderLayout());
+        JPanel filler5 = new JPanel();
+        JPanel filler6 = new JPanel();
+        JPanel filler7 = new JPanel();
         
-        southEast.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+        // panel that will hold the SE panel for captured pieces
+        filler4.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
                                                         boardHeight));
-        filler3.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+        // panels that provide "borders" that prevent pieces from touching board
+        filler5.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
                                                       boardHeight));
-        filler4.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+        filler6.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
                                                       boardHeight));
+        // panel that fills the extra space of filler4
+        filler7.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+                                               (int) (boardHeight * 0.86)));
+        southEast.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)),
+                                                 (int) (boardHeight * 0.14)));
+        filler4.add(filler7, BorderLayout.NORTH);
+        filler4.add(southEast, BorderLayout.SOUTH);
         
 
         southEast.setBackground(darkGreen);
-        southEast.setLayout(new FlowLayout());
-        filler3.setBackground(darkGreen);
         filler4.setBackground(darkGreen);
-        east.add(filler3, BorderLayout.WEST);
-        east.add(filler4, BorderLayout.EAST);
-        east.add(southEast, BorderLayout.CENTER);
+        filler5.setBackground(darkGreen);
+        filler6.setBackground(darkGreen);
+        filler7.setBackground(darkGreen);
+        east.add(filler5, BorderLayout.WEST);
+        east.add(filler6, BorderLayout.EAST);
+        east.add(filler4, BorderLayout.CENTER);
 
         // add components of each square to the list
         list = new List(8);
