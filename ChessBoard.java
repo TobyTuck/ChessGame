@@ -412,6 +412,22 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                             list.replaceComponent(selectedPanel1, selectedPanel2);
                             pin(selectedPiece, selectedPanel2, 0, 0, "BorderLayout", true);
 
+                            // remove outline on suggestion panels
+                            int previousLocation = 0;
+                            for(int index = 0; index < list.getSize(); ++index){
+                                if(list.pop(index) == selectedPanel1)
+                                    previousLocation = index;}
+
+                            List myMoves = selectedPiece.getMovement();
+                            int count;
+                            for(int index = 0; index < myMoves.getSize(); ++index){
+                                // check that no piece occupies the potential movements
+                                count = previousLocation + (int) myMoves.pop(index);
+                                if(count < list.getSize()){
+                                    if(!sameColor(selectedPiece, 
+                                                  (ChessPiece) list.getComponent(count)))
+                                        removeOutline((JPanel) list.pop(count));} }
+
                             // Reset all the the fields 
                             selectedPanel1 = null;
                             selectedPanel2 = null;
@@ -423,7 +439,33 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         if(list.getComponent(clickedPanel) != null){
                             selectedPanel1 = clickedPanel;
                             selectedPiece =  (ChessPiece) list.getComponent(selectedPanel1);
-                            outline(selectedPanel1, Color.red, 5);} } }  
+                            outline(selectedPanel1, Color.red, 5);
+                            
+                            // provide suggestions
+                            // get my location
+                            int myLocation = 0;
+                            for(int index = 0; index < list.getSize(); ++index){
+                                if(list.pop(index) == selectedPanel1)
+                                    myLocation = index;}
+
+                            List myMoves = selectedPiece.getMovement();
+                            int count;
+                            boolean safe = false;
+                            int previous;
+                            int idk;
+                            for(int index = 0; index < myMoves.getSize(); ++index){
+                                // check that no piece occupies the potential movements
+                                count = myLocation + (int) myMoves.pop(index);
+
+                                idk 
+
+                                if(((previous % 8 < 4) && (count % 8 > 4)) || (previous % 8
+
+                                if(count < list.getSize() && safe){
+                                    if(!sameColor(selectedPiece, 
+                                                 (ChessPiece) list.getComponent(count)))
+                                        outline((JPanel) list.pop(count), Color.blue, 5);
+                                        previous = count;} } } } }
             }
         };
 
@@ -536,6 +578,32 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             panel.add(southOutliner, BorderLayout.SOUTH);
             panel.add(eastOutliner, BorderLayout.EAST);
             panel.add(westOutliner, BorderLayout.WEST);}
+
+        else{
+            Color myColor = panel.getBackground();
+            JLabel center = new JLabel();
+            center.setPreferredSize(new Dimension(panel.getWidth() - (2 * depth), 
+                                                  panel.getHeight() - (2 * depth)));
+            center.setBackground(myColor);
+            panel.add(center, BorderLayout.CENTER);
+            panel.add(northOutliner, BorderLayout.NORTH);
+            panel.add(southOutliner, BorderLayout.SOUTH);
+            panel.add(eastOutliner, BorderLayout.EAST);
+            panel.add(westOutliner, BorderLayout.WEST);}
+
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    private void removeOutline(JPanel panel){
+        // sort through components and strip all of panel
+        Component[] cComponents = panel.getComponents();
+        JLabel label = null;
+        for(Component c : cComponents){
+            if(c instanceof JLabel)
+                label = (JLabel) c;
+                if(label.getIcon() == null)
+                    panel.remove(c);}
 
         panel.revalidate();
         panel.repaint();

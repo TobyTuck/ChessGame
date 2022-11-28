@@ -13,6 +13,7 @@ import java.awt.RenderingHints;
 public class ChessPiece{
 
     private BufferedImage _image; 
+    private List _movement;
 
     /**
     Method used to scale the image to a new width and height as specified in the 
@@ -47,10 +48,10 @@ public class ChessPiece{
     }
 
     /**
-    Mutator method for the image field
+    Used for subclass to set desired image based on type of ChessPiece
     */
-    public void setImage(BufferedImage image){
-        _image = image;
+    protected void setImage(BufferedImage image){
+    _image = image;
     }
 
     /**
@@ -72,5 +73,20 @@ public class ChessPiece{
     */
     public int getWidth(){
         return _image.getWidth();
+    }
+
+    /**
+    Method that will return the movement of the chesspiece
+    */
+    public List getMovement(){
+        return _movement;
+    }
+
+    protected void setMovement(List movement){
+        _movement = movement;
+    }
+
+    public int getMovementSize(){
+        return _movement.getSize();
     }
 }
