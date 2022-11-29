@@ -10,7 +10,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-public class ChessPiece{
+public abstract class ChessPiece{
 
     private BufferedImage _image; 
     private List _movement;
@@ -89,4 +89,82 @@ public class ChessPiece{
     public int getMovementSize(){
         return _movement.getSize();
     }
+
+    /**
+    Method that tests 2 ChessPieces to see if they are the same color
+    */
+    protected boolean sameColor(ChessPiece piece1, ChessPiece piece2){
+        // special cases- one of the pieces is null, while the other is not; or both are null
+        if((piece1 == null && piece2 != null) || (piece1 != null && piece2 == null) || 
+           (piece1 == null && piece2 == null))
+            return false;
+
+        // 2 possibilities- piece1 belongs to black color, or white
+        if(isBlack(piece1)){ 
+            // piece can be black
+            if(isBlack(piece2))
+                return true;
+
+            // or white
+            else{
+                return false;} }
+
+        // piece is white
+        else{
+            // piece can be white
+            if(isWhite(piece2))
+                return true;
+
+            // or white
+            else{
+                return false;} }
+    }
+
+    /**
+    Private helper method for the sameColor() function
+    */
+    private boolean isBlack(ChessPiece piece){
+        if(piece instanceof BlackPawn || piece instanceof BlackRook || piece instanceof BlackKnight ||
+           piece instanceof BlackBishop || piece instanceof BlackQueen || piece instanceof BlackKing)
+            return true;
+        return false;
+    }
+
+    /**
+    Private helper method for the sameColor() function
+    */
+    private boolean isWhite(ChessPiece piece){
+        if(piece instanceof WhitePawn || piece instanceof WhiteRook || piece instanceof WhiteKnight ||
+           piece instanceof WhiteBishop || piece instanceof WhiteQueen || piece instanceof WhiteKing)
+            return true;
+        return false;
+    }
+
+    /**
+    Method that checks if an oppoent exists in a square
+    */
+    protected boolean isOpponent(ChessPiece piece1, ChessPiece piece2){
+    // special case
+    if(piece1 == null || piece2 == null)
+        return false;
+
+    // 2 options- piece1 is black
+    else if(isBlack(piece1)){
+        if(isBlack(piece2))
+            return false;
+        else{
+            return true;} }
+
+    // or white
+    else{
+        if(isWhite(piece2))
+            return false;
+        else{
+            return true;} }
+    }
+
+    /**
+    Method that handles the "overflow" of potential moves of a certain chesspiece
+    */
+    public abstract List removeOverflow(int myLocation, List chessboard);
 }

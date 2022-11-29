@@ -343,6 +343,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             private JPanel selectedPanel1;
             private JPanel selectedPanel2;
             private ChessPiece selectedPiece;
+            private List myMoves;
 
             @Override
             public void mousePressed(MouseEvent e) {
@@ -412,21 +413,13 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                             list.replaceComponent(selectedPanel1, selectedPanel2);
                             pin(selectedPiece, selectedPanel2, 0, 0, "BorderLayout", true);
 
-                            // remove outline on suggestion panels
-                            int previousLocation = 0;
+                            // remove outline from suggested move panels
+                            /* int myLocation = 0;
                             for(int index = 0; index < list.getSize(); ++index){
                                 if(list.pop(index) == selectedPanel1)
-                                    previousLocation = index;}
-
-                            List myMoves = selectedPiece.getMovement();
-                            int count;
+                                    myLocation = index;}*/
                             for(int index = 0; index < myMoves.getSize(); ++index){
-                                // check that no piece occupies the potential movements
-                                count = previousLocation + (int) myMoves.pop(index);
-                                if(count < list.getSize()){
-                                    if(!sameColor(selectedPiece, 
-                                                  (ChessPiece) list.getComponent(count)))
-                                        removeOutline((JPanel) list.pop(count));} }
+                                removeOutline((JPanel) list.pop((int) myMoves.pop(index)));}
 
                             // Reset all the the fields 
                             selectedPanel1 = null;
@@ -448,24 +441,9 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 if(list.pop(index) == selectedPanel1)
                                     myLocation = index;}
 
-                            List myMoves = selectedPiece.getMovement();
-                            int count;
-                            boolean safe = false;
-                            int previous;
-                            int idk;
+                            myMoves = selectedPiece.removeOverflow(myLocation, list);
                             for(int index = 0; index < myMoves.getSize(); ++index){
-                                // check that no piece occupies the potential movements
-                                count = myLocation + (int) myMoves.pop(index);
-
-                                idk 
-
-                                if(((previous % 8 < 4) && (count % 8 > 4)) || (previous % 8
-
-                                if(count < list.getSize() && safe){
-                                    if(!sameColor(selectedPiece, 
-                                                 (ChessPiece) list.getComponent(count)))
-                                        outline((JPanel) list.pop(count), Color.blue, 5);
-                                        previous = count;} } } } }
+                                outline((JPanel) list.pop((int) myMoves.pop(index)), Color.blue, 5);} } } }
             }
         };
 

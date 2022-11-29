@@ -31,4 +31,18 @@ public class BlackKnight extends ChessPiece{
         potentialMoves.push(-6, true);
         super.setMovement(potentialMoves);
     }
+
+    public List removeOverflow(int myLocation, List chessboard){
+        List potentialMoves = new List(5);
+        List extensiveMoves = super.getMovement();
+        int move;
+
+        for(int index = 0; index < extensiveMoves.getSize(); ++index){
+            move = myLocation + (int) extensiveMoves.pop(index);
+            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent(myLocation), 
+               (ChessPiece) chessboard.getComponent(move)))
+                potentialMoves.push(move, null);}
+
+        return potentialMoves;
+    }
 }
