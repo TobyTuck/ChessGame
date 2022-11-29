@@ -9,6 +9,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.geom.AffineTransform;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.JPanel;
 
 public abstract class ChessPiece{
 
@@ -144,23 +145,73 @@ public abstract class ChessPiece{
     Method that checks if an oppoent exists in a square
     */
     protected boolean isOpponent(ChessPiece piece1, ChessPiece piece2){
-    // special case
-    if(piece1 == null || piece2 == null)
+        // special case
+        if(piece1 == null || piece2 == null)
+            return false;
+
+        // 2 options- piece1 is black
+        else if(isBlack(piece1)){
+            if(isBlack(piece2))
+                return false;
+            else{
+                return true;} }
+
+        // or white
+        else{
+            if(isWhite(piece2))
+                return false;
+            else{
+                return true;} }
+    }
+
+    protected boolean baseOf(int number, int base, int difference){
+        while(number > difference){
+            number -= difference;}
+
+        if(number == base)
+            return true;
+
         return false;
+    }
 
-    // 2 options- piece1 is black
-    else if(isBlack(piece1)){
-        if(isBlack(piece2))
-            return false;
-        else{
-            return true;} }
+    protected boolean samePanelColor(JPanel panel1, JPanel panel2){
+        if(panel1.getBackground() == panel2.getBackground())
+            return true;
 
-    // or white
-    else{
-        if(isWhite(piece2))
-            return false;
-        else{
-            return true;} }
+        return false;
+    }
+
+    /**
+    Checks that a number is the same multiple of a given number
+    */
+    protected boolean sameMultiple(int number1, int number2, int factor){
+        if(number1 / factor == number2 / factor)
+            return true;
+
+        return false;
+    }
+
+    protected boolean sameBase(int number1, int number2, int difference){
+        while(number1 > difference){
+            number1 -= difference;}
+
+        while(number2 > difference){
+            number2 -= difference;}
+
+        if(number1 == number2)
+            return true;
+
+        return false;
+    }
+
+    protected boolean overflow(int num1, int num2, int limit){
+        if(((baseOf(num1, 7, limit) || baseOf(num1, 8, limit)) && 
+           (baseOf(num2, 1, limit) || baseOf(num2, 2, limit))) ||
+           ((baseOf(num1, 1, limit) || baseOf(num1, 2, limit)) &&
+           (baseOf(num2, 7, limit) || baseOf(num2, 8, limit))))
+            return true;
+        
+        return false;
     }
 
     /**

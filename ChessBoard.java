@@ -443,7 +443,10 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                             myMoves = selectedPiece.removeOverflow(myLocation, list);
                             for(int index = 0; index < myMoves.getSize(); ++index){
-                                outline((JPanel) list.pop((int) myMoves.pop(index)), Color.blue, 5);} } } }
+                                outline((JPanel) list.pop((int) myMoves.pop(index)), Color.blue, 5);} 
+                        } 
+                    } 
+                }
             }
         };
 

@@ -39,8 +39,12 @@ public class WhiteKnight extends ChessPiece{
 
         for(int index = 0; index < extensiveMoves.getSize(); ++index){
             move = myLocation + (int) extensiveMoves.pop(index);
-            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent(myLocation), 
-               (ChessPiece) chessboard.getComponent(move)))
+            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent
+              (myLocation), (ChessPiece) chessboard.getComponent(move)) && 
+              !(((baseOf(myLocation, 1, 8) || baseOf(myLocation, 8, 8)) && 
+              (baseOf(move, 6, 8) || baseOf(move, 7, 8))) || 
+              ((baseOf(myLocation, 6, 8) || baseOf(myLocation, 7, 8)) && 
+              (baseOf(move, 1, 8) || baseOf(move, 8, 8)))))
                 potentialMoves.push(move, null);}
 
         return potentialMoves;

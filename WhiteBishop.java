@@ -57,13 +57,68 @@ public class WhiteBishop extends ChessPiece{
     public List removeOverflow(int myLocation, List chessboard){
         List potentialMoves = new List(5);
         List extensiveMoves = super.getMovement();
-        int move;
+        boolean isDone = false;
+        ChessPiece currentPiece = (ChessPiece) chessboard.getComponent(myLocation);
+        ChessPiece movePiece = null;
 
-        for(int index = 0; index < extensiveMoves.getSize(); ++index){
+        int move = myLocation + 9;
+        if(move < 63)
+            movePiece = (ChessPiece) chessboard.getComponent(move);
+        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move - 8, 8)
+              && !isDone && move < 63){
+            potentialMoves.push(move, null);
+            if(isOpponent(currentPiece, movePiece))
+                isDone = true;
+            move += 9;
+            if(move < 63)
+                movePiece = (ChessPiece) chessboard.getComponent(move);}
+
+        move = myLocation + 7;
+        if(move < 63)
+            movePiece = (ChessPiece) chessboard.getComponent(move);
+        isDone = false;
+        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move - 6, 8)
+              && !isDone && move < 63){
+            potentialMoves.push(move, null);
+            if(isOpponent(currentPiece, movePiece))
+                isDone = true;
+            move += 7;
+            if(move < 63)
+                movePiece = (ChessPiece) chessboard.getComponent(move);}
+
+        move = myLocation - 9;
+        if(move < 63)
+            movePiece = (ChessPiece) chessboard.getComponent(move);
+        isDone = false;
+        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move + 10, 8)
+              && !isDone && move < 63){
+            potentialMoves.push(move, null);
+            if(isOpponent(currentPiece, movePiece))
+                isDone = true;
+            move -= 9;
+            if(move < 63)
+                movePiece = (ChessPiece) chessboard.getComponent(move);}
+
+        move = myLocation -7;
+        if(move < 63)
+            movePiece = (ChessPiece) chessboard.getComponent(move);
+        isDone = false;
+        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move + 7, 8)
+              && !isDone && move < 63){
+            potentialMoves.push(move, null);
+            if(isOpponent(currentPiece, movePiece))
+                isDone = true;
+            move -= 7;
+            if(move < 63)
+                movePiece = (ChessPiece) chessboard.getComponent(move);}
+
+        /* for(int index = 0; index < extensiveMoves.getSize(); ++index){
             move = myLocation + (int) extensiveMoves.pop(index);
-            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent(myLocation), 
-               (ChessPiece) chessboard.getComponent(move)))
-                potentialMoves.push(move, null);}
+            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent
+              (myLocation), (ChessPiece) chessboard.getComponent(move)) && 
+              (samePanelColor((JPanel) chessboard.pop(move), (JPanel)
+              chessboard.pop(myLocation))))
+                potentialMoves.push(move, null);} */
 
         return potentialMoves;
     }

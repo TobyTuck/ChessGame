@@ -59,9 +59,9 @@ public class BlackRook extends ChessPiece{
 
         for(int index = 0; index < extensiveMoves.getSize(); ++index){
             move = myLocation + (int) extensiveMoves.pop(index);
-            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent(myLocation), 
-               (ChessPiece) chessboard.getComponent(move)))
-
+            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent
+              (myLocation), (ChessPiece) chessboard.getComponent(move)) &&
+              (sameMultiple(myLocation, move, 8) || sameBase(myLocation, move, 8)))
                 potentialMoves.push(move, null);}
 
         return potentialMoves;

@@ -39,8 +39,13 @@ public class BlackKing extends ChessPiece{
 
         for(int index = 0; index < extensiveMoves.getSize(); ++index){
             move = myLocation + (int) extensiveMoves.pop(index);
-            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent(myLocation), 
-               (ChessPiece) chessboard.getComponent(move)))
+
+            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent
+              (myLocation), (ChessPiece) chessboard.getComponent(move)) && 
+              !((baseOf(myLocation, 8, 8) && baseOf(move, 7, 8)) || 
+              (baseOf(myLocation, 7, 8) && baseOf(move, 8, 8))) && 
+              !((myLocation == 0 && move == 7) || (myLocation == 7 && move == 0)))
+
                 potentialMoves.push(move, null);}
 
         return potentialMoves;
