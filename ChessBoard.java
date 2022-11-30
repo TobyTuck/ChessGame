@@ -93,9 +93,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         
         // build a dark green color for side panels
-        // old green: 0, 100, 0
+        // light blue: 102, 178, 255
         Color darkGreen = new Color(25, 45, 25);
-
         // build supporting panels
         // build panels above and below chessboard
         north = new JPanel();
@@ -359,8 +358,14 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         selectedPanel2 = clickedPanel;
                         ChessPiece selectedPiece2 = (ChessPiece) list.getComponent(selectedPanel2);
 
+                        boolean legal = false;
+                        // restrict choice of piece movement
+                        for(int index = 0; index < myMoves.getSize(); ++index){
+                            if((JPanel) list.pop((int) myMoves.pop(index)) == selectedPanel2)
+                                legal = true;}
+
                         // chesspiece can't capture chesspiece of same color
-                        if((!sameColor(selectedPiece, selectedPiece2)) || 
+                        if((!sameColor(selectedPiece, selectedPiece2) && legal) || 
                             selectedPiece == selectedPiece2){
                             Component[] jcomponents = selectedPanel1.getComponents();
 
@@ -395,7 +400,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
                                                 ((double) capturedHeight / 
                                                 (double) selectedPiece2.getHeight())));
-                                pin(selectedPiece2, northWest, capturedWidth, capturedHeight, 
+                                pin(selectedPiece2, southEast, capturedWidth, capturedHeight, 
                                     "FlowLayout", false);}
 
                             // captured piece is white
@@ -406,7 +411,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
                                                 ((double) capturedHeight / 
                                                 (double) selectedPiece2.getHeight())));
-                                pin(selectedPiece2, southEast, capturedWidth, capturedHeight, 
+                                pin(selectedPiece2, northWest, capturedWidth, capturedHeight, 
                                     "FlowLayout", false);}
 
                             // add the chesspiece of the first selected panel to the next
@@ -432,8 +437,11 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         if(list.getComponent(clickedPanel) != null){
                             selectedPanel1 = clickedPanel;
                             selectedPiece =  (ChessPiece) list.getComponent(selectedPanel1);
-                            outline(selectedPanel1, Color.red, 5);
-                            
+                            if(isBlack(selectedPiece))
+                                outline(selectedPanel1, Color.black, 5);
+                            else{
+                                outline(selectedPanel1, Color.white, 5);}
+
                             // provide suggestions
                             // get my location
                             int myLocation = 0;
@@ -441,9 +449,19 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 if(list.pop(index) == selectedPanel1)
                                     myLocation = index;}
 
+                            int possibleMove;
+                            // Color option = new Color(102, 178, 255);
+                            Color option = new Color(118, 255, 122);
                             myMoves = selectedPiece.removeOverflow(myLocation, list);
                             for(int index = 0; index < myMoves.getSize(); ++index){
-                                outline((JPanel) list.pop((int) myMoves.pop(index)), Color.blue, 5);} 
+                                possibleMove = (int) myMoves.pop(index);
+                                if(isOpponent((ChessPiece) list.getComponent(myLocation), 
+                                             (ChessPiece) list.getComponent(possibleMove)))
+                                    outline((JPanel) list.pop(possibleMove), Color.red, 5);
+
+                                else{
+                                    addSquare(
+                                        (JPanel) list.pop(possibleMove), 20, option);} }
                         } 
                     } 
                 }
@@ -576,6 +594,47 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         panel.repaint();
     }
 
+    private void addSquare(JPanel panel, int x, Color color){
+        panel.setLayout(new BorderLayout());
+
+        JLabel center = new JLabel();
+        JLabel north = new JLabel();
+        JLabel south = new JLabel();
+        JLabel east = new JLabel();
+        JLabel west = new JLabel();
+
+        center.setBackground(color);
+
+        Color panelColor = panel.getBackground();
+        north.setBackground(panelColor);
+        south.setBackground(panelColor);
+        east.setBackground(panelColor);
+        west.setBackground(panelColor);
+
+        center.setPreferredSize(new Dimension(x, x));
+        north.setPreferredSize
+            (new Dimension(panel.getWidth(), (int) (0.5 * (panel.getHeight() - x))));
+        south.setPreferredSize
+            (new Dimension(panel.getWidth(), (int) (0.5 * (panel.getHeight() - x))));
+        east.setPreferredSize(new Dimension((int) (0.5 * (panel.getWidth() - x)), panel.getHeight()));
+        west.setPreferredSize(new Dimension((int) (0.5 * (panel.getWidth() - x)), panel.getHeight()));
+
+        center.setOpaque(true);
+        north.setOpaque(true);
+        south.setOpaque(true);
+        east.setOpaque(true);
+        west.setOpaque(true);
+
+        panel.add(center, BorderLayout.CENTER);
+        panel.add(north, BorderLayout.NORTH);
+        panel.add(south, BorderLayout.SOUTH);
+        panel.add(east, BorderLayout.EAST);
+        panel.add(west, BorderLayout.WEST);
+
+        panel.revalidate();
+        panel.repaint();
+    }
+
     private void removeOutline(JPanel panel){
         // sort through components and strip all of panel
         Component[] cComponents = panel.getComponents();
@@ -646,6 +705,29 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
            piece instanceof WhiteBishop || piece instanceof WhiteQueen || piece instanceof WhiteKing)
             return true;
         return false;
+    }
+
+    /**
+    Method that checks if an oppoent exists in a square
+    */
+    protected boolean isOpponent(ChessPiece piece1, ChessPiece piece2){
+        // special case
+        if(piece1 == null || piece2 == null)
+            return false;
+
+        // 2 options- piece1 is black
+        else if(isBlack(piece1)){
+            if(isBlack(piece2))
+                return false;
+            else{
+                return true;} }
+
+        // or white
+        else{
+            if(isWhite(piece2))
+                return false;
+            else{
+                return true;} }
     }
 
     /**

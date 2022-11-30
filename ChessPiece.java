@@ -204,14 +204,20 @@ public abstract class ChessPiece{
         return false;
     }
 
-    protected boolean overflow(int num1, int num2, int limit){
-        if(((baseOf(num1, 7, limit) || baseOf(num1, 8, limit)) && 
-           (baseOf(num2, 1, limit) || baseOf(num2, 2, limit))) ||
-           ((baseOf(num1, 1, limit) || baseOf(num1, 2, limit)) &&
-           (baseOf(num2, 7, limit) || baseOf(num2, 8, limit))))
-            return true;
+    protected boolean overflow(int num1, int num2, int limit, ChessPiece piece){
+        if(piece instanceof WhiteBishop || piece instanceof BlackBishop){
+            if(((baseOf(num1, 7, limit) || baseOf(num1, 8, limit)) && 
+               (baseOf(num2, 1, limit) || baseOf(num2, 2, limit))) ||
+               ((baseOf(num1, 1, limit) || baseOf(num1, 2, limit)) &&
+               (baseOf(num2, 7, limit) || baseOf(num2, 8, limit))))
+                return true;
         
-        return false;
+            return false;}
+
+        // chesspiece is rook?
+        if(num1 / limit == num2 / limit)
+            return false;
+        return true;
     }
 
     /**

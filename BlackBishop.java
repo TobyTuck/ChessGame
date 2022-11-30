@@ -62,17 +62,16 @@ public class BlackBishop extends ChessPiece{
 
     public List removeOverflow(int myLocation, List chessboard){
         List potentialMoves = new List(5);
-        List extensiveMoves = super.getMovement();
-        boolean isDone;
+        boolean isDone = false;
         ChessPiece currentPiece = (ChessPiece) chessboard.getComponent(myLocation);
         ChessPiece movePiece = null;
 
         int move = myLocation + 9;
         if(move < 63)
             movePiece = (ChessPiece) chessboard.getComponent(move);
-        isDone = false;
-        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move - 8, 8)
-              && !isDone && move < 63){
+        while(!sameColor(currentPiece, movePiece) && 
+              !overflow(move + 1, move - 8, 8, new BlackBishop())
+              && !isDone && move < 64){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -84,8 +83,9 @@ public class BlackBishop extends ChessPiece{
         if(move < 63)
             movePiece = (ChessPiece) chessboard.getComponent(move);
         isDone = false;
-        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move - 6, 8)
-              && !isDone && move < 63){
+        while(!sameColor(currentPiece, movePiece) && 
+              !overflow(move + 1, move - 6, 8, new BlackBishop())
+              && !isDone && move < 64){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -97,8 +97,9 @@ public class BlackBishop extends ChessPiece{
         if(move < 63)
             movePiece = (ChessPiece) chessboard.getComponent(move);
         isDone = false;
-        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move + 10, 8)
-              && !isDone && move < 63){
+        while(!sameColor(currentPiece, movePiece) && 
+              !overflow(move + 1, move + 10, 8, new BlackBishop())
+              && !isDone && move > -1){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -110,8 +111,9 @@ public class BlackBishop extends ChessPiece{
         if(move < 63)
             movePiece = (ChessPiece) chessboard.getComponent(move);
         isDone = false;
-        while(!sameColor(currentPiece, movePiece) && !overflow(move + 1, move + 7, 8)
-              && !isDone && move < 63){
+        while(!sameColor(currentPiece, movePiece) && 
+              !overflow(move + 1, move + 8, 8, new BlackBishop())
+              && !isDone && move > -1){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
