@@ -365,8 +365,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 legal = true;}
 
                         // chesspiece can't capture chesspiece of same color
-                        if((!sameColor(selectedPiece, selectedPiece2) && legal) || 
-                            selectedPiece == selectedPiece2){
+                        if(((!sameColor(selectedPiece, selectedPiece2) && legal) && 
+                            !isKing(selectedPiece2)) || selectedPiece == selectedPiece2){
                             Component[] jcomponents = selectedPanel1.getComponents();
 
                             // find JLabel "pinned" to first JPanel selected
@@ -744,6 +744,16 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     */
     private int rowOf(int myLocation){
         return (myLocation / 8) + 1;
+    }
+
+    /**
+    Method that checks if a ChessPiece is a king
+    */
+    private boolean isKing(ChessPiece piece){
+        if(piece instanceof BlackKing || piece instanceof WhiteKing)
+            return true;
+
+        return false;
     }
 
     /**

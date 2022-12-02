@@ -132,13 +132,14 @@ public class List{
         if(_head.getData().equals(data))
             _head.setComponent(component);
 
-        Link myLink = _head;
-        for(Link index = _head; !index.getData().equals(data); 
-            index = index.getRight()){
-            myLink = index;}
-        myLink = myLink.getRight();
+        else{
+            Link myLink = _head;
+            for(Link index = _head; !index.getData().equals(data); 
+                index = index.getRight()){
+                myLink = index;}
+            myLink = myLink.getRight();
 
-        myLink.setComponent(component);
+            myLink.setComponent(component);}
     }
 
     /**

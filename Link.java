@@ -50,6 +50,8 @@ public class Link{
     }
 
     public void setComponent(Object component){
+        if(_component != null)
+            _component = null;
         _component = component;
     }
 

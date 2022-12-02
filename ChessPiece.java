@@ -204,6 +204,12 @@ public abstract class ChessPiece{
         return false;
     }
 
+    protected boolean isKing(ChessPiece piece){
+        if(piece instanceof WhiteKing || piece instanceof BlackKing)
+            return true;
+        return false;
+    }
+
     protected boolean overflow(int num1, int num2, int limit, ChessPiece piece){
         if(piece instanceof WhiteBishop || piece instanceof BlackBishop){
             if(((baseOf(num1, 7, limit) || baseOf(num1, 8, limit)) && 

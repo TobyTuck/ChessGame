@@ -39,12 +39,12 @@ public class WhitePawn extends ChessPiece{
             potentialMoves.push(move, null);
 
         move = myLocation - 8;
-        if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
+        if((move / 8 == (myLocation / 8) - 1) && move > -1 && 
            chessboard.getComponent(move) == null)
             potentialMoves.push(move, null);
 
         move = myLocation - 9;
-        if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
+        if((move / 8 == (myLocation / 8) - 1) && move > -1 && 
            isOpponent((ChessPiece) chessboard.getComponent(move), 
            (ChessPiece) chessboard.getComponent(myLocation)))
             potentialMoves.push(move, null);
