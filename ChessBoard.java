@@ -419,12 +419,21 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                             pin(selectedPiece, selectedPanel2, 0, 0, "BorderLayout", true);
 
                             // remove outline from suggested move panels
-                            /* int myLocation = 0;
-                            for(int index = 0; index < list.getSize(); ++index){
-                                if(list.pop(index) == selectedPanel1)
-                                    myLocation = index;}*/
                             for(int index = 0; index < myMoves.getSize(); ++index){
                                 removeOutline((JPanel) list.pop((int) myMoves.pop(index)));}
+
+                            // if pawn reaches opposite side of board, turn it into a queen
+                            int myLocation = 0;
+                            for(int index = 0; index < list.getSize(); ++index){
+                                if(list.pop(index) == selectedPanel2)
+                                    myLocation = index;}
+                            if(selectedPiece instanceof BlackPawn && rowOf(myLocation) == 8){
+                                list.addComponent(selectedPanel2, new BlackQueen());
+                                pin(new BlackQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
+
+                            if(selectedPiece instanceof WhitePawn && rowOf(myLocation) == 1){
+                                list.addComponent(selectedPanel2, new WhiteQueen());
+                                pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
 
                             // Reset all the the fields 
                             selectedPanel1 = null;
@@ -450,8 +459,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                     myLocation = index;}
 
                             int possibleMove;
-                            // Color option = new Color(102, 178, 255);
-                            Color option = new Color(118, 255, 122);
+                            // Color option = new Color(118, 255, 122);
+                            Color option = new Color(127, 255, 0);
                             myMoves = selectedPiece.removeOverflow(myLocation, list);
                             for(int index = 0; index < myMoves.getSize(); ++index){
                                 possibleMove = (int) myMoves.pop(index);
@@ -728,6 +737,13 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                 return false;
             else{
                 return true;} }
+    }
+
+    /**
+    Method that returns the "level" of the chessboard the number is at
+    */
+    private int rowOf(int myLocation){
+        return (myLocation / 8) + 1;
     }
 
     /**
