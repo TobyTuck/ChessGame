@@ -92,7 +92,7 @@ public class WhiteQueen extends ChessPiece{
             movePiece = (ChessPiece) chessboard.getComponent(move);
         while(!sameColor(currentPiece, movePiece) && 
               !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move < 64 && !isKing(movePiece)){
+              move < 64){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -106,7 +106,7 @@ public class WhiteQueen extends ChessPiece{
             movePiece = (ChessPiece) chessboard.getComponent(move);
         while(!sameColor(currentPiece, movePiece) && 
               !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move > -1 && !isKing(movePiece)){
+              move > -1){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -118,8 +118,7 @@ public class WhiteQueen extends ChessPiece{
         isDone = false;
         if(move < 63)
             movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move < 64 &&
-              !isKing(movePiece)){
+        while(!sameColor(currentPiece, movePiece) && !isDone && move < 64){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -131,8 +130,7 @@ public class WhiteQueen extends ChessPiece{
         isDone = false;
         if(move < 63)
             movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move > -1 &&
-              !isKing(movePiece)){
+        while(!sameColor(currentPiece, movePiece) && !isDone && move > -1){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -147,7 +145,7 @@ public class WhiteQueen extends ChessPiece{
             movePiece = (ChessPiece) chessboard.getComponent(move);
         while(!sameColor(currentPiece, movePiece) && 
               !overflow(move + 1, move - 8, 8, new BlackBishop())
-              && !isDone && move < 64 && !isKing(movePiece)){
+              && !isDone && move < 64){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -161,7 +159,7 @@ public class WhiteQueen extends ChessPiece{
         isDone = false;
         while(!sameColor(currentPiece, movePiece) && 
               !overflow(move + 1, move - 6, 8, new BlackBishop())
-              && !isDone && move < 64 && !isKing(movePiece)){
+              && !isDone && move < 64){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -175,7 +173,7 @@ public class WhiteQueen extends ChessPiece{
         isDone = false;
         while(!sameColor(currentPiece, movePiece) && 
               !overflow(move + 1, move + 10, 8, new BlackBishop())
-              && !isDone && move > -1 && !isKing(movePiece)){
+              && !isDone && move > -1){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;
@@ -188,8 +186,8 @@ public class WhiteQueen extends ChessPiece{
             movePiece = (ChessPiece) chessboard.getComponent(move);
         isDone = false;
         while(!sameColor(currentPiece, movePiece) && 
-              !overflow(move + 1, move + 8, 8, new BlackBishop())
-              && !isDone && move > -1 && !isKing(movePiece)){
+              !overflow(move + 1, move + 8, 8, new BlackBishop()) && 
+              !isDone && move > -1){
             potentialMoves.push(move, null);
             if(isOpponent(currentPiece, movePiece))
                 isDone = true;

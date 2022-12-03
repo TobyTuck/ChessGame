@@ -459,14 +459,20 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                     myLocation = index;}
 
                             int possibleMove;
-                            // Color option = new Color(118, 255, 122);
+                            // Green: 118, 255, 122
+                            // Magenta: 128, 0, 128
+                            // dark red: 139, 0, 0 
                             Color option = new Color(127, 255, 0);
+                            Color captureKing = new Color(128, 0, 128);
                             myMoves = selectedPiece.removeOverflow(myLocation, list);
                             for(int index = 0; index < myMoves.getSize(); ++index){
                                 possibleMove = (int) myMoves.pop(index);
                                 if(isOpponent((ChessPiece) list.getComponent(myLocation), 
-                                             (ChessPiece) list.getComponent(possibleMove)))
-                                    outline((JPanel) list.pop(possibleMove), Color.red, 5);
+                                             (ChessPiece) list.getComponent(possibleMove))){
+                                    if(!isKing((ChessPiece) list.getComponent(possibleMove)))
+                                        outline((JPanel) list.pop(possibleMove), Color.red, 5);
+                                    else{
+                                        outline((JPanel) list.pop(possibleMove), captureKing, 5);} }
 
                                 else{
                                     addSquare(
