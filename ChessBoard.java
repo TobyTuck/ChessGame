@@ -342,6 +342,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             private JPanel selectedPanel1;
             private JPanel selectedPanel2;
             private ChessPiece selectedPiece;
+            private ChessPiece priorMove = null;
             private List myMoves;
 
             @Override
@@ -367,6 +368,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         // chesspiece can't capture chesspiece of same color
                         if(((!sameColor(selectedPiece, selectedPiece2) && legal) && 
                             !isKing(selectedPiece2)) || selectedPiece == selectedPiece2){
+
                             Component[] jcomponents = selectedPanel1.getComponents();
 
                             // find JLabel "pinned" to first JPanel selected
@@ -435,7 +437,11 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 list.addComponent(selectedPanel2, new WhiteQueen());
                                 pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
 
-                            // Reset all the the fields 
+                            // allow color to move again only if he didn't move the piece selected 
+                            if(selectedPiece != selectedPiece2)
+                                priorMove = selectedPiece;
+                            
+                            // Reset all the the fields
                             selectedPanel1 = null;
                             selectedPanel2 = null;
                             selectedPiece = null;} }
@@ -443,9 +449,14 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                     // Other wise, find which component was clicked
                     else{
                         // check that panel selected by user has a chesspiece component
-                        if(list.getComponent(clickedPanel) != null){
+                        ChessPiece piece = null;
+                        if(list.getComponent(clickedPanel) != null)
+                            piece = (ChessPiece) list.getComponent(clickedPanel);
+
+                        if(piece != null && (priorMove != null || isWhite(piece)) && 
+                           !sameColor(priorMove, piece)){
                             selectedPanel1 = clickedPanel;
-                            selectedPiece =  (ChessPiece) list.getComponent(selectedPanel1);
+                            selectedPiece =  piece;
                             if(isBlack(selectedPiece))
                                 outline(selectedPanel1, Color.black, 5);
                             else{
