@@ -124,6 +124,17 @@ public class List{
     }
 
     /**
+    Method that returns the position of a link
+    */
+    public int getLocation(Object myobj){
+        int myLocation = 0;
+        for(link index = _head; !index.getData().equals(myObj);{
+            ++myLocation;}
+
+        return myLocation;
+    }
+            
+    /**
     Method that adds a component to a link
     */
     public void addComponent(Object data, Object component){

@@ -774,6 +774,26 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     }
 
     /**
+    Method that checks if a piece is eligible to be captured
+    */
+    private boolean isCheck(List chessboard, ChessPiece king, int myLocation){
+        ChessPiece piece;
+        List myMoves;
+        // sort through all opponent chesspieces
+        for(int index = 0; index < chessboard.getSize(); ++index){
+            piece = chessboard.getComponent(index);
+            if(isOpponent(piece, king)){
+                // find legal moves
+                myMoves = piece.removeOverflow(chessboard.getLocation(piece), 
+                                               chessboard);
+                for(int count = 0; count < chessboard.getSize(); ++count){
+                    if(myMoves.pop(count) == myLocation)
+                        return true;} } }
+
+        return false;
+    }
+
+    /**
     Methods that return dimensions of different portions of the JFrame and its panels
     Purpose: testing the values are as expected
     Note: Currently the screen dimension given by the Dimension class appears to be too large,
