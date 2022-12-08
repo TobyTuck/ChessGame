@@ -126,9 +126,10 @@ public class List{
     /**
     Method that returns the position of a link
     */
-    public int getLocation(Object myobj){
+    public int getLocation(Object myObj){
         int myLocation = 0;
-        for(link index = _head; !index.getData().equals(myObj);{
+        for(Link index = _head; !index.getData().equals(myObj);
+            index = index.getRight()){
             ++myLocation;}
 
         return myLocation;

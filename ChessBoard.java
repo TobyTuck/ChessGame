@@ -453,8 +453,23 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         if(list.getComponent(clickedPanel) != null)
                             piece = (ChessPiece) list.getComponent(clickedPanel);
 
+                        // check that king is not in check
+                        // locate king
+                        ChessPiece piece2 = null;
+                        int count = 0;
+                        // black chessmove
+                        if(isWhite(priorMove)){
+                            while(!(piece2 instanceof BlackKing) && count > 63){
+                                piece2 = (ChessPiece) list.getComponent(count);} }
+
+                        // white chessmove
+                        else{
+                            while(!(piece2 instanceof BlackKing) && count > 63){
+                                piece2 = (ChessPiece) list.getComponent(count);} }
+
                         if(piece != null && (priorMove != null || isWhite(piece)) && 
-                           !sameColor(priorMove, piece)){
+                           !sameColor(priorMove, piece) && 
+                           !isCheck(list, piece2, count)){
                             selectedPanel1 = clickedPanel;
                             selectedPiece =  piece;
                             if(isBlack(selectedPiece))
@@ -781,13 +796,13 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         List myMoves;
         // sort through all opponent chesspieces
         for(int index = 0; index < chessboard.getSize(); ++index){
-            piece = chessboard.getComponent(index);
+            piece = (ChessPiece) chessboard.getComponent(index);
             if(isOpponent(piece, king)){
                 // find legal moves
                 myMoves = piece.removeOverflow(chessboard.getLocation(piece), 
                                                chessboard);
                 for(int count = 0; count < chessboard.getSize(); ++count){
-                    if(myMoves.pop(count) == myLocation)
+                    if((int) myMoves.pop(count) == myLocation)
                         return true;} } }
 
         return false;
