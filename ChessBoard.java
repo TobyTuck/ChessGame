@@ -455,21 +455,32 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                         // check that king is not in check
                         // locate king
-                        ChessPiece piece2 = null;
+                        ChessPiece king = null;
                         int count = 0;
-                        // black chessmove
+                        // search black king
                         if(isWhite(priorMove)){
-                            while(!(piece2 instanceof BlackKing) && count > 63){
-                                piece2 = (ChessPiece) list.getComponent(count);} }
+                            // delete
+                            System.out.println("I am Black King");
 
-                        // white chessmove
+                            while(!(king instanceof BlackKing) && count < 63){
+                                king = (ChessPiece) list.getComponent(count);
+                                ++count;} }
+
+                        // search white king
                         else{
-                            while(!(piece2 instanceof BlackKing) && count > 63){
-                                piece2 = (ChessPiece) list.getComponent(count);} }
+                            // delete
+                            System.out.println("I am White King");
+
+                            while(!(king instanceof WhiteKing) && count < 63){
+                                king = (ChessPiece) list.getComponent(count);
+                                ++count;} }
+
+                        // delete
+                        System.out.println(count);
 
                         if(piece != null && (priorMove != null || isWhite(piece)) && 
                            !sameColor(priorMove, piece) && 
-                           !isCheck(list, piece2, count)){
+                           (!isCheck(list, king, count) || !isKing(piece))){
                             selectedPanel1 = clickedPanel;
                             selectedPiece =  piece;
                             if(isBlack(selectedPiece))
@@ -794,16 +805,29 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     private boolean isCheck(List chessboard, ChessPiece king, int myLocation){
         ChessPiece piece;
         List myMoves;
-        // sort through all opponent chesspieces
+        int location = 0;
+        // sort through all chess squares 
         for(int index = 0; index < chessboard.getSize(); ++index){
             piece = (ChessPiece) chessboard.getComponent(index);
-            if(isOpponent(piece, king)){
-                // find legal moves
-                myMoves = piece.removeOverflow(chessboard.getLocation(piece), 
-                                               chessboard);
+            // if chespiece is an opponent
+            if(isOpponent(piece, king) && piece != null){
+                // get my location
                 for(int count = 0; count < chessboard.getSize(); ++count){
+                    if(chessboard.getComponent(count) == piece)
+                        location = count;}
+
+                // delete
+                System.out.println(location);
+
+                // find legal moves
+                myMoves = piece.removeOverflow(location, chessboard);
+                for(int count = 0; count < myMoves.getSize(); ++count){
+                    // is one of the opponents move on the piece specified in the parameters
                     if((int) myMoves.pop(count) == myLocation)
                         return true;} } }
+
+        // delete
+        System.out.println("Check not detected");
 
         return false;
     }
