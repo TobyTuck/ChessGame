@@ -459,24 +459,15 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         int count = 0;
                         // search black king
                         if(isWhite(priorMove)){
-                            // delete
-                            System.out.println("I am Black King");
-
                             while(!(king instanceof BlackKing) && count < 63){
                                 king = (ChessPiece) list.getComponent(count);
                                 ++count;} }
 
                         // search white king
                         else{
-                            // delete
-                            System.out.println("I am White King");
-
                             while(!(king instanceof WhiteKing) && count < 63){
                                 king = (ChessPiece) list.getComponent(count);
                                 ++count;} }
-
-                        // delete
-                        System.out.println(count);
 
                         if(piece != null && (priorMove != null || isWhite(piece)) && 
                            !sameColor(priorMove, piece) && 
@@ -512,8 +503,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                         outline((JPanel) list.pop(possibleMove), captureKing, 5);} }
 
                                 else{
-                                    addSquare(
-                                        (JPanel) list.pop(possibleMove), 20, option);} }
+                                    addSquare((JPanel) list.pop(possibleMove), 20, option);} }
                         } 
                     } 
                 }
@@ -816,18 +806,12 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                     if(chessboard.getComponent(count) == piece)
                         location = count;}
 
-                // delete
-                System.out.println(location);
-
                 // find legal moves
                 myMoves = piece.removeOverflow(location, chessboard);
                 for(int count = 0; count < myMoves.getSize(); ++count){
                     // is one of the opponents move on the piece specified in the parameters
                     if((int) myMoves.pop(count) == myLocation)
                         return true;} } }
-
-        // delete
-        System.out.println("Check not detected");
 
         return false;
     }
