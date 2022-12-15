@@ -18,43 +18,9 @@ public class WhiteBishop extends ChessPiece{
             super.setImage(image);
         }catch(IOException exception){
             System.out.println("Error locating White Bishop image file");}
-
-        // set possible movements by piece
-        List potentialMoves = new List(30);
-        potentialMoves.push(9, true);
-        potentialMoves.push(18, true);
-        potentialMoves.push(27, true);
-        potentialMoves.push(36, true);
-        potentialMoves.push(45, true);
-        potentialMoves.push(54, true);
-        potentialMoves.push(63, true);
-        potentialMoves.push(-9, true);
-        potentialMoves.push(-18, true);
-        potentialMoves.push(-27, true);
-        potentialMoves.push(-36, true);
-        potentialMoves.push(-45, true);
-        potentialMoves.push(-54, true);
-        potentialMoves.push(-63, true);
-        potentialMoves.push(7, true);
-        potentialMoves.push(14, true);
-        potentialMoves.push(21, true);
-        potentialMoves.push(28, true);
-        potentialMoves.push(35, true);
-        potentialMoves.push(42, true);
-        potentialMoves.push(49, true);
-        potentialMoves.push(56, true);
-        potentialMoves.push(-7, true);
-        potentialMoves.push(-14, true);
-        potentialMoves.push(-21, true);
-        potentialMoves.push(-28, true);
-        potentialMoves.push(-35, true);
-        potentialMoves.push(-42, true);
-        potentialMoves.push(-49, true);
-        potentialMoves.push(-56, true);
-        super.setMovement(potentialMoves);
     }
 
-    public List removeOverflow(int myLocation, List chessboard){
+    public List possibleMoves(int myLocation, List chessboard){
         List potentialMoves = new List(5);
         List extensiveMoves = super.getMovement();
         boolean isDone = false;
@@ -115,14 +81,6 @@ public class WhiteBishop extends ChessPiece{
             move -= 7;
             if(move < 63)
                 movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        /* for(int index = 0; index < extensiveMoves.getSize(); ++index){
-            move = myLocation + (int) extensiveMoves.pop(index);
-            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent
-              (myLocation), (ChessPiece) chessboard.getComponent(move)) && 
-              (samePanelColor((JPanel) chessboard.pop(move), (JPanel)
-              chessboard.pop(myLocation))))
-                potentialMoves.push(move, null);} */
 
         return potentialMoves;
     }

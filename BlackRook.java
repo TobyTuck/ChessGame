@@ -18,41 +18,9 @@ public class BlackRook extends ChessPiece{
             super.setImage(image);
         }catch(IOException exception){
             System.out.println("Error locating Black Rook image file");}
-
-        // set possible movements by this piece
-        List potentialMoves = new List(28);
-        potentialMoves.push(8, true);
-        potentialMoves.push(16, true);
-        potentialMoves.push(24, true);
-        potentialMoves.push(32, true);
-        potentialMoves.push(40, true);
-        potentialMoves.push(48, true);
-        potentialMoves.push(56, true);
-        potentialMoves.push(1, true);
-        potentialMoves.push(2, true);
-        potentialMoves.push(3, true);
-        potentialMoves.push(4, true);
-        potentialMoves.push(5, true);
-        potentialMoves.push(6, true);
-        potentialMoves.push(7, true);
-        potentialMoves.push(-8, true);
-        potentialMoves.push(-16, true);
-        potentialMoves.push(-24, true);
-        potentialMoves.push(-32, true);
-        potentialMoves.push(-40, true);
-        potentialMoves.push(-48, true);
-        potentialMoves.push(-56, true);
-        potentialMoves.push(-1, true);
-        potentialMoves.push(-2, true);
-        potentialMoves.push(-3, true);
-        potentialMoves.push(-4, true);
-        potentialMoves.push(-5, true);
-        potentialMoves.push(-6, true);
-        potentialMoves.push(-7, true);
-        super.setMovement(potentialMoves);
     }
 
-    public List removeOverflow(int myLocation, List chessboard){
+    public List possibleMoves(int myLocation, List chessboard){
         List potentialMoves = new List(5);
         boolean isDone = false;
         ChessPiece currentPiece = (ChessPiece) chessboard.getComponent(myLocation);

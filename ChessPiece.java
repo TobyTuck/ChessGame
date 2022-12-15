@@ -83,14 +83,6 @@ public abstract class ChessPiece{
         return _movement;
     }
 
-    protected void setMovement(List movement){
-        _movement = movement;
-    }
-
-    public int getMovementSize(){
-        return _movement.getSize();
-    }
-
     /**
     Method that tests 2 ChessPieces to see if they are the same color
     */
@@ -227,7 +219,7 @@ public abstract class ChessPiece{
     }
 
     /**
-    Method that handles the "overflow" of potential moves of a certain chesspiece
+    Method that returns the available moves for the piece given its location and the board 
     */
-    public abstract List removeOverflow(int myLocation, List chessboard);
+    public abstract List possibleMoves(int myLocation, List chessboard);
 }

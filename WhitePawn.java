@@ -18,17 +18,9 @@ public class WhitePawn extends ChessPiece{
             super.setImage(image);
         }catch(IOException exception){
             System.out.println("Error locating White Pawn image file");}
-
-        // set potential moves
-        List potentialMoves = new List(1);
-        potentialMoves.push(-7, true);
-        potentialMoves.push(-8, true);
-        potentialMoves.push(-9, true);
-        potentialMoves.push(-16, true);
-        super.setMovement(potentialMoves);
      }
 
-    public List removeOverflow(int myLocation, List chessboard){
+    public List possibleMoves(int myLocation, List chessboard){
         List potentialMoves = new List(5);
         int move;
 
