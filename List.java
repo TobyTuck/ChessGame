@@ -134,6 +134,15 @@ public class List{
 
         return myLocation;
     }
+
+    /**
+    Method that removes every component of a node
+    */
+    public void removeAll(){
+    if(_head != null){
+        _head = null;
+        _size = 0;}
+    }
             
     /**
     Method that adds a component to a link
