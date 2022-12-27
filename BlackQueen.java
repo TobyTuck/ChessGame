@@ -290,13 +290,22 @@ public class BlackQueen extends ChessPiece{
     Method that handles the 'chessboard overflow' error
     */
     private boolean overflow(int start, int location, int moveTo){
-        if(sameRow(moveTo, location) || sameColumn(moveTo + 1, location + 1) ||
-           (!((rowOf(location, 8) && rowOf(moveTo, 7)) ||
-           (rowOf(moveTo, 8) && rowOf(location, 7))) && 
-           (location == moveTo + 7 || location == moveTo - 7 ||
-           location == moveTo + 9 || location == moveTo - 9)))
-            return false;
+        // rook movements
+        if(location == moveTo + 8 || location == moveTo - 8 ||
+           location == moveTo + 1 || location == moveTo - 1){
+            if(sameRow(moveTo, start) || sameColumn(moveTo + 1, start + 1))
+                return false;
 
-        return true;
+            else{
+                return true;} }
+
+        // bishop movements
+        else{
+            if((rowOf(location, 8) && rowOf(moveTo, 1)) || 
+               (rowOf(moveTo, 8) && rowOf(location, 1)))
+                return true;
+
+            else{
+                return false;} }
     }
 }
