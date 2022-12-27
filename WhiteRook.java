@@ -8,7 +8,11 @@ import javax.imageio.ImageIO;
 
 public class WhiteRook extends ChessPiece{
 
+    private List _possibleMoves;
+
     public WhiteRook(){
+        _possibleMoves = new List(5);
+
         // set file image
         try{
             // open image file
@@ -21,69 +25,91 @@ public class WhiteRook extends ChessPiece{
     }
 
     public List possibleMoves(int myLocation, List chessboard){
-        List potentialMoves = new List(5);
-        boolean isDone = false;
-        ChessPiece currentPiece = (ChessPiece) chessboard.getComponent(myLocation);
-        ChessPiece movePiece = null;
+        // remove any old moves that might be saved
+        _possibleMoves.removeAll();
 
-        int move = myLocation + 1;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 1;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
+        horizontalRight(myLocation, myLocation, chessboard);
+        horizontalLeft(myLocation, myLocation, chessboard);
+        verticalUp(myLocation, myLocation, chessboard);
+        verticalDown(myLocation, myLocation, chessboard);
 
-        move = myLocation - 1;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 1;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
+        return _possibleMoves;
+    }
 
-        move = myLocation + 8;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 8;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
+    /**
+    Recursive method that finds the horizonatal moves to the right
+    */
+    private void horizontalRight(int position, int startLocation, List chessboard){
+        int next = position + 1;
 
-        move = myLocation - 8;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 8;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
+        // check whether or not the position is valid according to rook rules
+        if(validMovement(position, next, startLocation, chessboard)){
+            _possibleMoves.push(next, null);
+            horizontalRight(next, startLocation, chessboard);}
+    }
 
-        /* for(int index = 0; index < extensiveMoves.getSize(); ++index){
-            move = myLocation + (int) extensiveMoves.pop(index);
-            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent
-              (myLocation), (ChessPiece) chessboard.getComponent(move)) &&
-              (sameMultiple(myLocation, move, 8) || sameBase(myLocation, move, 8)))
-                potentialMoves.push(move, null);}*/
+    /**
+    Recursive method that finds the horizontal moves to the left of current position
+    */
+    private void horizontalLeft(int position, int startLocation, List chessboard){
+        int next = position - 1;
 
-        return potentialMoves;
+        // check whether or not the position is valid according to rook rules
+        if(validMovement(position, next, startLocation, chessboard)){
+            _possibleMoves.push(next, null);
+            horizontalLeft(next, startLocation, chessboard);}
+    }
+
+    /**
+    Recursive method that finds any legal upward vertical moves
+    */
+    private void verticalUp(int position, int startLocation, List chessboard){
+        int next = position + 8;
+
+        // check whether or not the position is valid according to rook rules
+        if(validMovement(position, next, startLocation, chessboard)){
+            _possibleMoves.push(next, null);
+            verticalUp(next, startLocation, chessboard);}
+    }
+
+    /**
+    Recursive method that finds any legal downward vertical moves
+    */
+    private void verticalDown(int position, int startLocation, List chessboard){
+        int next = position - 8;
+
+        // check whether or not the position is valid according to rook rules
+        if(validMovement(position, next, startLocation, chessboard)){
+            _possibleMoves.push(next, null);
+            verticalDown(next, startLocation, chessboard);}
+    }
+
+    /**
+    Method that determines whether or not a potential move is valid according to rook rules
+    */
+    private boolean validMovement(int position, int next, int startLocation, List chessboard){
+        if(next > 63 || next < 0)
+            return false;
+
+        ChessPiece startPiece = (ChessPiece) chessboard.getComponent(startLocation);
+        ChessPiece myPiece = (ChessPiece) chessboard.getComponent(position);
+        ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
+
+        if(!sameColor(startPiece, nextPiece) &&
+           !overflow(startLocation, next) &&
+           (myPiece == null || myPiece == startPiece))
+            return true;
+
+        return false;
+    }
+
+    /**
+    Method that handles the 'chessboard overflow' error
+    */
+    private boolean overflow(int start, int moveTo){
+        if(sameRow(moveTo, start) || sameColumn(moveTo + 1, start + 1)) 
+            return false;
+
+        return true;
     }
 }

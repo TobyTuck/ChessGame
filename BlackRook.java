@@ -25,69 +25,6 @@ public class BlackRook extends ChessPiece{
     }
 
     public List possibleMoves(int myLocation, List chessboard){
-        /* List potentialMoves = new List(5);
-        boolean isDone = false;
-        ChessPiece currentPiece = (ChessPiece) chessboard.getComponent(myLocation);
-        ChessPiece movePiece = null;
-
-        int move = myLocation + 1;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 1;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation - 1;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 1;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation + 8;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 8;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation - 8;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 8;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        // for(int index = 0; index < extensiveMoves.getSize(); ++index){
-            move = myLocation + (int) extensiveMoves.pop(index);
-            if(move < 64 && !sameColor((ChessPiece) chessboard.getComponent
-              (myLocation), (ChessPiece) chessboard.getComponent(move)) &&
-              (sameMultiple(myLocation, move, 8) || sameBase(myLocation, move, 8)))
-                potentialMoves.push(move, null);}*/ 
-
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
 
@@ -139,7 +76,7 @@ public class BlackRook extends ChessPiece{
     Recursive method that finds any legal downward vertical moves
     */
     private void verticalDown(int position, int startLocation, List chessboard){
-        int next = position + 8;
+        int next = position - 8;
 
         // check whether or not the position is valid according to rook rules
         if(validMovement(position, next, startLocation, chessboard)){
@@ -159,7 +96,7 @@ public class BlackRook extends ChessPiece{
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
         if(!sameColor(startPiece, nextPiece) &&
-           !overflow(position + 1, next + 1) &&
+           !overflow(startLocation, next) &&
            (myPiece == null || myPiece == startPiece))
             return true;
 
@@ -169,11 +106,10 @@ public class BlackRook extends ChessPiece{
     /**
     Method that handles the 'chessboard overflow' error
     */
-    private boolean overflow(int location, int moveTo){
-        if((moveTo / 8 == location / 8) || (moveTo == location + 8) ||
-           (moveTo == location - 8))
-            return true;
+    private boolean overflow(int start, int moveTo){
+        if(sameRow(moveTo, start) || sameColumn(moveTo + 1, start + 1)) 
+            return false;
 
-        return false;
+        return true;
     }
 }

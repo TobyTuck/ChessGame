@@ -107,8 +107,8 @@ public class BlackBishop extends ChessPiece{
     Method that handles the 'chessboard overflow' error 
     */
     private boolean overflow(int location, int moveTo){
-        if((baseOf(location, 8, 8) && baseOf(moveTo, 1, 8)) || 
-           (baseOf(moveTo, 8, 8) && baseOf(location, 1, 8)))
+        if((rowOf(location, 8) && rowOf(moveTo, 1)) || 
+           (rowOf(moveTo, 8) && rowOf(location, 1)))
             return true;
 
         return false;

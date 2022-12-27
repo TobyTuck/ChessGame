@@ -156,9 +156,9 @@ public abstract class ChessPiece{
                 return true;} }
     }
 
-    protected boolean baseOf(int number, int base, int difference){
-        while(number > difference){
-            number -= difference;}
+    protected boolean rowOf(int number, int base){
+        while(number > 8){
+            number -= 8;}
 
         if(number == base)
             return true;
@@ -174,21 +174,26 @@ public abstract class ChessPiece{
     }
 
     /**
-    Checks that a number is the same multiple of a given number
+    Checks if two squares (identified by their number) would lie on the same 
+    Chess row 
     */
-    protected boolean sameMultiple(int number1, int number2, int factor){
-        if(number1 / factor == number2 / factor)
+    protected boolean sameRow(int number1, int number2){
+        if(number1 / 8 == number2 / 8)
             return true;
 
         return false;
     }
 
-    protected boolean sameBase(int number1, int number2, int difference){
-        while(number1 > difference){
-            number1 -= difference;}
+    /**
+    Checks if two squares (identified by their number) would lie on the same 
+    Chess column
+    */
+    protected boolean sameColumn(int number1, int number2){
+        while(number1 > 8){
+            number1 -= 8;}
 
-        while(number2 > difference){
-            number2 -= difference;}
+        while(number2 > 8){
+            number2 -= 8;}
 
         if(number1 == number2)
             return true;
@@ -198,10 +203,10 @@ public abstract class ChessPiece{
 
     protected boolean overflow(int num1, int num2, int limit, ChessPiece piece){
         if(piece instanceof WhiteBishop || piece instanceof BlackBishop){
-            if(((baseOf(num1, 7, limit) || baseOf(num1, 8, limit)) && 
-               (baseOf(num2, 1, limit) || baseOf(num2, 2, limit))) ||
-               ((baseOf(num1, 1, limit) || baseOf(num1, 2, limit)) &&
-               (baseOf(num2, 7, limit) || baseOf(num2, 8, limit))))
+            if(((rowOf(num1, 7) || rowOf(num1, 8)) && 
+               (rowOf(num2, 1) || rowOf(num2, 2))) ||
+               ((rowOf(num1, 1) || rowOf(num1, 2)) &&
+               (rowOf(num2, 7) || rowOf(num2, 8))))
                 return true;
         
             return false;}
