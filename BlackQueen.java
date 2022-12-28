@@ -25,122 +25,6 @@ public class BlackQueen extends ChessPiece{
     }
 
     public List possibleMoves(int myLocation, List chessboard){
-        /* List potentialMoves = new List(5);
-        boolean isDone = false;
-        ChessPiece currentPiece = (ChessPiece) chessboard.getComponent(myLocation);
-        ChessPiece movePiece = null;
-
-        // Rook-like properties
-        int move = myLocation + 1;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 1;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation - 1;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(myLocation, move, 8, new BlackRook()) && !isDone && 
-              move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 1;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation + 8;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 8;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation - 8;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && !isDone && move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 8;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        // Bishop-like properties
-        move = myLocation + 9;
-        isDone = false;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(move + 1, move - 8, 8, new BlackBishop())
-              && !isDone && move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 9;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation + 7;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        isDone = false;
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(move + 1, move - 6, 8, new BlackBishop())
-              && !isDone && move < 64){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move += 7;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation - 9;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        isDone = false;
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(move + 1, move + 10, 8, new BlackBishop())
-              && !isDone && move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 9;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        move = myLocation -7;
-        if(move < 63)
-            movePiece = (ChessPiece) chessboard.getComponent(move);
-        isDone = false;
-        while(!sameColor(currentPiece, movePiece) && 
-              !overflow(move + 1, move + 8, 8, new BlackBishop())
-              && !isDone && move > -1){
-            potentialMoves.push(move, null);
-            if(isOpponent(currentPiece, movePiece))
-                isDone = true;
-            move -= 7;
-            if(move < 63)
-                movePiece = (ChessPiece) chessboard.getComponent(move);}
-
-        return potentialMoves; */
-
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
 
@@ -268,16 +152,6 @@ public class BlackQueen extends ChessPiece{
         ChessPiece myPiece = (ChessPiece) chessboard.getComponent(position);
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
-        // delete
-        if(sameColor(startPiece, nextPiece))
-            System.out.println("Can't capture piece of same color: " + next);
-
-        if(overflow(startLocation, position, next))
-            System.out.println("Overflow error: " + next);
-
-        if(!(myPiece == null || myPiece == startPiece))
-            System.out.println("Space after potential capture error: " + next);
-
         if(!sameColor(startPiece, nextPiece) &&
            !overflow(startLocation, position, next) &&
            (myPiece == null || myPiece == startPiece))
@@ -301,8 +175,8 @@ public class BlackQueen extends ChessPiece{
 
         // bishop movements
         else{
-            if((rowOf(location, 8) && rowOf(moveTo, 1)) || 
-               (rowOf(moveTo, 8) && rowOf(location, 1)))
+            if((rowOf(location + 1, 8) && rowOf(moveTo + 1, 1)) || 
+               (rowOf(moveTo + 1, 8) && rowOf(location + 1, 1)))
                 return true;
 
             else{

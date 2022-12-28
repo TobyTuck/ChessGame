@@ -201,24 +201,8 @@ public abstract class ChessPiece{
         return false;
     }
 
-    protected boolean overflow(int num1, int num2, int limit, ChessPiece piece){
-        if(piece instanceof WhiteBishop || piece instanceof BlackBishop){
-            if(((rowOf(num1, 7) || rowOf(num1, 8)) && 
-               (rowOf(num2, 1) || rowOf(num2, 2))) ||
-               ((rowOf(num1, 1) || rowOf(num1, 2)) &&
-               (rowOf(num2, 7) || rowOf(num2, 8))))
-                return true;
-        
-            return false;}
-
-        // chesspiece is rook?
-        if(num1 / limit == num2 / limit)
-            return false;
-        return true;
-    }
-
     /**
-    Method that returns the available moves for the piece given its location and the board 
+    Returns the available moves for the piece 
     */
     public abstract List possibleMoves(int myLocation, List chessboard);
 }

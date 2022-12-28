@@ -16,8 +16,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
     private JPanel west;
 
     // panels that fit insde the east and west panels, w/ the purpose of holding captured chesspieces
-    private JPanel northWest;
-    private JPanel southEast;
+    private JPanel capturedWhite;
+    private JPanel capturedBlack;
 
     //holds all the individual squares
     List list;
@@ -111,31 +111,31 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         west.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)),
                                                    boardHeight));
         west.setBackground(darkGreen);
-        northWest = new JPanel();
+        capturedWhite = new JPanel();
         JPanel filler1 = new JPanel();
         JPanel filler2 = new JPanel();
         
-        northWest.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+        capturedWhite.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
                                                         boardHeight));
         filler1.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
                                                       boardHeight));
         filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
                                                       boardHeight));
 
-        northWest.setBackground(darkGreen);
-        northWest.setLayout(new FlowLayout());
+        capturedWhite.setBackground(Color.red);
+        capturedWhite.setLayout(new FlowLayout());
         filler1.setBackground(darkGreen);
         filler2.setBackground(darkGreen);
         west.add(filler1, BorderLayout.EAST);
         west.add(filler2, BorderLayout.WEST);
-        west.add(northWest, BorderLayout.CENTER);
+        west.add(capturedWhite, BorderLayout.CENTER);
 
         east = new JPanel(new BorderLayout());
         east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)), 
                                                    boardHeight));
         east.setBackground(darkGreen);
 
-        southEast = new JPanel(new FlowLayout());
+        capturedBlack = new JPanel(new FlowLayout());
         JPanel filler4 = new JPanel(new BorderLayout());
         JPanel filler5 = new JPanel();
         JPanel filler6 = new JPanel();
@@ -152,13 +152,13 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         // panel that fills the extra space of filler4
         filler7.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
                                                (int) (boardHeight * 0.86)));
-        southEast.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)),
+        capturedBlack.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)),
                                                  (int) (boardHeight * 0.14)));
         filler4.add(filler7, BorderLayout.NORTH);
-        filler4.add(southEast, BorderLayout.SOUTH);
+        filler4.add(capturedBlack, BorderLayout.SOUTH);
         
 
-        southEast.setBackground(darkGreen);
+        capturedBlack.setBackground(Color.red);
         filler4.setBackground(darkGreen);
         filler5.setBackground(darkGreen);
         filler6.setBackground(darkGreen);
@@ -402,7 +402,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
                                                 ((double) capturedHeight / 
                                                 (double) selectedPiece2.getHeight())));
-                                pin(selectedPiece2, southEast, capturedWidth, capturedHeight, 
+                                pin(selectedPiece2, capturedBlack, capturedWidth, capturedHeight, 
                                     "FlowLayout", false);}
 
                             // captured piece is white
@@ -413,7 +413,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
                                                 ((double) capturedHeight / 
                                                 (double) selectedPiece2.getHeight())));
-                                pin(selectedPiece2, northWest, capturedWidth, capturedHeight, 
+                                pin(selectedPiece2, capturedWhite, capturedWidth, capturedHeight, 
                                     "FlowLayout", false);}
 
                             // add the chesspiece of the first selected panel to the next
