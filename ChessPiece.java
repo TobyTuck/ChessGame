@@ -37,7 +37,6 @@ public abstract class ChessPiece{
         graphics2D.drawImage(_image, 0, 0, newWidth, newHeight, null);
 
         _image =  newImage;
-
     }
 
     /** 

@@ -81,6 +81,8 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
+        this.setIconImage(new Logo().getImage());
+
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         
@@ -93,7 +95,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         
         // build a dark green color for side panels
-        // light blue: 102, 178, 255
         Color darkGreen = new Color(25, 45, 25);
         // build supporting panels
         // build panels above and below chessboard
@@ -122,7 +123,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
                                                       boardHeight));
 
-        capturedWhite.setBackground(Color.red);
+        capturedWhite.setBackground(darkGreen);
         capturedWhite.setLayout(new FlowLayout());
         filler1.setBackground(darkGreen);
         filler2.setBackground(darkGreen);
@@ -158,7 +159,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         filler4.add(capturedBlack, BorderLayout.SOUTH);
         
 
-        capturedBlack.setBackground(Color.red);
+        capturedBlack.setBackground(darkGreen);
         filler4.setBackground(darkGreen);
         filler5.setBackground(darkGreen);
         filler6.setBackground(darkGreen);
@@ -331,11 +332,22 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
-        this.add(board, BorderLayout.CENTER);
-        this.add(north, BorderLayout.NORTH);
-        this.add(south, BorderLayout.SOUTH);
-        this.add(west, BorderLayout.WEST);
-        this.add(east, BorderLayout.EAST);
+        System.out.println("Width: " + screenSize.width + "\nLength: " + screenSize.height);
+
+        if(screenSize.width > screenSize.height){
+            this.add(board, BorderLayout.CENTER);
+            this.add(north, BorderLayout.NORTH);
+            this.add(south, BorderLayout.SOUTH);
+            this.add(west, BorderLayout.WEST);
+            this.add(east, BorderLayout.EAST);}
+
+        if(screenSize.width < screenSize.height){ 
+            this.add(board, BorderLayout.CENTER);
+            this.add(north, BorderLayout.WEST);
+            this.add(south, BorderLayout.EAST);
+            this.add(west, BorderLayout.SOUTH);
+            this.add(east, BorderLayout.NORTH);}
+
         this.setVisible(true);
 
         MouseAdapter ma = new MouseAdapter() {
