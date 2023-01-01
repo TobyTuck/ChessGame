@@ -81,6 +81,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
+        // set applet's tab icon
         this.setIconImage(new Logo().getImage());
 
         // build the chessboard
@@ -453,6 +454,18 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                             if(selectedPiece != selectedPiece2)
                                 priorMove = selectedPiece;
                             
+                            // check if checkmate has been achieved
+                            ChessPiece king = null;
+                            int count = 0;
+                            while(!(king instanceof BlackKing) && count < 63){
+                                king = (ChessPiece) list.getComponent(0);
+                                ++count;}
+
+                            // delete
+                            if(king instanceof BlackKing){
+                                if(king.checkMate(count, list))
+                                    System.out.println("Checkmate achieved!");}
+
                             // Reset all the the fields
                             selectedPanel1 = null;
                             selectedPanel2 = null;
@@ -499,9 +512,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                     myLocation = index;}
 
                             int possibleMove;
-                            // Green: 118, 255, 122
-                            // Magenta: 128, 0, 128
-                            // dark red: 139, 0, 0 
                             Color option = new Color(127, 255, 0);
                             Color captureKing = new Color(128, 0, 128);
                             myMoves = selectedPiece.possibleMoves(myLocation, list);

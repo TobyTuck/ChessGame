@@ -201,6 +201,49 @@ public abstract class ChessPiece{
     }
 
     /**
+    Checks whethor or not the king chesspiece is in checkmate
+    */
+    public boolean checkMate(int kingLocation, List chessboard){
+        BlackKing king = (BlackKing) (chessboard.getComponent(kingLocation));
+
+        List kingMoves = king.possibleMoves(kingLocation, chessboard);
+        kingMoves.push(kingLocation, null);
+
+        List listHolder = new List(5);    // temp. holder for single opponent moves
+        List opponentMoves = new List(5);
+        List sameMoves = new List(5);     // moves which belong to both BK and opponent pieces
+
+
+        // iterate through all chesspieces, and find opponent piece moves
+        for(int index = 0; index < chessboard.getSize(); ++index){
+            if(isOpponent((ChessPiece) chessboard.getComponent(index), new BlackKing())){
+                listHolder = ((ChessPiece) (chessboard.getComponent(index))).
+                                            possibleMoves(index, chessboard);
+                // copy over moves from one piece to list repository of all opponent moves
+                for(int i = 0; i < listHolder.getSize(); ++i){
+                    opponentMoves.push(listHolder.pop(i), null);} } }
+                
+        // make a list of moves both king and opponent pieces may use 
+        for(int index = 0; index < opponentMoves.getSize(); ++index){
+            for(int i = 0; i < kingMoves.getSize(); ++i){ 
+                if((int) (opponentMoves.pop(index)) == (int) (kingMoves.pop(i)))
+                    sameMoves.push(kingMoves.pop(i), null);} }
+
+        boolean checkmate = true;
+        boolean equal = false;
+        // check if all of the king's moves are blocked by opponent chesspieces 
+        for(int index = 0; index < sameMoves.getSize(); ++index){
+            for(int i = 0; i < kingMoves.getSize(); ++i){
+                if((int) (sameMoves.pop(index)) == (int) (kingMoves.pop(i)))
+                    equal = true;} 
+            
+            if(!equal)
+                checkmate = false;}
+        
+        return checkmate;
+    }
+
+    /**
     Returns the available moves for the piece 
     */
     public abstract List possibleMoves(int myLocation, List chessboard);
