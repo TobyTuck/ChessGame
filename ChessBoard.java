@@ -333,8 +333,6 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
-        System.out.println("Width: " + screenSize.width + "\nLength: " + screenSize.height);
-
         if(screenSize.width > screenSize.height){
             this.add(board, BorderLayout.CENTER);
             this.add(north, BorderLayout.NORTH);

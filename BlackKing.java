@@ -78,15 +78,16 @@ public class BlackKing extends ChessPiece{
     Method that checks if a potential move by the king places him in check
     */
     private boolean check(int move){
-        List opponentMoves = new List(5);
+        List opponentMoves;
 
-        // find opponent moves
+        // sort through opponent chesspieces from all possible chess squares 
         for(int index = 0; index < _chessboard.getSize(); ++index){
             if(isOpponent((ChessPiece) (_chessboard.getComponent(index)), new BlackKing())){
-               opponentMoves = ((ChessPiece) (_chessboard.getComponent(index))).
+                // get moves of each single opponent chesspiece
+                opponentMoves = ((ChessPiece) (_chessboard.getComponent(index))).
                                               possibleMoves(index, _chessboard);
 
-                // check if any opponent moves are the same as potential king piece moves
+                // check if any opponent moves are the same as king piece move
                 for(int i = 0; i < opponentMoves.getSize(); ++i){
                     if((int) opponentMoves.pop(i) == move)
                         return true;} } }
