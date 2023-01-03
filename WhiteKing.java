@@ -8,7 +8,16 @@ import javax.imageio.ImageIO;
 
 public class WhiteKing extends ChessPiece{
 
+    private List _possibleMoves;
+    private List _chessboard;
+    private int _location;
+
     public WhiteKing(){
+        // initialize fields
+        _possibleMoves = new List(5);
+        _chessboard = null;
+        _location = 0;
+
         // set file image
         try{
             // open image file
@@ -20,51 +29,147 @@ public class WhiteKing extends ChessPiece{
             System.out.println("Error locating the White King image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard){
-        List potentialMoves = new List(5);
+    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck){
+        // remove any other former moves from Black King chesspiece
+        _possibleMoves.removeAll();
+
+        // set fields
+        _chessboard = chessboard;
+        _location = myLocation;
+
         int move;
+        ChessPiece myPiece = (ChessPiece) (_chessboard.getComponent(myLocation));
+        ChessPiece movePiece;
 
-        // '\^ left up diagonal' move
-        move = myLocation - 9;
-        if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
-            potentialMoves.push(move, null);
+        if(considerCheck){
+            // '\^ left up diagonal' move
+            move = myLocation - 9;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
+               !sameColor(movePiece, myPiece) && !check(move)){
+                _possibleMoves.push(move, null);
 
-        // '|^ straight up vertical' move
-        move = myLocation - 8;
-        if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
-            potentialMoves.push(move, null);
+            // '|^ straight up vertical' move
+            move = myLocation - 8;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
+               !sameColor(movePiece, myPiece) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '/^ right up diagonal' move
-        move = myLocation - 7;
-        if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
-            potentialMoves.push(move, null);
+            // '/^ right up diagonal' move
+            move = myLocation - 7;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
+               !sameColor(movePiece, myPiece) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '<- left horizontal' move
-        move = myLocation - 1;
-        if(move >= 0 && (move / 8 == myLocation / 8))
-            potentialMoves.push(move, null);
+            // '<- left horizontal' move
+            move = myLocation - 1;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == myLocation / 8) && 
+               !sameColor(movePiece, myPiece) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '-> right horizontal' move
-        move = myLocation + 1;
-        if(move < 63 && (move / 8 == myLocation / 8))
-            potentialMoves.push(move, null);
+            // '-> right horizontal' move
+            move = myLocation + 1;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == myLocation / 8) && 
+               !sameColor(movePiece, myPiece) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '\v left down diagonal' move
-        move = myLocation + 9;
-        if(move < 63 && (move / 8 == (myLocation / 8) + 1))
-            potentialMoves.push(move, null);
+            // '\v left down diagonal' move
+            move = myLocation + 9;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
+               !sameColor(movePiece, myPiece) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '|v straight down vertical' move
-        move = myLocation + 8;
-        if(move < 63 && (move / 8 == (myLocation / 8) + 1))
-            potentialMoves.push(move, null);
+            // '|v straight down vertical' move
+            move = myLocation + 8;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
+               !sameColor(movePiece, myPiece) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '/v right down diagonal' move
-        move = myLocation + 7;
-        if(move < 63 && (move / 8 == (myLocation / 8) + 1))
-            potentialMoves.push(move, null);
+            // '/v right down diagonal' move
+            move = myLocation + 7;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
+               !sameColor(movePiece, myPiece) && !check(move))
+                _possibleMoves.push(move, null);}
 
-        return potentialMoves;
+        else{
+            // '\^ left up diagonal' move
+            move = myLocation - 9;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+                _possibleMoves.push(move, null);
+
+            // '|^ straight up vertical' move
+            move = myLocation - 8;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+                _possibleMoves.push(move, null);
+
+            // '/^ right up diagonal' move
+            move = myLocation - 7;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+                _possibleMoves.push(move, null);
+
+            // '<- left horizontal' move
+            move = myLocation - 1;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move >= 0 && (move / 8 == myLocation / 8))
+                _possibleMoves.push(move, null);
+
+            // '-> right horizontal' move
+            move = myLocation + 1;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == myLocation / 8))
+                _possibleMoves.push(move, null);
+
+            // '\v left down diagonal' move
+            move = myLocation + 9;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+                _possibleMoves.push(move, null);
+
+            // '|v straight down vertical' move
+            move = myLocation + 8;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+                _possibleMoves.push(move, null);
+
+            // '/v right down diagonal' move
+            move = myLocation + 7;
+            movePiece = (ChessPiece) (_chessboard.getComponent(move));
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+                _possibleMoves.push(move, null);}
+
+
+        return _possibleMoves;
+    }
+
+    /**
+    Method that checks if a potential move by the king places him in check
+    */
+    private boolean check(int move){
+        List opponentMoves;
+        ChessPiece opponent;
+
+        // sort through opponent chesspieces from all possible chess squares 
+        for(int index = 0; index < _chessboard.getSize(); ++index){
+            opponent = (ChessPiece) (_chessboard.getComponent(index));
+            if(isOpponent(opponent, this)){
+                opponentMoves = opponent.possibleMoves(index, _chessboard, false);
+
+                // check if any opponent moves are the same as king piece move
+                for(int i = 0; i < opponentMoves.getSize(); ++i){
+                    if((int) opponentMoves.pop(i) == move)
+                        return true;} } }
+
+        return false;
     }
 }
 

@@ -14,6 +14,8 @@ public class BlackKing extends ChessPiece{
 
     public BlackKing(){
         _possibleMoves = new List(5);
+        _chessboard = null;
+        _location = 0;
 
         // set file image
         try{
@@ -26,50 +28,95 @@ public class BlackKing extends ChessPiece{
             System.out.println("Error locating Black King image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard){
+    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck){
+        // remove any other former moves from Black King chesspiece
+        _possibleMoves.removeAll();
+
         _chessboard = chessboard;
         _location = myLocation;
         int move;
 
-        // '\^ left up diagonal' move
-        move = myLocation - 9;
-        if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && !check(move))
-            _possibleMoves.push(move, null);
+        if(considerCheck){
+            // '\^ left up diagonal' move
+            move = myLocation - 9;
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '|^ straight up vertical' move
-        move = myLocation - 8;
-        if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && !check(move))
-            _possibleMoves.push(move, null);
+            // '|^ straight up vertical' move
+            move = myLocation - 8;
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '/^ right up diagonal' move
-        move = myLocation - 7;
-        if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && !check(move))
-            _possibleMoves.push(move, null);
+            // '/^ right up diagonal' move
+            move = myLocation - 7;
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '<- left horizontal' move
-        move = myLocation - 1;
-        if(move >= 0 && (move / 8 == myLocation / 8) && !check(move))
-            _possibleMoves.push(move, null);
+            // '<- left horizontal' move
+            move = myLocation - 1;
+            if(move >= 0 && (move / 8 == myLocation / 8) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '-> right horizontal' move
-        move = myLocation + 1;
-        if(move < 63 && (move / 8 == myLocation / 8) && !check(move))
-            _possibleMoves.push(move, null);
+            // '-> right horizontal' move
+            move = myLocation + 1;
+            if(move < 63 && (move / 8 == myLocation / 8) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '\v left down diagonal' move
-        move = myLocation + 9;
-        if(move < 63 && (move / 8 == (myLocation / 8) + 1) && !check(move))
-            _possibleMoves.push(move, null);
+            // '\v left down diagonal' move
+            move = myLocation + 9;
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '|v straight down vertical' move
-        move = myLocation + 8;
-        if(move < 63 && (move / 8 == (myLocation / 8) + 1) && !check(move))
-            _possibleMoves.push(move, null);
+            // '|v straight down vertical' move
+            move = myLocation + 8;
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && !check(move))
+                _possibleMoves.push(move, null);
 
-        // '/v right down diagonal' move
-        move = myLocation + 7;
-        if(move < 63 && (move / 8 == (myLocation / 8) + 1) && !check(move))
-            _possibleMoves.push(move, null);
+            // '/v right down diagonal' move
+            move = myLocation + 7;
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && !check(move))
+                _possibleMoves.push(move, null);}
+
+        else{
+            // '\^ left up diagonal' move
+            move = myLocation - 9;
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+                _possibleMoves.push(move, null);
+
+            // '|^ straight up vertical' move
+            move = myLocation - 8;
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+                _possibleMoves.push(move, null);
+
+            // '/^ right up diagonal' move
+            move = myLocation - 7;
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+                _possibleMoves.push(move, null);
+
+            // '<- left horizontal' move
+            move = myLocation - 1;
+            if(move >= 0 && (move / 8 == myLocation / 8))
+                _possibleMoves.push(move, null);
+
+            // '-> right horizontal' move
+            move = myLocation + 1;
+            if(move < 63 && (move / 8 == myLocation / 8))
+                _possibleMoves.push(move, null);
+
+            // '\v left down diagonal' move
+            move = myLocation + 9;
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+                _possibleMoves.push(move, null);
+
+            // '|v straight down vertical' move
+            move = myLocation + 8;
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+                _possibleMoves.push(move, null);
+
+            // '/v right down diagonal' move
+            move = myLocation + 7;
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+                _possibleMoves.push(move, null);}
 
         return _possibleMoves;
     }
@@ -79,13 +126,14 @@ public class BlackKing extends ChessPiece{
     */
     private boolean check(int move){
         List opponentMoves;
+        ChessPiece opponent;
 
         // sort through opponent chesspieces from all possible chess squares 
         for(int index = 0; index < _chessboard.getSize(); ++index){
-            if(isOpponent((ChessPiece) (_chessboard.getComponent(index)), new BlackKing())){
-                // get moves of each single opponent chesspiece
-                opponentMoves = ((ChessPiece) (_chessboard.getComponent(index))).
-                                              possibleMoves(index, _chessboard);
+            opponent = (ChessPiece) (_chessboard.getComponent(index));
+            if(isOpponent(opponent, this)){
+                // get moves of opponent chesspiece
+                opponentMoves = opponent.possibleMoves(index, _chessboard, false);
 
                 // check if any opponent moves are the same as king piece move
                 for(int i = 0; i < opponentMoves.getSize(); ++i){

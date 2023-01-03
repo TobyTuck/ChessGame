@@ -512,7 +512,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                             int possibleMove;
                             Color option = new Color(127, 255, 0);
                             Color captureKing = new Color(128, 0, 128);
-                            myMoves = selectedPiece.possibleMoves(myLocation, list);
+                            myMoves = selectedPiece.possibleMoves(myLocation, list, true);
                             for(int index = 0; index < myMoves.getSize(); ++index){
                                 possibleMove = (int) myMoves.pop(index);
                                 if(isOpponent((ChessPiece) list.getComponent(myLocation), 
@@ -827,7 +827,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         location = count;}
 
                 // find legal moves
-                myMoves = piece.possibleMoves(location, chessboard);
+                myMoves = piece.possibleMoves(location, chessboard, true);
                 for(int count = 0; count < myMoves.getSize(); ++count){
                     // is one of the opponents move on the piece specified in the parameters
                     if((int) myMoves.pop(count) == myLocation)

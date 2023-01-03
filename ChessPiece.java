@@ -206,7 +206,7 @@ public abstract class ChessPiece{
     public boolean checkMate(int kingLocation, List chessboard){
         BlackKing king = (BlackKing) (chessboard.getComponent(kingLocation));
 
-        List kingMoves = king.possibleMoves(kingLocation, chessboard);
+        List kingMoves = king.possibleMoves(kingLocation, chessboard, true);
         kingMoves.push(kingLocation, null);
 
         List listHolder = new List(5);    // temp. holder for single opponent moves
@@ -218,7 +218,7 @@ public abstract class ChessPiece{
         for(int index = 0; index < chessboard.getSize(); ++index){
             if(isOpponent((ChessPiece) chessboard.getComponent(index), new BlackKing())){
                 listHolder = ((ChessPiece) (chessboard.getComponent(index))).
-                                            possibleMoves(index, chessboard);
+                                            possibleMoves(index, chessboard, false);
                 // copy over moves from one piece to list repository of all opponent moves
                 for(int i = 0; i < listHolder.getSize(); ++i){
                     opponentMoves.push(listHolder.pop(i), null);} } }
@@ -245,6 +245,7 @@ public abstract class ChessPiece{
 
     /**
     Returns the available moves for the piece 
+    To see why a boolean parameter was used, see documentation for BlackKing subclass
     */
-    public abstract List possibleMoves(int myLocation, List chessboard);
+    public abstract List possibleMoves(int myLocation, List chessboard, boolean hold);
 }

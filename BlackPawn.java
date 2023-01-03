@@ -22,7 +22,7 @@ public class BlackPawn extends ChessPiece{
             System.out.println("Error locating Black Pawn image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard){
+    public List possibleMoves(int myLocation, List chessboard, boolean notApplicable){
         List potentialMoves = new List(5);
         int move;
 

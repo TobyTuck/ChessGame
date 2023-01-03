@@ -24,7 +24,7 @@ public class BlackRook extends ChessPiece{
             System.out.println("Error locating Black Rook image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard){
+    public List possibleMoves(int myLocation, List chessboard, boolean notApplicable){
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
 
