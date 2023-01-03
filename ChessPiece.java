@@ -245,7 +245,14 @@ public abstract class ChessPiece{
 
     /**
     Returns the available moves for the piece 
-    To see why a boolean parameter was used, see documentation for BlackKing subclass
+    Boolean Parameter: Used to differentiate between standard moves of the chesspiece
+                       and moves which will determine whether the opponent king may
+                       occupy a position w/o being in "check." 
+                       For example, if an opponent king is placed in check by a rook,
+                       that king may not move linear, as it is still in check. Under
+                       normal circumstances, the rook would not be allowed to move to
+                       the position behind an opponent, which would have allowed the 
+                       opponent king to move linear, an illegal move.
     */
     public abstract List possibleMoves(int myLocation, List chessboard, boolean hold);
 }
