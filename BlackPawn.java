@@ -22,7 +22,7 @@ public class BlackPawn extends ChessPiece{
             System.out.println("Error locating Black Pawn image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard, boolean notApplicable){
+    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck){
         List potentialMoves = new List(5);
         int move;
 
@@ -32,10 +32,11 @@ public class BlackPawn extends ChessPiece{
            (ChessPiece) chessboard.getComponent(myLocation)))
             potentialMoves.push(move, null);
 
-        move = myLocation + 8;
-        if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
-           chessboard.getComponent(move) == null)
-            potentialMoves.push(move, null);
+        if(considerCheck){
+            move = myLocation + 8;
+            if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
+               chessboard.getComponent(move) == null)
+                potentialMoves.push(move, null);}
 
         move = myLocation + 9;
         if((move / 8 == (myLocation / 8) + 1) && move < 64 && 

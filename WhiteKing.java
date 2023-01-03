@@ -39,114 +39,104 @@ public class WhiteKing extends ChessPiece{
 
         int move;
         ChessPiece myPiece = (ChessPiece) (_chessboard.getComponent(myLocation));
-        ChessPiece movePiece;
 
         if(considerCheck){
             // '\^ left up diagonal' move
             move = myLocation - 9;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
-               !sameColor(movePiece, myPiece) && !check(move)){
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);
 
             // '|^ straight up vertical' move
             move = myLocation - 8;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
-               !sameColor(movePiece, myPiece) && !check(move))
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);
 
             // '/^ right up diagonal' move
             move = myLocation - 7;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
-               !sameColor(movePiece, myPiece) && !check(move))
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);
 
             // '<- left horizontal' move
             move = myLocation - 1;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move >= 0 && (move / 8 == myLocation / 8) && 
-               !sameColor(movePiece, myPiece) && !check(move))
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);
 
             // '-> right horizontal' move
             move = myLocation + 1;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move < 63 && (move / 8 == myLocation / 8) && 
-               !sameColor(movePiece, myPiece) && !check(move))
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);
 
             // '\v left down diagonal' move
             move = myLocation + 9;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
-               !sameColor(movePiece, myPiece) && !check(move))
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);
 
             // '|v straight down vertical' move
             move = myLocation + 8;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
-               !sameColor(movePiece, myPiece) && !check(move))
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);
 
             // '/v right down diagonal' move
             move = myLocation + 7;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
             if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
-               !sameColor(movePiece, myPiece) && !check(move))
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece) && !check(move))
                 _possibleMoves.push(move, null);}
 
         else{
             // '\^ left up diagonal' move
             move = myLocation - 9;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);
 
             // '|^ straight up vertical' move
             move = myLocation - 8;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);
 
             // '/^ right up diagonal' move
             move = myLocation - 7;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move >= 0 && (move / 8 == (myLocation / 8) - 1))
+            if(move >= 0 && (move / 8 == (myLocation / 8) - 1) && 
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);
 
             // '<- left horizontal' move
             move = myLocation - 1;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move >= 0 && (move / 8 == myLocation / 8))
+            if(move >= 0 && (move / 8 == myLocation / 8) &&
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);
 
             // '-> right horizontal' move
             move = myLocation + 1;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move < 63 && (move / 8 == myLocation / 8))
+            if(move < 63 && (move / 8 == myLocation / 8) && 
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);
 
             // '\v left down diagonal' move
             move = myLocation + 9;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);
 
             // '|v straight down vertical' move
             move = myLocation + 8;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);
 
             // '/v right down diagonal' move
             move = myLocation + 7;
-            movePiece = (ChessPiece) (_chessboard.getComponent(move));
-            if(move < 63 && (move / 8 == (myLocation / 8) + 1))
+            if(move < 63 && (move / 8 == (myLocation / 8) + 1) && 
+               !sameColor((ChessPiece) (_chessboard.getComponent(move)), myPiece))
                 _possibleMoves.push(move, null);}
-
 
         return _possibleMoves;
     }
@@ -172,4 +162,3 @@ public class WhiteKing extends ChessPiece{
         return false;
     }
 }
-

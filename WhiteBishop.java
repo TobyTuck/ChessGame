@@ -24,14 +24,14 @@ public class WhiteBishop extends ChessPiece{
             System.out.println("Error locating White Bishop image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard, boolean notApplicable){
+    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck){
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
 
-        topRight(myLocation, myLocation, chessboard);
-        topLeft(myLocation, myLocation, chessboard);
-        bottomRight(myLocation, myLocation, chessboard);
-        bottomLeft(myLocation, myLocation, chessboard);
+        topRight(myLocation, myLocation, chessboard, considerCheck);
+        topLeft(myLocation, myLocation, chessboard, considerCheck);
+        bottomRight(myLocation, myLocation, chessboard, considerCheck);
+        bottomLeft(myLocation, myLocation, chessboard, considerCheck);
 
         return _possibleMoves;
     }
@@ -39,68 +39,79 @@ public class WhiteBishop extends ChessPiece{
     /**
     Recursive method that adds the angled top right moves
     */
-    private void topRight(int position, int startLocation, List chessboard){
+    private void topRight(int position, int startLocation, List chessboard,
+                          boolean considerCheck){
         int next = position + 7;
 
         // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
             _possibleMoves.push(next, null);
-            topRight(next, startLocation, chessboard);}
+            topRight(next, startLocation, chessboard, considerCheck);}
     }
 
     /**
     Recursive method that adds the angled top left moves
     */
-    private void topLeft(int position, int startLocation, List chessboard){
+    private void topLeft(int position, int startLocation, List chessboard,
+                         boolean considerCheck){
         int next = position + 9;
 
         // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
             _possibleMoves.push(next, null);
-            topLeft(next, startLocation, chessboard);}
+            topLeft(next, startLocation, chessboard, considerCheck);}
     }
 
     /**
     Recursive method that adds the angled bottom right moves
     */
-    private void bottomRight(int position, int startLocation, List chessboard){
+    private void bottomRight(int position, int startLocation, List chessboard,
+                             boolean considerCheck){
         int next = position - 7;
 
         // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
             _possibleMoves.push(next, null);
-            bottomRight(next, startLocation, chessboard);}
+            bottomRight(next, startLocation, chessboard, considerCheck);}
     }
 
     /**
     Recursive method that adds the angled bottom left moves
     */
-    private void bottomLeft(int position, int startLocation, List chessboard){
+    private void bottomLeft(int position, int startLocation, List chessboard,
+                            boolean considerCheck){
         int next = position - 9;
 
         // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
             _possibleMoves.push(next, null);
-            bottomLeft(next, startLocation, chessboard);}
+            bottomLeft(next, startLocation, chessboard, considerCheck);}
     }
 
     /**
     Method that determines whether or not a potential move is valid according to Bishop rules 
     */
-    private boolean validMovement(int position, int next, int startLocation, List chessboard){
+    private boolean validMovement(int position, int next, int startLocation, List chessboard,
+                                  boolean considerCheck){
         if(next > 63 || next < 0)
-            return false;
+                return false;
 
         ChessPiece startPiece = (ChessPiece) chessboard.getComponent(startLocation);
         ChessPiece myPiece = (ChessPiece) chessboard.getComponent(position); 
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
-        if(!sameColor(startPiece, nextPiece) && 
-           !overflow(position + 1, next + 1) &&
-           (myPiece == null || myPiece == startPiece))
-            return true; 
+        if(considerCheck){
+            if(!sameColor(startPiece, nextPiece) && !overflow(position + 1, next + 1) &&
+               (myPiece == null || myPiece == startPiece))
+                return true; 
 
-        return false;
+            return false;}
+
+        else{
+            if(!sameColor(startPiece, nextPiece) && !overflow(position + 1, next + 1))
+                return true; 
+
+            return false;}
     }
 
     /**

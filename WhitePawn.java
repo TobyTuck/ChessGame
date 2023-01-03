@@ -20,7 +20,7 @@ public class WhitePawn extends ChessPiece{
             System.out.println("Error locating White Pawn image file");}
      }
 
-    public List possibleMoves(int myLocation, List chessboard, boolean notApplicable){
+    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck){
         List potentialMoves = new List(5);
         int move;
 
@@ -30,10 +30,11 @@ public class WhitePawn extends ChessPiece{
            (ChessPiece) chessboard.getComponent(myLocation)))
             potentialMoves.push(move, null);
 
-        move = myLocation - 8;
-        if((move / 8 == (myLocation / 8) - 1) && move > -1 && 
-           chessboard.getComponent(move) == null)
-            potentialMoves.push(move, null);
+        if(considerCheck){
+            move = myLocation - 8;
+            if((move / 8 == (myLocation / 8) - 1) && move > -1 && 
+                chessboard.getComponent(move) == null)
+                potentialMoves.push(move, null);}
 
         move = myLocation - 9;
         if((move / 8 == (myLocation / 8) - 1) && move > -1 && 
