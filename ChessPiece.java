@@ -115,7 +115,7 @@ public abstract class ChessPiece{
     /**
     Private helper method for the sameColor() function
     */
-    private boolean isBlack(ChessPiece piece){
+    public boolean isBlack(ChessPiece piece){
         if(piece instanceof BlackPawn || piece instanceof BlackRook || piece instanceof BlackKnight ||
            piece instanceof BlackBishop || piece instanceof BlackQueen || piece instanceof BlackKing)
             return true;
@@ -125,10 +125,17 @@ public abstract class ChessPiece{
     /**
     Private helper method for the sameColor() function
     */
-    private boolean isWhite(ChessPiece piece){
+    public boolean isWhite(ChessPiece piece){
         if(piece instanceof WhitePawn || piece instanceof WhiteRook || piece instanceof WhiteKnight ||
            piece instanceof WhiteBishop || piece instanceof WhiteQueen || piece instanceof WhiteKing)
             return true;
+        return false;
+    }
+
+    public boolean isKing(ChessPiece piece){
+        if(piece instanceof BlackKing || piece instanceof WhiteKing)
+            return true;
+
         return false;
     }
 

@@ -102,19 +102,25 @@ public class BlackBishop extends ChessPiece{
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
         if(considerCheck){
-            if(!sameColor(startPiece, nextPiece) && 
-               !overflow(position + 1, next + 1) &&
+            if(!sameColor(startPiece, nextPiece) && !overflow(position + 1, next + 1) &&
                (myPiece == null || myPiece == startPiece))
                 return true; 
 
             return false;}
 
         else{
-            if(!sameColor(startPiece, nextPiece) && 
-               !overflow(position + 1, next + 1))
-                return true; 
+            if(startLocation == position){
+                if(!isWhite(nextPiece))
+                    return true;
 
-            return false;}
+                return false;}
+
+            else{
+                if(!sameColor(startPiece, myPiece) && !overflow(position + 1, next + 1) &&
+                   (!isWhite(nextPiece) || isKing(nextPiece)))
+                    return true; 
+
+                return false;} }
     }
 
     /**

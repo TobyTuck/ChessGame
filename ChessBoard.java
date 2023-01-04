@@ -4,7 +4,7 @@ import java.awt.event.*;  // used for MouseAdapter and MouseEvent
 import java.util.Random;
 import java.awt.image.BufferedImage;
 
-public class ChessBoard extends JFrame /* implements MouseListener */{
+public class ChessBoard extends JFrame{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
@@ -440,10 +440,13 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                             for(int index = 0; index < list.getSize(); ++index){
                                 if(list.pop(index) == selectedPanel2)
                                     myLocation = index;}
+
+                            // if pawn reaches the end of the board- make it a queen
                             if(selectedPiece instanceof BlackPawn && rowOf(myLocation) == 8){
                                 list.addComponent(selectedPanel2, new BlackQueen());
                                 pin(new BlackQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
 
+                            // if pawn reaches the end of the board- make it a queen
                             if(selectedPiece instanceof WhitePawn && rowOf(myLocation) == 1){
                                 list.addComponent(selectedPanel2, new WhiteQueen());
                                 pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
@@ -453,16 +456,16 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                                 priorMove = selectedPiece;
                             
                             // check if checkmate has been achieved
-                            ChessPiece king = null;
+                            /* ChessPiece king = null;
                             int count = 0;
                             while(!(king instanceof BlackKing) && count < 63){
                                 king = (ChessPiece) list.getComponent(0);
-                                ++count;}
+                                ++count;} */
 
                             // delete
-                            if(king instanceof BlackKing){
+                            /* if(king instanceof BlackKing){
                                 if(king.checkMate(count, list))
-                                    System.out.println("Checkmate achieved!");}
+                                    System.out.println("Checkmate achieved!");} */
 
                             // Reset all the the fields
                             selectedPanel1 = null;
@@ -478,7 +481,7 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
 
                         // check that king is not in check
                         // locate king
-                        ChessPiece king = null;
+                        /* ChessPiece king = null;
                         int count = 0;
                         // search black king
                         if(isWhite(priorMove)){
@@ -490,11 +493,11 @@ public class ChessBoard extends JFrame /* implements MouseListener */{
                         else{
                             while(!(king instanceof WhiteKing) && count < 63){
                                 king = (ChessPiece) list.getComponent(count);
-                                ++count;} }
+                                ++count;} }*/
 
                         if(piece != null && (priorMove != null || isWhite(piece)) && 
-                           !sameColor(priorMove, piece) && 
-                           (!isCheck(list, king, count) || !isKing(piece))){
+                           !sameColor(priorMove, piece)){
+                           //&& (!isCheck(list, king, count) || !isKing(piece))){
                             selectedPanel1 = clickedPanel;
                             selectedPiece =  piece;
                             if(isBlack(selectedPiece))

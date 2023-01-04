@@ -161,20 +161,26 @@ public class WhiteQueen extends ChessPiece{
         ChessPiece myPiece = (ChessPiece) chessboard.getComponent(position);
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
-        if(considerCheck){
-            if(!sameColor(startPiece, nextPiece) &&
-               !overflow(startLocation, position, next) &&
+    if(considerCheck){
+            if(!sameColor(startPiece, nextPiece) && !overflow(startLocation, position, next) &&
                (myPiece == null || myPiece == startPiece))
                 return true;
 
             return false;}
 
         else{
-            if(!sameColor(startPiece, nextPiece) &&
-               !overflow(startLocation, position, next))
-                return true;
+            if(startLocation == position){
+                if(!isBlack(nextPiece))
+                    return true;
 
-            return false;}
+                return false;}
+
+            else{
+                if(!sameColor(startPiece, nextPiece) && !overflow(startLocation, position, next) &&
+                   (!isBlack(nextPiece) || isKing(nextPiece)))
+                    return true;
+
+                return false;} }
     }
 
     /**

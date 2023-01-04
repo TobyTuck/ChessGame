@@ -108,10 +108,18 @@ public class WhiteRook extends ChessPiece{
             return false;}
 
         else{
-            if(!sameColor(startPiece, nextPiece) && !overflow(startLocation, next))
-                return true;
+            if(startLocation == position){
+                if(!isBlack(nextPiece))
+                    return true;
 
-            return false;}
+                return false;}
+
+            else{
+                if(!sameColor(startPiece, myPiece) && !overflow(startLocation, next) &&
+                   (!isBlack(nextPiece) || isKing(nextPiece)))
+                    return true;
+
+                return false;} }
     }
 
     /**

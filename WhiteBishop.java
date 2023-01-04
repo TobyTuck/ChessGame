@@ -108,10 +108,18 @@ public class WhiteBishop extends ChessPiece{
             return false;}
 
         else{
-            if(!sameColor(startPiece, nextPiece) && !overflow(position + 1, next + 1))
-                return true; 
+            if(startLocation == position){
+                if(!isBlack(nextPiece))
+                    return true;
+                
+                return false;}
 
-            return false;}
+            else{
+                if(!sameColor(startPiece, myPiece) && !overflow(position + 1, next + 1) &&
+                   (!isBlack(nextPiece) || isKing(nextPiece)))
+                    return true; 
+
+                return false;} }
     }
 
     /**

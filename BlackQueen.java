@@ -169,10 +169,18 @@ public class BlackQueen extends ChessPiece{
             return false;}
 
         else{
-            if(!sameColor(startPiece, nextPiece) && !overflow(startLocation, position, next))
-                return true;
+            if(startLocation == position){
+                if(!isWhite(nextPiece))
+                    return true;
 
-            return false;}
+                return false;}
+
+            else{
+                if(!sameColor(startPiece, nextPiece) && !overflow(startLocation, position, next) &&
+                   (!isWhite(nextPiece) || isKing(nextPiece)))
+                    return true;
+
+                return false;} }
     }
 
     /**
