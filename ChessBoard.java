@@ -272,14 +272,12 @@ public class ChessBoard extends JFrame{
         // in the List
         int cellRemainder,
             count = 0;
-        Object generic;
         JPanel jpanel;
 
         for(int index = 0; index < list.getSize(); ++index){
 
             // type conversions
-            generic = list.pop(index);
-            jpanel = (JPanel)generic;
+            jpanel = (JPanel) list.pop(index);
             
             // set size of the JPanel- (8.57, 8.56)
             jpanel.setPreferredSize(new Dimension((int)(boardHeight / 8.0), 
@@ -316,6 +314,9 @@ public class ChessBoard extends JFrame{
             // add components to board
             board.add(jpanel);
             ++count;}
+
+        // delete
+        System.out.println("Bottom square: " + ((JPanel) (list.pop(50))).getSize());
 
         // add chesspieces to their default starting points
         list.addComponent(list.pop(0), new BlackRook());
