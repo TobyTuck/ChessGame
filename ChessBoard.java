@@ -96,28 +96,30 @@ public class ChessBoard extends JFrame{
         this.setTitle("ChessGame Application");
 
         Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
-        int taskBarSize = scnMax.bottom;
-
-        // delete
-        System.out.println("Task Bar Size: " + taskBarSize);
+        int taskBarSize = scnMax.top;
 
         screenWidth = this.getWidth();
         screenHeight = this.getHeight() - taskBarSize; 
+
+        // delete
+        System.out.println("Task Bar Size: " + taskBarSize +
+                           "\nScreen Width: " + screenWidth +
+                           "\nScreen Height: " + screenHeight);
 
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         // ensure the board is square- and divides evenly into 8 
-        int eightDivisible = 1;
+        int eightDivisible = 0;
         do{
             boardHeight = (int)(screenHeight * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
 
-        screenHeight = this.getHeight();
-        screenWidth = this.getWidth();
-        
+        // delete
+        System.out.println("Board Height: " + boardHeight);
+
         // build a dark green color for side panels
         Color darkGreen = new Color(25, 45, 25);
         // build supporting panels
