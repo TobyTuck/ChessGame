@@ -108,19 +108,18 @@ public class BlackRook extends ChessPiece{
 
             return false;}
 
+        // only look at instances of check (as applies to opponent king)
+        // only difference is that BRook's moves "extend through" a WKing 
+            // eg: if a king in check moves diagonally away from BRook, piece is still in check
         else{
-            if(startLocation == position){
-                if(!isWhite(nextPiece))
-                    return true;
+            // illegal moves
+            if((isBlack(nextPiece) || (isWhite(myPiece) && !(myPiece instanceof WhiteKing))) ||
+               overflow(position, next))
+                return false;
 
-                return false;}
-
+            // legal moves
             else{
-                if(!sameColor(startPiece, myPiece) && !overflow(startLocation, next) &&
-                   (!isWhite(nextPiece) || isKing(nextPiece)))
-                    return true;
-
-                return false;} }
+                return true;} }
     }
 
     /**

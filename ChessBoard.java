@@ -22,6 +22,8 @@ public class ChessBoard extends JFrame{
     //holds all the individual squares
     List list;
 
+    private int screenHeight;
+    private int screenWidth;
     private int boardHeight;
 
     // declare individual squares of the chessboard
@@ -72,56 +74,77 @@ public class ChessBoard extends JFrame{
             Toolkit.getDefaultToolkit().getScreenSize();
 
         // build the JFrame
-        this.setDefaultCloseOperation
-            (JFrame.EXIT_ON_CLOSE);
+        /* this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice device = graphics.getDefaultScreenDevice();
-        device.setFullScreenWindow(this);
+        device.setFullScreenWindow(this);*/
 
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setVisible(true);
+        this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        this.repaint();
+        
+        // delete
+        System.out.println("getSize(): " + this.getSize() +
+                           "\ngetContentPane().getSize(): " + this.getContentPane().getSize() +
+                           "\ngetPreferredSize(): " + this.getPreferredSize());
 
         // set applet's tab icon
         this.setIconImage(new Logo().getImage());
+        this.setTitle("ChessGame Application");
+
+        Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
+        int taskBarSize = scnMax.bottom;
+
+        // delete
+        System.out.println("Task Bar Size: " + taskBarSize);
+
+        screenWidth = this.getWidth();
+        screenHeight = this.getHeight() - taskBarSize; 
 
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        
+
         // ensure the board is square- and divides evenly into 8 
-        int eightDivisible = 0;
+        int eightDivisible = 1;
         do{
-            boardHeight = (int)(screenSize.height * 0.9) + eightDivisible;
+            boardHeight = (int)(screenHeight * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
+
+        screenHeight = this.getHeight();
+        screenWidth = this.getWidth();
         
         // build a dark green color for side panels
         Color darkGreen = new Color(25, 45, 25);
         // build supporting panels
         // build panels above and below chessboard
         north = new JPanel();
-        north.setPreferredSize(new Dimension(screenSize.width, 
-                                             (int) (0.5 * (screenSize.height - boardHeight))));
+        north.setPreferredSize(new Dimension(screenWidth, 
+                                             (int) (0.5 * (screenHeight - boardHeight))));
         north.setBackground(darkGreen);
         south = new JPanel();
-        south.setPreferredSize(new Dimension(screenSize.width, 
-                                             (int) (0.5 * (screenSize.height - boardHeight))));
+        south.setPreferredSize(new Dimension(screenWidth, 
+                                             (int) (0.5 * (screenHeight - boardHeight))));
         south.setBackground(darkGreen);
 
         // build panels to the left and right- with inner panels which will hold captured chesspieces
         west = new JPanel(new BorderLayout());
-        west.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)),
+        west.setPreferredSize(new Dimension((int) (0.5 * (screenWidth - boardHeight)),
                                                    boardHeight));
         west.setBackground(darkGreen);
         capturedWhite = new JPanel();
         JPanel filler1 = new JPanel();
         JPanel filler2 = new JPanel();
         
-        capturedWhite.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+        capturedWhite.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 
                                                         boardHeight));
-        filler1.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+        filler1.setPreferredSize(new Dimension((int) (0.05 * (screenWidth - boardHeight)), 
                                                       boardHeight));
-        filler2.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+        filler2.setPreferredSize(new Dimension((int) (0.05 * (screenWidth - boardHeight)), 
                                                       boardHeight));
 
         capturedWhite.setBackground(darkGreen);
@@ -133,7 +156,7 @@ public class ChessBoard extends JFrame{
         west.add(capturedWhite, BorderLayout.CENTER);
 
         east = new JPanel(new BorderLayout());
-        east.setPreferredSize(new Dimension((int) (0.5 * (screenSize.width - boardHeight)), 
+        east.setPreferredSize(new Dimension((int) (0.5 * (screenWidth - boardHeight)), 
                                                    boardHeight));
         east.setBackground(darkGreen);
 
@@ -144,17 +167,17 @@ public class ChessBoard extends JFrame{
         JPanel filler7 = new JPanel();
         
         // panel that will hold the SE panel for captured pieces
-        filler4.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+        filler4.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 
                                                         boardHeight));
         // panels that provide "borders" that prevent pieces from touching board
-        filler5.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+        filler5.setPreferredSize(new Dimension((int) (0.05 * (screenWidth - boardHeight)), 
                                                       boardHeight));
-        filler6.setPreferredSize(new Dimension((int) (0.05 * (screenSize.width - boardHeight)), 
+        filler6.setPreferredSize(new Dimension((int) (0.05 * (screenWidth - boardHeight)), 
                                                       boardHeight));
         // panel that fills the extra space of filler4
-        filler7.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)), 
+        filler7.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 
                                                (int) (boardHeight * 0.86)));
-        capturedBlack.setPreferredSize(new Dimension((int) (0.4 * (screenSize.width - boardHeight)),
+        capturedBlack.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                  (int) (boardHeight * 0.14)));
         filler4.add(filler7, BorderLayout.NORTH);
         filler4.add(capturedBlack, BorderLayout.SOUTH);
@@ -333,14 +356,14 @@ public class ChessBoard extends JFrame{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
-        if(screenSize.width > screenSize.height){
+        if(screenWidth > screenHeight){
             this.add(board, BorderLayout.CENTER);
             this.add(north, BorderLayout.NORTH);
             this.add(south, BorderLayout.SOUTH);
             this.add(west, BorderLayout.WEST);
             this.add(east, BorderLayout.EAST);}
 
-        if(screenSize.width < screenSize.height){ 
+        if(screenWidth < screenHeight){ 
             this.add(board, BorderLayout.CENTER);
             this.add(north, BorderLayout.WEST);
             this.add(south, BorderLayout.EAST);
@@ -350,11 +373,13 @@ public class ChessBoard extends JFrame{
         this.setVisible(true);
 
         MouseAdapter ma = new MouseAdapter() {
+            // field declaration
             private JPanel selectedPanel1;
             private JPanel selectedPanel2;
             private ChessPiece selectedPiece;
-            private ChessPiece priorMove = null;
             private List myMoves;
+            // first move is made by white side
+            private ChessPiece priorMove = new BlackPawn();
 
             @Override
             public void mousePressed(MouseEvent e) {
@@ -479,31 +504,13 @@ public class ChessBoard extends JFrame{
                         if(list.getComponent(clickedPanel) != null)
                             piece = (ChessPiece) list.getComponent(clickedPanel);
 
-                        // check that king is not in check
-                        // locate king
-                        /* ChessPiece king = null;
-                        int count = 0;
-                        // search black king
-                        if(isWhite(priorMove)){
-                            while(!(king instanceof BlackKing) && count < 63){
-                                king = (ChessPiece) list.getComponent(count);
-                                ++count;} }
-
-                        // search white king
-                        else{
-                            while(!(king instanceof WhiteKing) && count < 63){
-                                king = (ChessPiece) list.getComponent(count);
-                                ++count;} }*/
-
-                        if(piece != null && (priorMove != null || isWhite(piece)) && 
-                           !sameColor(priorMove, piece)){
-                           //&& (!isCheck(list, king, count) || !isKing(piece))){
+                        if(isOpponent(piece, priorMove)){ 
                             selectedPanel1 = clickedPanel;
                             selectedPiece =  piece;
                             if(isBlack(selectedPiece))
                                 outline(selectedPanel1, Color.black, 5);
-                            else{
-                                outline(selectedPanel1, Color.white, 5);}
+                            else
+                                outline(selectedPanel1, Color.white, 5);
 
                             // provide suggestions
                             // get my location
@@ -538,7 +545,7 @@ public class ChessBoard extends JFrame{
     }
 
     /**
-    Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
+    Private thiser method that adds a chesspiece image to the center of a JPanel using a JLabel 
     Height and width of the image is specified by the parameters
     'dimensionDecider' parameter determines if the label is set to the size of the panel or to the 
     size of the image
@@ -601,7 +608,7 @@ public class ChessBoard extends JFrame{
     }
 
     /**
-    Private helper method that outlines a jpanel chessquare with a color specified in the parameters
+    Private thiser method that outlines a jpanel chessquare with a color specified in the parameters
     The width of this outline is specified w/ in the methods parameters
     */
     private void outline(JPanel panel, Color color, int depth){

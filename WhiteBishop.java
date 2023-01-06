@@ -107,19 +107,18 @@ public class WhiteBishop extends ChessPiece{
 
             return false;}
 
+        // only look at instances of check (as applies to opponent king)
+        // only difference is that WBishop's moves "extend through" a BKing 
+            // eg: if a king in check moves diagonally away from WBishop, piece is still in check
         else{
-            if(startLocation == position){
-                if(!isBlack(nextPiece))
-                    return true;
-                
-                return false;}
+            // illegal moves
+            if((isWhite(nextPiece) || (isBlack(myPiece) && !(myPiece instanceof BlackKing))) ||
+               overflow(position, next))
+                return false;
 
+            // legal moves
             else{
-                if(!sameColor(startPiece, myPiece) && !overflow(position + 1, next + 1) &&
-                   (!isBlack(nextPiece) || isKing(nextPiece)))
-                    return true; 
-
-                return false;} }
+                return true;} }
     }
 
     /**
