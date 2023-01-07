@@ -98,6 +98,13 @@ public class ChessBoard extends JFrame{
         this.setIconImage(new Logo().getImage());
         this.setTitle("ChessGame Application");
 
+        // option 1
+        Dimension scrnSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                                .getMaximumWindowBounds();
+        int taskBarHeight = scrnSize.height - winSize.height; 
+
+        // option 2
         Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
         int taskBarSize = scnMax.top;
 
@@ -115,7 +122,7 @@ public class ChessBoard extends JFrame{
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         do{
-            boardHeight = (int)(screenHeight) + eightDivisible;
+            boardHeight = (int)(screenHeight * 0.95) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
