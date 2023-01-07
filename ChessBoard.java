@@ -85,6 +85,9 @@ public class ChessBoard extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.repaint();
+
+        // shall we make the size of the chessboard update as resized?
+        this.setResizable(true);
         
         // delete
         System.out.println("getSize(): " + this.getSize() +
@@ -112,7 +115,7 @@ public class ChessBoard extends JFrame{
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         do{
-            boardHeight = (int)(screenHeight * 0.9) + eightDivisible;
+            boardHeight = (int)(screenHeight) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
@@ -314,9 +317,6 @@ public class ChessBoard extends JFrame{
             // add components to board
             board.add(jpanel);
             ++count;}
-
-        // delete
-        System.out.println("Bottom square: " + ((JPanel) (list.pop(50))).getSize());
 
         // add chesspieces to their default starting points
         list.addComponent(list.pop(0), new BlackRook());
@@ -862,7 +862,7 @@ public class ChessBoard extends JFrame{
         Random random = new Random();
         int index = random.nextInt(64);
 
-        Object obj = list.pop(index);
+        Object obj = list.pop(0);
         JPanel jpanel = (JPanel)obj;
         return jpanel.getSize();
     }
