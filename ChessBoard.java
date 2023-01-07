@@ -92,7 +92,8 @@ public class ChessBoard extends JFrame{
         // delete
         System.out.println("getSize(): " + this.getSize() +
                            "\ngetContentPane().getSize(): " + this.getContentPane().getSize() +
-                           "\ngetPreferredSize(): " + this.getPreferredSize());
+                           "\ngetPreferredSize(): " + this.getPreferredSize() + 
+                           "\nTop Inset: " + getInsets().top);
 
         // set applet's tab icon
         this.setIconImage(new Logo().getImage());
@@ -109,7 +110,7 @@ public class ChessBoard extends JFrame{
         int taskBarSize = scnMax.top;
 
         screenWidth = this.getWidth();
-        screenHeight = this.getHeight() - taskBarSize; 
+        screenHeight = this.getHeight() - getInsets().top; 
 
         // delete
         System.out.println("Task Bar Size: " + taskBarSize +
