@@ -85,15 +85,16 @@ public class ChessBoard extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.repaint();
+        System.out.println("getSize(): " + this.getSize());
 
         // shall we make the size of the chessboard update as resized?
         this.setResizable(true);
         
         // delete
-        System.out.println("getSize(): " + this.getSize() +
-                           "\ngetContentPane().getSize(): " + this.getContentPane().getSize() +
-                           "\ngetPreferredSize(): " + this.getPreferredSize() + 
-                           "\nTop Inset: " + getInsets().top);
+        System.out.println("getSize(): " + this.getSize());
+                           // "\ngetContentPane().getSize(): " + this.getContentPane().getSize() +
+                           // "\ngetPreferredSize(): " + this.getPreferredSize() + 
+                           // "\nTop Inset: " + getInsets().top);
 
         // set applet's tab icon
         this.setIconImage(new Logo().getImage());
@@ -109,13 +110,23 @@ public class ChessBoard extends JFrame{
         Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
         int taskBarSize = scnMax.top;
 
-        screenWidth = this.getWidth();
-        screenHeight = this.getHeight() - getInsets().top; 
+        // 1st step- use component listener
+        addComponentListener(new ComponentAdapter(){
+            @Override
+            public void componentResized(ComponentEvent e){
+                Dimension dim = e.getComponent().getSize();
+                screenWidth = dim.width;
+                screenHeight = dim.height - getInsets().top;
+                // myPanel.resizeRectangle(dim.width / 2, dim.height / 2);
+            } 
+        });
 
-        // delete
-        System.out.println("Task Bar Size: " + taskBarSize +
-                           "\nScreen Width: " + screenWidth +
+        System.out.println("Screen Width: " + screenWidth +
                            "\nScreen Height: " + screenHeight);
+        // System.out.println("getSize(): " + this.getSize());
+        // Dimension screenDimension = this.getComponent().getSize();
+        // screenWidth = this.getWidth();
+        // screenHeight = this.getHeight() - getInsets().top; 
 
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -123,13 +134,10 @@ public class ChessBoard extends JFrame{
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         do{
-            boardHeight = (int)(screenHeight * 0.95) + eightDivisible;
+            boardHeight = (int)(screenHeight * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
-
-        // delete
-        System.out.println("Board Height: " + boardHeight);
 
         // build a dark green color for side panels
         Color darkGreen = new Color(25, 45, 25);
@@ -141,7 +149,8 @@ public class ChessBoard extends JFrame{
         north.setBackground(darkGreen);
         south = new JPanel();
         south.setPreferredSize(new Dimension(screenWidth, 
-                                             (int) (0.5 * (screenHeight - boardHeight))));
+                                             (int) (screenHeight - boardHeight - 
+                                             ((int) (0.5 * (screenHeight - boardHeight))))));
         south.setBackground(darkGreen);
 
         // build panels to the left and right- with inner panels which will hold captured chesspieces
@@ -389,8 +398,11 @@ public class ChessBoard extends JFrame{
             private JPanel selectedPanel2;
             private ChessPiece selectedPiece;
             private List myMoves;
+
             // first move is made by white side
             private ChessPiece priorMove = new BlackPawn();
+
+            private int myLocation;
 
             @Override
             public void mousePressed(MouseEvent e) {
@@ -472,18 +484,18 @@ public class ChessBoard extends JFrame{
                                 removeOutline((JPanel) list.pop((int) myMoves.pop(index)));}
 
                             // if pawn reaches opposite side of board, turn it into a queen
-                            int myLocation = 0;
+                            int location = 0;
                             for(int index = 0; index < list.getSize(); ++index){
                                 if(list.pop(index) == selectedPanel2)
-                                    myLocation = index;}
+                                    location = index;}
 
                             // if pawn reaches the end of the board- make it a queen
-                            if(selectedPiece instanceof BlackPawn && rowOf(myLocation) == 8){
+                            if(selectedPiece instanceof BlackPawn && rowOf(location) == 8){
                                 list.addComponent(selectedPanel2, new BlackQueen());
                                 pin(new BlackQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
 
                             // if pawn reaches the end of the board- make it a queen
-                            if(selectedPiece instanceof WhitePawn && rowOf(myLocation) == 1){
+                            if(selectedPiece instanceof WhitePawn && rowOf(location) == 1){
                                 list.addComponent(selectedPanel2, new WhiteQueen());
                                 pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
 
@@ -515,7 +527,35 @@ public class ChessBoard extends JFrame{
                         if(list.getComponent(clickedPanel) != null)
                             piece = (ChessPiece) list.getComponent(clickedPanel);
 
-                        if(isOpponent(piece, priorMove)){ 
+                        // determine if piece's king is in check
+                        // find integer location of king piece
+                        ChessPiece king = null;
+                        BlackKing BKing = null;
+                        WhiteKing WKing = null;
+                        int kingLocation = 0;
+                        boolean check = false;
+
+                        // look at Black side
+                        if(isBlack(piece)){
+                            for(int i = 0; i < 63; ++i){
+                                king = (ChessPiece) list.getComponent(i);
+                                if(king instanceof BlackKing){
+                                    kingLocation = i;
+                                    BKing = (BlackKing) king;} }
+                            if(BKing.check(kingLocation, list) && BKing != piece)
+                                check = true;}
+
+                        // look at White side
+                        else{
+                            for(int i = 0; i < 63; ++i){
+                                king = (ChessPiece) list.getComponent(i);
+                                if(king instanceof WhiteKing){
+                                    kingLocation = i;
+                                    WKing = (WhiteKing) king;} }
+                            if(WKing.check(kingLocation, list) && WKing != piece)
+                                check = true;}
+
+                        if(isOpponent(piece, priorMove) && !check){ 
                             selectedPanel1 = clickedPanel;
                             selectedPiece =  piece;
                             if(isBlack(selectedPiece))
