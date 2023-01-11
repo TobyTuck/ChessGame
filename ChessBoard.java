@@ -79,23 +79,27 @@ public class ChessBoard extends JFrame{
         GraphicsDevice device = graphics.getDefaultScreenDevice();
         device.setFullScreenWindow(this);*/
 
+        /* JFrame example = new JFrame();
+        example.setVisible(true);
+        example.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //example.setVisible(true);
+        int exampleHeight = example.getHeight();
+        int exampleWidth = example.getWidth();
+
+        // close the frame
+        // example.dispatchEvent(new WindowEvent(example, WindowEvent.WINDOW_CLOSING));*/
+
+
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setVisible(true);
-        this.pack();
+        // this.setVisible(true);
+        // this.pack();
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
-        this.repaint();
-        System.out.println("getSize(): " + this.getSize());
+        // this.repaint();
 
         // shall we make the size of the chessboard update as resized?
         this.setResizable(true);
         
-        // delete
-        System.out.println("getSize(): " + this.getSize());
-                           // "\ngetContentPane().getSize(): " + this.getContentPane().getSize() +
-                           // "\ngetPreferredSize(): " + this.getPreferredSize() + 
-                           // "\nTop Inset: " + getInsets().top);
-
         // set applet's tab icon
         this.setIconImage(new Logo().getImage());
         this.setTitle("ChessGame Application");
@@ -111,7 +115,7 @@ public class ChessBoard extends JFrame{
         int taskBarSize = scnMax.top;
 
         // 1st step- use component listener
-        addComponentListener(new ComponentAdapter(){
+        /* AddComponentListener(new ComponentAdapter(){
             @Override
             public void componentResized(ComponentEvent e){
                 Dimension dim = e.getComponent().getSize();
@@ -119,14 +123,23 @@ public class ChessBoard extends JFrame{
                 screenHeight = dim.height - getInsets().top;
                 // myPanel.resizeRectangle(dim.width / 2, dim.height / 2);
             } 
-        });
+        });*/
 
-        System.out.println("Screen Width: " + screenWidth +
-                           "\nScreen Height: " + screenHeight);
-        // System.out.println("getSize(): " + this.getSize());
-        // Dimension screenDimension = this.getComponent().getSize();
-        // screenWidth = this.getWidth();
-        // screenHeight = this.getHeight() - getInsets().top; 
+        screenHeight = screenSize.height;
+        screenWidth = screenSize.width;
+
+        // look into setPreferredSize() method, review bitch!
+        // delete
+        System.out.println("getSize(): " + this.getSize() +
+                           "\ntaskBarSize: " + taskBarSize +
+                           "\ntaskBarHeight: " + taskBarHeight +
+                           "\ngetInsets().top " + getInsets().top +
+                           "\nScreen Width: " + screenWidth +
+                           "\nScreen Height: " + screenHeight +
+                           // "\nExample Width: " + exampleWidth +
+                           // "\nExampleHeight: " + exampleHeight + 
+                           "\nscreenSize.height: " + screenSize.height +
+                           "\nscreenSize.width: " + screenSize.width);
 
         // build the chessboard
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
@@ -134,10 +147,12 @@ public class ChessBoard extends JFrame{
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         do{
-            boardHeight = (int)(screenHeight * 0.9) + eightDivisible;
+            boardHeight = (int)(screenSize.height * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
+
+        System.out.println("boardHeight: " + boardHeight);
 
         // build a dark green color for side panels
         Color darkGreen = new Color(25, 45, 25);
