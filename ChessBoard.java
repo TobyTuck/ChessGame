@@ -147,7 +147,7 @@ public class ChessBoard extends JFrame{
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         do{
-            boardHeight = (int)(screenSize.height * 0.9) + eightDivisible;
+            boardHeight = (int)(screenSize.height * 0.6) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
@@ -159,20 +159,20 @@ public class ChessBoard extends JFrame{
         // build supporting panels
         // build panels above and below chessboard
         north = new JPanel();
-        north.setPreferredSize(new Dimension(screenWidth, 
-                                             (int) (0.5 * (screenHeight - boardHeight))));
-        north.setBackground(darkGreen);
+        north.setPreferredSize(new Dimension(screenWidth, 50)); 
+                                             //(int) (0.5 * (screenHeight - boardHeight))));
+        north.setBackground(Color.red);//darkGreen);
         south = new JPanel();
-        south.setPreferredSize(new Dimension(screenWidth, 
-                                             (int) (screenHeight - boardHeight - 
-                                             ((int) (0.5 * (screenHeight - boardHeight))))));
-        south.setBackground(darkGreen);
+        south.setPreferredSize(new Dimension(screenWidth, 50));
+                                             // (int) (screenHeight - boardHeight - 
+                                             // ((int) (0.5 * (screenHeight - boardHeight))))));
+        south.setBackground(Color.blue);//darkGreen);
 
         // build panels to the left and right- with inner panels which will hold captured chesspieces
         west = new JPanel(new BorderLayout());
         west.setPreferredSize(new Dimension((int) (0.5 * (screenWidth - boardHeight)),
                                                    boardHeight));
-        west.setBackground(darkGreen);
+        west.setBackground(Color.green);//darkGreen);
         capturedWhite = new JPanel();
         JPanel filler1 = new JPanel();
         JPanel filler2 = new JPanel();
@@ -195,7 +195,7 @@ public class ChessBoard extends JFrame{
         east = new JPanel(new BorderLayout());
         east.setPreferredSize(new Dimension((int) (0.5 * (screenWidth - boardHeight)), 
                                                    boardHeight));
-        east.setBackground(darkGreen);
+        east.setBackground(Color.yellow);//darkGreen);
 
         capturedBlack = new JPanel(new FlowLayout());
         JPanel filler4 = new JPanel(new BorderLayout());
