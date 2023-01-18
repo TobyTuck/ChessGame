@@ -170,6 +170,8 @@ public class WhiteQueen extends ChessPiece{
 
         else{
             // illegal moves
+            // bug where king can capture into check against Queen and Bishop piece (diagonal movements)
+            // haven't checked rook pieces yet
             if((isWhite(nextPiece) || (isBlack(myPiece) && !(myPiece instanceof BlackKing))) ||
                overflow(startLocation, position, next))
                 return false;
