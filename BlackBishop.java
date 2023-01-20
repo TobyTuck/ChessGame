@@ -102,7 +102,7 @@ public class BlackBishop extends ChessPiece{
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
         if(considerCheck){
-            if(!sameColor(startPiece, nextPiece) && !overflow(position + 1, next + 1) &&
+            if(!sameColor(startPiece, nextPiece) && !overflow(position, next) &&
                (myPiece == null || myPiece == startPiece))
                 return true; 
 
@@ -126,8 +126,8 @@ public class BlackBishop extends ChessPiece{
     Method that handles the 'chessboard overflow' error 
     */
     private boolean overflow(int location, int moveTo){
-        if((rowOf(location, 8) && rowOf(moveTo, 1)) || 
-           (rowOf(moveTo, 8) && rowOf(location, 1)))
+        if((rowOf(location + 1, 8) && rowOf(moveTo + 1, 1)) || 
+           (rowOf(moveTo + 1, 8) && rowOf(location + 1, 1)))
             return true;
 
         return false;

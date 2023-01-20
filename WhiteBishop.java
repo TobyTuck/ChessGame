@@ -101,7 +101,7 @@ public class WhiteBishop extends ChessPiece{
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
         if(considerCheck){
-            if(!sameColor(startPiece, nextPiece) && !overflow(position + 1, next + 1) &&
+            if(!sameColor(startPiece, nextPiece) && !overflow(position, next) &&
                (myPiece == null || myPiece == startPiece))
                 return true; 
 
@@ -112,7 +112,7 @@ public class WhiteBishop extends ChessPiece{
             // eg: if a king in check moves diagonally away from WBishop, piece is still in check
         else{
             // illegal moves
-            if(isWhite(nextPiece) || (isBlack(myPiece) && !(myPiece instanceof BlackKing)) ||
+            if((isWhite(nextPiece) || (isBlack(myPiece) && !(myPiece instanceof BlackKing))) ||
                overflow(position, next))
                 return false;
 
