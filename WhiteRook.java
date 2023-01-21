@@ -101,7 +101,7 @@ public class WhiteRook extends ChessPiece{
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
         if(considerCheck){
-            if(!sameColor(startPiece, nextPiece) && !overflow(startLocation, next) &&
+            if(!sameColor(startPiece, nextPiece) && !overflow(position, next) &&
                (myPiece == null || myPiece == startPiece))
                 return true;
 
@@ -125,8 +125,15 @@ public class WhiteRook extends ChessPiece{
     Method that handles the 'chessboard overflow' error
     */
     private boolean overflow(int start, int moveTo){
-        if(sameRow(moveTo, start) || sameColumn(moveTo + 1, start + 1)) 
-            return false;
+        // check if move is vertical
+        if(moveTo == start + 8 || moveTo == start - 8){
+            if(sameColumn(moveTo + 1, start + 1))
+                return false;}
+
+        // check if move is horizontal
+        if(moveTo == start + 1 || moveTo == start - 1){
+            if(sameRow(moveTo, start)) 
+                return false;}
 
         return true;
     }

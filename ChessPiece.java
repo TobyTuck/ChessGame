@@ -162,6 +162,9 @@ public abstract class ChessPiece{
                 return true;} }
     }
 
+    /* 
+    Checks if a number lies on a particular row
+    */
     protected boolean rowOf(int number, int base){
         while(number > 8){
             number -= 8;}
@@ -192,7 +195,7 @@ public abstract class ChessPiece{
 
     /**
     Checks if two squares (identified by their number) would lie on the same 
-    Chess column
+    Chess column (horizontal)
     */
     protected boolean sameColumn(int number1, int number2){
         while(number1 > 8){

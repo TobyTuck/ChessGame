@@ -10,8 +10,10 @@ public class ChessBoard extends JFrame{
     private JPanel board;
 
     // panels that fit insde the east and west panels, w/ the purpose of holding captured chesspieces
+    // 2 panels for Black pieces because must add to bottom panel first, then to top
     private JPanel capturedWhite;
-    private JPanel capturedBlack;
+    private JPanel capturedBlack1;
+    private JPanel capturedBlack2;
 
     //holds all the individual squares
     List list;
@@ -103,13 +105,34 @@ public class ChessBoard extends JFrame{
         System.out.println("boardHeight: " + boardHeight);
 
         capturedWhite = new JPanel(new FlowLayout());
-        capturedBlack = new JPanel(new FlowLayout());
-        capturedWhite.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 
-                                                     (int) (boardHeight * 0.15)));
-        capturedBlack.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                     (int) (boardHeight * 0.15)));
-        capturedWhite.setBackground(Color.white);
-        capturedBlack.setBackground(Color.black);
+        
+        JPanel rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        JPanel rightFiller = new JPanel();
+        capturedBlack1 = new JPanel(new FlowLayout());
+        capturedBlack2 = new JPanel(new FlowLayout());
+
+        Dimension containerDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                     (int) (boardHeight * 0.7));
+        capturedWhite.setPreferredSize(containerDimension);
+
+        rightContainer.setPreferredSize(containerDimension);
+        rightFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                   (int) ((boardHeight * 0.7) - 
+                                                         ((boardHeight / 8.0) + 20)))); 
+        capturedBlack1.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                     (int) (((boardHeight / 8.0) * 0.5) + 10)));
+        capturedBlack2.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                     (int) (((boardHeight / 8.0) * 0.5) + 10)));
+
+        capturedWhite.setBackground(darkGreen);
+        rightContainer.setBackground(darkGreen);
+        rightFiller.setBackground(darkGreen);
+        capturedBlack1.setBackground(darkGreen);
+        capturedBlack2.setBackground(darkGreen);
+        
+        rightContainer.add(rightFiller);//, BorderLayout.NORTH);
+        rightContainer.add(capturedBlack2);//, BorderLayout.CENTER);
+        rightContainer.add(capturedBlack1);//, BorderLayout.SOUTH);
 
         // add components of each square to the list
         list = new List(8);
@@ -283,8 +306,8 @@ public class ChessBoard extends JFrame{
         //gbc.gridy = 0;
         this.add(board, gbc);
         //gbc.gridx = 5;
-        //gbc.gridy = -5;
-        this.add(capturedBlack, gbc);
+        // gbc.gridy = -5;
+        this.add(rightContainer, gbc);
         this.setVisible(true);
 
         MouseAdapter ma = new MouseAdapter() {
@@ -356,8 +379,26 @@ public class ChessBoard extends JFrame{
                                 capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
                                                 ((double) capturedHeight / 
                                                 (double) selectedPiece2.getHeight())));
-                                pin(selectedPiece2, capturedBlack, capturedWidth, capturedHeight, 
-                                    "FlowLayout", false);}
+                                
+                                // get number of captured pieces held by panel
+                                Component[] pComponents = capturedBlack1.getComponents();
+                                // check if size including one more label can fit
+                                int numComponents = 1;
+                                for(Component c : pComponents){
+                                    if(c instanceof JLabel)
+                                        ++numComponents;}                               
+                                // check if the first panel can hold anymore captured pieces
+                                if(((numComponents * ((double) (selectedPiece2.getWidth() * 
+                                   ((double) (boardHeight / 8.0) * 0.5 /  
+                                   (double) selectedPiece2.getHeight())))) + (numComponents * 5) + 5)
+                                   < (0.4 * (screenWidth - boardHeight)))
+                                    pin(selectedPiece2, capturedBlack1, capturedWidth, 
+                                        capturedHeight, "FlowLayout", false);
+
+                                // use upper panel
+                                else{
+                                    pin(selectedPiece2, capturedBlack2, capturedWidth, 
+                                        capturedHeight, "FlowLayout", false);} }
 
                             // captured piece is white
                             else if(isWhite(selectedPiece2) && selectedPiece2 != null && 
@@ -469,8 +510,10 @@ public class ChessBoard extends JFrame{
                             Color option = new Color(127, 255, 0);
                             Color captureKing = new Color(128, 0, 128);
                             myMoves = selectedPiece.possibleMoves(myLocation, list, true);
+                            // System.out.println("New Moves");
                             for(int index = 0; index < myMoves.getSize(); ++index){
                                 possibleMove = (int) myMoves.pop(index);
+                                // System.out.println(possibleMove);
                                 if(isOpponent((ChessPiece) list.getComponent(myLocation), 
                                              (ChessPiece) list.getComponent(possibleMove))){
                                     if(!isKing((ChessPiece) list.getComponent(possibleMove)))
