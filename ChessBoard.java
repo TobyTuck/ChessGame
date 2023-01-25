@@ -310,11 +310,26 @@ public class ChessBoard extends JFrame{
         this.add(rightContainer, gbc);
         this.setVisible(true);
 
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(screenSize);
+        getContentPane().add(layeredPane);
+
+        layeredPane.add(this, JLayeredPane.DEFAULT_LAYER);
+
         MouseAdapter ma = new MouseAdapter() {
             // field declaration
             private JPanel selectedPanel1;
             private JPanel selectedPanel2;
             private ChessPiece selectedPiece;
+
+            private ChessPiece chosenPiece;
+            private JPanel chosenPanel;
+            private int myX;
+            private int myY;
+            private int xLocation;
+            private int yLocation;
+            private JLabel chosenLabel;
+
             private List myMoves;
 
             // first move is made by white side
@@ -322,429 +337,253 @@ public class ChessBoard extends JFrame{
             private int myLocation;
 
             @Override
+            /*
+            Used in conjunction with the mouseDragged() method, separate from the mouseReleased() method
+            */
             public void mousePressed(MouseEvent e) {
-                /*
                 Component parent = e.getComponent();
                 Component comp = parent.getComponentAt(e.getPoint());
 
+                chosenPiece = null;
                 if(comp instanceof JPanel){
-                    JPanel clickedPanel = (JPanel) comp;
+                    // get the chesspiece that has been clicked
+                    chosenPanel = (JPanel) comp;
+                    chosenPiece = (ChessPiece) list.getComponent(chosenPanel);
 
-                    // Determine if there a panel has been selected before this action 
-                    if (selectedPanel1 != null) {
-                        selectedPanel2 = clickedPanel;
-                        ChessPiece selectedPiece2 = (ChessPiece) list.getComponent(selectedPanel2);
+                    // get the cordinates of the click
+                    xLocation = e.getXOnScreen();
+                    yLocation = e.getYOnScreen();
 
-                        boolean legal = false;
-                        // restrict choice of piece movement
-                        for(int index = 0; index < myMoves.getSize(); ++index){
-                            if((JPanel) list.pop((int) myMoves.pop(index)) == selectedPanel2)
-                                legal = true;}
+                    myX = getX();
+                    myY = getY();
 
-                        // chesspiece can't capture chesspiece of same color
-                        if(((!sameColor(selectedPiece, selectedPiece2) && legal) && 
-                            !isKing(selectedPiece2)) || selectedPiece == selectedPiece2){
+                    Component[] pComponents = chosenPanel.getComponents();
+                    for(Component a : pComponents){
+                        if(a instanceof JLabel){
+                            chosenLabel = (JLabel) a;} }
 
-                            Component[] jcomponents = selectedPanel1.getComponents();
-
-                            // find JLabel "pinned" to first JPanel selected
-                            for(Component c : jcomponents){
-                                if(c instanceof JLabel){
-                                    // remove label from its jpanel
-                                    selectedPanel1.remove(c);
-                                
-                                    selectedPanel1.revalidate();
-                                    selectedPanel1.repaint();} }
-
-                            Component[] scomponents = selectedPanel2.getComponents();
-
-                            // find JLabel "pinned" to second JPanel selected
-                            for(Component c : scomponents){
-                                // locate and remove the label
-                                if(c instanceof JLabel){
-                                    selectedPanel2.remove(c);
-
-                                    selectedPanel2.revalidate();
-                                    selectedPanel2.repaint();} }
-
-                            // add the captured piece to the corresponding location
-                            // captured piece is black
-                            int capturedWidth,
-                                capturedHeight;
-                            if(isBlack(selectedPiece2) && selectedPiece2 != null && 
-                               selectedPanel1 != selectedPanel2){
-                                // determine height and width of the captured piece
-                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
-                                                ((double) capturedHeight / 
-                                                (double) selectedPiece2.getHeight())));
-                                
-                                // get number of captured pieces held by panel
-                                Component[] pComponents = capturedBlack1.getComponents();
-                                // check if size including one more label can fit
-                                int numComponents = 1;
-                                for(Component c : pComponents){
-                                    if(c instanceof JLabel)
-                                        ++numComponents;}                               
-                                // check if the first panel can hold anymore captured pieces
-                                if(((numComponents * ((double) (selectedPiece2.getWidth() * 
-                                   ((double) (boardHeight / 8.0) * 0.5 /  
-                                   (double) selectedPiece2.getHeight())))) + (numComponents * 5) + 5)
-                                   < (0.4 * (screenWidth - boardHeight)))
-                                    pin(selectedPiece2, capturedBlack1, capturedWidth, 
-                                        capturedHeight, "FlowLayout", false);
-
-                                // use upper panel
-                                else{
-                                    pin(selectedPiece2, capturedBlack2, capturedWidth, 
-                                        capturedHeight, "FlowLayout", false);} }
-
-                            // captured piece is white
-                            else if(isWhite(selectedPiece2) && selectedPiece2 != null && 
-                                    selectedPanel1 != selectedPanel2){
-                                // determine height and width
-                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
-                                                ((double) capturedHeight / 
-                                                (double) selectedPiece2.getHeight())));
-                                pin(selectedPiece2, capturedWhite, capturedWidth, capturedHeight, 
-                                    "FlowLayout", false);}
-
-                            // add the chesspiece of the first selected panel to the next
-                            list.replaceComponent(selectedPanel1, selectedPanel2);
-                            pin(selectedPiece, selectedPanel2, 0, 0, "BorderLayout", true);
-
-                            // remove outline from suggested move panels
-                            for(int index = 0; index < myMoves.getSize(); ++index){
-                                removeOutline((JPanel) list.pop((int) myMoves.pop(index)));}
-
-                            // if pawn reaches opposite side of board, turn it into a queen
-                            int location = 0;
-                            for(int index = 0; index < list.getSize(); ++index){
-                                if(list.pop(index) == selectedPanel2)
-                                    location = index;}
-
-                            // if pawn reaches the end of the board- make it a queen
-                            if(selectedPiece instanceof BlackPawn && rowOf(location) == 8){
-                                list.addComponent(selectedPanel2, new BlackQueen());
-                                pin(new BlackQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
-
-                            // if pawn reaches the end of the board- make it a queen
-                            if(selectedPiece instanceof WhitePawn && rowOf(location) == 1){
-                                list.addComponent(selectedPanel2, new WhiteQueen());
-                                pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
-
-                            // allow color to move again only if he didn't move the piece selected 
-                            if(selectedPiece != selectedPiece2)
-                                priorMove = selectedPiece;
-                            
-                            // check if checkmate has been achieved
-                            /* ChessPiece king = null;
-                            int count = 0;
-                            while(!(king instanceof BlackKing) && count < 63){
-                                king = (ChessPiece) list.getComponent(0);
-                                ++count;} */
-
-                            // delete
-                            /* if(king instanceof BlackKing){
-                                if(king.checkMate(count, list))
-                                    System.out.println("Checkmate achieved!");} */
-
-                            /*
-                            // Reset all the the fields
-                            selectedPanel1 = null;
-                            selectedPanel2 = null;
-                            selectedPiece = null;} }
-                    
-                    // Other wise, find which component was clicked
-                    else{
-                        // check that panel selected by user has a chesspiece component
-                        ChessPiece piece = null;
-                        if(list.getComponent(clickedPanel) != null)
-                            piece = (ChessPiece) list.getComponent(clickedPanel);
-
-                        // determine if piece's king is in check
-                        // find integer location of king piece
-                        ChessPiece king = null;
-                        BlackKing BKing = null;
-                        WhiteKing WKing = null;
-                        int kingLocation = 0;
-                        boolean check = false;
-
-                        // look at Black side
-                        if(isBlack(piece)){
-                            for(int i = 0; i < 63; ++i){
-                                king = (ChessPiece) list.getComponent(i);
-                                if(king instanceof BlackKing){
-                                    kingLocation = i;
-                                    BKing = (BlackKing) king;} }
-                            if(BKing.check(kingLocation, list) && BKing != piece)
-                                check = true;}
-
-                        // look at White side
-                        else{
-                            for(int i = 0; i < 63; ++i){
-                                king = (ChessPiece) list.getComponent(i);
-                                if(king instanceof WhiteKing){
-                                    kingLocation = i;
-                                    WKing = (WhiteKing) king;} }
-                            if(WKing.check(kingLocation, list) && WKing != piece)
-                                check = true;}
-
-                        if(isOpponent(piece, priorMove) && !check){ 
-                            selectedPanel1 = clickedPanel;
-                            selectedPiece =  piece;
-                            if(isBlack(selectedPiece))
-                                outline(selectedPanel1, Color.black, 5);
-                            else
-                                outline(selectedPanel1, Color.white, 5);
-
-                            // provide suggestions
-                            // get my location
-                            int myLocation = 0;
-                            for(int index = 0; index < list.getSize(); ++index){
-                                if(list.pop(index) == selectedPanel1)
-                                    myLocation = index;}
-
-                            int possibleMove;
-                            Color option = new Color(127, 255, 0);
-                            Color captureKing = new Color(128, 0, 128);
-                            myMoves = selectedPiece.possibleMoves(myLocation, list, true);
-                            // System.out.println("New Set of Moves");
-                            for(int index = 0; index < myMoves.getSize(); ++index){
-                                possibleMove = (int) myMoves.pop(index);
-                                // System.out.println(possibleMove);
-                                if(isOpponent((ChessPiece) list.getComponent(myLocation), 
-                                             (ChessPiece) list.getComponent(possibleMove))){
-                                    if(!isKing((ChessPiece) list.getComponent(possibleMove)))
-                                        outline((JPanel) list.pop(possibleMove), Color.red, 5);
-                                    else{
-                                        outline((JPanel) list.pop(possibleMove), captureKing, 5);} }
-
-                                else{
-                                    addSquare((JPanel) list.pop(possibleMove), 20, option);} }
-                        } 
-                    } 
-                }*/
+                    layeredPane.add(chosenLabel, JLayeredPane.DRAG_LAYER);
+                    layeredPane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));}
             }
 
             @Override
-            public void mouseReleased(MouseEvent e){
-                Component parent = e.getComponent();
-                Component comp = parent.getComponentAt(e.getPoint());
-
-                if(comp instanceof JPanel){
-                    JPanel clickedPanel = (JPanel) comp;
-
-                    // Determine if there a panel has been selected before this action 
-                    if (selectedPanel1 != null) {
-                        selectedPanel2 = clickedPanel;
-                        ChessPiece selectedPiece2 = (ChessPiece) list.getComponent(selectedPanel2);
-
-                        boolean legal = false;
-                        // restrict choice of piece movement
-                        for(int index = 0; index < myMoves.getSize(); ++index){
-                            if((JPanel) list.pop((int) myMoves.pop(index)) == selectedPanel2)
-                                legal = true;}
-
-                        // chesspiece can't capture chesspiece of same color
-                        if(((!sameColor(selectedPiece, selectedPiece2) && legal) && 
-                            !isKing(selectedPiece2)) || selectedPiece == selectedPiece2){
-
-                            Component[] jcomponents = selectedPanel1.getComponents();
-
-                            // find JLabel "pinned" to first JPanel selected
-                            for(Component c : jcomponents){
-                                if(c instanceof JLabel){
-                                    // remove label from its jpanel
-                                    selectedPanel1.remove(c);
-                                
-                                    selectedPanel1.revalidate();
-                                    selectedPanel1.repaint();} }
-
-                            Component[] scomponents = selectedPanel2.getComponents();
-
-                            // find JLabel "pinned" to second JPanel selected
-                            for(Component c : scomponents){
-                                // locate and remove the label
-                                if(c instanceof JLabel){
-                                    selectedPanel2.remove(c);
-
-                                    selectedPanel2.revalidate();
-                                    selectedPanel2.repaint();} }
-
-                            // add the captured piece to the corresponding location
-                            // captured piece is black
-                            int capturedWidth,
-                                capturedHeight;
-                            if(isBlack(selectedPiece2) && selectedPiece2 != null && 
-                               selectedPanel1 != selectedPanel2){
-                                // determine height and width of the captured piece
-                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
-                                                ((double) capturedHeight / 
-                                                (double) selectedPiece2.getHeight())));
-                                
-                                // get number of captured pieces held by panel
-                                Component[] pComponents = capturedBlack1.getComponents();
-                                // check if size including one more label can fit
-                                int numComponents = 1;
-                                for(Component c : pComponents){
-                                    if(c instanceof JLabel)
-                                        ++numComponents;}                               
-                                // check if the first panel can hold anymore captured pieces
-                                if(((numComponents * ((double) (selectedPiece2.getWidth() * 
-                                   ((double) (boardHeight / 8.0) * 0.5 /  
-                                   (double) selectedPiece2.getHeight())))) + (numComponents * 5) + 5)
-                                   < (0.4 * (screenWidth - boardHeight)))
-                                    pin(selectedPiece2, capturedBlack1, capturedWidth, 
-                                        capturedHeight, "FlowLayout", false);
-
-                                // use upper panel
-                                else{
-                                    pin(selectedPiece2, capturedBlack2, capturedWidth, 
-                                        capturedHeight, "FlowLayout", false);} }
-
-                            // captured piece is white
-                            else if(isWhite(selectedPiece2) && selectedPiece2 != null && 
-                                    selectedPanel1 != selectedPanel2){
-                                // determine height and width
-                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
-                                                ((double) capturedHeight / 
-                                                (double) selectedPiece2.getHeight())));
-                                pin(selectedPiece2, capturedWhite, capturedWidth, capturedHeight, 
-                                    "FlowLayout", false);}
-
-                            // add the chesspiece of the first selected panel to the next
-                            list.replaceComponent(selectedPanel1, selectedPanel2);
-                            pin(selectedPiece, selectedPanel2, 0, 0, "BorderLayout", true);
-
-                            // remove outline from suggested move panels
-                            for(int index = 0; index < myMoves.getSize(); ++index){
-                                removeOutline((JPanel) list.pop((int) myMoves.pop(index)));}
-
-                            // if pawn reaches opposite side of board, turn it into a queen
-                            int location = 0;
-                            for(int index = 0; index < list.getSize(); ++index){
-                                if(list.pop(index) == selectedPanel2)
-                                    location = index;}
-
-                            // if pawn reaches the end of the board- make it a queen
-                            if(selectedPiece instanceof BlackPawn && rowOf(location) == 8){
-                                list.addComponent(selectedPanel2, new BlackQueen());
-                                pin(new BlackQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
-
-                            // if pawn reaches the end of the board- make it a queen
-                            if(selectedPiece instanceof WhitePawn && rowOf(location) == 1){
-                                list.addComponent(selectedPanel2, new WhiteQueen());
-                                pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
-
-                            // allow color to move again only if he didn't move the piece selected 
-                            if(selectedPiece != selectedPiece2)
-                                priorMove = selectedPiece;
-                            
-                            // check if checkmate has been achieved
-                            /* ChessPiece king = null;
-                            int count = 0;
-                            while(!(king instanceof BlackKing) && count < 63){
-                                king = (ChessPiece) list.getComponent(0);
-                                ++count;} */
-
-                            // delete
-                            /* if(king instanceof BlackKing){
-                                if(king.checkMate(count, list))
-                                    System.out.println("Checkmate achieved!");} */
-
-                            // Reset all the the fields
-                            selectedPanel1 = null;
-                            selectedPanel2 = null;
-                            selectedPiece = null;} }
-                    
-                    // Other wise, find which component was clicked
-                    else{
-                        // check that panel selected by user has a chesspiece component
-                        ChessPiece piece = null;
-                        if(list.getComponent(clickedPanel) != null)
-                            piece = (ChessPiece) list.getComponent(clickedPanel);
-
-                        // determine if piece's king is in check
-                        // find integer location of king piece
-                        ChessPiece king = null;
-                        BlackKing BKing = null;
-                        WhiteKing WKing = null;
-                        int kingLocation = 0;
-                        boolean check = false;
-
-                        // look at Black side
-                        if(isBlack(piece)){
-                            for(int i = 0; i < 63; ++i){
-                                king = (ChessPiece) list.getComponent(i);
-                                if(king instanceof BlackKing){
-                                    kingLocation = i;
-                                    BKing = (BlackKing) king;} }
-                            if(BKing.check(kingLocation, list) && BKing != piece)
-                                check = true;}
-
-                        // look at White side
-                        else{
-                            for(int i = 0; i < 63; ++i){
-                                king = (ChessPiece) list.getComponent(i);
-                                if(king instanceof WhiteKing){
-                                    kingLocation = i;
-                                    WKing = (WhiteKing) king;} }
-                            if(WKing.check(kingLocation, list) && WKing != piece)
-                                check = true;}
-
-                        if(isOpponent(piece, priorMove) && !check){ 
-                            selectedPanel1 = clickedPanel;
-                            selectedPiece =  piece;
-                            if(isBlack(selectedPiece))
-                                outline(selectedPanel1, Color.black, 5);
-                            else
-                                outline(selectedPanel1, Color.white, 5);
-
-                            // provide suggestions
-                            // get my location
-                            int myLocation = 0;
-                            for(int index = 0; index < list.getSize(); ++index){
-                                if(list.pop(index) == selectedPanel1)
-                                    myLocation = index;}
-
-                            int possibleMove;
-                            Color option = new Color(127, 255, 0);
-                            Color captureKing = new Color(128, 0, 128);
-                            myMoves = selectedPiece.possibleMoves(myLocation, list, true);
-                            // System.out.println("New Set of Moves");
-                            for(int index = 0; index < myMoves.getSize(); ++index){
-                                possibleMove = (int) myMoves.pop(index);
-                                // System.out.println(possibleMove);
-                                if(isOpponent((ChessPiece) list.getComponent(myLocation), 
-                                             (ChessPiece) list.getComponent(possibleMove))){
-                                    if(!isKing((ChessPiece) list.getComponent(possibleMove)))
-                                        outline((JPanel) list.pop(possibleMove), Color.red, 5);
-                                    else{
-                                        outline((JPanel) list.pop(possibleMove), captureKing, 5);} }
-
-                                else{
-                                    addSquare((JPanel) list.pop(possibleMove), 20, option);} }
-                        } 
-                    } 
-                }
-            }
-
-            @Override
+            /*
+            In dragging the chesspiece, the user will not be able to see the potential moves of his selected piece
+            */
             public void mouseDragged(MouseEvent e){
+                int newXLocation;
+                int newYLocation;
 
+                if(chosenPiece != null){
+                    // get the coordinates of the new location of the chesspiece
+                    newXLocation = (e.getXOnScreen() - xLocation) + myX;
+                    newYLocation = (e.getYOnScreen() - yLocation) + myY;
+
+                    // update the location of the JLabel representing the piece 
+                    chosenLabel.setLocation(newXLocation, newYLocation);}
+            }
+
+            @Override
+            /*
+            By releasing a mouse click, the user will be able to see the potential moves of the selected piece
+            This is the major difference between a releasing a click and dragging a chesspiece to its intended location
+            */
+            public void mouseReleased(MouseEvent e){
+                // find the chesssquare that has just been selected 
+                JPanel clickedPanel = getChessSquare(e);
+
+                    // Determine if there a panel has been selected before this action 
+                    if (selectedPanel1 != null) {
+                        selectedPanel2 = clickedPanel;
+                        ChessPiece selectedPiece2 = (ChessPiece) list.getComponent(selectedPanel2);
+
+                        boolean legal = false;
+                        // restrict choice of piece movement
+                        for(int index = 0; index < myMoves.getSize(); ++index){
+                            if((JPanel) list.pop((int) myMoves.pop(index)) == selectedPanel2)
+                                legal = true;}
+
+                        // chesspiece can't capture chesspiece of same color
+                        if(legal || selectedPiece == selectedPiece2){ 
+
+                            Component[] jcomponents = selectedPanel1.getComponents();
+
+                            // find JLabel "pinned" to first JPanel selected
+                            for(Component c : jcomponents){
+                                if(c instanceof JLabel){
+                                    // remove label from its jpanel
+                                    selectedPanel1.remove(c);
+                                
+                                    selectedPanel1.revalidate();
+                                    selectedPanel1.repaint();} }
+
+                            Component[] scomponents = selectedPanel2.getComponents();
+
+                            // find JLabel "pinned" to second JPanel selected
+                            for(Component c : scomponents){
+                                // locate and remove the label
+                                if(c instanceof JLabel){
+                                    selectedPanel2.remove(c);
+
+                                    selectedPanel2.revalidate();
+                                    selectedPanel2.repaint();} }
+
+                            // add the captured piece to the corresponding location
+                            // captured piece is black
+                            int capturedWidth,
+                                capturedHeight;
+                            if(isBlack(selectedPiece2) && selectedPiece2 != null && 
+                               selectedPanel1 != selectedPanel2){
+                                // determine height and width of the captured piece
+                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
+                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
+                                                ((double) capturedHeight / 
+                                                (double) selectedPiece2.getHeight())));
+                                
+                                // get number of captured pieces held by panel
+                                Component[] pComponents = capturedBlack1.getComponents();
+                                // check if size including one more label can fit
+                                int numComponents = 1;
+                                for(Component c : pComponents){
+                                    if(c instanceof JLabel)
+                                        ++numComponents;}                               
+                                // check if the first panel can hold anymore captured pieces
+                                if(((numComponents * ((double) (selectedPiece2.getWidth() * 
+                                   ((double) (boardHeight / 8.0) * 0.5 /  
+                                   (double) selectedPiece2.getHeight())))) + (numComponents * 5) + 5)
+                                   < (0.4 * (screenWidth - boardHeight)))
+                                    pin(selectedPiece2, capturedBlack1, capturedWidth, 
+                                        capturedHeight, "FlowLayout", false);
+
+                                // use upper panel
+                                else{
+                                    pin(selectedPiece2, capturedBlack2, capturedWidth, 
+                                        capturedHeight, "FlowLayout", false);} }
+
+                            // captured piece is white
+                            else if(isWhite(selectedPiece2) && selectedPiece2 != null && 
+                                    selectedPanel1 != selectedPanel2){
+                                // determine height and width
+                                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
+                                capturedWidth = (int) ((double) (selectedPiece2.getWidth() * 
+                                                ((double) capturedHeight / 
+                                                (double) selectedPiece2.getHeight())));
+                                pin(selectedPiece2, capturedWhite, capturedWidth, capturedHeight, 
+                                    "FlowLayout", false);}
+
+                            // add the chesspiece of the first selected panel to the next
+                            list.replaceComponent(selectedPanel1, selectedPanel2);
+                            pin(selectedPiece, selectedPanel2, 0, 0, "BorderLayout", true);
+
+                            // remove outline from suggested move panels
+                            for(int index = 0; index < myMoves.getSize(); ++index){
+                                removeOutline((JPanel) list.pop((int) myMoves.pop(index)));}
+
+                            // if pawn reaches opposite side of board, turn it into a queen
+                            int location = 0;
+                            for(int index = 0; index < list.getSize(); ++index){
+                                if(list.pop(index) == selectedPanel2)
+                                    location = index;}
+
+                            // if pawn reaches the end of the board- make it a queen
+                            if(selectedPiece instanceof BlackPawn && rowOf(location) == 8){
+                                list.addComponent(selectedPanel2, new BlackQueen());
+                                pin(new BlackQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
+
+                            // if pawn reaches the end of the board- make it a queen
+                            if(selectedPiece instanceof WhitePawn && rowOf(location) == 1){
+                                list.addComponent(selectedPanel2, new WhiteQueen());
+                                pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);}
+
+                            // allow color to move again only if he didn't move the piece selected 
+                            if(selectedPiece != selectedPiece2)
+                                priorMove = selectedPiece;
+                            
+                            // Reset all the the fields
+                            selectedPanel1 = null;
+                            selectedPanel2 = null;
+                            selectedPiece = null;} }
+                    
+                    // Other wise, find which component was clicked
+                    else{
+                        // find the selected chesspiece 
+                        ChessPiece piece = (ChessPiece) list.getComponent(clickedPanel);
+
+                        if(movable(piece, priorMove)){ 
+
+                            // set fields for alternate method calls
+                            selectedPanel1 = clickedPanel;
+                            selectedPiece =  piece;
+
+                            if(isBlack(selectedPiece))
+                                outline(selectedPanel1, Color.black, 5);
+                            else
+                                outline(selectedPanel1, Color.white, 5);
+
+                            // provide suggestions
+                            // get my location
+                            int myLocation = 0;
+                            for(int index = 0; index < list.getSize(); ++index){
+                                if(list.pop(index) == selectedPanel1)
+                                    myLocation = index;}
+
+                            int possibleMove;
+                            Color option = new Color(127, 255, 0);
+                            Color captureKing = new Color(128, 0, 128);
+                            myMoves = selectedPiece.possibleMoves(myLocation, list, true);
+                            for(int index = 0; index < myMoves.getSize(); ++index){
+                                possibleMove = (int) myMoves.pop(index);
+                                // if move is opponent, highlight it for user
+                                if(isOpponent((ChessPiece) list.getComponent(myLocation), 
+                                             (ChessPiece) list.getComponent(possibleMove))){
+                                    if(!isKing((ChessPiece) list.getComponent(possibleMove)))
+                                        outline((JPanel) list.pop(possibleMove), Color.red, 5);
+                                    else{
+                                        outline((JPanel) list.pop(possibleMove), captureKing, 5);} }
+
+                                else{
+                                    addSquare((JPanel) list.pop(possibleMove), 20, option);} }
+                        } 
+                    }
+            }
+
+            /**
+            Method that identifies the location of MouseEvents and returns the JPanel
+            At those cordinates
+            */
+            private JPanel getChessSquare(MouseEvent e){
+                JPanel clickedPanel = null;
+                Component parent = e.getComponent();
+                Component comp = parent.getComponentAt(e.getPoint());
+
+                if(comp instanceof JPanel)
+                    clickedPanel = (JPanel) comp;
+
+                return clickedPanel;
+            }
+
+            /**
+            Method that checks the following criteria to see if a chesspiece is eligible to move:
+                The chess square being selected contains a piece
+                The piece being selected is a different color that the previous move
+            */
+            private boolean movable(ChessPiece move, ChessPiece priorMove){
+                if(move != null && isOpponent(move, priorMove))
+                    return true;
+
+                return false;
             }
         };
 
-        board.addMouseListener(ma);
-        board.addMouseMotionListener(ma);
+        layeredPane.addMouseListener(ma);
+        layeredPane.addMouseMotionListener(ma);
+
+        // board.addMouseListener(ma);
+        // board.addMouseMotionListener(ma);
     }
 
     /**
-    Private thiser method that adds a chesspiece image to the center of a JPanel using a JLabel 
+    Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
     Height and width of the image is specified by the parameters
     'dimensionDecider' parameter determines if the label is set to the size of the panel or to the 
     size of the image
@@ -807,7 +646,7 @@ public class ChessBoard extends JFrame{
     }
 
     /**
-    Private thiser method that outlines a jpanel chessquare with a color specified in the parameters
+    Private helper method that outlines a jpanel chessquare with a color specified in the parameters
     The width of this outline is specified w/ in the methods parameters
     */
     private void outline(JPanel panel, Color color, int depth){
