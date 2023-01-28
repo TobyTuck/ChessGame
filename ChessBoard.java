@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 
 public class ChessBoard extends JFrame{
 
+    private JLayeredPane layeredPane;
+
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
 
@@ -66,8 +68,7 @@ public class ChessBoard extends JFrame{
     */
     public ChessBoard(){
         // get screen dimensions
-        Dimension screenSize = 
-            Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Color darkGreen = new Color(25, 45, 25);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,10 +83,6 @@ public class ChessBoard extends JFrame{
         this.setIconImage(new Logo().getImage());
         this.setTitle("ChessGame Application");
 
-        // option 2
-        Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
-        int taskBarSize = scnMax.top;
-
         screenHeight = screenSize.height;
         screenWidth = screenSize.width;
 
@@ -93,10 +90,13 @@ public class ChessBoard extends JFrame{
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         board.setBackground(Color.pink);
 
+        JLayeredPane layeredPane = new JLayeredPane();
+        //layeredPane.setPreferredSize(screenSize);
+
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
         do{
-            boardHeight = (int)((screenHeight - taskBarSize - 50) * 0.9) + eightDivisible;
+            boardHeight = (int)((screenHeight - 70) * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
@@ -296,6 +296,7 @@ public class ChessBoard extends JFrame{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
+        this.add(layeredPane);
         GridBagConstraints gbc = new GridBagConstraints();
         //gbc.gridx = -5;
         //gbc.gridy = 5;
@@ -310,11 +311,9 @@ public class ChessBoard extends JFrame{
         this.add(rightContainer, gbc);
         this.setVisible(true);
 
-        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(screenSize);
-        getContentPane().add(layeredPane);
-
-        layeredPane.add(this, JLayeredPane.DEFAULT_LAYER);
+        //getContentPane().add(layeredPane);
 
         MouseAdapter ma = new MouseAdapter() {
             // field declaration
@@ -338,7 +337,8 @@ public class ChessBoard extends JFrame{
 
             @Override
             /*
-            Used in conjunction with the mouseDragged() method, separate from the mouseReleased() method
+            Used in conjunction with the mouseDragged() method 
+            Separate from the mouseReleased() method
             */
             public void mousePressed(MouseEvent e) {
                 Component parent = e.getComponent();
@@ -363,12 +363,13 @@ public class ChessBoard extends JFrame{
                             chosenLabel = (JLabel) a;} }
 
                     layeredPane.add(chosenLabel, JLayeredPane.DRAG_LAYER);
-                    layeredPane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));}
+                    // layeredPane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));}
             }
 
             @Override
             /*
-            In dragging the chesspiece, the user will not be able to see the potential moves of his selected piece
+            In dragging the chesspiece, the user will not be able to see the potential moves of 
+            His selected piece
             */
             public void mouseDragged(MouseEvent e){
                 int newXLocation;
@@ -385,8 +386,10 @@ public class ChessBoard extends JFrame{
 
             @Override
             /*
-            By releasing a mouse click, the user will be able to see the potential moves of the selected piece
-            This is the major difference between a releasing a click and dragging a chesspiece to its intended location
+            By releasing a mouse click, the user will be able to see the potential moves of the 
+            selected piece
+            This is the major difference between a releasing a click and dragging a chesspiece 
+            to its intended location
             */
             public void mouseReleased(MouseEvent e){
                 // find the chesssquare that has just been selected 
