@@ -268,17 +268,26 @@ public class List{
     */
     public Object getComponent(Object data){
         
-        if(_head.getData().equals(data))
-            return _head.getComponent();
+        //try{
+            if(_head.getData().equals(data))
+                return _head.getComponent();
 
-        Link myLink = _head;
+            Link myLink = _head;
 
-        for(Link index = _head; !index.getData().equals(data); 
-            index = index.getRight()){
-            myLink = index;}
-        myLink = myLink.getRight();
+            for(Link index = _head; !index.getData().equals(data); 
+                index = index.getRight()){
+                myLink = index;}
+            myLink = myLink.getRight();
 
-        return myLink.getComponent();
+            return myLink.getComponent();
+
+        /*} catch (NullPointerException e){
+            System.out.println("Object entered does not exist in this list.\n" +
+                               "Two possibilities exist: \n\tEither the object " +
+                               "provided is incorrect\n\tOR the list provided is " +
+                               "incorrect");}
+
+        return null;*/
     }
 
     /**

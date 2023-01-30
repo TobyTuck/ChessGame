@@ -296,7 +296,7 @@ public class ChessBoard extends JFrame{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
-        this.add(layeredPane);
+        // frame.add(layeredPane);
         GridBagConstraints gbc = new GridBagConstraints();
         //gbc.gridx = -5;
         //gbc.gridy = 5;
@@ -311,11 +311,73 @@ public class ChessBoard extends JFrame{
         this.add(rightContainer, gbc);
         this.setVisible(true);
 
-        layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(screenSize);
-        //getContentPane().add(layeredPane);
+        MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
+                                                capturedWhite, capturedBlack1, capturedBlack2);
+        layeredPane.addMouseListener(mma);
+        this.getContentPane().add(layeredPane);
+    }
 
-        MouseAdapter ma = new MouseAdapter() {
+    private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,
+                     boolean dimensionDecider){
+                
+        // default height and width for each chesspiece
+        if(width == 0 && height == 0){
+            if(piece instanceof BlackPawn || piece instanceof WhitePawn){
+                height = (int) ((boardHeight / 8.0) * 0.6);
+                width = (int) ((double) (piece.getWidth() * 
+                        ((double) height / (double) piece.getHeight())));}
+
+            else if(piece instanceof BlackRook || piece instanceof WhiteRook){
+                height = (int) ((boardHeight / 8.0) * 0.75);
+                width = (int) ((double) (piece.getWidth() * 
+                        ((double) height / (double) piece.getHeight())));}
+
+            else if(piece instanceof BlackKnight || piece instanceof WhiteKnight){
+                height = (int) ((boardHeight / 8.0) * 0.75);
+                width = (int) ((double) (piece.getWidth() * 
+                        ((double) height / (double) piece.getHeight())));}
+
+            else if(piece instanceof BlackBishop || piece instanceof WhiteBishop){ 
+                height = (int) ((boardHeight / 8.0) * 0.8);
+                width = (int) ((double) (piece.getWidth() * 
+                        ((double) height / (double) piece.getHeight())));}
+
+            else if(piece instanceof BlackQueen || piece instanceof WhiteQueen){ 
+                height = (int) ((boardHeight / 8.0) * 0.85);
+                width = (int) ((double) (piece.getWidth() * 
+                        ((double) height / (double) piece.getHeight())));}
+
+            // ChessPiece is a king
+            else{ 
+                height = (int) ((boardHeight / 8.0) * 0.9);
+                width = (int) ((double) (piece.getWidth() * 
+                        ((double) height / (double) piece.getHeight())));} } 
+
+        // rescale image to fit its jpanel
+        piece.scaleImage(width, height);
+
+        // create the label and set preferrences
+        JLabel label = new JLabel(piece.toImageIcon(), JLabel.CENTER);
+
+        // determine whether or not the label should be set to the size of the label or not
+        if(dimensionDecider == true)
+            label.setPreferredSize(panel.getPreferredSize());
+
+        else{
+            label.setPreferredSize(new Dimension(width, height));}
+
+        // use layout manager specified in the parameters
+        if(layoutDecider.equals("BorderLayout"))
+            panel.add(label, BorderLayout.CENTER);
+
+        else if(layoutDecider.equals("FlowLayout"))
+            panel.add(label);
+    }
+}
+        // frame.addMouseListener(ma);
+        // frame.addMouseMotionListener(ma);
+
+        /*frame.addMouseListener(new MouseAdapter() {
             // field declaration
             private JPanel selectedPanel1;
             private JPanel selectedPanel2;
@@ -340,6 +402,7 @@ public class ChessBoard extends JFrame{
             Used in conjunction with the mouseDragged() method 
             Separate from the mouseReleased() method
             */
+            /*
             public void mousePressed(MouseEvent e) {
                 Component parent = e.getComponent();
                 Component comp = parent.getComponentAt(e.getPoint());
@@ -354,16 +417,16 @@ public class ChessBoard extends JFrame{
                     xLocation = e.getXOnScreen();
                     yLocation = e.getYOnScreen();
 
-                    myX = getX();
-                    myY = getY();
+                    myX = e.getX();
+                    myY = e.getY();
 
                     Component[] pComponents = chosenPanel.getComponents();
                     for(Component a : pComponents){
                         if(a instanceof JLabel){
                             chosenLabel = (JLabel) a;} }
 
-                    layeredPane.add(chosenLabel, JLayeredPane.DRAG_LAYER);
-                    // layeredPane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));}
+                    layeredPane.add(chosenLabel, JLayeredPane.DRAG_LAYER);}
+                    // layeredPane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
             }
 
             @Override
@@ -371,6 +434,7 @@ public class ChessBoard extends JFrame{
             In dragging the chesspiece, the user will not be able to see the potential moves of 
             His selected piece
             */
+            /*
             public void mouseDragged(MouseEvent e){
                 int newXLocation;
                 int newYLocation;
@@ -391,6 +455,7 @@ public class ChessBoard extends JFrame{
             This is the major difference between a releasing a click and dragging a chesspiece 
             to its intended location
             */
+            /*
             public void mouseReleased(MouseEvent e){
                 // find the chesssquare that has just been selected 
                 JPanel clickedPanel = getChessSquare(e);
@@ -548,12 +613,14 @@ public class ChessBoard extends JFrame{
                                     addSquare((JPanel) list.pop(possibleMove), 20, option);} }
                         } 
                     }
-            }
+                } 
+            });
 
             /**
             Method that identifies the location of MouseEvents and returns the JPanel
             At those cordinates
             */
+            /*
             private JPanel getChessSquare(MouseEvent e){
                 JPanel clickedPanel = null;
                 Component parent = e.getComponent();
@@ -570,20 +637,19 @@ public class ChessBoard extends JFrame{
                 The chess square being selected contains a piece
                 The piece being selected is a different color that the previous move
             */
+            /*
             private boolean movable(ChessPiece move, ChessPiece priorMove){
                 if(move != null && isOpponent(move, priorMove))
                     return true;
 
                 return false;
             }
-        };
 
-        layeredPane.addMouseListener(ma);
-        layeredPane.addMouseMotionListener(ma);
+        // layeredPane.addMouseListener(ma);
+        // layeredPane.addMouseMotionListener(ma);
 
         // board.addMouseListener(ma);
         // board.addMouseMotionListener(ma);
-    }
 
     /**
     Private helper method that adds a chesspiece image to the center of a JPanel using a JLabel 
@@ -591,6 +657,7 @@ public class ChessBoard extends JFrame{
     'dimensionDecider' parameter determines if the label is set to the size of the panel or to the 
     size of the image
     */
+    /*
     private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,
                      boolean dimensionDecider){
                 
@@ -652,6 +719,7 @@ public class ChessBoard extends JFrame{
     Private helper method that outlines a jpanel chessquare with a color specified in the parameters
     The width of this outline is specified w/ in the methods parameters
     */
+    /*
     private void outline(JPanel panel, Color color, int depth){
         panel.setLayout(new BorderLayout());
 
@@ -779,6 +847,7 @@ public class ChessBoard extends JFrame{
     /*
     Method that checks to see if two chesspieces are of the same color
     */
+    /*
     private boolean sameColor(ChessPiece piece1, ChessPiece piece2){
         // special cases- one of the pieces is null, while the other is not; or both are null
         if((piece1 == null && piece2 != null) || (piece1 != null && piece2 == null) || 
@@ -823,6 +892,7 @@ public class ChessBoard extends JFrame{
     /**
     Method that checks if an oppoent exists in a square
     */
+    /*
     protected boolean isOpponent(ChessPiece piece1, ChessPiece piece2){
         // special case
         if(piece1 == null || piece2 == null)
@@ -846,6 +916,7 @@ public class ChessBoard extends JFrame{
     /**
     Method that returns the "level" of the chessboard the number is at
     */
+    /*
     private int rowOf(int myLocation){
         return (myLocation / 8) + 1;
     }
@@ -853,6 +924,7 @@ public class ChessBoard extends JFrame{
     /**
     Method that checks if a ChessPiece is a king
     */
+    /*
     private boolean isKing(ChessPiece piece){
         if(piece instanceof BlackKing || piece instanceof WhiteKing)
             return true;
@@ -863,6 +935,7 @@ public class ChessBoard extends JFrame{
     /**
     Method that checks if a piece is eligible to be captured
     */
+    /*
     private boolean isCheck(List chessboard, ChessPiece king, int myLocation){
         ChessPiece piece;
         List myMoves;
@@ -896,7 +969,7 @@ public class ChessBoard extends JFrame{
           the true dimensions of the screen: xrandr | grep '*' | awk '{ print $1 }'
     */
     // Method to return size of a random chess square
-    public Dimension getCellDimension(){
+    /* public Dimension getCellDimension(){
         Random random = new Random();
         int index = random.nextInt(64);
 
@@ -912,6 +985,6 @@ public class ChessBoard extends JFrame{
 
     // Method to return the dimensions of the entire JFrame
     public Dimension getWindowSize(){
-        return this.getSize();
+        return frame.getSize();
     }
-}
+} */
