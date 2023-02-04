@@ -10,6 +10,7 @@ public class ChessBoard extends JFrame{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
+    private JPanel background;
 
     // panels that fit insde the east and west panels, w/ the purpose of holding captured chesspieces
     // 2 panels for Black pieces because must add to bottom panel first, then to top
@@ -79,6 +80,8 @@ public class ChessBoard extends JFrame{
         this.setResizable(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
+        System.out.println(this.getSize());
+
         // set applet's tab icon
         this.setIconImage(new Logo().getImage());
         this.setTitle("ChessGame Application");
@@ -91,6 +94,9 @@ public class ChessBoard extends JFrame{
         board.setBackground(Color.pink);
 
         JLayeredPane layeredPane = new JLayeredPane();
+        // layeredPane.setPreferredSize(screenSize);
+        layeredPane.setLayout(new GridBagLayout());
+        // layeredPane.getLayer(0).setIsOptimizedDrawingEnabled(false);
         //layeredPane.setPreferredSize(screenSize);
 
         // ensure the board is square- and divides evenly into 8 
@@ -101,8 +107,8 @@ public class ChessBoard extends JFrame{
         }while(boardHeight % 8 != 0);
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
 
-        // delete
-        System.out.println("boardHeight: " + boardHeight);
+        background = new JPanel();
+        background.setBackground(darkGreen);
 
         capturedWhite = new JPanel(new FlowLayout());
         
@@ -124,15 +130,19 @@ public class ChessBoard extends JFrame{
         capturedBlack2.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                      (int) (((boardHeight / 8.0) * 0.5) + 10)));
 
-        capturedWhite.setBackground(darkGreen);
-        rightContainer.setBackground(darkGreen);
-        rightFiller.setBackground(darkGreen);
-        capturedBlack1.setBackground(darkGreen);
-        capturedBlack2.setBackground(darkGreen);
+        capturedWhite.setBackground(Color.white);
+        rightContainer.setBackground(Color.red);
+        rightFiller.setBackground(Color.blue);
+        capturedBlack1.setBackground(Color.yellow);
+        capturedBlack2.setBackground(Color.pink);
         
         rightContainer.add(rightFiller);//, BorderLayout.NORTH);
         rightContainer.add(capturedBlack2);//, BorderLayout.CENTER);
         rightContainer.add(capturedBlack1);//, BorderLayout.SOUTH);
+                                           
+        JPanel dragLayer = new JPanel();
+        // dragLayer.setVisible(false);
+        // dragLayer.setPreferredSize(new Dimension(boardHeight, boardHeight));
 
         // add components of each square to the list
         list = new List(8);
@@ -296,25 +306,27 @@ public class ChessBoard extends JFrame{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
-        // frame.add(layeredPane);
         GridBagConstraints gbc = new GridBagConstraints();
-        //gbc.gridx = -5;
-        //gbc.gridy = 5;
-        gbc.weightx = 0.05;
-        //gbc.weighty = 0.05;
-        this.add(capturedWhite, gbc);
-        //gbc.gridx = 0;
-        //gbc.gridy = 0;
-        this.add(board, gbc);
-        //gbc.gridx = 5;
-        // gbc.gridy = -5;
-        this.add(rightContainer, gbc);
-        this.setVisible(true);
+        // Default Layer
+        layeredPane.add(background, gbc, JLayeredPane.DEFAULT_LAYER);
+
+        // Pallette Layer
+        gbc.insets = new Insets(0, 10, 0, 10);
+        layeredPane.add(capturedWhite, gbc, JLayeredPane.PALETTE_LAYER);
+        layeredPane.add(board, gbc, JLayeredPane.PALETTE_LAYER);
+        layeredPane.add(rightContainer, gbc, JLayeredPane.PALETTE_LAYER);
+
+        // Drag Layer
+        gbc.insets = new Insets(0, 0, 0, 0);
+        layeredPane.add(dragLayer, gbc, JLayeredPane.DRAG_LAYER);
 
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
-                                                capturedWhite, capturedBlack1, capturedBlack2);
-        layeredPane.addMouseListener(mma);
-        this.getContentPane().add(layeredPane);
+                                                capturedWhite, capturedBlack1, capturedBlack2, dragLayer);
+
+        board.addMouseListener(mma);
+        board.addMouseMotionListener(mma);
+        this.add(layeredPane);
+        this.setVisible(true);
     }
 
     private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,
