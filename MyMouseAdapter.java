@@ -40,11 +40,10 @@ public class MyMouseAdapter extends MouseAdapter{
     private Point initialClick;
     // private JPanel parentPanel;
     private JPanel pressedPanel;
-    private JPanel invisiblePanel;
     private JLabel pressedLabel;
 
     public MyMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
-                          JPanel capBlack1, JPanel capBlack2, JPanel invisible){
+                          JPanel capBlack1, JPanel capBlack2){
         list = chessboard;
         boardHeight = bH;
         screenWidth = sW;
@@ -52,7 +51,6 @@ public class MyMouseAdapter extends MouseAdapter{
         capturedWhite = capWhite;
         capturedBlack1 = capBlack1;
         capturedBlack2 = capBlack2;
-        invisiblePanel = invisible;
        
         // first move is made by white side
         priorMove = new BlackPawn();
@@ -156,29 +154,8 @@ public class MyMouseAdapter extends MouseAdapter{
             // JPanel invisiblePanel;
             if(!dragged){
                 pressedPanel.remove(pressedLabel);
-                /* // get the label corresponding to the chess piece
-                Component[] pComponents = pressedPanel.getComponents();
-                for(Component a : pComponents){
-                    if(a instanceof JLabel){
-                        chosenLabel = (JLabel) a; 
-
-                        // remove the JLabel from its location
-                        pressedPanel.remove(chosenLabel);} }*/
-    
-                /* // get invisible jpanel in the drag layer
-                JPanel invisiblePanel = null;
-                Component[] dComponents = parent.getComponentsInLayer(JLayeredPane.DRAG_LAYER);
-                for(Component a : dComponents){
-                    if(a instanceof JPanel)
-                        invisiblePanel = (JPanel) a;}*/
-
-                // add image to the invisible layer and set it visible
-                // pressed
-                // pressedPanel.setLocation(400, 500);
-                invisiblePanel.add(pressedLabel);
-                invisiblePanel.setVisible(true);
-                invisiblePanel.setBackground(Color.red);
-                pressedLabel.setVisible(true);
+                layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
+                // pressedLabel.setVisible(true);
 
                 layeredPane.revalidate();
                 layeredPane.repaint();}
@@ -236,7 +213,7 @@ public class MyMouseAdapter extends MouseAdapter{
             System.out.println("Drag released");
 
             // remove panel from drag layer
-            invisiblePanel.removeAll();
+            // invisiblePanel.removeAll();
 
             // add panel to square user was hovering over 
             list.replaceComponent(pressedPanel, clickedPanel);

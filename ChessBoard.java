@@ -74,7 +74,7 @@ public class ChessBoard extends JFrame{
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridBagLayout());
-        this.getContentPane().setBackground(darkGreen);
+        // this.getContentPane().setBackground(darkGreen);
 
         // shall we make the size of the chessboard update as resized?
         this.setResizable(true);
@@ -95,9 +95,14 @@ public class ChessBoard extends JFrame{
 
         JLayeredPane layeredPane = new JLayeredPane();
         // layeredPane.setPreferredSize(screenSize);
-        layeredPane.setLayout(new GridBagLayout());
+        // layeredPane.setLayout(new GridBagLayout());
         // layeredPane.getLayer(0).setIsOptimizedDrawingEnabled(false);
         //layeredPane.setPreferredSize(screenSize);
+
+        // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
+        JPanel defaultHolder = new JPanel(new GridBagLayout());
+        defaultHolder.setPreferredSize(new Dimension(300, 400));
+        JPanel paletteHolder = new JPanel(new GridBagLayout());
 
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
@@ -136,14 +141,10 @@ public class ChessBoard extends JFrame{
         capturedBlack1.setBackground(Color.yellow);
         capturedBlack2.setBackground(Color.pink);
         
-        rightContainer.add(rightFiller);//, BorderLayout.NORTH);
-        rightContainer.add(capturedBlack2);//, BorderLayout.CENTER);
-        rightContainer.add(capturedBlack1);//, BorderLayout.SOUTH);
+        rightContainer.add(rightFiller);
+        rightContainer.add(capturedBlack2);
+        rightContainer.add(capturedBlack1);
                                            
-        JPanel dragLayer = new JPanel();
-        // dragLayer.setVisible(false);
-        // dragLayer.setPreferredSize(new Dimension(boardHeight, boardHeight));
-
         // add components of each square to the list
         list = new List(8);
 
@@ -307,23 +308,26 @@ public class ChessBoard extends JFrame{
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
         GridBagConstraints gbc = new GridBagConstraints();
-        // Default Layer
-        layeredPane.add(background, gbc, JLayeredPane.DEFAULT_LAYER);
 
-        // Pallette Layer
+        // add component to the defaultHolder 
+        defaultHolder.add(background, gbc);
+
+        // add components to the paletteHolder 
         gbc.insets = new Insets(0, 10, 0, 10);
-        layeredPane.add(capturedWhite, gbc, JLayeredPane.PALETTE_LAYER);
-        layeredPane.add(board, gbc, JLayeredPane.PALETTE_LAYER);
-        layeredPane.add(rightContainer, gbc, JLayeredPane.PALETTE_LAYER);
+        paletteHolder.add(capturedWhite, gbc);
+        paletteHolder.add(board, gbc);
+        paletteHolder.add(rightContainer, gbc);
 
-        // Drag Layer
-        gbc.insets = new Insets(0, 0, 0, 0);
-        layeredPane.add(dragLayer, gbc, JLayeredPane.DRAG_LAYER);
+        // add 'Holder' panels to their respective layers in the layeredPane
+        layeredPane.add(defaultHolder, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(paletteHolder, JLayeredPane.PALETTE_LAYER);
 
+        // instantiate my MouseAdapter
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
-                                                capturedWhite, capturedBlack1, capturedBlack2, dragLayer);
+                                                capturedWhite, capturedBlack1, capturedBlack2);
 
         board.addMouseListener(mma);
+        // need to add a MouseMotionListener for the layeredPane?
         board.addMouseMotionListener(mma);
         this.add(layeredPane);
         this.setVisible(true);
