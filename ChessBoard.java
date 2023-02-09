@@ -10,7 +10,6 @@ public class ChessBoard extends JFrame{
 
     // JPanel that consists of the entire 8 * 8 chessboard
     private JPanel board;
-    private JPanel background;
 
     // panels that fit insde the east and west panels, w/ the purpose of holding captured chesspieces
     // 2 panels for Black pieces because must add to bottom panel first, then to top
@@ -73,7 +72,7 @@ public class ChessBoard extends JFrame{
         Color darkGreen = new Color(25, 45, 25);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new GridBagLayout());
+        this.setLayout(new BorderLayout()); //GridBagLayout());
         // this.getContentPane().setBackground(darkGreen);
 
         // shall we make the size of the chessboard update as resized?
@@ -94,15 +93,14 @@ public class ChessBoard extends JFrame{
         board.setBackground(Color.pink);
 
         JLayeredPane layeredPane = new JLayeredPane();
-        // layeredPane.setPreferredSize(screenSize);
+        layeredPane.setBackground(Color.red);
+        layeredPane.setPreferredSize(screenSize);
+        layeredPane.setLocation((int) (screenSize.width), (int) (screenSize.height));
         // layeredPane.setLayout(new GridBagLayout());
         // layeredPane.getLayer(0).setIsOptimizedDrawingEnabled(false);
-        //layeredPane.setPreferredSize(screenSize);
 
         // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
         JPanel defaultHolder = new JPanel(new GridBagLayout());
-        defaultHolder.setPreferredSize(new Dimension(300, 400));
-        JPanel paletteHolder = new JPanel(new GridBagLayout());
 
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
@@ -110,10 +108,9 @@ public class ChessBoard extends JFrame{
             boardHeight = (int)((screenHeight - 70) * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
-        board.setPreferredSize(new Dimension(boardHeight, boardHeight));
-
-        background = new JPanel();
-        background.setBackground(darkGreen);
+        // board.setPreferredSize(new Dimension(boardHeight, boardHeight));
+        board.setBounds((int) (screenSize.width / 2), (int) (screenSize.height / 2)
+                        , boardHeight, boardHeight);
 
         capturedWhite = new JPanel(new FlowLayout());
         
@@ -124,9 +121,15 @@ public class ChessBoard extends JFrame{
 
         Dimension containerDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                      (int) (boardHeight * 0.7));
-        capturedWhite.setPreferredSize(containerDimension);
+        // capturedWhite.setPreferredSize(containerDimension);
+        capturedWhite.setBounds((int) (screenSize.width / 2 - boardHeight / 2 - 15), 
+                                (int) (screenSize.height / 2), (int) 
+                                (0.4 * (screenWidth - boardHeight)), (int) (boardHeight * 0.7));
 
-        rightContainer.setPreferredSize(containerDimension);
+        // rightContainer.setPreferredSize(containerDimension);
+        rightContainer.setBounds((int) (screenSize.width / 2 + boardHeight / 2 + 15), 
+                                (int) (screenSize.height / 2), (int) 
+                                (0.4 * (screenWidth - boardHeight)), (int) (boardHeight * 0.7));
         rightFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                    (int) ((boardHeight * 0.7) - 
                                                          ((boardHeight / 8.0) + 20)))); 
@@ -307,20 +310,16 @@ public class ChessBoard extends JFrame{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
+        // add components to the defaultHolder 
         GridBagConstraints gbc = new GridBagConstraints();
-
-        // add component to the defaultHolder 
-        defaultHolder.add(background, gbc);
-
-        // add components to the paletteHolder 
         gbc.insets = new Insets(0, 10, 0, 10);
-        paletteHolder.add(capturedWhite, gbc);
-        paletteHolder.add(board, gbc);
-        paletteHolder.add(rightContainer, gbc);
+        defaultHolder.add(capturedWhite, gbc);
+        defaultHolder.add(board, gbc);
+        defaultHolder.add(rightContainer, gbc);
 
         // add 'Holder' panels to their respective layers in the layeredPane
         layeredPane.add(defaultHolder, JLayeredPane.DEFAULT_LAYER);
-        layeredPane.add(paletteHolder, JLayeredPane.PALETTE_LAYER);
+        layeredPane.setVisible(true);
 
         // instantiate my MouseAdapter
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
@@ -329,7 +328,7 @@ public class ChessBoard extends JFrame{
         board.addMouseListener(mma);
         // need to add a MouseMotionListener for the layeredPane?
         board.addMouseMotionListener(mma);
-        this.add(layeredPane);
+        this.add(layeredPane, BorderLayout.CENTER);
         this.setVisible(true);
     }
 
