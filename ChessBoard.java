@@ -4,103 +4,62 @@ import java.awt.event.*;  // used for MouseAdapter and MouseEvent
 import java.util.Random;
 import java.awt.image.BufferedImage;
 
-public class ChessBoard extends JFrame{
+public class ChessBoard{
 
-    private JLayeredPane layeredPane;
-
-    // JPanel that consists of the entire 8 * 8 chessboard
-    private JPanel board;
-
-    // panels that fit insde the east and west panels, w/ the purpose of holding captured chesspieces
-    // 2 panels for Black pieces because must add to bottom panel first, then to top
-    private JPanel capturedWhite;
-    private JPanel capturedBlack1;
-    private JPanel capturedBlack2;
-
-    //holds all the individual squares
-    List list;
-
-    private int screenHeight;
-    private int screenWidth;
     private int boardHeight;
-
-    // declare individual squares of the chessboard
-    private JPanel square0;         private JPanel square10;
-    private JPanel square1;         private JPanel square11;
-    private JPanel square2;         private JPanel square12;
-    private JPanel square3;         private JPanel square13;
-    private JPanel square4;         private JPanel square14;
-    private JPanel square5;         private JPanel square15;
-    private JPanel square6;         private JPanel square16;
-    private JPanel square7;         private JPanel square17;
-    private JPanel square8;         private JPanel square18;
-    private JPanel square9;         private JPanel square19;
-
-    private JPanel square20;        private JPanel square30;
-    private JPanel square21;        private JPanel square31;
-    private JPanel square22;        private JPanel square32;
-    private JPanel square23;        private JPanel square33;
-    private JPanel square24;        private JPanel square34;
-    private JPanel square25;        private JPanel square35;
-    private JPanel square26;        private JPanel square36;
-    private JPanel square27;        private JPanel square37;
-    private JPanel square28;        private JPanel square38;
-    private JPanel square29;        private JPanel square39;
-
-    private JPanel square40;        private JPanel square50;
-    private JPanel square41;        private JPanel square51;
-    private JPanel square42;        private JPanel square52;
-    private JPanel square43;        private JPanel square53;
-    private JPanel square44;        private JPanel square54;
-    private JPanel square45;        private JPanel square55;
-    private JPanel square46;        private JPanel square56;
-    private JPanel square47;        private JPanel square57;
-    private JPanel square48;        private JPanel square58;
-    private JPanel square49;        private JPanel square59;
-
-    private JPanel square60;
-    private JPanel square61;
-    private JPanel square62;
-    private JPanel square63;
 
     /**
     No-arg constructor that creates the board- and adds all pieces to their default positions
     */
-    public ChessBoard(){
+    public ChessBoard(JFrame frame, JLayeredPane layeredPane){
+
+        // JLayeredPane layeredPane;
+
+        JPanel defaultHolder;
+
+        // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
+        JPanel board;
+        JPanel capturedWhite;
+        JPanel capturedBlack1;
+        JPanel capturedBlack2;
+
+        // holds list of all individual squares and their pieces
+        List list;
+
+        int screenHeight;
+        int screenWidth;
+
         // get screen dimensions
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Color darkGreen = new Color(25, 45, 25);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout()); //GridBagLayout());
-        // this.getContentPane().setBackground(darkGreen);
+        frame.getContentPane().setBackground(darkGreen);
+        /* frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // frame.getContentPane().setBackground(darkGreen);
 
         // shall we make the size of the chessboard update as resized?
-        this.setResizable(true);
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        System.out.println(this.getSize());
+        frame.setResizable(true);
+        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // set applet's tab icon
-        this.setIconImage(new Logo().getImage());
-        this.setTitle("ChessGame Application");
+        frame.setIconImage(new Logo().getImage());
+        frame.setTitle("ChessGame Application");*/
 
         screenHeight = screenSize.height;
         screenWidth = screenSize.width;
 
-        // build the chessboard
+        // initialize all JComponents 
+        layeredPane = new JLayeredPane();
+
+        defaultHolder = new JPanel(new GridBagLayout());
+
         board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        board.setBackground(Color.pink);
+        JPanel rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        capturedWhite = new JPanel(new FlowLayout());
 
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBackground(Color.red);
-        layeredPane.setPreferredSize(screenSize);
-        layeredPane.setLocation((int) (screenSize.width), (int) (screenSize.height));
-        // layeredPane.setLayout(new GridBagLayout());
-        // layeredPane.getLayer(0).setIsOptimizedDrawingEnabled(false);
-
-        // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
-        JPanel defaultHolder = new JPanel(new GridBagLayout());
+        JPanel rightFiller = new JPanel();
+        capturedBlack1 = new JPanel(new FlowLayout());
+        capturedBlack2 = new JPanel(new FlowLayout());
 
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
@@ -108,28 +67,15 @@ public class ChessBoard extends JFrame{
             boardHeight = (int)((screenHeight - 70) * 0.9) + eightDivisible;
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
-        // board.setPreferredSize(new Dimension(boardHeight, boardHeight));
-        board.setBounds((int) (screenSize.width / 2), (int) (screenSize.height / 2)
-                        , boardHeight, boardHeight);
-
-        capturedWhite = new JPanel(new FlowLayout());
-        
-        JPanel rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        JPanel rightFiller = new JPanel();
-        capturedBlack1 = new JPanel(new FlowLayout());
-        capturedBlack2 = new JPanel(new FlowLayout());
 
         Dimension containerDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                      (int) (boardHeight * 0.7));
-        // capturedWhite.setPreferredSize(containerDimension);
-        capturedWhite.setBounds((int) (screenSize.width / 2 - boardHeight / 2 - 15), 
-                                (int) (screenSize.height / 2), (int) 
-                                (0.4 * (screenWidth - boardHeight)), (int) (boardHeight * 0.7));
 
-        // rightContainer.setPreferredSize(containerDimension);
-        rightContainer.setBounds((int) (screenSize.width / 2 + boardHeight / 2 + 15), 
-                                (int) (screenSize.height / 2), (int) 
-                                (0.4 * (screenWidth - boardHeight)), (int) (boardHeight * 0.7));
+        // set the size of all JComponents as necessary
+        board.setPreferredSize(new Dimension(boardHeight, boardHeight));
+        capturedWhite.setPreferredSize(containerDimension);
+        rightContainer.setPreferredSize(containerDimension);
+
         rightFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                    (int) ((boardHeight * 0.7) - 
                                                          ((boardHeight / 8.0) + 20)))); 
@@ -138,89 +84,86 @@ public class ChessBoard extends JFrame{
         capturedBlack2.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                      (int) (((boardHeight / 8.0) * 0.5) + 10)));
 
+        // set the colors of JComponents (for testing purposes)
         capturedWhite.setBackground(Color.white);
         rightContainer.setBackground(Color.red);
         rightFiller.setBackground(Color.blue);
         capturedBlack1.setBackground(Color.yellow);
         capturedBlack2.setBackground(Color.pink);
         
-        rightContainer.add(rightFiller);
-        rightContainer.add(capturedBlack2);
-        rightContainer.add(capturedBlack1);
-                                           
         // add components of each square to the list
         list = new List(8);
 
-        square0 = new JPanel(); list.push(square0, null);
-        square1 = new JPanel(); list.push(square1, null);
-        square2 = new JPanel(); list.push(square2, null);
-        square3 = new JPanel(); list.push(square3, null);
-        square4 = new JPanel(); list.push(square4, null);
-        square5 = new JPanel(); list.push(square5, null);
-        square6 = new JPanel(); list.push(square6, null);
-        square7 = new JPanel(); list.push(square7, null);
-        square8 = new JPanel(); list.push(square8, null);
-        square9 = new JPanel(); list.push(square9, null);
+        JPanel square0 = new JPanel(); list.push(square0, null);
+        JPanel square1 = new JPanel(); list.push(square1, null);
+        JPanel square2 = new JPanel(); list.push(square2, null);
+        JPanel square3 = new JPanel(); list.push(square3, null);
+        JPanel square4 = new JPanel(); list.push(square4, null);
+        JPanel square5 = new JPanel(); list.push(square5, null);
+        JPanel square6 = new JPanel(); list.push(square6, null);
+        JPanel square7 = new JPanel(); list.push(square7, null);
+        JPanel square8 = new JPanel(); list.push(square8, null);
+        JPanel square9 = new JPanel(); list.push(square9, null);
         
-        square10 = new JPanel(); list.push(square10, null);
-        square11 = new JPanel(); list.push(square11, null);
-        square12 = new JPanel(); list.push(square12, null);
-        square13 = new JPanel(); list.push(square13, null);
-        square14 = new JPanel(); list.push(square14, null);
-        square15 = new JPanel(); list.push(square15, null);
-        square16 = new JPanel(); list.push(square16, null);
-        square17 = new JPanel(); list.push(square17, null);
-        square18 = new JPanel(); list.push(square18, null);
-        square19 = new JPanel(); list.push(square19, null);
+        JPanel square10 = new JPanel(); list.push(square10, null);
+        JPanel square11 = new JPanel(); list.push(square11, null);
+        JPanel square12 = new JPanel(); list.push(square12, null);
+        JPanel square13 = new JPanel(); list.push(square13, null);
+        JPanel square14 = new JPanel(); list.push(square14, null);
+        JPanel square15 = new JPanel(); list.push(square15, null);
+        JPanel square16 = new JPanel(); list.push(square16, null);
+        JPanel square17 = new JPanel(); list.push(square17, null);
+        JPanel square18 = new JPanel(); list.push(square18, null);
+        JPanel square19 = new JPanel(); list.push(square19, null);
 
-        square20 = new JPanel(); list.push(square20, null);
-        square21 = new JPanel(); list.push(square21, null);
-        square22 = new JPanel(); list.push(square22, null);
-        square23 = new JPanel(); list.push(square23, null);
-        square24 = new JPanel(); list.push(square24, null);
-        square25 = new JPanel(); list.push(square25, null);
-        square26 = new JPanel(); list.push(square26, null);
-        square27 = new JPanel(); list.push(square27, null);
-        square28 = new JPanel(); list.push(square28, null);
-        square29 = new JPanel(); list.push(square29, null);
+        JPanel square20 = new JPanel(); list.push(square20, null);
+        JPanel square21 = new JPanel(); list.push(square21, null);
+        JPanel square22 = new JPanel(); list.push(square22, null);
+        JPanel square23 = new JPanel(); list.push(square23, null);
+        JPanel square24 = new JPanel(); list.push(square24, null);
+        JPanel square25 = new JPanel(); list.push(square25, null);
+        JPanel square26 = new JPanel(); list.push(square26, null);
+        JPanel square27 = new JPanel(); list.push(square27, null);
+        JPanel square28 = new JPanel(); list.push(square28, null);
+        JPanel square29 = new JPanel(); list.push(square29, null);
 
-        square30 = new JPanel(); list.push(square30, null);
-        square31 = new JPanel(); list.push(square31, null);
-        square32 = new JPanel(); list.push(square32, null);
-        square33 = new JPanel(); list.push(square33, null);
-        square34 = new JPanel(); list.push(square34, null);
-        square35 = new JPanel(); list.push(square35, null);
-        square36 = new JPanel(); list.push(square36, null);
-        square37 = new JPanel(); list.push(square37, null);
-        square38 = new JPanel(); list.push(square38, null);
-        square39 = new JPanel(); list.push(square39, null);
+        JPanel square30 = new JPanel(); list.push(square30, null);
+        JPanel square31 = new JPanel(); list.push(square31, null);
+        JPanel square32 = new JPanel(); list.push(square32, null);
+        JPanel square33 = new JPanel(); list.push(square33, null);
+        JPanel square34 = new JPanel(); list.push(square34, null);
+        JPanel square35 = new JPanel(); list.push(square35, null);
+        JPanel square36 = new JPanel(); list.push(square36, null);
+        JPanel square37 = new JPanel(); list.push(square37, null);
+        JPanel square38 = new JPanel(); list.push(square38, null);
+        JPanel square39 = new JPanel(); list.push(square39, null);
 
-        square40 = new JPanel(); list.push(square40, null);
-        square41 = new JPanel(); list.push(square41, null);
-        square42 = new JPanel(); list.push(square42, null);
-        square43 = new JPanel(); list.push(square43, null);
-        square44 = new JPanel(); list.push(square44, null);
-        square45 = new JPanel(); list.push(square45, null);
-        square46 = new JPanel(); list.push(square46, null);
-        square47 = new JPanel(); list.push(square47, null);
-        square48 = new JPanel(); list.push(square48, null);
-        square49 = new JPanel(); list.push(square49, null);
+        JPanel square40 = new JPanel(); list.push(square40, null);
+        JPanel square41 = new JPanel(); list.push(square41, null);
+        JPanel square42 = new JPanel(); list.push(square42, null);
+        JPanel square43 = new JPanel(); list.push(square43, null);
+        JPanel square44 = new JPanel(); list.push(square44, null);
+        JPanel square45 = new JPanel(); list.push(square45, null);
+        JPanel square46 = new JPanel(); list.push(square46, null);
+        JPanel square47 = new JPanel(); list.push(square47, null);
+        JPanel square48 = new JPanel(); list.push(square48, null);
+        JPanel square49 = new JPanel(); list.push(square49, null);
 
-        square50 = new JPanel(); list.push(square50, null);
-        square51 = new JPanel(); list.push(square51, null);
-        square52 = new JPanel(); list.push(square52, null);
-        square53 = new JPanel(); list.push(square53, null);
-        square54 = new JPanel(); list.push(square54, null);
-        square55 = new JPanel(); list.push(square55, null);
-        square56 = new JPanel(); list.push(square56, null);
-        square57 = new JPanel(); list.push(square57, null);
-        square58 = new JPanel(); list.push(square58, null);
-        square59 = new JPanel(); list.push(square59, null);
+        JPanel square50 = new JPanel(); list.push(square50, null);
+        JPanel square51 = new JPanel(); list.push(square51, null);
+        JPanel square52 = new JPanel(); list.push(square52, null);
+        JPanel square53 = new JPanel(); list.push(square53, null);
+        JPanel square54 = new JPanel(); list.push(square54, null);
+        JPanel square55 = new JPanel(); list.push(square55, null);
+        JPanel square56 = new JPanel(); list.push(square56, null);
+        JPanel square57 = new JPanel(); list.push(square57, null);
+        JPanel square58 = new JPanel(); list.push(square58, null);
+        JPanel square59 = new JPanel(); list.push(square59, null);
 
-        square60 = new JPanel(); list.push(square60, null);
-        square61 = new JPanel(); list.push(square61, null);
-        square62 = new JPanel(); list.push(square62, null);
-        square63 = new JPanel(); list.push(square63, null);
+        JPanel square60 = new JPanel(); list.push(square60, null);
+        JPanel square61 = new JPanel(); list.push(square61, null);
+        JPanel square62 = new JPanel(); list.push(square62, null);
+        JPanel square63 = new JPanel(); list.push(square63, null);
 
         //Set properties of all the items
         // in the List
@@ -310,16 +253,40 @@ public class ChessBoard extends JFrame{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
-        // add components to the defaultHolder 
+        // defaultHolder.setBackground(Color.pink);
+
+        // add components to their parent containers
+        rightContainer.add(rightFiller);
+        rightContainer.add(capturedBlack2);
+        rightContainer.add(capturedBlack1);
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0, 10, 0, 10);
         defaultHolder.add(capturedWhite, gbc);
         defaultHolder.add(board, gbc);
         defaultHolder.add(rightContainer, gbc);
 
-        // add 'Holder' panels to their respective layers in the layeredPane
         layeredPane.add(defaultHolder, JLayeredPane.DEFAULT_LAYER);
-        layeredPane.setVisible(true);
+
+        layeredPane.setBackground(Color.blue);
+
+        frame.add(layeredPane);
+
+        JLayeredPane myJLP = layeredPane;
+
+        frame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                Dimension size = myJLP.getSize();
+                int width = size.width;
+                int height = size.height;
+
+                if(width > 1000 && height > 600)
+                    defaultHolder.setBounds(0, 0, size.width, size.height);
+                
+                System.out.println("Width: " + size.width +
+                                   "\nHeight " + size.height);
+            }
+        });
 
         // instantiate my MouseAdapter
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
@@ -328,8 +295,8 @@ public class ChessBoard extends JFrame{
         board.addMouseListener(mma);
         // need to add a MouseMotionListener for the layeredPane?
         board.addMouseMotionListener(mma);
-        this.add(layeredPane, BorderLayout.CENTER);
-        this.setVisible(true);
+
+        frame.setVisible(true);
     }
 
     private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,
