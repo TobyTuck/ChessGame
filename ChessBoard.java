@@ -4,16 +4,16 @@ import java.awt.event.*;  // used for MouseAdapter and MouseEvent
 import java.util.Random;
 import java.awt.image.BufferedImage;
 
-public class ChessBoard{
+public class ChessBoard extends JFrame{
 
     private int boardHeight;
 
     /**
     No-arg constructor that creates the board- and adds all pieces to their default positions
     */
-    public ChessBoard(JFrame frame, JLayeredPane layeredPane){
+    public ChessBoard(){
 
-        // JLayeredPane layeredPane;
+        JLayeredPane layeredPane;
 
         JPanel defaultHolder;
 
@@ -33,17 +33,17 @@ public class ChessBoard{
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Color darkGreen = new Color(25, 45, 25);
 
-        frame.getContentPane().setBackground(darkGreen);
-        /* frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // frame.getContentPane().setBackground(darkGreen);
+        this.getContentPane().setBackground(darkGreen);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.getContentPane().setBackground(darkGreen);
 
         // shall we make the size of the chessboard update as resized?
-        frame.setResizable(true);
-        // frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setResizable(true);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // set applet's tab icon
-        frame.setIconImage(new Logo().getImage());
-        frame.setTitle("ChessGame Application");*/
+        this.setIconImage(new Logo().getImage());
+        this.setTitle("ChessGame Application");
 
         screenHeight = screenSize.height;
         screenWidth = screenSize.width;
@@ -72,6 +72,24 @@ public class ChessBoard{
                                                      (int) (boardHeight * 0.7));
 
         // set the size of all JComponents as necessary
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                Dimension size = layeredPane.getSize();
+                int width = size.width;
+                int height = size.height;
+
+                if(width > 1000 && height > 600){
+                    // defaultHolder.setBounds(0, 0, size.width, size.height);
+
+                    defaultHolder.setPreferredSize(size);
+                    defaultHolder.setLocation(0, 0);
+
+                    // delete
+                    System.out.println("Width: " + size.width +
+                                       "\nHeight " + size.height);}
+            }
+        });
+
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         capturedWhite.setPreferredSize(containerDimension);
         rightContainer.setPreferredSize(containerDimension);
@@ -267,26 +285,7 @@ public class ChessBoard{
         defaultHolder.add(rightContainer, gbc);
 
         layeredPane.add(defaultHolder, JLayeredPane.DEFAULT_LAYER);
-
-        layeredPane.setBackground(Color.blue);
-
-        frame.add(layeredPane);
-
-        JLayeredPane myJLP = layeredPane;
-
-        frame.addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent e) {
-                Dimension size = myJLP.getSize();
-                int width = size.width;
-                int height = size.height;
-
-                if(width > 1000 && height > 600)
-                    defaultHolder.setBounds(0, 0, size.width, size.height);
-                
-                System.out.println("Width: " + size.width +
-                                   "\nHeight " + size.height);
-            }
-        });
+        this.add(layeredPane);
 
         // instantiate my MouseAdapter
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
@@ -296,7 +295,7 @@ public class ChessBoard{
         // need to add a MouseMotionListener for the layeredPane?
         board.addMouseMotionListener(mma);
 
-        frame.setVisible(true);
+        this.setVisible(true);
     }
 
     private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,

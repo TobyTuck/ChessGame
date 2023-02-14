@@ -1,7 +1,7 @@
 public class ChessGame{
 
     public static void main(String[] args){
-        ChessBoardInitializer board = new ChessBoardInitializer();
+        ChessBoard board = new ChessBoard();
     
         // print the dimensions of the JFrame and its components
         /* System.out.println
