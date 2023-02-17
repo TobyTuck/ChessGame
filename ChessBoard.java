@@ -35,7 +35,6 @@ public class ChessBoard extends JFrame{
 
         this.getContentPane().setBackground(darkGreen);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground(darkGreen);
 
         // shall we make the size of the chessboard update as resized?
         this.setResizable(true);
@@ -81,7 +80,7 @@ public class ChessBoard extends JFrame{
                 if(width > 1000 && height > 600){
                     // defaultHolder.setBounds(0, 0, size.width, size.height);
 
-                    defaultHolder.setPreferredSize(size);
+                    defaultHolder.setSize(size.width, height);
                     defaultHolder.setLocation(0, 0);
 
                     // delete
@@ -89,6 +88,11 @@ public class ChessBoard extends JFrame{
                                        "\nHeight " + size.height);}
             }
         });
+
+        // defaultHolder.setSize(900, 1600);
+        defaultHolder.setBackground(Color.red);
+        // defaultHolder.setLayout(new GridBagLayout());
+defaultHolder.setLayout(new GridBagLayout());
 
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         capturedWhite.setPreferredSize(containerDimension);
@@ -271,15 +275,13 @@ public class ChessBoard extends JFrame{
             if(component != null && component instanceof ChessPiece)
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
 
-        // defaultHolder.setBackground(Color.pink);
-
         // add components to their parent containers
         rightContainer.add(rightFiller);
         rightContainer.add(capturedBlack2);
         rightContainer.add(capturedBlack1);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0, 10, 0, 10);
+        // gbc.insets = new Insets(0, 10, 0, 10);
         defaultHolder.add(capturedWhite, gbc);
         defaultHolder.add(board, gbc);
         defaultHolder.add(rightContainer, gbc);
@@ -287,13 +289,17 @@ public class ChessBoard extends JFrame{
         layeredPane.add(defaultHolder, JLayeredPane.DEFAULT_LAYER);
         this.add(layeredPane);
 
-        // instantiate my MouseAdapter
+        // delete
+        JPanel tester = new JPanel();
+        tester.setBackground(Color.red);
+        // this.add(tester);
+
+        // instantiate and add MouseAdapter to chessboard
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
                                                 capturedWhite, capturedBlack1, capturedBlack2);
 
         board.addMouseListener(mma);
-        // need to add a MouseMotionListener for the layeredPane?
-        board.addMouseMotionListener(mma);
+        layeredPane.addMouseMotionListener(mma);
 
         this.setVisible(true);
     }
