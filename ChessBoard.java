@@ -71,28 +71,27 @@ public class ChessBoard extends JFrame{
                                                      (int) (boardHeight * 0.7));
 
         // set the size of all JComponents as necessary
-        this.addComponentListener(new ComponentAdapter() {
+        /*defaultHolder.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
-                Dimension size = layeredPane.getSize();
+                // get the size of the container
+                Dimension size = e.getComponent().getParent().getSize();
                 int width = size.width;
                 int height = size.height;
 
                 if(width > 1000 && height > 600){
                     // defaultHolder.setBounds(0, 0, size.width, size.height);
-
-                    defaultHolder.setSize(size.width, height);
-                    defaultHolder.setLocation(0, 0);
+                    // e.getComponent().setSize(size);
 
                     // delete
                     System.out.println("Width: " + size.width +
                                        "\nHeight " + size.height);}
             }
-        });
+        });*/
 
-        // defaultHolder.setSize(900, 1600);
+        // find some way to set this to the size of the JLayeredPane- and the JFrame
+        defaultHolder.setSize(1848, 1011);
         defaultHolder.setBackground(Color.red);
-        // defaultHolder.setLayout(new GridBagLayout());
-defaultHolder.setLayout(new GridBagLayout());
+        defaultHolder.setLayout(new GridBagLayout());
 
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         capturedWhite.setPreferredSize(containerDimension);
@@ -281,18 +280,13 @@ defaultHolder.setLayout(new GridBagLayout());
         rightContainer.add(capturedBlack1);
 
         GridBagConstraints gbc = new GridBagConstraints();
-        // gbc.insets = new Insets(0, 10, 0, 10);
+        gbc.insets = new Insets(0, 10, 0, 10);
         defaultHolder.add(capturedWhite, gbc);
         defaultHolder.add(board, gbc);
         defaultHolder.add(rightContainer, gbc);
 
         layeredPane.add(defaultHolder, JLayeredPane.DEFAULT_LAYER);
         this.add(layeredPane);
-
-        // delete
-        JPanel tester = new JPanel();
-        tester.setBackground(Color.red);
-        // this.add(tester);
 
         // instantiate and add MouseAdapter to chessboard
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 

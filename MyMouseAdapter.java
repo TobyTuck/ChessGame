@@ -86,48 +86,6 @@ public class MyMouseAdapter extends MouseAdapter{
         initialClick = e.getPoint();
 
         dragged = false;
-
-
-        /* JComponent comp = (JComponent) e.getComponent();
-
-        if(comp instanceof JLayeredPane)
-            System.out.println("We're screwed!");
-
-        if(comp instanceof JPanel){
-        // get the square the click was registered at
-        JPanel clickedPanel = getClickedSquare(e);
-        chosenPiece = (ChessPiece) list.getComponent(getClickedSquare(e));
-
-        if(chosenPiece != null){
-            // get the label corresponding to the chess piece
-            Component[] pComponents = clickedPanel.getComponents();
-            for(Component a : pComponents){
-                if(a instanceof JLabel){
-                    chosenLabel = (JLabel) a; 
-
-                    // remove the JLabel from its location
-                    clickedPanel.remove(chosenLabel);} }
-
-            chosenLabel.setVisible(true);
-
-            parentPanel.add(chosenLabel);
-            // layeredPane.add(parentPanel, new GridBagConstraints(), JLayeredPane.DRAG_LAYER);
-
-            layeredPane.revalidate();
-            layeredPane.repaint();
-
-            // get the cordinates of the click
-            xLocation = e.getXOnScreen();
-            yLocation = e.getYOnScreen();
-
-            myX = e.getX();
-            myY = e.getY();
-
-            initialClick = e.getPoint();
-
-            dragged = false;
-
-            System.out.println("Mouse pressed!");} }*/
     }
 
     @Override
@@ -175,26 +133,6 @@ public class MyMouseAdapter extends MouseAdapter{
                 layeredPane.repaint();}
 
             dragged = true;}
-
-        /* // locate the clicked chesspiece
-        JPanel chosenPanel = getClickedSquare(e);
-        chosenPiece = (ChessPiece) list.getComponent(getClickedSquare(e));
-
-        if(chosenPiece != null){
-            layeredPane.setLayout(null);
-
-            // get the coordinates of the chesspiece's new location
-            int newXLocation = (e.getXOnScreen() - xLocation) + myX;
-            int newYLocation = (e.getYOnScreen() - yLocation) + myY;
-            chosenLabel.setLocation(newXLocation, newYLocation);
-            // int mom = comp.getX() + e.getX() - initialClick.x;
-            // int dad = comp.getY() + e.getY() - initialClick.y;
-            // chosenLabel.setLocation(mom, dad);
-
-            layeredPane.revalidate();
-            layeredPane.repaint();
-
-            dragged = true;} */
     }
 
     @Override
