@@ -41,6 +41,10 @@ public class MyMouseAdapter extends MouseAdapter{
     private JPanel pressedPanel;
     private JPanel _board;
     private JLabel pressedLabel;
+    private int initialX;
+    private int initialY;
+    private int screenX;
+    private int screenY;
 
     public MyMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
                           JPanel capBlack1, JPanel capBlack2, JPanel board){
@@ -72,7 +76,12 @@ public class MyMouseAdapter extends MouseAdapter{
         pressedPanel = getChessSquare(e);
 
         // get the cordinates of the click
-        initialClick = e.getPoint();
+        // initialClick = e.getPoint();
+        initialX = e.getX();
+        initialY = e.getY();
+
+        screenX = e.getXOnScreen();
+        screenY = e.getYOnScreen();
 
         dragged = false;
     }
@@ -97,6 +106,7 @@ public class MyMouseAdapter extends MouseAdapter{
 
                 // add label to top layer of the JLayeredPane
                 layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
+                pressedLabel.setLocation(initialX, initialY);
                 
                 // remove label from JLayeredPane
                 pressedPanel.remove(pressedLabel);
@@ -109,9 +119,12 @@ public class MyMouseAdapter extends MouseAdapter{
             // continuation of drag
             else{
                 // update the position of the label
-                int xUpdate = comp.getX() + e.getX() - initialClick.x;
-                int yUpdate = comp.getY() + e.getY() - initialClick.y;
-                pressedLabel.setLocation(xUpdate, yUpdate);
+                // int xUpdate = /*comp.getX()*/ + e.getX() - initialClick.x;
+                // int yUpdate = /*comp.getY()*/ + e.getY() - initialClick.y;
+                // pressedLabel.setLocation(xUpdate, yUpdate);
+                int deltaX = e.getXOnScreen() - screenX;
+                int deltaY = e.getYOnScreen() - screenY;
+                pressedLabel.setLocation(initialX + deltaX, initialY + deltaY); 
 
                 layeredPane.revalidate();
                 layeredPane.repaint();} }
