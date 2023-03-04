@@ -40,7 +40,6 @@ public class MyMouseAdapter extends MouseAdapter{
     private Point initialClick;
     private JPanel pressedPanel;
     private JPanel _board;
-    private JLabel pressedLabel;
 
     public MyMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
                           JPanel capBlack1, JPanel capBlack2, JPanel board){
@@ -83,20 +82,21 @@ public class MyMouseAdapter extends MouseAdapter{
     His selected piece
     */
     public void mouseDragged(MouseEvent e){
-        // delete
-        System.out.println("Mouse Dragged!");
-
         JComponent comp = (JComponent) e.getComponent();
         ChessPiece pressedPiece = (ChessPiece) list.getComponent(pressedPanel);
 
         if(pressedPiece != null){
+            System.out.println("Mouse Dragged!");
+
             // first time component is dragged
             if(!dragged){
                 // get label from initial press
-                pressedLabel = getChessLabel(pressedPanel);
+                JLabel pressedLabel = getChessLabel(pressedPanel);
 
                 // add label to top layer of the JLayeredPane
+                pressedPanel.remove(pressedLabel);
                 layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
+                pressedLabel.setVisible(true);
                 
                 // remove label from JLayeredPane
                 pressedPanel.remove(pressedLabel);
@@ -109,9 +109,9 @@ public class MyMouseAdapter extends MouseAdapter{
             // continuation of drag
             else{
                 // update the position of the label
-                int xUpdate = comp.getX() + e.getX() - initialClick.x;
-                int yUpdate = comp.getY() + e.getY() - initialClick.y;
-                pressedLabel.setLocation(xUpdate, yUpdate);
+                int mom = comp.getX() + e.getX() - initialClick.x;
+                int dad = comp.getY() + e.getY() - initialClick.y;
+                pressedLabel.setLocation(mom, dad);
 
                 layeredPane.revalidate();
                 layeredPane.repaint();} }
@@ -123,10 +123,9 @@ public class MyMouseAdapter extends MouseAdapter{
     However, if the user releases the mouse without dragging, piece options to move will be given
     */
     public void mouseReleased(MouseEvent e){
-        // delete
         System.out.println("Mouse Released!");
 
-        // find the chessquare that has just been selected 
+        // find the chesssquare that has just been selected 
         JPanel clickedPanel = getChessSquare(e);
 
         // user dragged the selected piece before release
@@ -134,7 +133,7 @@ public class MyMouseAdapter extends MouseAdapter{
             System.out.println("Drag released");
 
             // remove panel from drag layer
-            layeredPane.remove(pressedLabel);
+            // invisiblePanel.removeAll();
 
             // add panel to square user was hovering over 
             list.replaceComponent(pressedPanel, clickedPanel);

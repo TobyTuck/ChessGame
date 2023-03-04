@@ -90,7 +90,6 @@ public class ChessBoard extends JFrame{
 
         // find some way to set this to the size of the JLayeredPane- and the JFrame
         defaultHolder.setSize(1848, 1011);
-        defaultHolder.setBackground(Color.red);
         defaultHolder.setLayout(new GridBagLayout());
 
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
@@ -105,12 +104,12 @@ public class ChessBoard extends JFrame{
         capturedBlack2.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                      (int) (((boardHeight / 8.0) * 0.5) + 10)));
 
-        // set the colors of JComponents (for testing purposes)
-        capturedWhite.setBackground(Color.white);
-        rightContainer.setBackground(Color.red);
-        rightFiller.setBackground(Color.blue);
-        capturedBlack1.setBackground(Color.yellow);
-        capturedBlack2.setBackground(Color.pink);
+        // set the colors of JComponents
+        defaultHolder.setBackground(darkGreen);
+        capturedWhite.setBackground(darkGreen);
+        rightFiller.setBackground(darkGreen);
+        capturedBlack1.setBackground(darkGreen);
+        capturedBlack2.setBackground(darkGreen);
         
         // add components of each square to the list
         list = new List(8);
@@ -290,10 +289,11 @@ public class ChessBoard extends JFrame{
 
         // instantiate and add MouseAdapter to chessboard
         MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
-                                                capturedWhite, capturedBlack1, capturedBlack2);
+                                                capturedWhite, capturedBlack1, capturedBlack2, board);
 
+        // How can I make this representative of the layeredPane without getting LP clicks?
         board.addMouseListener(mma);
-        layeredPane.addMouseMotionListener(mma);
+        board.addMouseMotionListener(mma);
 
         this.setVisible(true);
     }
