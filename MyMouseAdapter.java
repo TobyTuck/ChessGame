@@ -78,11 +78,11 @@ public class MyMouseAdapter extends MouseAdapter{
         // get the cordinates of the click
         // initialClick = e.getPoint();
         Point p = MouseInfo.getPointerInfo().getLocation();
-        myX = p.x;
-        myY = p.y;
+        // myX = p.x;
+        // myY = p.y;
 
-        // myX = e.getX();
-        // myY = e.getY();
+        myX = e.getX();
+        myY = e.getY();
 
         screenX = e.getXOnScreen();
         screenY = e.getYOnScreen();
