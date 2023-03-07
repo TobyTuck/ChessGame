@@ -8,14 +8,13 @@ public class ChessBoard extends JFrame{
 
     private int boardHeight;
 
+    private JPanel defaultHolder;
+    private JLayeredPane layeredPane;
+
     /**
     No-arg constructor that creates the board- and adds all pieces to their default positions
     */
     public ChessBoard(){
-
-        JLayeredPane layeredPane;
-
-        JPanel defaultHolder;
 
         // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
         JPanel board;
@@ -49,6 +48,7 @@ public class ChessBoard extends JFrame{
 
         // initialize all JComponents 
         layeredPane = new JLayeredPane();
+        layeredPane.setLayout(null);
 
         defaultHolder = new JPanel(new GridBagLayout());
 
@@ -71,7 +71,7 @@ public class ChessBoard extends JFrame{
                                                      (int) (boardHeight * 0.7));
 
         // set the size of all JComponents as necessary
-        /*defaultHolder.addComponentListener(new ComponentAdapter() {
+        /* defaultHolder.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
                 // get the size of the container
                 Dimension size = e.getComponent().getParent().getSize();
@@ -353,6 +353,13 @@ public class ChessBoard extends JFrame{
 
         else if(layoutDecider.equals("FlowLayout"))
             panel.add(label);
+    }
+
+    /**
+    Method that returns the size of the Panel that represents the default panel in the JLayeredPane
+    */
+    public Dimension getLayeredSize(){
+        return layeredPane.getSize();
     }
 }
         // frame.addMouseListener(ma);

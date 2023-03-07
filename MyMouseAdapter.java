@@ -77,8 +77,12 @@ public class MyMouseAdapter extends MouseAdapter{
 
         // get the cordinates of the click
         // initialClick = e.getPoint();
-        initialX = e.getX();
-        initialY = e.getY();
+        Point p = MouseInfo.getPointerInfo().getLocation();
+        myX = p.x;
+        myY = p.y;
+
+        // myX = e.getX();
+        // myY = e.getY();
 
         screenX = e.getXOnScreen();
         screenY = e.getYOnScreen();
@@ -105,9 +109,11 @@ public class MyMouseAdapter extends MouseAdapter{
                 pressedLabel = getChessLabel(pressedPanel);
 
                 // add label to top layer of the JLayeredPane
+                // pressedLabel.setLocation(initialX, initialY);
+                pressedLabel.setLocation(myX, myY);
                 layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
-                pressedLabel.setLocation(initialX, initialY);
-                
+                // pressedLabel.setLocation(0, 0);
+
                 // remove label from JLayeredPane
                 pressedPanel.remove(pressedLabel);
 
@@ -124,7 +130,7 @@ public class MyMouseAdapter extends MouseAdapter{
                 // pressedLabel.setLocation(xUpdate, yUpdate);
                 int deltaX = e.getXOnScreen() - screenX;
                 int deltaY = e.getYOnScreen() - screenY;
-                pressedLabel.setLocation(initialX + deltaX, initialY + deltaY); 
+                pressedLabel.setLocation(myX + deltaX, myY + deltaY); 
 
                 layeredPane.revalidate();
                 layeredPane.repaint();} }
