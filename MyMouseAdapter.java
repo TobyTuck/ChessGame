@@ -87,6 +87,10 @@ public class MyMouseAdapter extends MouseAdapter{
         screenX = e.getXOnScreen();
         screenY = e.getYOnScreen();
 
+        // delete
+        System.out.println("getX(): " + myX + "; getXOnScreen(): " + screenX + "; p.x: " + p.x +
+                           "\ngetY(): " + myY + "; getYOnScreen(): " + screenY + "; p.y: " + p.y);
+
         dragged = false;
     }
 
@@ -106,11 +110,9 @@ public class MyMouseAdapter extends MouseAdapter{
             // first time component is dragged
             if(!dragged){
                 // get label from initial press
-                pressedLabel = getChessLabel(pressedPanel);
-
                 // add label to top layer of the JLayeredPane
-                // pressedLabel.setLocation(initialX, initialY);
-                pressedLabel.setLocation(myX, myY);
+                pressedLabel.setLocation(screenX, screenY);
+                // pressedLabel.setLocation(myX, myY);
                 layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
                 // pressedLabel.setLocation(0, 0);
 
@@ -130,7 +132,9 @@ public class MyMouseAdapter extends MouseAdapter{
                 // pressedLabel.setLocation(xUpdate, yUpdate);
                 int deltaX = e.getXOnScreen() - screenX;
                 int deltaY = e.getYOnScreen() - screenY;
-                pressedLabel.setLocation(myX + deltaX, myY + deltaY); 
+                //pressedLabel.setLocation(myX + deltaX, myY + deltaY); 
+                // delete
+                pressedLabel.setLocation(screenX + deltaX, screenY + deltaY);
 
                 layeredPane.revalidate();
                 layeredPane.repaint();} }
