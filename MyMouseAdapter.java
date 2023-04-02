@@ -43,8 +43,8 @@ public class MyMouseAdapter extends MouseAdapter{
     private JLabel pressedLabel;
     private int initialX;
     private int initialY;
-    private int screenX;
-    private int screenY;
+    private int mouseX;
+    private int mouseY;
 
     public MyMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
                           JPanel capBlack1, JPanel capBlack2, JPanel board){
@@ -70,26 +70,19 @@ public class MyMouseAdapter extends MouseAdapter{
     */
     public void mousePressed(MouseEvent e) {
         // delete
-        System.out.println("Mouse Pressed!"); 
+        // System.out.println("Mouse Pressed!"); 
 
         // get the pressed Chess Square panel 
         pressedPanel = getChessSquare(e);
 
-        // get the cordinates of the click
-        // initialClick = e.getPoint();
-        Point p = MouseInfo.getPointerInfo().getLocation();
-        // myX = p.x;
-        // myY = p.y;
+        // get the pressed label
+        pressedLabel = getChessLabel(getChessSquare(e));
 
         myX = e.getX();
         myY = e.getY();
 
-        screenX = e.getXOnScreen();
-        screenY = e.getYOnScreen();
-
-        // delete
-        System.out.println("getX(): " + myX + "; getXOnScreen(): " + screenX + "; p.x: " + p.x +
-                           "\ngetY(): " + myY + "; getYOnScreen(): " + screenY + "; p.y: " + p.y);
+        mouseX = e.getXOnScreen();
+        mouseY = e.getYOnScreen();
 
         dragged = false;
     }
@@ -101,20 +94,21 @@ public class MyMouseAdapter extends MouseAdapter{
     */
     public void mouseDragged(MouseEvent e){
         // delete
-        System.out.println("Mouse Dragged!");
+        // System.out.println("Mouse Dragged!");
 
         JComponent comp = (JComponent) e.getComponent();
         ChessPiece pressedPiece = (ChessPiece) list.getComponent(pressedPanel);
+
+        int tryX = MouseInfo.getPointerInfo().getLocation().x;
+        int tryY = MouseInfo.getPointerInfo().getLocation().y;
 
         if(pressedPiece != null){
             // first time component is dragged
             if(!dragged){
                 // get label from initial press
                 // add label to top layer of the JLayeredPane
-                pressedLabel.setLocation(screenX, screenY);
-                // pressedLabel.setLocation(myX, myY);
+                pressedLabel.setLocation(mouseX + 400, mouseY);
                 layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
-                // pressedLabel.setLocation(0, 0);
 
                 // remove label from JLayeredPane
                 pressedPanel.remove(pressedLabel);
@@ -127,14 +121,9 @@ public class MyMouseAdapter extends MouseAdapter{
             // continuation of drag
             else{
                 // update the position of the label
-                // int xUpdate = /*comp.getX()*/ + e.getX() - initialClick.x;
-                // int yUpdate = /*comp.getY()*/ + e.getY() - initialClick.y;
-                // pressedLabel.setLocation(xUpdate, yUpdate);
-                int deltaX = e.getXOnScreen() - screenX;
-                int deltaY = e.getYOnScreen() - screenY;
-                //pressedLabel.setLocation(myX + deltaX, myY + deltaY); 
-                // delete
-                pressedLabel.setLocation(screenX + deltaX, screenY + deltaY);
+                int deltaX = e.getXOnScreen() - mouseX;
+                int deltaY = e.getYOnScreen() - mouseY;
+                pressedLabel.setLocation(myX + deltaX + 400, myY + deltaY); 
 
                 layeredPane.revalidate();
                 layeredPane.repaint();} }
@@ -147,7 +136,7 @@ public class MyMouseAdapter extends MouseAdapter{
     */
     public void mouseReleased(MouseEvent e){
         // delete
-        System.out.println("Mouse Released!");
+        // System.out.println("Mouse Released!");
 
         // find the chessquare that has just been selected 
         JPanel clickedPanel = getChessSquare(e);

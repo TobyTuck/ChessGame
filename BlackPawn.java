@@ -18,7 +18,7 @@ public class BlackPawn extends ChessPiece{
         // set image file
         try{
             // open image file
-            BufferedImage image = ImageIO.read(new File("BlackPawn.png"));
+            BufferedImage image = ImageIO.read(new File("BlackPawn2.png"));
            
             // pass image to parent class 
             super.setImage(image);
