@@ -3,15 +3,16 @@ National Science Foundation. This project will consist of a multiplayer-player c
 that verifies all moves made by either player.
 
 A short breakdown of the class types:
-    1) Chessboard - provides a simple GUI that displays a chess board to its users
+    1) Chessboard - provides a simple GUI that displays a chess board to its users (<br/>)
     2) MyMouseAdapter - handles any MouseEvents, such as mouse clicks or drags, and interprets them
-                        to the lower programs
-    3) <chess piece>.java - a sub program that represents each type of chess piece, and are 
-                            responsible for handling piece moves, image types, etc
+                        to the lower programs (<br/>)
+    3) [chess piece].java - a sub program that represents each type of chess piece, and are 
+                            responsible for handling piece moves, image types, etc (<br/>)
         NOTE: all of these sub programs inherit from the 'ChessPiece' sub program, which provide
               common fields and methods used by all piece, especially for determing the validity of 
-              piece moves
+              piece moves (<br/>)
 
-    4) <chess piece>.png - image for each chess piece that represents the piece on the chess board
+    4) [chess piece].png - image for each chess piece that represents the piece on the chess board
+    (<br/r>)
 
-Feel free to send a pull request for this program if you would like to run it yourself
+Feel free to send a pull request for this program if you would like to run it yourself (<br/>)
