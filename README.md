@@ -13,9 +13,9 @@ that verifies all moves made by either player.</h3>
                             responsible for handling piece moves, image types, etc</li>
         <ul>
             <li>all of these sub programs inherit from the 'ChessPiece' sub program, which provide
-                common fields and methods used by all piece, especially for determing the validity of 
-                piece moves</li>
+                common fields and methods used by all pieces, especially for determing the validity 
+                of piece moves</li>
 
-    <li>[chess piece].png - image for each chess piece that represents the piece on the board</li>
+    <li>[chess piece png file] - chess piece image that represents the piece on the board</li>
 
 <h3>Feel free to send a pull request for this program if you would like to run it yourself </h3><br/>
