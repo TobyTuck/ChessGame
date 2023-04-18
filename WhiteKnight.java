@@ -24,7 +24,8 @@ public class WhiteKnight extends ChessPiece{
             System.out.println("Error locating White Knight image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard, boolean notApplicable){
+    public List possibleMoves(int myLocation, List chessboard, boolean notApplicable,
+                              int doNothing1, int doNothing2){
         // remove any moves from prior location
         _possibleMoves.removeAll();
 
@@ -61,28 +62,28 @@ public class WhiteKnight extends ChessPiece{
 
         // 'upside down r' move
         move = myLocation + 6;
-        if(move < 63){
+        if(move <= 63){
             movePiece = (ChessPiece) chessboard.getComponent(move);
             if((move / 8 == (myLocation / 8) + 1) && !isWhite(movePiece))
                 _possibleMoves.push(move, null);}
 
         // 'upside down reverse r' move
         move = myLocation + 10;
-        if(move < 63){
+        if(move <= 63){
             movePiece = (ChessPiece) chessboard.getComponent(move);
             if((move / 8 == (myLocation / 8) + 1) && !isWhite(movePiece))
                 _possibleMoves.push(move, null);}
        
         // 'upside down reverse L' move
         move = myLocation + 17;
-        if(move < 63){
+        if(move <= 63){
             movePiece = (ChessPiece) chessboard.getComponent(move);
             if((move / 8 == (myLocation / 8) + 2) && !isWhite(movePiece))
                 _possibleMoves.push(move, null);}
 
         // 'upside down L' move
         move = myLocation + 15;
-        if(move < 63){
+        if(move <= 63){
             movePiece = (ChessPiece) chessboard.getComponent(move);
             if((move / 8 == (myLocation / 8) + 2) && !isWhite(movePiece))
                 _possibleMoves.push(move, null);}

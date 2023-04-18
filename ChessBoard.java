@@ -270,8 +270,9 @@ public class ChessBoard extends JFrame{
         for(int index = 0; index < list.getSize(); ++index){
             Object component = list.getComponent(index);
 
-            if(component != null && component instanceof ChessPiece)
-                pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);}
+            if(component != null && component instanceof ChessPiece){
+                // place each piece on their squares
+                pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);} }
 
         // add components to their parent containers
         rightContainer.add(rightFiller);

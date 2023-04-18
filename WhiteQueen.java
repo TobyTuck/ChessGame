@@ -24,7 +24,8 @@ public class WhiteQueen extends ChessPiece{
             System.out.println("Error locating White Queen image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck){
+    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck,
+                              int doNothing1, int doNothing2){
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
 

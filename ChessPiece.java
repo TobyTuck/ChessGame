@@ -184,7 +184,7 @@ public abstract class ChessPiece{
 
     /**
     Checks if two squares (identified by their number) would lie on the same 
-    Chess row 
+    Horizontal chess row 
     */
     protected boolean sameRow(int number1, int number2){
         if(number1 / 8 == number2 / 8)
@@ -194,8 +194,8 @@ public abstract class ChessPiece{
     }
 
     /**
-    Checks if two squares (identified by their number) would lie on the same 
-    Chess column (horizontal)
+    Checks if two squares (identified by their number) would lie on the same vertical 
+    Chess column
     */
     protected boolean sameColumn(int number1, int number2){
         while(number1 > 8){
@@ -216,7 +216,7 @@ public abstract class ChessPiece{
     public boolean checkMate(int kingLocation, List chessboard){
         BlackKing king = (BlackKing) (chessboard.getComponent(kingLocation));
 
-        List kingMoves = king.possibleMoves(kingLocation, chessboard, true);
+        List kingMoves = king.possibleMoves(kingLocation, chessboard, true, 0, 0);
         kingMoves.push(kingLocation, null);
 
         List listHolder = new List(5);    // temp. holder for single opponent moves
@@ -228,7 +228,8 @@ public abstract class ChessPiece{
         for(int index = 0; index < chessboard.getSize(); ++index){
             if(isOpponent((ChessPiece) chessboard.getComponent(index), new BlackKing())){
                 listHolder = ((ChessPiece) (chessboard.getComponent(index))).
-                                            possibleMoves(index, chessboard, false);
+                                            possibleMoves(index, chessboard, false,
+                                                          0, 0);
                 // copy over moves from one piece to list repository of all opponent moves
                 for(int i = 0; i < listHolder.getSize(); ++i){
                     opponentMoves.push(listHolder.pop(i), null);} } }
@@ -264,5 +265,6 @@ public abstract class ChessPiece{
                        the position behind an opponent, which would have allowed the 
                        opponent king to move linear, an illegal move.
     */
-    public abstract List possibleMoves(int myLocation, List chessboard, boolean hold);
+    public abstract List possibleMoves(int myLocation, List chessboard, boolean hold,
+                                       int startLastMove, int endLastMove);
 }

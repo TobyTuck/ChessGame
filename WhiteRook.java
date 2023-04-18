@@ -9,9 +9,11 @@ import javax.imageio.ImageIO;
 public class WhiteRook extends ChessPiece{
 
     private List _possibleMoves;
+    private boolean _beenMoved;
 
     public WhiteRook(){
         _possibleMoves = new List(5);
+        _beenMoved = false;
 
         // set file image
         try{
@@ -24,14 +26,25 @@ public class WhiteRook extends ChessPiece{
             System.out.println("Error locating White Rook image file");}
     }
 
-    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck){
+    public List possibleMoves(int myLocation, List chessboard, boolean considerCheck,
+                              int doNothing1, int doNothing2){
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
 
-        horizontalRight(myLocation, myLocation, chessboard, considerCheck);
-        horizontalLeft(myLocation, myLocation, chessboard, considerCheck);
-        verticalUp(myLocation, myLocation, chessboard, considerCheck);
-        verticalDown(myLocation, myLocation, chessboard, considerCheck);
+        if(considerCheck){
+            horizontalRight(myLocation, myLocation, chessboard, considerCheck);
+            horizontalLeft(myLocation, myLocation, chessboard, considerCheck);
+            verticalUp(myLocation, myLocation, chessboard, considerCheck);
+            verticalDown(myLocation, myLocation, chessboard, considerCheck);
+
+            // check casteling
+            castle(chessboard, myLocation);}
+
+        else{
+            horizontalRight(myLocation, myLocation, chessboard, considerCheck);
+            horizontalLeft(myLocation, myLocation, chessboard, considerCheck);
+            verticalUp(myLocation, myLocation, chessboard, considerCheck);
+            verticalDown(myLocation, myLocation, chessboard, considerCheck);}
 
         return _possibleMoves;
     }
@@ -89,6 +102,45 @@ public class WhiteRook extends ChessPiece{
     }
 
     /**
+    Method that checks if the rook is able to castle
+    */
+    private void castle(List chessboard, int position){
+        // check rook on left side of the chessboard
+        leftSideCastle(chessboard, position);
+
+        // check rook on right side of the chessboard
+        rightSideCastle(chessboard, position);
+    }
+
+    /**
+    Method that checks the left-side rook for a castle
+    */
+    private void leftSideCastle(List chessboard, int position){
+        int move = 60;
+        ChessPiece piece = (ChessPiece) chessboard.getComponent(move);
+        
+        if(!hasMoved() && chessboard.getComponent(57) == null && chessboard.getComponent(58) == null 
+           && chessboard.getComponent(59) == null && position == 56 && piece instanceof WhiteKing){
+            WhiteKing king = (WhiteKing) piece;
+            if(!king.hasMoved())
+                _possibleMoves.push(move, null);}
+    }
+
+    /**
+    Method that checks the right-side rook for a castle
+    */
+    private void rightSideCastle(List chessboard, int position){
+        int move = 60;
+        ChessPiece piece = (ChessPiece) chessboard.getComponent(move);
+        
+        if(!hasMoved() && chessboard.getComponent(61) == null && chessboard.getComponent(62) == null 
+           && position == 63 && piece instanceof WhiteKing){
+            WhiteKing king = (WhiteKing) piece;
+            if(!king.hasMoved())
+                _possibleMoves.push(move, null);}
+    }
+
+    /**
     Method that determines whether or not a potential move is valid according to rook rules
     */
     private boolean validMovement(int position, int next, int startLocation, List chessboard,
@@ -136,5 +188,21 @@ public class WhiteRook extends ChessPiece{
                 return false;}
 
         return true;
+    }
+
+    /**
+    Method that sets the 'beenMoved' field to true
+    Should be called after a rook chess piece is initially moved
+    */
+    public void beenMoved(){
+        _beenMoved = true;
+    }
+
+    /**
+    Method that returns the 'beenMoved' field
+    Indicates whether or not a rook has been moved
+    */
+    public boolean hasMoved(){
+        return _beenMoved;
     }
 }
