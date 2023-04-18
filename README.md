@@ -1,7 +1,5 @@
-# Title of the project
 <h1>Pragmatic Chess</h1>
 
-# Explanation of project
 <h3>This project is part of my S.T.E.M. Train Scholarship Project from Arizona State University and 
 the National Science Foundation. This project will consist of a multiplayer-player chess game, 
 that verifies all moves made by either player.</h3>
@@ -16,7 +14,7 @@ that verifies all moves made by either player.</h3>
         <ul>
             <li>all of these sub programs inherit from the 'ChessPiece' sub program, which provide
                 common fields and methods used by all piece, especially for determing the validity of 
-                piece moves </li>
+                piece moves</li>
 
     <li>[chess piece].png - image for each chess piece that represents the piece on the board</li>
 
