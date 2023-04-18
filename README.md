@@ -9,7 +9,7 @@ that verifies all moves made by either player.</h3>
     <li>Chessboard - provides a simple GUI that displays a chess board to its users</li>
     <li>MyMouseAdapter - handles any MouseEvents, such as mouse clicks or drags, and interprets them
                         to the lower programs</li>
-    <li>[chess piece png file] - chess piece image that represents the piece on the board</li>
+    <li>[chess piece].png - chess piece image that represents the piece on the board</li>
     <li>[chess piece].java - a sub program that represents each type of chess piece, and are 
                             responsible for handling piece moves, image types, etc</li>
         <ul>
