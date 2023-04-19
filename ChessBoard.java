@@ -15,7 +15,6 @@ public class ChessBoard extends JFrame{
     No-arg constructor that creates the board- and adds all pieces to their default positions
     */
     public ChessBoard(){
-
         // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
         JPanel board;
         JPanel capturedWhite;
@@ -71,25 +70,23 @@ public class ChessBoard extends JFrame{
                                                      (int) (boardHeight * 0.7));
 
         // set the size of all JComponents as necessary
-        /* defaultHolder.addComponentListener(new ComponentAdapter() {
+        this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
-                // get the size of the container
-                Dimension size = e.getComponent().getParent().getSize();
-                int width = size.width;
-                int height = size.height;
+                // get the height of the taskbar
+                Insets myInsets = ChessBoard.this.getInsets();
+                int toolBarHeight = myInsets.top;
 
-                if(width > 1000 && height > 600){
-                    // defaultHolder.setBounds(0, 0, size.width, size.height);
-                    // e.getComponent().setSize(size);
+                // get the size of the JFrame container
+                // to get height, subtract JFrame size from its toolbar height 
+                int width = ChessBoard.this.getWidth();
+                int height = ChessBoard.this.getHeight() - toolBarHeight;
 
-                    // delete
-                    System.out.println("Width: " + size.width +
-                                       "\nHeight " + size.height);}
+                // set the size of the default holder to the same size as the JFrame
+                defaultHolder.setSize(new Dimension(width, height));
+                defaultHolder.revalidate();
             }
-        });*/
+        });
 
-        // find some way to set this to the size of the JLayeredPane- and the JFrame
-        defaultHolder.setSize(1848, 1011);
         defaultHolder.setLayout(new GridBagLayout());
 
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));

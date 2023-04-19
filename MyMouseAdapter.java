@@ -116,7 +116,8 @@ public class MyMouseAdapter extends MouseAdapter{
                         _p1Location = index;}
 
                 // get label from initial press
-                pressedLabel.setLocation(mouseX + 400, mouseY);
+                // mouseX + 400
+                pressedLabel.setLocation(mouseX, mouseY);
 
                 // add label to top layer of the JLayeredPane
                 layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
