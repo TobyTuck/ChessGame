@@ -388,10 +388,9 @@ public class MyMouseAdapter extends MouseAdapter{
             int capturedWidth,
                 capturedHeight;
             if(isBlack(capturedPiece) && capturedPanel != null && firstSelected != capturedPanel){
-                // determine height and width of the captured piece
                 capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                capturedWidth = (int) ((double) (capturedPanel.getWidth() * ((double) 
-                                       capturedHeight / (double) capturedPanel.getHeight())));
+                capturedWidth = (int) (((double) capturedPiece.getWidth()) * ((double) 
+                                       capturedHeight / (double) capturedPiece.getHeight()));
                                
                 // get number of captured pieces held by panel
                 Component[] pComponents = capturedBlack1.getComponents();
@@ -401,9 +400,8 @@ public class MyMouseAdapter extends MouseAdapter{
                     if(c instanceof JLabel)
                         ++numComponents;}                               
                 // check if the first panel can hold anymore captured pieces
-                if(((numComponents * ((double) (capturedPanel.getWidth() * 
-                  ((double) (boardHeight / 8.0) * 0.5 / (double) capturedPanel.getHeight())))) + 
-                   (numComponents * 5) + 5) < (0.4 * (screenWidth - boardHeight)))
+                if(((numComponents * capturedPanel.getWidth() * 5) + 5) <
+                   (0.4 * (screenWidth - boardHeight)))
                     pin(capturedPiece, capturedBlack1, capturedWidth, capturedHeight, 
                         "FlowLayout", false);
 
@@ -417,8 +415,8 @@ public class MyMouseAdapter extends MouseAdapter{
                     firstSelected != capturedPanel){
                 // determine height and width
                 capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                capturedWidth = (int) ((double) (capturedPanel.getWidth() * ((double) 
-                                       capturedHeight / (double) capturedPanel.getHeight())));
+                capturedWidth = (int) (((double) capturedPiece.getWidth()) * ((double) 
+                                       capturedHeight / (double) capturedPiece.getHeight()));
                 pin(capturedPiece, capturedWhite, capturedWidth, capturedHeight, "FlowLayout", 
                     false);} }
     }

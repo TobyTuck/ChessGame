@@ -103,10 +103,14 @@ public class ChessBoard extends JFrame{
 
         // set the colors of JComponents
         defaultHolder.setBackground(darkGreen);
-        capturedWhite.setBackground(darkGreen);
-        rightFiller.setBackground(darkGreen);
-        capturedBlack1.setBackground(darkGreen);
-        capturedBlack2.setBackground(darkGreen);
+        // capturedWhite.setBackground(darkGreen);
+        capturedWhite.setBackground(Color.black);
+        // rightFiller.setBackground(darkGreen);
+        rightFiller.setBackground(Color.red);
+        // capturedBlack1.setBackground(darkGreen);
+        capturedBlack1.setBackground(Color.white);
+        // capturedBlack2.setBackground(darkGreen);
+        capturedBlack2.setBackground(Color.blue);
         
         // add components of each square to the list
         list = new List(8);
