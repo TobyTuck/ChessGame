@@ -111,7 +111,7 @@ public class ChessBoard extends JFrame{
         capturedBlack1.setBackground(Color.white);
         // capturedBlack2.setBackground(darkGreen);
         capturedBlack2.setBackground(Color.blue);
-        
+
         // add components of each square to the list
         list = new List(8);
 

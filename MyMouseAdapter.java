@@ -399,9 +399,15 @@ public class MyMouseAdapter extends MouseAdapter{
                 for(Component c : pComponents){
                     if(c instanceof JLabel)
                         ++numComponents;}                               
+
+                // delete
+                System.out.println("piece width: " + capturedWidth + 
+                                   "\tnumComponents: " + numComponents);
+                System.out.println("section width: " + (numComponents * (capturedWidth + 5) + 5) +
+                                   "\tPanel width: " + (0.4 * (screenWidth - boardHeight)));
+
                 // check if the first panel can hold anymore captured pieces
-                if(((numComponents * capturedPanel.getWidth() * 5) + 5) <
-                   (0.4 * (screenWidth - boardHeight)))
+                if((numComponents * (capturedWidth + 5) + 5) < (0.4 * (screenWidth - boardHeight)))
                     pin(capturedPiece, capturedBlack1, capturedWidth, capturedHeight, 
                         "FlowLayout", false);
 
