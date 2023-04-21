@@ -385,13 +385,19 @@ public class MyMouseAdapter extends MouseAdapter{
 
             // add the captured piece to the corresponding location
             // captured piece is black
-            int capturedWidth,
-                capturedHeight;
+            int capturedWidth = 0,
+                capturedHeight = 0;
             if(isBlack(capturedPiece) && capturedPanel != null && firstSelected != capturedPanel){
-                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                capturedWidth = (int) (((double) capturedPiece.getWidth()) * ((double) 
-                                       capturedHeight / (double) capturedPiece.getHeight()));
-                               
+                int offset = 0;
+                do{
+                    capturedWidth = (int) ((boardHeight / 8.0) / 5) - offset;
+                    capturedHeight = (int) (((double) capturedPiece.getHeight()) * ((double)
+                                            capturedWidth / (double) capturedPiece.getWidth()));
+                    ++offset;
+
+                // ensure that the label is small enough to fit on the captured designated panel
+                }while(capturedHeight > (((double) boardHeight / 8.0) * 0.5) + 10);
+
                 // get number of captured pieces held by panel
                 Component[] pComponents = capturedBlack1.getComponents();
                 // check if size including one more label can fit
@@ -399,12 +405,6 @@ public class MyMouseAdapter extends MouseAdapter{
                 for(Component c : pComponents){
                     if(c instanceof JLabel)
                         ++numComponents;}                               
-
-                // delete
-                System.out.println("piece width: " + capturedWidth + 
-                                   "\tnumComponents: " + numComponents);
-                System.out.println("section width: " + (numComponents * (capturedWidth + 5) + 5) +
-                                   "\tPanel width: " + (0.4 * (screenWidth - boardHeight)));
 
                 // check if the first panel can hold anymore captured pieces
                 if((numComponents * (capturedWidth + 5) + 5) < (0.4 * (screenWidth - boardHeight)))
@@ -420,9 +420,16 @@ public class MyMouseAdapter extends MouseAdapter{
             else if(isWhite(capturedPiece) && capturedPiece != null && 
                     firstSelected != capturedPanel){
                 // determine height and width
-                capturedHeight = (int) ((boardHeight / 8.0) * 0.5);
-                capturedWidth = (int) (((double) capturedPiece.getWidth()) * ((double) 
-                                       capturedHeight / (double) capturedPiece.getHeight()));
+                int offset = 0;
+                do{
+                    capturedWidth = (int) ((boardHeight / 8.0) / 5) - offset;
+                    capturedHeight = (int) (((double) capturedPiece.getHeight()) * ((double)
+                                            capturedWidth / (double) capturedPiece.getWidth()));
+                    ++offset;
+
+                // ensure that the label is small enough to fit on the captured designated panel
+                }while(capturedHeight > (((double) boardHeight / 8.0) * 0.5) + 10);
+
                 pin(capturedPiece, capturedWhite, capturedWidth, capturedHeight, "FlowLayout", 
                     false);} }
     }

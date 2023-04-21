@@ -40,7 +40,7 @@ public class ChessBoard extends JFrame{
 
         // set applet's tab icon
         this.setIconImage(new Logo().getImage());
-        this.setTitle("ChessGame Application");
+        this.setTitle("Pragmatic Chess");
 
         screenHeight = screenSize.height;
         screenWidth = screenSize.width;
@@ -66,9 +66,6 @@ public class ChessBoard extends JFrame{
             ++eightDivisible;
         }while(boardHeight % 8 != 0);
 
-        Dimension containerDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                     (int) (boardHeight * 0.7));
-
         // set the size of all JComponents as necessary
         this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent e) {
@@ -89,6 +86,9 @@ public class ChessBoard extends JFrame{
 
         defaultHolder.setLayout(new GridBagLayout());
 
+        Dimension containerDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                     (int) (boardHeight * 0.7));
+
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         capturedWhite.setPreferredSize(containerDimension);
         rightContainer.setPreferredSize(containerDimension);
@@ -103,14 +103,15 @@ public class ChessBoard extends JFrame{
 
         // set the colors of JComponents
         defaultHolder.setBackground(darkGreen);
-        // capturedWhite.setBackground(darkGreen);
-        capturedWhite.setBackground(Color.black);
-        // rightFiller.setBackground(darkGreen);
-        rightFiller.setBackground(Color.red);
-        // capturedBlack1.setBackground(darkGreen);
-        capturedBlack1.setBackground(Color.white);
-        // capturedBlack2.setBackground(darkGreen);
-        capturedBlack2.setBackground(Color.blue);
+        capturedWhite.setBackground(darkGreen);
+        rightContainer.setBackground(darkGreen);
+        // capturedWhite.setBackground(Color.black);
+        rightFiller.setBackground(darkGreen);
+        // rightFiller.setBackground(Color.red);
+        capturedBlack1.setBackground(darkGreen);
+        // capturedBlack1.setBackground(Color.white);
+        capturedBlack2.setBackground(darkGreen);
+        // capturedBlack2.setBackground(Color.blue);
 
         // add components of each square to the list
         list = new List(8);
