@@ -388,15 +388,9 @@ public class MyMouseAdapter extends MouseAdapter{
             int capturedWidth = 0,
                 capturedHeight = 0;
             if(isBlack(capturedPiece) && capturedPanel != null && firstSelected != capturedPanel){
-                int offset = 0;
-                do{
-                    capturedWidth = (int) ((boardHeight / 8.0) / 5) - offset;
-                    capturedHeight = (int) (((double) capturedPiece.getHeight()) * ((double)
-                                            capturedWidth / (double) capturedPiece.getWidth()));
-                    ++offset;
-
-                // ensure that the label is small enough to fit on the captured designated panel
-                }while(capturedHeight > (((double) boardHeight / 8.0) * 0.5) + 10);
+                capturedWidth = (int) (boardHeight / 40.0);
+                capturedHeight = (int) (((double) capturedPiece.getHeight()) * ((double)
+                                        capturedWidth / (double) capturedPiece.getWidth()));
 
                 // get number of captured pieces held by panel
                 Component[] pComponents = capturedBlack1.getComponents();

@@ -93,13 +93,21 @@ public class ChessBoard extends JFrame{
         capturedWhite.setPreferredSize(containerDimension);
         rightContainer.setPreferredSize(containerDimension);
 
+        BlackQueen myQueen = new BlackQueen();
+
         rightFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                    (int) ((boardHeight * 0.7) - 
-                                                         ((boardHeight / 8.0) + 20)))); 
+                                                   (2 * ((int) (((double) myQueen.getHeight()) * 
+                                                   ((double) (boardHeight / 40.0) / 
+                                                   (double) myQueen.getWidth()) + 10)))))); 
         capturedBlack1.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                     (int) (((boardHeight / 8.0) * 0.5) + 10)));
+                                                     (int) (((double) myQueen.getHeight()) * ((double)
+                                                     (boardHeight / 40.0) / 
+                                                     (double) myQueen.getWidth()) + 5)));
         capturedBlack2.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                     (int) (((boardHeight / 8.0) * 0.5) + 10)));
+                                                     (int) (((double) myQueen.getHeight()) * ((double)
+                                                     (boardHeight / 40.0) / 
+                                                     (double) myQueen.getWidth()) + 5)));
 
         // set the colors of JComponents
         defaultHolder.setBackground(darkGreen);
