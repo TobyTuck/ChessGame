@@ -204,4 +204,28 @@ public class WhiteQueen extends ChessPiece{
             else{
                 return false;} }
     }
+
+    /**
+    Method that returns true if a piece's move is in sequence
+    */
+    public boolean inSequence(int myLocation, int move, List chessboard){
+        // remove any old moves that might be saved
+        _possibleMoves.removeAll();
+
+        horizontalRight(myLocation, myLocation, chessboard, true);
+        horizontalLeft(myLocation, myLocation, chessboard, true);
+        verticalUp(myLocation, myLocation, chessboard, true);
+        verticalDown(myLocation, myLocation, chessboard, true);       
+        topRight(myLocation, myLocation, chessboard, true);
+        topLeft(myLocation, myLocation, chessboard, true);
+        bottomRight(myLocation, myLocation, chessboard, true);
+        bottomLeft(myLocation, myLocation, chessboard, true);
+
+        // search possible moves for the given location
+        for(int index = 0; index < _possibleMoves.getSize(); ++index){
+            if((int) _possibleMoves.pop(index) == move)
+                return true;}
+
+        return false;
+    }
 }

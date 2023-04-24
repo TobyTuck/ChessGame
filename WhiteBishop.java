@@ -132,4 +132,25 @@ public class WhiteBishop extends ChessPiece{
 
         return false;
     }
+
+    /**
+    Method that returns true if a piece's move is in sequence between a bishop and
+    a position on the board
+    */
+    public boolean inSequence(int myLocation, int reference, int move, List chessboard){
+        // remove any old moves that might be saved
+        _possibleMoves.removeAll();
+
+        topRight(myLocation, myLocation, chessboard, true);
+        topLeft(myLocation, myLocation, chessboard, true);
+        bottomRight(myLocation, myLocation, chessboard, true);
+        bottomLeft(myLocation, myLocation, chessboard, true);       
+
+        // search possible moves for the given location
+        for(int index = 0; index < _possibleMoves.getSize(); ++index){
+            if((int) _possibleMoves.pop(index) == move)
+                return true;}
+
+        return false;
+    }
 }

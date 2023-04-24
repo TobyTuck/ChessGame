@@ -199,6 +199,29 @@ public class BlackKing extends ChessPiece{
     }
 
     /**
+    Method that returns the piece that places our king in check
+    */
+    public ChessPiece getCheckedPiece(int move, List chessboard){
+        _chessboard = chessboard;
+        List opponentMoves;
+        ChessPiece opponent;
+
+        // sort through opponent chesspieces from all possible chess squares 
+        for(int index = 0; index < _chessboard.getSize(); ++index){
+            opponent = (ChessPiece) (_chessboard.getComponent(index));
+            if(isOpponent(opponent, this)){
+                // get moves of opponent chesspiece
+                opponentMoves = opponent.possibleMoves(index, _chessboard, false, 0, 0);
+
+                // check if any opponent moves are the same as king piece move
+                for(int i = 0; i < opponentMoves.getSize(); ++i){
+                    if((int) opponentMoves.pop(i) == move)
+                        return opponent;} } }
+
+        return null;
+    }
+
+    /**
     Method that returns the location of the opponent chess piece that holds the king in check
     */
     public int checkLocation(List chessboard){

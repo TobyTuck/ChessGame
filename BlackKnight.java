@@ -47,7 +47,8 @@ public class BlackKnight extends ChessPiece{
         if(move >= 0){
             movePiece = (ChessPiece) chessboard.getComponent(move);
             if((move / 8 == (myLocation / 8) - 2) && !isBlack(movePiece) &&
-               (!bKing.check(kingLocation, chessboard) || move == bKing.checkLocation(chessboard)))
+               (!bKing.check(kingLocation, chessboard) || move == bKing.checkLocation(chessboard)) ||
+               )
                 _possibleMoves.push(move, null);}
 
         // 'L' move

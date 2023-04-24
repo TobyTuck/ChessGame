@@ -191,6 +191,26 @@ public class WhiteRook extends ChessPiece{
     }
 
     /**
+    Method that returns true if a piece's move is in sequence
+    */
+    public boolean inSequence(int myLocation, int move, List chessboard){
+        // remove any old moves that might be saved
+        _possibleMoves.removeAll();
+
+        horizontalRight(myLocation, myLocation, chessboard, true);
+        horizontalLeft(myLocation, myLocation, chessboard, true);
+        verticalUp(myLocation, myLocation, chessboard, true);
+        verticalDown(myLocation, myLocation, chessboard, true);       
+
+        // search possible moves for the given location
+        for(int index = 0; index < _possibleMoves.getSize(); ++index){
+            if((int) _possibleMoves.pop(index) == move)
+                return true;}
+
+        return false;
+    }
+
+    /**
     Method that sets the 'beenMoved' field to true
     Should be called after a rook chess piece is initially moved
     */
