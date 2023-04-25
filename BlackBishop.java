@@ -42,10 +42,14 @@ public class BlackBishop extends ChessPiece{
 
         // piece's king does not lie in check
         if(!bKing.check(kingLocation, chessboard)){
-            topRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
-            topLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
-            bottomRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
-            bottomLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);}
+            topRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
+                     _possibleMoves);
+            topLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
+                    _possibleMoves);
+            bottomRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
+                        _possibleMoves);
+            bottomLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
+                       _possibleMoves);}
 
         else{
             checkTopRight(myLocation, myLocation, chessboard, considerCheck, bKing, 
@@ -64,15 +68,16 @@ public class BlackBishop extends ChessPiece{
     Recursive method that adds the angled top right moves
     */
     private void topRight(int position, int startLocation, List chessboard,
-                          boolean considerCheck, BlackKing bKing, int bKingLocation){
+                          boolean considerCheck, BlackKing bKing, int bKingLocation,
+                          List moves){
         int next = position + 7;
 
         // is movement is valid according to the chesspiece rules? 
         if(validMovement(position, next, startLocation, chessboard, considerCheck,
                          bKing, bKingLocation)){
-            _possibleMoves.push(next, null);
+            moves.push(next, null);
             topRight(next, startLocation, chessboard, considerCheck, bKing, 
-                     bKingLocation);}
+                     bKingLocation, moves);}
     }
 
     /**
@@ -84,9 +89,9 @@ public class BlackBishop extends ChessPiece{
         int next = position + 7;
 
         // get list of all legal moves in a non-check format
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation);
-        List potentialMoves = _possibleMoves;
-        _possibleMoves.removeAll();
+        List potentialMoves = new List(63);
+        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation, 
+                 potentialMoves);
 
         // moves are not allowed until the opponent's path to our king is blocked 
         // then all subsequent moves are pushed to the list 
@@ -101,15 +106,16 @@ public class BlackBishop extends ChessPiece{
     Recursive method that adds the angled top left moves
     */
     private void topLeft(int position, int startLocation, List chessboard,
-                         boolean considerCheck, BlackKing bKing, int bKingLocation){
+                         boolean considerCheck, BlackKing bKing, int bKingLocation,
+                         List moves){
         int next = position + 9;
 
         // is movement is valid according to the chesspiece rules? 
         if(validMovement(position, next, startLocation, chessboard, considerCheck,
                          bKing, bKingLocation)){
-            _possibleMoves.push(next, null);
+            moves.push(next, null);
             topLeft(next, startLocation, chessboard, considerCheck, bKing, 
-                    bKingLocation);}
+                    bKingLocation, moves);}
     }
 
     /**
@@ -121,9 +127,9 @@ public class BlackBishop extends ChessPiece{
         int next = position + 9;
 
         // get list of all legal moves in a non-check format
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation);
-        List potentialMoves = _possibleMoves;
-        _possibleMoves.removeAll();
+        List potentialMoves = new List(63);
+        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation,
+                 potentialMoves);
 
         // moves are not allowed until the opponent's path to our king is blocked 
         // then all subsequent moves are pushed to the list 
@@ -138,15 +144,16 @@ public class BlackBishop extends ChessPiece{
     Recursive method that adds the angled bottom right moves
     */
     private void bottomRight(int position, int startLocation, List chessboard,
-                             boolean considerCheck, BlackKing bKing, int bKingLocation){
+                             boolean considerCheck, BlackKing bKing, int bKingLocation,
+                             List moves){
         int next = position - 7;
 
         // is movement is valid according to the chesspiece rules? 
         if(validMovement(position, next, startLocation, chessboard, considerCheck,
                          bKing, bKingLocation)){
-            _possibleMoves.push(next, null);
+            moves.push(next, null);
             bottomRight(next, startLocation, chessboard, considerCheck, bKing,
-                        bKingLocation);}
+                        bKingLocation, moves);}
     }
 
     /**
@@ -159,9 +166,9 @@ public class BlackBishop extends ChessPiece{
         int next = position - 7;
 
         // get list of all legal moves in a non-check format
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation);
-        List potentialMoves = _possibleMoves;
-        _possibleMoves.removeAll();
+        List potentialMoves = new List(63);
+        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation,
+                 potentialMoves);
 
         // moves are not allowed until the opponent's path to our king is blocked 
         // then all subsequent moves are pushed to the list 
@@ -176,15 +183,16 @@ public class BlackBishop extends ChessPiece{
     Recursive method that adds the angled bottom left moves
     */
     private void bottomLeft(int position, int startLocation, List chessboard,
-                            boolean considerCheck, BlackKing bKing, int bKingLocation){
+                            boolean considerCheck, BlackKing bKing, int bKingLocation,
+                            List moves){
         int next = position - 9;
 
         // is movement is valid according to the chesspiece rules? 
         if(validMovement(position, next, startLocation, chessboard, considerCheck,
                          bKing, bKingLocation)){
-            _possibleMoves.push(next, null);
+            moves.push(next, null);
             bottomLeft(next, startLocation, chessboard, considerCheck, bKing,
-                       bKingLocation);}
+                       bKingLocation, moves);}
     }
 
     /**
@@ -197,9 +205,9 @@ public class BlackBishop extends ChessPiece{
         int next = position - 9;
 
         // get list of all legal moves in a non-check format
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation);
-        List potentialMoves = _possibleMoves;
-        _possibleMoves.removeAll();
+        List potentialMoves = new List(63);
+        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation,
+                 potentialMoves);
 
         // moves are not allowed until the opponent's path to our king is blocked 
         // then all subsequent moves are pushed to the list 

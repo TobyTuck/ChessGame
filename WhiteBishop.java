@@ -137,7 +137,7 @@ public class WhiteBishop extends ChessPiece{
     Method that returns true if a piece's move is in sequence between a bishop and
     a position on the board
     */
-    public boolean inSequence(int myLocation, int reference, int move, List chessboard){
+    public boolean inSequence(int myLocation, int move, List chessboard){
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
 
