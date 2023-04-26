@@ -41,25 +41,10 @@ public class BlackBishop extends ChessPiece{
                 bKing = (BlackKing) piece;} }
 
         // piece's king does not lie in check
-        if(!bKing.check(kingLocation, chessboard)){
-            topRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
-                     _possibleMoves);
-            topLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
-                    _possibleMoves);
-            bottomRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
-                        _possibleMoves);
-            bottomLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation,
-                       _possibleMoves);}
-
-        else{
-            checkTopRight(myLocation, myLocation, chessboard, considerCheck, bKing, 
-                          kingLocation);
-            checkTopLeft(myLocation, myLocation, chessboard, considerCheck, bKing, 
-                         kingLocation);
-            checkBottomRight(myLocation, myLocation, chessboard, considerCheck, bKing, 
-                             kingLocation);
-            checkBottomLeft(myLocation, myLocation, chessboard, considerCheck, bKing, 
-                            kingLocation);}
+        topRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
+        topLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
+        bottomRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
+        bottomLeft(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
 
         return _possibleMoves;
     }
@@ -68,154 +53,115 @@ public class BlackBishop extends ChessPiece{
     Recursive method that adds the angled top right moves
     */
     private void topRight(int position, int startLocation, List chessboard,
-                          boolean considerCheck, BlackKing bKing, int bKingLocation,
-                          List moves){
+                          boolean considerCheck, BlackKing bKing, int bKingLocation){
         int next = position + 7;
 
-        // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard, considerCheck,
-                         bKing, bKingLocation)){
-            moves.push(next, null);
-            topRight(next, startLocation, chessboard, considerCheck, bKing, 
-                     bKingLocation, moves);}
-    }
+        // recursive call that moves farther away from piece
+        if(!bKing.check(bKingLocation, chessboard)){
+            // is movement is valid according to the chesspiece rules? 
+            if(validMovement(position, next, startLocation, chessboard, considerCheck,
+                             bKing, bKingLocation)){
+                _possibleMoves.push(next, null);
+                topRight(next, startLocation, chessboard, considerCheck, bKing, 
+                         bKingLocation);} }
 
-    /**
-    Method that determines the moves toward the upper right diagnoal 
-    when its king lies in check
-    */
-    private void checkTopRight(int position, int startLocation, List chessboard, 
-                               boolean considerCheck, BlackKing bKing, int bKingLocation){
-        int next = position + 7;
+        // moves that are available when your king is in check
+        // start from outside moves, and come in
+        else{
+            int potentialMove;
+            boolean flag = false;
+            int totalMoves = movesBeforeOverflow(position, next, chessboard);
 
-        // get list of all legal moves in a non-check format
-        List potentialMoves = new List(63);
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation, 
-                 potentialMoves);
-
-        // moves are not allowed until the opponent's path to our king is blocked 
-        // then all subsequent moves are pushed to the list 
-        boolean flag = false;
-        for(int index = 0; index < potentialMoves.getSize(); ++index){
-            if(validBlock(bKing, bKingLocation, startLocation, next, chessboard) || flag){
-                _possibleMoves.push(potentialMoves.pop(index), null);
-                flag = true;} }
+            for(int index = totalMoves; index > 0; --index){
+                potentialMove = (index * 7) + position;
+                if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
+                   bKingLocation) || flag){
+                    _possibleMoves.push((int) potentialMove, null);
+                    flag = true;} } }
     }
 
     /**
     Recursive method that adds the angled top left moves
     */
     private void topLeft(int position, int startLocation, List chessboard,
-                         boolean considerCheck, BlackKing bKing, int bKingLocation,
-                         List moves){
+                         boolean considerCheck, BlackKing bKing, int bKingLocation){
         int next = position + 9;
 
-        // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard, considerCheck,
-                         bKing, bKingLocation)){
-            moves.push(next, null);
-            topLeft(next, startLocation, chessboard, considerCheck, bKing, 
-                    bKingLocation, moves);}
-    }
+        if(!bKing.check(bKingLocation, chessboard)){
+            // is movement is valid according to the chesspiece rules? 
+            if(validMovement(position, next, startLocation, chessboard, considerCheck,
+                             bKing, bKingLocation)){
+                _possibleMoves.push(next, null);
+                topLeft(next, startLocation, chessboard, considerCheck, bKing, 
+                        bKingLocation);} }
 
-    /**
-    Method that determines the moves toward the upper left diagnoal 
-    when its king lies in check
-    */
-    private void checkTopLeft(int position, int startLocation, List chessboard, 
-                              boolean considerCheck, BlackKing bKing, int bKingLocation){
-        int next = position + 9;
+        else{
+            int potentialMove;
+            boolean flag = false;
+            int totalMoves = movesBeforeOverflow(position, next, chessboard);
 
-        // get list of all legal moves in a non-check format
-        List potentialMoves = new List(63);
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation,
-                 potentialMoves);
-
-        // moves are not allowed until the opponent's path to our king is blocked 
-        // then all subsequent moves are pushed to the list 
-        boolean flag = false;
-        for(int index = 0; index < potentialMoves.getSize(); ++index){
-            if(validBlock(bKing, bKingLocation, startLocation, next, chessboard) || flag){
-                _possibleMoves.push(potentialMoves.pop(index), null);
-                flag = true;} }
+            for(int index = totalMoves; index > 0; --index){
+                potentialMove = (index * 7) + position;
+                if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
+                   bKingLocation) || flag){
+                    _possibleMoves.push((int) potentialMove, null);
+                    flag = true;} } }
     }
 
     /**
     Recursive method that adds the angled bottom right moves
     */
     private void bottomRight(int position, int startLocation, List chessboard,
-                             boolean considerCheck, BlackKing bKing, int bKingLocation,
-                             List moves){
+                             boolean considerCheck, BlackKing bKing, int bKingLocation){
         int next = position - 7;
 
-        // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard, considerCheck,
-                         bKing, bKingLocation)){
-            moves.push(next, null);
-            bottomRight(next, startLocation, chessboard, considerCheck, bKing,
-                        bKingLocation, moves);}
-    }
+        if(!bKing.check(bKingLocation, chessboard)){
+            // is movement is valid according to the chesspiece rules? 
+            if(validMovement(position, next, startLocation, chessboard, considerCheck,
+                             bKing, bKingLocation)){
+                _possibleMoves.push(next, null);
+                bottomRight(next, startLocation, chessboard, considerCheck, bKing,
+                            bKingLocation);} }
 
-    /**
-    Method that determines the moves toward the bottom right diagnoal 
-    when its king lies in check
-    */
-    private void checkBottomRight(int position, int startLocation, List chessboard, 
-                                  boolean considerCheck, BlackKing bKing, 
-                                  int bKingLocation){
-        int next = position - 7;
+        else{
+            int potentialMove;
+            boolean flag = false;
+            int totalMoves = movesBeforeOverflow(position, next, chessboard);
 
-        // get list of all legal moves in a non-check format
-        List potentialMoves = new List(63);
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation,
-                 potentialMoves);
-
-        // moves are not allowed until the opponent's path to our king is blocked 
-        // then all subsequent moves are pushed to the list 
-        boolean flag = false;
-        for(int index = 0; index < potentialMoves.getSize(); ++index){
-            if(validBlock(bKing, bKingLocation, startLocation, next, chessboard) || flag){
-                _possibleMoves.push(potentialMoves.pop(index), null);
-                flag = true;} }
+            for(int index = totalMoves; index > 0; --index){
+                potentialMove = (index * 7) + position;
+                if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
+                   bKingLocation) || flag){
+                    _possibleMoves.push((int) potentialMove, null);
+                    flag = true;} } }
     }
 
     /**
     Recursive method that adds the angled bottom left moves
     */
     private void bottomLeft(int position, int startLocation, List chessboard,
-                            boolean considerCheck, BlackKing bKing, int bKingLocation,
-                            List moves){
+                            boolean considerCheck, BlackKing bKing, int bKingLocation){
         int next = position - 9;
 
-        // is movement is valid according to the chesspiece rules? 
-        if(validMovement(position, next, startLocation, chessboard, considerCheck,
-                         bKing, bKingLocation)){
-            moves.push(next, null);
-            bottomLeft(next, startLocation, chessboard, considerCheck, bKing,
-                       bKingLocation, moves);}
-    }
+        if(!bKing.check(bKingLocation, chessboard)){
+            // is movement is valid according to the chesspiece rules? 
+            if(validMovement(position, next, startLocation, chessboard, considerCheck,
+                             bKing, bKingLocation)){
+                _possibleMoves.push(next, null);
+                bottomLeft(next, startLocation, chessboard, considerCheck, bKing,
+                           bKingLocation);} }
 
-    /**
-    Method that determines the moves toward the bottom right diagnoal 
-    when its king lies in check
-    */
-    private void checkBottomLeft(int position, int startLocation, List chessboard, 
-                                    boolean considerCheck, BlackKing bKing, 
-                                    int bKingLocation){
-        int next = position - 9;
+        else{
+            int potentialMove;
+            boolean flag = false;
+            int totalMoves = movesBeforeOverflow(position, next, chessboard);
 
-        // get list of all legal moves in a non-check format
-        List potentialMoves = new List(63);
-        topRight(next, startLocation, chessboard, considerCheck, bKing, bKingLocation,
-                 potentialMoves);
-
-        // moves are not allowed until the opponent's path to our king is blocked 
-        // then all subsequent moves are pushed to the list 
-        boolean flag = false;
-        for(int index = 0; index < potentialMoves.getSize(); ++index){
-            if(validBlock(bKing, bKingLocation, startLocation, next, chessboard) || flag){
-                _possibleMoves.push(potentialMoves.pop(index), null);
-                flag = true;} }
+            for(int index = totalMoves; index > 0; --index){
+                potentialMove = (index * 7) + position;
+                if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
+                   bKingLocation) || flag){
+                    _possibleMoves.push((int) potentialMove, null);
+                    flag = true;} } }
     }
 
     /**
@@ -234,7 +180,8 @@ public class BlackBishop extends ChessPiece{
         if(considerCheck){
             if(!sameColor(startPiece, nextPiece) && !overflow(position, next) &&
                (myPiece == null || myPiece == startPiece) && 
-               (!bKing.check(bKingLocation, chessboard) || next == bKing.checkLocation(chessboard)))
+               (!bKing.check(bKingLocation, chessboard) || 
+               blockCheck(position, next, bKingLocation, chessboard)))
                 return true; 
 
             return false;}
@@ -265,35 +212,17 @@ public class BlackBishop extends ChessPiece{
     }
 
     /**
-    Method that only returns false when it is impossible for a piece to block its king in check
+    Method that returns the number of moves available for a black bishop before board overflow
     */
-    private boolean validBlock(BlackKing myKing, int myBKing, int startLocation, int move, 
-                               List chessboard){
-        // find the opponent piece that places our king in check
-        ChessPiece opponent = myKing.getCheckedPiece(move, chessboard); 
+    private int movesBeforeOverflow(int location, int move, List chessboard){
+        int index = 0;
+        int jump = move - location;
 
-        if(opponent instanceof WhiteBishop || opponent instanceof WhiteRook || opponent instanceof WhiteQueen){
-            if(opponent instanceof WhiteBishop){
-                WhiteBishop complex = (WhiteBishop) opponent;
-                if(complex.inSequence(startLocation, move, chessboard))
-                    return true;
+        while(!overflow(location, move) && !isBlack((ChessPiece) chessboard.getComponent(move))){
+            location = move;
+            move += jump;
+            ++index;}
 
-                return false;}
-
-            else if(opponent instanceof WhiteRook){
-                WhiteRook complex = (WhiteRook) opponent;
-                if(complex.inSequence(startLocation, move, chessboard))
-                    return true;
-
-                return false;}
-
-            else{
-                WhiteQueen complex = (WhiteQueen) opponent;
-                if(complex.inSequence(startLocation, move, chessboard))
-                    return true;
-
-                return false;} }
-
-        return false;
+        return index;
     }
 }
