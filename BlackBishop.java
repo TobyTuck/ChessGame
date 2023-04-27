@@ -68,6 +68,8 @@ public class BlackBishop extends ChessPiece{
         // moves that are available when your king is in check
         // start from outside moves, and come in
         else{
+            System.out.println("Made it (0)");
+
             int potentialMove;
             boolean flag = false;
             int totalMoves = movesBeforeOverflow(position, next, chessboard);
@@ -75,7 +77,8 @@ public class BlackBishop extends ChessPiece{
             for(int index = totalMoves; index > 0; --index){
                 potentialMove = (index * 7) + position;
                 if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
-                   bKingLocation) || flag){
+                   bKingLocation)){
+                    System.out.println("Made it (1)");
                     _possibleMoves.push((int) potentialMove, null);
                     flag = true;} } }
     }
@@ -101,9 +104,9 @@ public class BlackBishop extends ChessPiece{
             int totalMoves = movesBeforeOverflow(position, next, chessboard);
 
             for(int index = totalMoves; index > 0; --index){
-                potentialMove = (index * 7) + position;
+                potentialMove = (index * 9) + position;
                 if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
-                   bKingLocation) || flag){
+                   bKingLocation)){
                     _possibleMoves.push((int) potentialMove, null);
                     flag = true;} } }
     }
@@ -129,9 +132,10 @@ public class BlackBishop extends ChessPiece{
             int totalMoves = movesBeforeOverflow(position, next, chessboard);
 
             for(int index = totalMoves; index > 0; --index){
-                potentialMove = (index * 7) + position;
+                potentialMove = (index * (-7)) + position;
                 if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
-                   bKingLocation) || flag){
+                   bKingLocation)){
+                    System.out.println("Made it (2)");
                     _possibleMoves.push((int) potentialMove, null);
                     flag = true;} } }
     }
@@ -157,9 +161,10 @@ public class BlackBishop extends ChessPiece{
             int totalMoves = movesBeforeOverflow(position, next, chessboard);
 
             for(int index = totalMoves; index > 0; --index){
-                potentialMove = (index * 7) + position;
+                potentialMove = (index * (-9)) + position;
                 if(validMovement(position, next, startLocation, chessboard, considerCheck, bKing, 
-                   bKingLocation) || flag){
+                   bKingLocation)){
+                    System.out.println("Made it (3)");
                     _possibleMoves.push((int) potentialMove, null);
                     flag = true;} } }
     }
