@@ -30,21 +30,34 @@ public class WhiteRook extends ChessPiece{
                               int doNothing1, int doNothing2){
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
+        
+        // get the rook's king and its location
+        WhiteKing wKing = (WhiteKing) getKing(chessboard, this);
+        int kingLocation = getKingLocation(chessboard, this);       
 
         if(considerCheck){
-            horizontalRight(myLocation, myLocation, chessboard, considerCheck);
-            horizontalLeft(myLocation, myLocation, chessboard, considerCheck);
-            verticalUp(myLocation, myLocation, chessboard, considerCheck);
-            verticalDown(myLocation, myLocation, chessboard, considerCheck);
+            horizontalRight(myLocation, myLocation, chessboard, considerCheck, wKing, kingLocation);
+            horizontalLeft(myLocation, myLocation, chessboard, considerCheck, wKing, kingLocation);
+            verticalUp(myLocation, myLocation, chessboard, considerCheck, wKing, kingLocation);
+            verticalDown(myLocation, myLocation, chessboard, considerCheck, wKing, kingLocation);
 
             // check casteling
             castle(chessboard, myLocation);}
 
         else{
-            horizontalRight(myLocation, myLocation, chessboard, considerCheck);
-            horizontalLeft(myLocation, myLocation, chessboard, considerCheck);
-            verticalUp(myLocation, myLocation, chessboard, considerCheck);
-            verticalDown(myLocation, myLocation, chessboard, considerCheck);}
+            // White king and its location will not be used to calculate whether or not the opponent
+            // king is in check
+            WhiteKing doesNotMatter = wKing;
+            int doesntMatter = kingLocation;
+
+            horizontalRight(myLocation, myLocation, chessboard, considerCheck, doesNotMatter, 
+                            doesntMatter);
+            horizontalLeft(myLocation, myLocation, chessboard, considerCheck, doesNotMatter, 
+                           doesntMatter);
+            verticalUp(myLocation, myLocation, chessboard, considerCheck, doesNotMatter, 
+                       doesntMatter);
+            verticalDown(myLocation, myLocation, chessboard, considerCheck, doesNotMatter, 
+                         doesntMatter);}
 
         return _possibleMoves;
     }
@@ -53,52 +66,56 @@ public class WhiteRook extends ChessPiece{
     Recursive method that finds the horizonatal moves to the right
     */
     private void horizontalRight(int position, int startLocation, List chessboard,
-                                 boolean considerCheck){
+                                 boolean considerCheck, WhiteKing myKing, int kingLocation){
         int next = position + 1;
 
         // check whether or not the position is valid according to rook rules
-        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck, myKing, 
+                         kingLocation)){
             _possibleMoves.push(next, null);
-            horizontalRight(next, startLocation, chessboard, considerCheck);}
+            horizontalRight(next, startLocation, chessboard, considerCheck, myKing, kingLocation);}
     }
 
     /**
     Recursive method that finds the horizontal moves to the left of current position
     */
     private void horizontalLeft(int position, int startLocation, List chessboard,
-                                boolean considerCheck){
+                                boolean considerCheck, WhiteKing myKing, int kingLocation){
         int next = position - 1;
 
         // check whether or not the position is valid according to rook rules
-        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck, myKing, 
+                         kingLocation)){
             _possibleMoves.push(next, null);
-            horizontalLeft(next, startLocation, chessboard, considerCheck);}
+            horizontalLeft(next, startLocation, chessboard, considerCheck, myKing, kingLocation);}
     }
 
     /**
     Recursive method that finds any legal upward vertical moves
     */
     private void verticalUp(int position, int startLocation, List chessboard,
-                            boolean considerCheck){
+                            boolean considerCheck, WhiteKing myKing, int kingLocation){
         int next = position + 8;
 
         // check whether or not the position is valid according to rook rules
-        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck, myKing, 
+                         kingLocation)){
             _possibleMoves.push(next, null);
-            verticalUp(next, startLocation, chessboard, considerCheck);}
+            verticalUp(next, startLocation, chessboard, considerCheck, myKing, kingLocation);}
     }
 
     /**
     Recursive method that finds any legal downward vertical moves
     */
     private void verticalDown(int position, int startLocation, List chessboard, 
-                              boolean considerCheck){
+                              boolean considerCheck, WhiteKing myKing, int kingLocation){
         int next = position - 8;
 
         // check whether or not the position is valid according to rook rules
-        if(validMovement(position, next, startLocation, chessboard, considerCheck)){
+        if(validMovement(position, next, startLocation, chessboard, considerCheck, myKing, 
+                         kingLocation)){
             _possibleMoves.push(next, null);
-            verticalDown(next, startLocation, chessboard, considerCheck);}
+            verticalDown(next, startLocation, chessboard, considerCheck, myKing, kingLocation);}
     }
 
     /**
@@ -144,7 +161,7 @@ public class WhiteRook extends ChessPiece{
     Method that determines whether or not a potential move is valid according to rook rules
     */
     private boolean validMovement(int position, int next, int startLocation, List chessboard,
-                                  boolean considerCheck){
+                                  boolean considerCheck, WhiteKing myKing, int kingLocation){
         if(next > 63 || next < 0)
             return false;
 
@@ -153,8 +170,8 @@ public class WhiteRook extends ChessPiece{
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
         if(considerCheck){
-            if(!sameColor(startPiece, nextPiece) && !overflow(position, next) &&
-               (myPiece == null || myPiece == startPiece))
+            if(!sameColor(startPiece, nextPiece) && !overflow(position, next) && (myPiece == null || 
+               myPiece == startPiece) && (!myKing.check(kingLocation, chessboard)))
                 return true;
 
             return false;}
@@ -188,26 +205,6 @@ public class WhiteRook extends ChessPiece{
                 return false;}
 
         return true;
-    }
-
-    /**
-    Method that returns true if a piece's move is in sequence
-    */
-    public boolean inSequence(int myLocation, int move, List chessboard){
-        // remove any old moves that might be saved
-        _possibleMoves.removeAll();
-
-        horizontalRight(myLocation, myLocation, chessboard, true);
-        horizontalLeft(myLocation, myLocation, chessboard, true);
-        verticalUp(myLocation, myLocation, chessboard, true);
-        verticalDown(myLocation, myLocation, chessboard, true);       
-
-        // search possible moves for the given location
-        for(int index = 0; index < _possibleMoves.getSize(); ++index){
-            if((int) _possibleMoves.pop(index) == move)
-                return true;}
-
-        return false;
     }
 
     /**

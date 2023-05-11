@@ -32,14 +32,8 @@ public class BlackRook extends ChessPiece{
         _possibleMoves.removeAll();
 
         // search board for black king
-        ChessPiece piece;
-        BlackKing bKing = null;
-        int kingLocation = 0;
-        for(int index = 0; index < chessboard.getSize(); ++index){
-            piece = (ChessPiece) chessboard.getComponent(index);
-            if(piece instanceof BlackKing){
-                kingLocation = index;
-                bKing = (BlackKing) piece;} }
+        BlackKing bKing = (BlackKing) getKing(chessboard, this);
+        int kingLocation = getKingLocation(chessboard, this);
 
         if(considerCheck){
             horizontalRight(myLocation, myLocation, chessboard, considerCheck, bKing, kingLocation);
@@ -54,11 +48,16 @@ public class BlackRook extends ChessPiece{
             // Black king and its location will not be used to calculate whether or not the opponent
             // king is in check
             BlackKing doesntMatter = bKing;
+            int doesNotMatter = kingLocation;
 
-            horizontalRight(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 0);
-            horizontalLeft(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 0);
-            verticalUp(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 0);
-            verticalDown(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 0);}
+            horizontalRight(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 
+                            doesNotMatter);
+            horizontalLeft(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 
+                           doesNotMatter);
+            verticalUp(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 
+                       doesNotMatter);
+            verticalDown(myLocation, myLocation, chessboard, considerCheck, doesntMatter, 
+                         doesNotMatter);}
 
         return _possibleMoves;
     }

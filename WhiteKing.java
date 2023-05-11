@@ -194,6 +194,64 @@ public class WhiteKing extends ChessPiece{
     }
 
     /**
+    Method that returns the piece that places our king in check
+    */
+    public ChessPiece getCheckedPiece(int move, List chessboard){
+        _chessboard = chessboard;
+        List opponentMoves;
+        ChessPiece opponent;
+
+        // sort through opponent chesspieces from all possible chess squares 
+        for(int index = 0; index < _chessboard.getSize(); ++index){
+            opponent = (ChessPiece) (_chessboard.getComponent(index));
+            if(isOpponent(opponent, this)){
+                // get moves of opponent chesspiece
+                opponentMoves = opponent.possibleMoves(index, _chessboard, false, 0, 0);
+
+                // check if any opponent moves are the same as king piece move
+                for(int i = 0; i < opponentMoves.getSize(); ++i){
+                    if((int) opponentMoves.pop(i) == move)
+                        return opponent;} } }
+
+        return null;
+    }
+
+    /**
+    Method that returns the location of the opponent chess piece that holds the king in check
+    */
+    public int checkLocation(List chessboard){
+        _chessboard = chessboard;
+        ChessPiece piece,
+                   opponent;
+        List opponentMoves;
+        WhiteKing wKing = null;
+        int kingLocation = 0;
+        int position = 0;
+
+        // search the chessboard for the position of the BlackKing
+        for(int index = 0; index < _chessboard.getSize(); ++index){
+            piece = (ChessPiece) _chessboard.getComponent(index);
+            if(piece instanceof WhiteKing){
+                kingLocation = index;
+                wKing = (WhiteKing) piece;} }
+
+        // sort through all opponent chesspieces from all possible chess squares 
+        for(int index = 0; index < _chessboard.getSize(); ++index){
+            opponent = (ChessPiece) (_chessboard.getComponent(index));
+            if(isOpponent(opponent, this)){
+                // get moves of opponent chesspiece
+                opponentMoves = opponent.possibleMoves(index, _chessboard, false, 0, 0);
+
+                // check if any opponent moves are the same as king piece location
+                for(int i = 0; i < opponentMoves.getSize(); ++i){
+                    if((int) opponentMoves.pop(i) == kingLocation)
+                        // return the position of the piece that places the king in check
+                        position = index;} } }
+
+        return position;
+    }
+
+    /**
     Method that sets the 'beenMoved' field to true
     Should be called after a king chess piece is initially moved
     */

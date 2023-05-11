@@ -35,42 +35,32 @@ public class BlackPawn extends ChessPiece{
 
         if(considerCheck){
             // search board for chess king
-            ChessPiece piece;
-            BlackKing bKing = null;
-            int kingLocation = 0;
-            for(int index = 0; index < chessboard.getSize(); ++index){
-                piece = (ChessPiece) chessboard.getComponent(index);
-                if(piece instanceof BlackKing){
-                    kingLocation = index;
-                    bKing = (BlackKing) piece;} }
+            BlackKing bKing = (BlackKing) getKing(chessboard, this);
+            int kingLocation = getKingLocation(chessboard, this);
 
             move = myLocation + 7;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
-               isOpponent((ChessPiece) chessboard.getComponent(move), 
-               (ChessPiece) chessboard.getComponent(myLocation)) &&
+               isOpponent((ChessPiece) chessboard.getComponent(move), this) &&
                (!bKing.check(kingLocation, chessboard) || move == bKing.checkLocation(chessboard) ||
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation + 8;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
-               chessboard.getComponent(move) == null && 
-               (!bKing.check(kingLocation, chessboard) || 
+               chessboard.getComponent(move) == null && (!bKing.check(kingLocation, chessboard) || 
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation + 9;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
-               isOpponent((ChessPiece) chessboard.getComponent(move), 
-               (ChessPiece) chessboard.getComponent(myLocation)) && 
+               isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
                (!bKing.check(kingLocation, chessboard) || move == bKing.checkLocation(chessboard) ||
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation + 16;
             if(myLocation / 8 == 1 && chessboard.getComponent(move) == null && 
-               chessboard.getComponent(move - 8) == null && 
-               (!bKing.check(kingLocation, chessboard) || 
+               chessboard.getComponent(move - 8) == null && (!bKing.check(kingLocation, chessboard) ||
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 

@@ -288,6 +288,51 @@ public abstract class ChessPiece{
     }
 
     /**
+    Method that returns a respective chess piece's king
+    */
+    public ChessPiece getKing(List chessboard, ChessPiece myPiece){
+        ChessPiece piece;
+
+        if(isBlack(myPiece)){
+            BlackKing bKing = null;
+            for(int index = 0; index < chessboard.getSize(); ++index){
+                piece = (ChessPiece) chessboard.getComponent(index);
+                if(piece instanceof BlackKing)
+                    bKing = (BlackKing) piece;} 
+            return bKing;}
+
+        WhiteKing wKing = null;
+        for(int index = 0; index < chessboard.getSize(); ++index){
+            piece = (ChessPiece) chessboard.getComponent(index);
+            if(piece instanceof WhiteKing)
+                wKing = (WhiteKing) piece;}
+
+        return wKing;
+    }
+
+    /**
+    Method that returns the location of a respective piece's king
+    */
+    public int getKingLocation(List chessboard, ChessPiece myPiece){
+        ChessPiece piece;
+        int kingLocation = 0;
+
+        if(isBlack(myPiece)){
+            for(int index = 0; index < chessboard.getSize(); ++index){
+                piece = (ChessPiece) chessboard.getComponent(index);
+                if(piece instanceof BlackKing)
+                    kingLocation = index;} }
+
+        else{
+            for(int index = 0; index < chessboard.getSize(); ++index){
+                piece = (ChessPiece) chessboard.getComponent(index);
+                if(piece instanceof WhiteKing)
+                    kingLocation = index;} }
+
+        return kingLocation;
+    }
+
+    /**
     Returns the available moves for the piece 
     Boolean Parameter: Used to differentiate between standard moves of the chesspiece
                        and moves which will determine whether the opponent king may
