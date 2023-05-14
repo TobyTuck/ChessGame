@@ -343,8 +343,10 @@ public class MyMouseAdapter extends MouseAdapter{
                 legal = true;}
 
         // selection of the same piece is also allowed
-        if(legal || firstSelected == secondSelected)
-            return true;
+        if(legal || firstSelected == secondSelected){
+            System.out.println(position);
+
+            return true;}
 
         return false;
     }
