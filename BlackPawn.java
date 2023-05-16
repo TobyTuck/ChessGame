@@ -5,12 +5,10 @@ This is a class that models a Black Pawn chesspiece
 import java.awt.image.BufferedImage;
 import java.io.*;  // used for File and IOException classes
 import javax.imageio.ImageIO;
-import java.awt.image.AffineTransformOp;
-import java.awt.geom.AffineTransform;
 
 public class BlackPawn extends ChessPiece{
     
-    List _possibleMoves;
+    private List _possibleMoves;
 
     public BlackPawn(){
         _possibleMoves = new List(5);
@@ -37,30 +35,31 @@ public class BlackPawn extends ChessPiece{
             // search board for chess king
             BlackKing bKing = (BlackKing) getKing(chessboard, this);
             int kingLocation = getKingLocation(chessboard, this);
+            boolean inCheck = bKing.check(kingLocation, chessboard);
 
             move = myLocation + 7;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) &&
-               (!bKing.check(kingLocation, chessboard) || move == bKing.checkLocation(chessboard) ||
+               (!inCheck || move == bKing.checkLocation(chessboard) ||
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation + 8;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
-               chessboard.getComponent(move) == null && (!bKing.check(kingLocation, chessboard) || 
+               chessboard.getComponent(move) == null && (!inCheck || 
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation + 9;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
-               (!bKing.check(kingLocation, chessboard) || move == bKing.checkLocation(chessboard) ||
+               (!inCheck || move == bKing.checkLocation(chessboard) ||
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation + 16;
             if(myLocation / 8 == 1 && chessboard.getComponent(move) == null && 
-               chessboard.getComponent(move - 8) == null && (!bKing.check(kingLocation, chessboard) ||
+               chessboard.getComponent(move - 8) == null && (!inCheck ||
                blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
@@ -68,8 +67,7 @@ public class BlackPawn extends ChessPiece{
             if(sameRow(myLocation, 32) && (ChessPiece) chessboard.getComponent
                (endLastMove) instanceof WhitePawn && sameRow(startLastMove, 48) &&
                (myLocation == endLastMove - 1 || myLocation == endLastMove + 1) && 
-               (!bKing.check(kingLocation, chessboard) || 
-               blockCheck(myLocation, move, kingLocation, chessboard)))
+               (!inCheck || blockCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(endLastMove + 8,  null);}
 
         else{

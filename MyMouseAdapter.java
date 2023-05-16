@@ -311,8 +311,11 @@ public class MyMouseAdapter extends MouseAdapter{
                             addSquare((JPanel) list.pop(possibleMove), 20, Color.red);
                             
                         // standard move
-                        else
-                            addSquare((JPanel) list.pop(possibleMove), 20, option);} 
+                        else{
+                            // delete
+                            System.out.println("Made it: " + possibleMove);
+
+                            addSquare((JPanel) list.pop(possibleMove), 20, option);} }
 
                     // throw flag so a dragged option is not able to interrupt
                     optionsInterrupter = true;} } }
@@ -343,10 +346,8 @@ public class MyMouseAdapter extends MouseAdapter{
                 legal = true;}
 
         // selection of the same piece is also allowed
-        if(legal || firstSelected == secondSelected){
-            System.out.println(position);
-
-            return true;}
+        if(legal || firstSelected == secondSelected)
+            return true;
 
         return false;
     }
