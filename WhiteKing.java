@@ -182,8 +182,7 @@ public class WhiteKing extends ChessPiece{
         for(int index = 0; index < _chessboard.getSize(); ++index){
             opponent = (ChessPiece) (_chessboard.getComponent(index));
             if(isOpponent(opponent, this)){
-                opponentMoves = opponent.possibleMoves(index, _chessboard, false, 0, 
-                                                       0);
+                opponentMoves = opponent.possibleMoves(index, _chessboard, false, 0, 0);
 
                 // check if any opponent moves are the same as king piece move
                 for(int i = 0; i < opponentMoves.getSize(); ++i){

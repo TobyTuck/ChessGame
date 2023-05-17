@@ -37,6 +37,8 @@ public class WhitePawn extends ChessPiece{
             int kingLocation = getKingLocation(chessboard, this);
             boolean inCheck = wKing.check(kingLocation, chessboard);
 
+            _possibleMoves.removeAll();
+
             move = myLocation - 7;
             if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
