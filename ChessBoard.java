@@ -35,7 +35,7 @@ public class ChessBoard extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // shall we make the size of the chessboard update as resized?
-        // this.setResizable(true);
+        this.setResizable(true);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // set applet's tab icon

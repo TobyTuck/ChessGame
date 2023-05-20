@@ -42,34 +42,32 @@ public class WhitePawn extends ChessPiece{
             move = myLocation - 7;
             if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
-               (!inCheck || move == wKing.checkLocation(chessboard) ||
-               blockCheck(myLocation, move, kingLocation, chessboard)))
+               (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation - 8;
             if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
                chessboard.getComponent(move) == null && (!inCheck || 
-               blockCheck(myLocation, move, kingLocation, chessboard)))
+               removeCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation - 9;
             if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
-               (!inCheck || move == wKing.checkLocation(chessboard) ||
-               blockCheck(myLocation, move, kingLocation, chessboard)))
+               (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             move = myLocation - 16;
             if(myLocation / 8 == 6 && chessboard.getComponent(move) == null && 
                chessboard.getComponent(move + 8) == null && (!inCheck ||
-               blockCheck(myLocation, move, kingLocation, chessboard)))
+               removeCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(move, null);
 
             // en passant
             if(sameRow(myLocation, 24) && (ChessPiece) chessboard.getComponent
                (endLastMove) instanceof BlackPawn && sameRow(startLastMove, 8) &&
                (myLocation == endLastMove - 1 || myLocation == endLastMove + 1) &&
-               (!inCheck || blockCheck(myLocation, move, kingLocation, chessboard)))
+               (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
                 _possibleMoves.push(endLastMove - 8,  null);}
 
         else{

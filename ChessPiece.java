@@ -257,7 +257,7 @@ public abstract class ChessPiece{
     /**
     Method that checks if a piece blocks check from occuring
     */
-    public boolean blockCheck(int myLocation, int myMove, int kingLocation, List chessboard){
+    public boolean removeCheck(int myLocation, int myMove, int kingLocation, List chessboard){
         // simulate move, and check if king is now in check
         // make a 'simulation' list
         List simulation = new List(63);
@@ -338,10 +338,10 @@ public abstract class ChessPiece{
                        and moves which will determine whether the opponent king may
                        occupy a position w/o being in "check." 
                        For example, if an opponent king is placed in check by a rook,
-                       that king may not move linear, as it is still in check. Under
-                       normal circumstances, the rook would not be allowed to move to
-                       the position behind an opponent, which would have allowed the 
-                       opponent king to move linear, an illegal move.
+                       that king may not move linear, as it is still in check 
+                       Under normal circumstances, the rook would not be allowed to 
+                       move to the position behind an opponent, which would have 
+                       allowed the opponent king to move linear, an illegal move.
     */
     public abstract List possibleMoves(int myLocation, List chessboard, boolean hold,
                                        int startLastMove, int endLastMove);

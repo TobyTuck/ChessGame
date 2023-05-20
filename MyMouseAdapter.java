@@ -314,14 +314,8 @@ public class MyMouseAdapter extends MouseAdapter{
                             addSquare((JPanel) list.pop(possibleMove), 20, Color.red);
                             
                         // standard move
-                        else{
-                            // delete
-                            System.out.println(possibleMove);
-
-                            addSquare((JPanel) list.pop(possibleMove), 20, option);} }
-
-                    // delete
-                    System.out.println("\n");
+                        else
+                            addSquare((JPanel) list.pop(possibleMove), 20, option);}
 
                     // throw flag so a dragged option is not able to interrupt
                     optionsInterrupter = true;} } }

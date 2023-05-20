@@ -97,20 +97,19 @@ public class WhiteBishop extends ChessPiece{
         if(next > 63 || next < 0)
                 return false;
 
-        ChessPiece startPiece = (ChessPiece) chessboard.getComponent(startLocation);
         ChessPiece myPiece = (ChessPiece) chessboard.getComponent(position); 
         ChessPiece nextPiece = (ChessPiece) chessboard.getComponent(next);
 
         if(considerCheck){
-            if(!sameColor(startPiece, nextPiece) && !overflow(position, next) &&
-               (myPiece == null || myPiece == startPiece))
+            if(!sameColor(this, nextPiece) && !overflow(position, next) &&
+               (myPiece == null || myPiece == this))
                 return true; 
 
             return false;}
 
         // only look at instances of check (as applies to opponent king)
         // only difference is that WBishop's moves "extend through" a BKing 
-            // eg: if a king in check moves diagonally away from WBishop, piece is still in check
+        // eg: if a king in check moves diagonally away from WBishop, piece is still in check
         else{
             // illegal moves
             if((isWhite(nextPiece) || (isBlack(myPiece) && !(myPiece instanceof BlackKing))) ||
@@ -133,10 +132,10 @@ public class WhiteBishop extends ChessPiece{
         return false;
     }
 
-    /**
+    /*
     Method that returns true if a piece's move is in sequence between a bishop and
     a position on the board
-    */
+
     public boolean inSequence(int myLocation, int move, List chessboard){
         // remove any old moves that might be saved
         _possibleMoves.removeAll();
@@ -152,5 +151,5 @@ public class WhiteBishop extends ChessPiece{
                 return true;}
 
         return false;
-    }
+    }*/
 }
