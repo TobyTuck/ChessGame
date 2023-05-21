@@ -60,7 +60,7 @@ public class WhiteBishop extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 topRight(next, considerCheck);} }
@@ -81,7 +81,7 @@ public class WhiteBishop extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 topLeft(next, considerCheck);} }
@@ -102,7 +102,7 @@ public class WhiteBishop extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 bottomRight(next, considerCheck);} }
@@ -123,7 +123,7 @@ public class WhiteBishop extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 bottomLeft(next, considerCheck);} }

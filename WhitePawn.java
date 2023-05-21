@@ -42,32 +42,32 @@ public class WhitePawn extends ChessPiece{
             move = myLocation - 7;
             if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
-               (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
+               (!inCheck || removeCheck(myLocation, move, chessboard)))
                 _moves.push(move, null);
 
             move = myLocation - 8;
             if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
                chessboard.getComponent(move) == null && (!inCheck || 
-               removeCheck(myLocation, move, kingLocation, chessboard)))
+               removeCheck(myLocation, move, chessboard)))
                 _moves.push(move, null);
 
             move = myLocation - 9;
             if((move / 8 == (myLocation / 8) - 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
-               (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
+               (!inCheck || removeCheck(myLocation, move, chessboard)))
                 _moves.push(move, null);
 
             move = myLocation - 16;
             if(myLocation / 8 == 6 && chessboard.getComponent(move) == null && 
                chessboard.getComponent(move + 8) == null && (!inCheck ||
-               removeCheck(myLocation, move, kingLocation, chessboard)))
+               removeCheck(myLocation, move, chessboard)))
                 _moves.push(move, null);
 
             // en passant
             if(sameRow(myLocation, 24) && (ChessPiece) chessboard.getComponent
                (endLastMove) instanceof BlackPawn && sameRow(startLastMove, 8) &&
                (myLocation == endLastMove - 1 || myLocation == endLastMove + 1) &&
-               (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
+               (!inCheck || removeCheck(myLocation, move, chessboard)))
                 _moves.push(endLastMove - 8,  null);}
 
         else{

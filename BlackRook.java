@@ -65,7 +65,7 @@ public class BlackRook extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 horizontalRight(next, considerCheck);} }
@@ -86,7 +86,7 @@ public class BlackRook extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 horizontalLeft(next, considerCheck);} }
@@ -107,7 +107,7 @@ public class BlackRook extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 verticalUp(next, considerCheck);} }
@@ -128,7 +128,7 @@ public class BlackRook extends ChessPiece{
         // considerCheck is true- king can't be in check for opponent's move (checkmate)
         if(considerCheck && _king.check(_kingLocation, _chessboard)){
             if(validGeneralMove(position, next)){
-                if(removeCheck(_location, next, _kingLocation, _chessboard))
+                if(removeCheck(_location, next, _chessboard))
                     _moves.push(next, null);
 
                 verticalDown(next, considerCheck);} }

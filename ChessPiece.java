@@ -257,7 +257,7 @@ public abstract class ChessPiece{
     /**
     Method that checks if a piece blocks check from occuring
     */
-    public boolean removeCheck(int myLocation, int myMove, int kingLocation, List chessboard){
+    public boolean removeCheck(int location, int move, List chessboard){
         // simulate move, and check if king is now in check
         // make a 'simulation' list
         List simulation = new List(63);
@@ -268,20 +268,23 @@ public abstract class ChessPiece{
                             (ChessPiece) chessboard.getComponent(index));}
 
         // perform simulation move
-        simulation.addComponent((JPanel) chessboard.pop(myMove), 
-                                (ChessPiece) chessboard.getComponent(myLocation));
-        simulation.addComponent((JPanel) chessboard.pop(myLocation), null);
+        simulation.addComponent((JPanel) chessboard.pop(move), 
+                                (ChessPiece) chessboard.getComponent(location));
+        simulation.addComponent((JPanel) chessboard.pop(location), null);
 
         // does king remain in check w/ in this simulation?
-        ChessPiece myKing = (ChessPiece) simulation.getComponent(kingLocation);
-        if(myKing instanceof BlackKing){
-            BlackKing myBKing = (BlackKing) myKing;
-            if(myBKing.check(kingLocation, simulation))
+        ChessPiece king = getKing(simulation, 
+                                  (ChessPiece) simulation.getComponent(move));
+        int kingLocation = getKingLocation(simulation, 
+                                           (ChessPiece) simulation.getComponent(move));
+        if(king instanceof BlackKing){
+            BlackKing bKing = (BlackKing) king;
+            if(bKing.check(kingLocation, simulation))
                 return false;}
 
         else{
-            WhiteKing myWKing = (WhiteKing) myKing;
-            if(myWKing.check(kingLocation, simulation))
+            WhiteKing wKing = (WhiteKing) king;
+            if(wKing.check(kingLocation, simulation))
                 return false;}
 
         return true;
