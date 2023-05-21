@@ -295,11 +295,8 @@ public class MyMouseAdapter extends MouseAdapter{
 
                         // castle
                         else if(sameColor((ChessPiece) list.getComponent(_p1Location), 
-                                          (ChessPiece) list.getComponent(possibleMove))){
-                            // delete
-                            System.out.println(possibleMove);
-
-                            outline((JPanel) list.pop(possibleMove), option, 5);}
+                                          (ChessPiece) list.getComponent(possibleMove)))
+                            outline((JPanel) list.pop(possibleMove), option, 5);
 
                         // en passant move to capture opponent
                         else if((selectedPiece instanceof BlackPawn ||

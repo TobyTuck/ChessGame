@@ -8,10 +8,10 @@ import javax.imageio.ImageIO;
 
 public class BlackPawn extends ChessPiece{
     
-    private List _possibleMoves;
+    private List _moves;
 
     public BlackPawn(){
-        _possibleMoves = new List(5);
+        _moves = new List(5);
         
         // set image file
         try{
@@ -27,7 +27,7 @@ public class BlackPawn extends ChessPiece{
     public List possibleMoves(int myLocation, List chessboard, boolean considerCheck,
                               int startLastMove, int endLastMove){
         // remove moves from previous locations
-        _possibleMoves.removeAll();
+        _moves.removeAll();
 
         int move;
 
@@ -41,42 +41,42 @@ public class BlackPawn extends ChessPiece{
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) &&
                (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                _possibleMoves.push(move, null);
+                _moves.push(move, null);
 
             move = myLocation + 8;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
                chessboard.getComponent(move) == null && (!inCheck || 
                removeCheck(myLocation, move, kingLocation, chessboard)))
-                _possibleMoves.push(move, null);
+                _moves.push(move, null);
 
             move = myLocation + 9;
             if((move / 8 == (myLocation / 8) + 1) && move < 64 && 
                isOpponent((ChessPiece) chessboard.getComponent(move), this) && 
                (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                _possibleMoves.push(move, null);
+                _moves.push(move, null);
 
             move = myLocation + 16;
             if(myLocation / 8 == 1 && chessboard.getComponent(move) == null && 
                chessboard.getComponent(move - 8) == null && (!inCheck ||
                removeCheck(myLocation, move, kingLocation, chessboard)))
-                _possibleMoves.push(move, null);
+                _moves.push(move, null);
 
             // en passant
             if(sameRow(myLocation, 32) && (ChessPiece) chessboard.getComponent
                (endLastMove) instanceof WhitePawn && sameRow(startLastMove, 48) &&
                (myLocation == endLastMove - 1 || myLocation == endLastMove + 1) && 
                (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                _possibleMoves.push(endLastMove + 8,  null);}
+                _moves.push(endLastMove + 8,  null);}
 
         else{
             move = myLocation + 7;
             if((move / 8 == (myLocation / 8) + 1) && move < 64)
-                _possibleMoves.push(move, null);
+                _moves.push(move, null);
 
             move = myLocation + 9;
             if((move / 8 == (myLocation / 8) + 1) && move < 64)
-                _possibleMoves.push(move, null);}
+                _moves.push(move, null);}
 
-        return _possibleMoves;
+        return _moves;
     }
 }

@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 
 public class BlackKnight extends ChessPiece{
 
-    private List _possibleMoves;
+    private List _moves;
 
     public BlackKnight(){
-        _possibleMoves = new List(5);
+        _moves = new List(5);
 
         // set file image
         try{
@@ -28,7 +28,7 @@ public class BlackKnight extends ChessPiece{
     public List possibleMoves(int myLocation, List chessboard, boolean routineCheck,
                               int doNothing1, int doNothing2){
         // remove moves from previous locations
-        _possibleMoves.removeAll();
+        _moves.removeAll();
 
         int move;
         ChessPiece movePiece;
@@ -45,7 +45,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 2) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'L' move
             move = myLocation - 15;
@@ -53,7 +53,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 2) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'r' move
             move = myLocation - 6;
@@ -61,7 +61,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 1) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'reverse r' move
             move = myLocation - 10;
@@ -69,7 +69,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 1) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down r' move
             move = myLocation + 6;
@@ -77,7 +77,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 1) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down reverse r' move
             move = myLocation + 10;
@@ -85,7 +85,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 1) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down reverse L' move
             move = myLocation + 17;
@@ -93,7 +93,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 2) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down L' move
             move = myLocation + 15;
@@ -101,7 +101,7 @@ public class BlackKnight extends ChessPiece{
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 2) && !isBlack(movePiece) &&
                    (!inCheck || removeCheck(myLocation, move, kingLocation, chessboard)))
-                    _possibleMoves.push(move, null);} }
+                    _moves.push(move, null);} }
         
         else{
             // 'reverse L' move
@@ -109,57 +109,57 @@ public class BlackKnight extends ChessPiece{
             if(move >= 0){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 2) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'L' move
             move = myLocation - 15;
             if(move >= 0){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 2) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'r' move
             move = myLocation - 6;
             if(move >= 0){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 1) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'reverse r' move
             move = myLocation - 10;
             if(move >= 0){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) - 1) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down r' move
             move = myLocation + 6;
             if(move <= 63){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 1) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down reverse r' move
             move = myLocation + 10;
             if(move <= 63){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 1) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down reverse L' move
             move = myLocation + 17;
             if(move <= 63){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 2) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);}
+                    _moves.push(move, null);}
 
             // 'upside down L' move
             move = myLocation + 15;
             if(move <= 63){
                 movePiece = (ChessPiece) chessboard.getComponent(move);
                 if((move / 8 == (myLocation / 8) + 2) && !isBlack(movePiece))
-                    _possibleMoves.push(move, null);} }
+                    _moves.push(move, null);} }
 
-        return _possibleMoves;
+        return _moves;
     }
 }
