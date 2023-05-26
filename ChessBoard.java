@@ -3,6 +3,7 @@ import java.awt.*;  // used for Dimension, GraphicsEnvironment, GraphicsDevice
 import java.awt.event.*;  // used for MouseAdapter and MouseEvent
 import java.util.Random;
 import java.awt.image.BufferedImage;
+import java.awt.geom.RoundRectangle2D;
 
 public class ChessBoard extends JFrame{
 
@@ -16,7 +17,7 @@ public class ChessBoard extends JFrame{
     */
     public ChessBoard(){
         // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
-        JPanel board;
+        RoundedPanel board;
         JPanel capturedWhite;
         JPanel capturedBlack1;
         JPanel capturedBlack2;
@@ -51,13 +52,16 @@ public class ChessBoard extends JFrame{
 
         defaultHolder = new JPanel(new GridBagLayout());
 
-        board = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        board = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         JPanel rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         capturedWhite = new JPanel(new FlowLayout());
 
         JPanel rightFiller = new JPanel();
         capturedBlack1 = new JPanel(new FlowLayout());
         capturedBlack2 = new JPanel(new FlowLayout());
+
+        // round the corners of the chess board
+        board.setBackground(new Color(210, 180, 140));
 
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
@@ -124,76 +128,76 @@ public class ChessBoard extends JFrame{
         // add components of each square to the list
         list = new List(8);
 
-        JPanel square0 = new JPanel(); list.push(square0, null);
-        JPanel square1 = new JPanel(); list.push(square1, null);
-        JPanel square2 = new JPanel(); list.push(square2, null);
-        JPanel square3 = new JPanel(); list.push(square3, null);
-        JPanel square4 = new JPanel(); list.push(square4, null);
-        JPanel square5 = new JPanel(); list.push(square5, null);
-        JPanel square6 = new JPanel(); list.push(square6, null);
-        JPanel square7 = new JPanel(); list.push(square7, null);
-        JPanel square8 = new JPanel(); list.push(square8, null);
-        JPanel square9 = new JPanel(); list.push(square9, null);
+        RoundedPanel square0 = new RoundedPanel(); list.push(square0, null);
+        RoundedPanel square1 = new RoundedPanel(); list.push(square1, null);
+        RoundedPanel square2 = new RoundedPanel(); list.push(square2, null);
+        RoundedPanel square3 = new RoundedPanel(); list.push(square3, null);
+        RoundedPanel square4 = new RoundedPanel(); list.push(square4, null);
+        RoundedPanel square5 = new RoundedPanel(); list.push(square5, null);
+        RoundedPanel square6 = new RoundedPanel(); list.push(square6, null);
+        RoundedPanel square7 = new RoundedPanel(); list.push(square7, null);
+        RoundedPanel square8 = new RoundedPanel(); list.push(square8, null);
+        RoundedPanel square9 = new RoundedPanel(); list.push(square9, null);
         
-        JPanel square10 = new JPanel(); list.push(square10, null);
-        JPanel square11 = new JPanel(); list.push(square11, null);
-        JPanel square12 = new JPanel(); list.push(square12, null);
-        JPanel square13 = new JPanel(); list.push(square13, null);
-        JPanel square14 = new JPanel(); list.push(square14, null);
-        JPanel square15 = new JPanel(); list.push(square15, null);
-        JPanel square16 = new JPanel(); list.push(square16, null);
-        JPanel square17 = new JPanel(); list.push(square17, null);
-        JPanel square18 = new JPanel(); list.push(square18, null);
-        JPanel square19 = new JPanel(); list.push(square19, null);
+        RoundedPanel square10 = new RoundedPanel(); list.push(square10, null);
+        RoundedPanel square11 = new RoundedPanel(); list.push(square11, null);
+        RoundedPanel square12 = new RoundedPanel(); list.push(square12, null);
+        RoundedPanel square13 = new RoundedPanel(); list.push(square13, null);
+        RoundedPanel square14 = new RoundedPanel(); list.push(square14, null);
+        RoundedPanel square15 = new RoundedPanel(); list.push(square15, null);
+        RoundedPanel square16 = new RoundedPanel(); list.push(square16, null);
+        RoundedPanel square17 = new RoundedPanel(); list.push(square17, null);
+        RoundedPanel square18 = new RoundedPanel(); list.push(square18, null);
+        RoundedPanel square19 = new RoundedPanel(); list.push(square19, null);
 
-        JPanel square20 = new JPanel(); list.push(square20, null);
-        JPanel square21 = new JPanel(); list.push(square21, null);
-        JPanel square22 = new JPanel(); list.push(square22, null);
-        JPanel square23 = new JPanel(); list.push(square23, null);
-        JPanel square24 = new JPanel(); list.push(square24, null);
-        JPanel square25 = new JPanel(); list.push(square25, null);
-        JPanel square26 = new JPanel(); list.push(square26, null);
-        JPanel square27 = new JPanel(); list.push(square27, null);
-        JPanel square28 = new JPanel(); list.push(square28, null);
-        JPanel square29 = new JPanel(); list.push(square29, null);
+        RoundedPanel square20 = new RoundedPanel(); list.push(square20, null);
+        RoundedPanel square21 = new RoundedPanel(); list.push(square21, null);
+        RoundedPanel square22 = new RoundedPanel(); list.push(square22, null);
+        RoundedPanel square23 = new RoundedPanel(); list.push(square23, null);
+        RoundedPanel square24 = new RoundedPanel(); list.push(square24, null);
+        RoundedPanel square25 = new RoundedPanel(); list.push(square25, null);
+        RoundedPanel square26 = new RoundedPanel(); list.push(square26, null);
+        RoundedPanel square27 = new RoundedPanel(); list.push(square27, null);
+        RoundedPanel square28 = new RoundedPanel(); list.push(square28, null);
+        RoundedPanel square29 = new RoundedPanel(); list.push(square29, null);
 
-        JPanel square30 = new JPanel(); list.push(square30, null);
-        JPanel square31 = new JPanel(); list.push(square31, null);
-        JPanel square32 = new JPanel(); list.push(square32, null);
-        JPanel square33 = new JPanel(); list.push(square33, null);
-        JPanel square34 = new JPanel(); list.push(square34, null);
-        JPanel square35 = new JPanel(); list.push(square35, null);
-        JPanel square36 = new JPanel(); list.push(square36, null);
-        JPanel square37 = new JPanel(); list.push(square37, null);
-        JPanel square38 = new JPanel(); list.push(square38, null);
-        JPanel square39 = new JPanel(); list.push(square39, null);
+        RoundedPanel square30 = new RoundedPanel(); list.push(square30, null);
+        RoundedPanel square31 = new RoundedPanel(); list.push(square31, null);
+        RoundedPanel square32 = new RoundedPanel(); list.push(square32, null);
+        RoundedPanel square33 = new RoundedPanel(); list.push(square33, null);
+        RoundedPanel square34 = new RoundedPanel(); list.push(square34, null);
+        RoundedPanel square35 = new RoundedPanel(); list.push(square35, null);
+        RoundedPanel square36 = new RoundedPanel(); list.push(square36, null);
+        RoundedPanel square37 = new RoundedPanel(); list.push(square37, null);
+        RoundedPanel square38 = new RoundedPanel(); list.push(square38, null);
+        RoundedPanel square39 = new RoundedPanel(); list.push(square39, null);
 
-        JPanel square40 = new JPanel(); list.push(square40, null);
-        JPanel square41 = new JPanel(); list.push(square41, null);
-        JPanel square42 = new JPanel(); list.push(square42, null);
-        JPanel square43 = new JPanel(); list.push(square43, null);
-        JPanel square44 = new JPanel(); list.push(square44, null);
-        JPanel square45 = new JPanel(); list.push(square45, null);
-        JPanel square46 = new JPanel(); list.push(square46, null);
-        JPanel square47 = new JPanel(); list.push(square47, null);
-        JPanel square48 = new JPanel(); list.push(square48, null);
-        JPanel square49 = new JPanel(); list.push(square49, null);
+        RoundedPanel square40 = new RoundedPanel(); list.push(square40, null);
+        RoundedPanel square41 = new RoundedPanel(); list.push(square41, null);
+        RoundedPanel square42 = new RoundedPanel(); list.push(square42, null);
+        RoundedPanel square43 = new RoundedPanel(); list.push(square43, null);
+        RoundedPanel square44 = new RoundedPanel(); list.push(square44, null);
+        RoundedPanel square45 = new RoundedPanel(); list.push(square45, null);
+        RoundedPanel square46 = new RoundedPanel(); list.push(square46, null);
+        RoundedPanel square47 = new RoundedPanel(); list.push(square47, null);
+        RoundedPanel square48 = new RoundedPanel(); list.push(square48, null);
+        RoundedPanel square49 = new RoundedPanel(); list.push(square49, null);
 
-        JPanel square50 = new JPanel(); list.push(square50, null);
-        JPanel square51 = new JPanel(); list.push(square51, null);
-        JPanel square52 = new JPanel(); list.push(square52, null);
-        JPanel square53 = new JPanel(); list.push(square53, null);
-        JPanel square54 = new JPanel(); list.push(square54, null);
-        JPanel square55 = new JPanel(); list.push(square55, null);
-        JPanel square56 = new JPanel(); list.push(square56, null);
-        JPanel square57 = new JPanel(); list.push(square57, null);
-        JPanel square58 = new JPanel(); list.push(square58, null);
-        JPanel square59 = new JPanel(); list.push(square59, null);
+        RoundedPanel square50 = new RoundedPanel(); list.push(square50, null);
+        RoundedPanel square51 = new RoundedPanel(); list.push(square51, null);
+        RoundedPanel square52 = new RoundedPanel(); list.push(square52, null);
+        RoundedPanel square53 = new RoundedPanel(); list.push(square53, null);
+        RoundedPanel square54 = new RoundedPanel(); list.push(square54, null);
+        RoundedPanel square55 = new RoundedPanel(); list.push(square55, null);
+        RoundedPanel square56 = new RoundedPanel(); list.push(square56, null);
+        RoundedPanel square57 = new RoundedPanel(); list.push(square57, null);
+        RoundedPanel square58 = new RoundedPanel(); list.push(square58, null);
+        RoundedPanel square59 = new RoundedPanel(); list.push(square59, null);
 
-        JPanel square60 = new JPanel(); list.push(square60, null);
-        JPanel square61 = new JPanel(); list.push(square61, null);
-        JPanel square62 = new JPanel(); list.push(square62, null);
-        JPanel square63 = new JPanel(); list.push(square63, null);
+        RoundedPanel square60 = new RoundedPanel(); list.push(square60, null);
+        RoundedPanel square61 = new RoundedPanel(); list.push(square61, null);
+        RoundedPanel square62 = new RoundedPanel(); list.push(square62, null);
+        RoundedPanel square63 = new RoundedPanel(); list.push(square63, null);
 
         //Set properties of all the items
         // in the List
