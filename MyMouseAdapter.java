@@ -98,7 +98,7 @@ public class MyMouseAdapter extends MouseAdapter{
 
         int tryX = MouseInfo.getPointerInfo().getLocation().x;
         int tryY = MouseInfo.getPointerInfo().getLocation().y;
-
+        
         // first time component is dragged
         if(!dragged){
             JPanel clickedPanel = getChessSquare(e);
@@ -116,8 +116,8 @@ public class MyMouseAdapter extends MouseAdapter{
                         _p1Location = index;}
 
                 // get label from initial press
-                // mouseX + 400
-                pressedLabel.setLocation(mouseX, mouseY);
+                // pressedLabel.setLocation(mouseX, mouseY);
+                pressedLabel.setLocation(tryX, tryY);
 
                 // add label to top layer of the JLayeredPane
                 layeredPane.add(pressedLabel, JLayeredPane.DRAG_LAYER);
@@ -139,7 +139,7 @@ public class MyMouseAdapter extends MouseAdapter{
             // update the position of the label
             int deltaX = e.getXOnScreen() - mouseX;
             int deltaY = e.getYOnScreen() - mouseY;
-            pressedLabel.setLocation(myX + deltaX + 400, myY + deltaY); 
+            pressedLabel.setLocation(myX + deltaX, myY + deltaY); 
 
             layeredPane.revalidate();
             layeredPane.repaint();}
@@ -599,13 +599,23 @@ public class MyMouseAdapter extends MouseAdapter{
     Method that checks if a JPanel is a member of the JPanels on the "board"
     */
     private boolean isBoardMember(JPanel panel){
+        JPanel bPanel = null;
+
         // get list of all components within the board
-        Component[] pComponents = _board.getComponents();
-        for(Component c : pComponents){
-            if(c instanceof JPanel)
-                // check if JPanel is equal to argument
-                if(c.equals(panel))
-                    return true;}
+        Component[] bComponents = _board.getComponents();
+
+        // look through all containers in the surface of the board
+        for(Component b : bComponents){
+            if(b instanceof JPanel)
+                bPanel = (JPanel) b;
+                Component[] cComponents = bPanel.getComponents();
+
+                // look through all jpanels of each container
+                for(Component c : cComponents){
+                    if(c instanceof JPanel)
+                        // check if JPanel is equal to argument
+                        if(c.equals(panel))
+                            return true;} }
 
         return false;
     }

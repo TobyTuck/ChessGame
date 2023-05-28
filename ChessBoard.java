@@ -17,10 +17,17 @@ public class ChessBoard extends JFrame{
     */
     public ChessBoard(){
         // make 'Holder' panels for the background chess (board, whiteCapture, blackCaptured)
-        RoundedPanel board;
-        JPanel capturedWhite;
-        JPanel capturedBlack1;
-        JPanel capturedBlack2;
+        RoundedPanel board,
+                     nwContainer,
+                     neContainer,
+                     swContainer,
+                     seContainer;
+
+        JPanel capturedWhite,
+               capturedBlack1,
+               capturedBlack2;
+
+        // SettingsButton settings = new SettingsButton();
 
         // holds list of all individual squares and their pieces
         List list;
@@ -31,6 +38,8 @@ public class ChessBoard extends JFrame{
         // get screen dimensions
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Color darkGreen = new Color(25, 45, 25);
+        Color tan = new Color(210, 180, 140);
+        Color brown = new Color(139, 69, 19);
 
         this.getContentPane().setBackground(darkGreen);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,15 +62,17 @@ public class ChessBoard extends JFrame{
         defaultHolder = new JPanel(new GridBagLayout());
 
         board = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        nwContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        neContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        swContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        seContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
         JPanel rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         capturedWhite = new JPanel(new FlowLayout());
 
-        JPanel rightFiller = new JPanel();
+        JPanel rightFiller = new JPanel(new FlowLayout());
         capturedBlack1 = new JPanel(new FlowLayout());
         capturedBlack2 = new JPanel(new FlowLayout());
-
-        // round the corners of the chess board
-        board.setBackground(new Color(210, 180, 140));
 
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
@@ -94,6 +105,11 @@ public class ChessBoard extends JFrame{
                                                      (int) (boardHeight * 0.7));
 
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
+        nwContainer.setPreferredSize(new Dimension(boardHeight / 2, boardHeight / 2));
+        neContainer.setPreferredSize(new Dimension(boardHeight / 2, boardHeight / 2));
+        swContainer.setPreferredSize(new Dimension(boardHeight / 2, boardHeight / 2));
+        seContainer.setPreferredSize(new Dimension(boardHeight / 2, boardHeight / 2));
+
         capturedWhite.setPreferredSize(containerDimension);
         rightContainer.setPreferredSize(containerDimension);
 
@@ -113,90 +129,97 @@ public class ChessBoard extends JFrame{
                                                      (boardHeight / 40.0) / 
                                                      (double) myQueen.getWidth()) + 5)));
 
+        SettingsButton settings = new SettingsButton((int) (boardHeight / 12.0), 
+                                                     (int) (boardHeight / 12.0));
+        settings.setPreferredSize(new Dimension((int) (boardHeight / 12.0), 
+                                                (int) (boardHeight / 12.0)));
+
+
         // set the colors of JComponents
+        nwContainer.setBackground(tan);
+        neContainer.setBackground(brown);
+        swContainer.setBackground(brown);
+        seContainer.setBackground(tan);
         defaultHolder.setBackground(darkGreen);
         capturedWhite.setBackground(darkGreen);
         rightContainer.setBackground(darkGreen);
-        // capturedWhite.setBackground(Color.black);
         rightFiller.setBackground(darkGreen);
-        // rightFiller.setBackground(Color.red);
         capturedBlack1.setBackground(darkGreen);
-        // capturedBlack1.setBackground(Color.white);
         capturedBlack2.setBackground(darkGreen);
-        // capturedBlack2.setBackground(Color.blue);
 
         // add components of each square to the list
         list = new List(8);
 
         RoundedPanel square0 = new RoundedPanel(); list.push(square0, null);
-        RoundedPanel square1 = new RoundedPanel(); list.push(square1, null);
-        RoundedPanel square2 = new RoundedPanel(); list.push(square2, null);
-        RoundedPanel square3 = new RoundedPanel(); list.push(square3, null);
-        RoundedPanel square4 = new RoundedPanel(); list.push(square4, null);
-        RoundedPanel square5 = new RoundedPanel(); list.push(square5, null);
-        RoundedPanel square6 = new RoundedPanel(); list.push(square6, null);
+        JPanel square1 = new JPanel(); list.push(square1, null);
+        JPanel square2 = new JPanel(); list.push(square2, null);
+        JPanel square3 = new JPanel(); list.push(square3, null);
+        JPanel square4 = new JPanel(); list.push(square4, null);
+        JPanel square5 = new JPanel(); list.push(square5, null);
+        JPanel square6 = new JPanel(); list.push(square6, null);
         RoundedPanel square7 = new RoundedPanel(); list.push(square7, null);
-        RoundedPanel square8 = new RoundedPanel(); list.push(square8, null);
-        RoundedPanel square9 = new RoundedPanel(); list.push(square9, null);
-        
-        RoundedPanel square10 = new RoundedPanel(); list.push(square10, null);
-        RoundedPanel square11 = new RoundedPanel(); list.push(square11, null);
-        RoundedPanel square12 = new RoundedPanel(); list.push(square12, null);
-        RoundedPanel square13 = new RoundedPanel(); list.push(square13, null);
-        RoundedPanel square14 = new RoundedPanel(); list.push(square14, null);
-        RoundedPanel square15 = new RoundedPanel(); list.push(square15, null);
-        RoundedPanel square16 = new RoundedPanel(); list.push(square16, null);
-        RoundedPanel square17 = new RoundedPanel(); list.push(square17, null);
-        RoundedPanel square18 = new RoundedPanel(); list.push(square18, null);
-        RoundedPanel square19 = new RoundedPanel(); list.push(square19, null);
 
-        RoundedPanel square20 = new RoundedPanel(); list.push(square20, null);
-        RoundedPanel square21 = new RoundedPanel(); list.push(square21, null);
-        RoundedPanel square22 = new RoundedPanel(); list.push(square22, null);
-        RoundedPanel square23 = new RoundedPanel(); list.push(square23, null);
-        RoundedPanel square24 = new RoundedPanel(); list.push(square24, null);
-        RoundedPanel square25 = new RoundedPanel(); list.push(square25, null);
-        RoundedPanel square26 = new RoundedPanel(); list.push(square26, null);
-        RoundedPanel square27 = new RoundedPanel(); list.push(square27, null);
-        RoundedPanel square28 = new RoundedPanel(); list.push(square28, null);
-        RoundedPanel square29 = new RoundedPanel(); list.push(square29, null);
+        JPanel square8 = new JPanel(); list.push(square8, null);
+        JPanel square9 = new JPanel(); list.push(square9, null);
+        JPanel square10 = new JPanel(); list.push(square10, null);
+        JPanel square11 = new JPanel(); list.push(square11, null);
+        JPanel square12 = new JPanel(); list.push(square12, null);
+        JPanel square13 = new JPanel(); list.push(square13, null);
+        JPanel square14 = new JPanel(); list.push(square14, null);
+        JPanel square15 = new JPanel(); list.push(square15, null);
 
-        RoundedPanel square30 = new RoundedPanel(); list.push(square30, null);
-        RoundedPanel square31 = new RoundedPanel(); list.push(square31, null);
-        RoundedPanel square32 = new RoundedPanel(); list.push(square32, null);
-        RoundedPanel square33 = new RoundedPanel(); list.push(square33, null);
-        RoundedPanel square34 = new RoundedPanel(); list.push(square34, null);
-        RoundedPanel square35 = new RoundedPanel(); list.push(square35, null);
-        RoundedPanel square36 = new RoundedPanel(); list.push(square36, null);
-        RoundedPanel square37 = new RoundedPanel(); list.push(square37, null);
-        RoundedPanel square38 = new RoundedPanel(); list.push(square38, null);
-        RoundedPanel square39 = new RoundedPanel(); list.push(square39, null);
+        JPanel square16 = new JPanel(); list.push(square16, null);
+        JPanel square17 = new JPanel(); list.push(square17, null);
+        JPanel square18 = new JPanel(); list.push(square18, null);
+        JPanel square19 = new JPanel(); list.push(square19, null);
+        JPanel square20 = new JPanel(); list.push(square20, null);
+        JPanel square21 = new JPanel(); list.push(square21, null);
+        JPanel square22 = new JPanel(); list.push(square22, null);
+        JPanel square23 = new JPanel(); list.push(square23, null);
 
-        RoundedPanel square40 = new RoundedPanel(); list.push(square40, null);
-        RoundedPanel square41 = new RoundedPanel(); list.push(square41, null);
-        RoundedPanel square42 = new RoundedPanel(); list.push(square42, null);
-        RoundedPanel square43 = new RoundedPanel(); list.push(square43, null);
-        RoundedPanel square44 = new RoundedPanel(); list.push(square44, null);
-        RoundedPanel square45 = new RoundedPanel(); list.push(square45, null);
-        RoundedPanel square46 = new RoundedPanel(); list.push(square46, null);
-        RoundedPanel square47 = new RoundedPanel(); list.push(square47, null);
-        RoundedPanel square48 = new RoundedPanel(); list.push(square48, null);
-        RoundedPanel square49 = new RoundedPanel(); list.push(square49, null);
+        JPanel square24 = new JPanel(); list.push(square24, null);
+        JPanel square25 = new JPanel(); list.push(square25, null);
+        JPanel square26 = new JPanel(); list.push(square26, null);
+        JPanel square27 = new JPanel(); list.push(square27, null);
+        JPanel square28 = new JPanel(); list.push(square28, null);
+        JPanel square29 = new JPanel(); list.push(square29, null);
+        JPanel square30 = new JPanel(); list.push(square30, null);
+        JPanel square31 = new JPanel(); list.push(square31, null);
 
-        RoundedPanel square50 = new RoundedPanel(); list.push(square50, null);
-        RoundedPanel square51 = new RoundedPanel(); list.push(square51, null);
-        RoundedPanel square52 = new RoundedPanel(); list.push(square52, null);
-        RoundedPanel square53 = new RoundedPanel(); list.push(square53, null);
-        RoundedPanel square54 = new RoundedPanel(); list.push(square54, null);
-        RoundedPanel square55 = new RoundedPanel(); list.push(square55, null);
+        JPanel square32 = new JPanel(); list.push(square32, null);
+        JPanel square33 = new JPanel(); list.push(square33, null);
+        JPanel square34 = new JPanel(); list.push(square34, null);
+        JPanel square35 = new JPanel(); list.push(square35, null);
+        JPanel square36 = new JPanel(); list.push(square36, null);
+        JPanel square37 = new JPanel(); list.push(square37, null);
+        JPanel square38 = new JPanel(); list.push(square38, null);
+        JPanel square39 = new JPanel(); list.push(square39, null);
+
+        JPanel square40 = new JPanel(); list.push(square40, null);
+        JPanel square41 = new JPanel(); list.push(square41, null);
+        JPanel square42 = new JPanel(); list.push(square42, null);
+        JPanel square43 = new JPanel(); list.push(square43, null);
+        JPanel square44 = new JPanel(); list.push(square44, null);
+        JPanel square45 = new JPanel(); list.push(square45, null);
+        JPanel square46 = new JPanel(); list.push(square46, null);
+        JPanel square47 = new JPanel(); list.push(square47, null);
+
+        JPanel square48 = new JPanel(); list.push(square48, null);
+        JPanel square49 = new JPanel(); list.push(square49, null);
+        JPanel square50 = new JPanel(); list.push(square50, null);
+        JPanel square51 = new JPanel(); list.push(square51, null);
+        JPanel square52 = new JPanel(); list.push(square52, null);
+        JPanel square53 = new JPanel(); list.push(square53, null);
+        JPanel square54 = new JPanel(); list.push(square54, null);
+        JPanel square55 = new JPanel(); list.push(square55, null);
+
         RoundedPanel square56 = new RoundedPanel(); list.push(square56, null);
-        RoundedPanel square57 = new RoundedPanel(); list.push(square57, null);
-        RoundedPanel square58 = new RoundedPanel(); list.push(square58, null);
-        RoundedPanel square59 = new RoundedPanel(); list.push(square59, null);
-
-        RoundedPanel square60 = new RoundedPanel(); list.push(square60, null);
-        RoundedPanel square61 = new RoundedPanel(); list.push(square61, null);
-        RoundedPanel square62 = new RoundedPanel(); list.push(square62, null);
+        JPanel square57 = new JPanel(); list.push(square57, null);
+        JPanel square58 = new JPanel(); list.push(square58, null);
+        JPanel square59 = new JPanel(); list.push(square59, null);
+        JPanel square60 = new JPanel(); list.push(square60, null);
+        JPanel square61 = new JPanel(); list.push(square61, null);
+        JPanel square62 = new JPanel(); list.push(square62, null);
         RoundedPanel square63 = new RoundedPanel(); list.push(square63, null);
 
         //Set properties of all the items
@@ -213,10 +236,6 @@ public class ChessBoard extends JFrame{
             // set size of the JPanel- (8.57, 8.56)
             jpanel.setPreferredSize(new Dimension((int)(boardHeight / 8.0), 
                                                   (int)(boardHeight / 8.0)));
-
-            // make the two colors of the chessboard
-            Color tan = new Color(210, 180, 140);
-            Color brown = new Color(139, 69, 19);
 
             cellRemainder = index % 2;
             if((int)(count / 8) % 2 == 0){
@@ -242,8 +261,27 @@ public class ChessBoard extends JFrame{
             // set the Layout manager for each jpanel
             jpanel.setLayout(new BorderLayout());
 
-            // add components to board
-            board.add(jpanel);
+            // add components to respective container 
+            if(index == 0 || index == 1 || index == 2 || index == 3 || index == 8 || index == 9 ||
+               index == 10 || index == 11 || index == 16 || index == 17 || index == 18 ||
+               index == 19 || index == 24 || index == 25 || index == 26 || index == 27)
+                nwContainer.add(jpanel);
+
+            else if(index == 4 || index == 5 || index == 6 || index == 7 || index == 12 ||
+                    index == 13 || index == 14 || index == 15 || index == 20 || index == 21 ||
+                    index == 22 || index == 23 || index == 28 || index == 29 || index == 30 ||
+                    index == 31)
+                neContainer.add(jpanel);
+
+            else if(index == 32 || index == 33 || index == 34 || index == 35 || index == 40 ||
+                    index == 41 || index == 42 || index == 43 || index == 48 || index == 49 ||
+                    index == 50 || index == 51 || index == 56 || index == 57 || index == 58 ||
+                    index == 59)
+                swContainer.add(jpanel);
+
+            else
+                seContainer.add(jpanel);
+
             ++count;}
 
         // add chesspieces to their default starting points
@@ -289,6 +327,13 @@ public class ChessBoard extends JFrame{
                 pin((ChessPiece) component, (JPanel) list.pop(index), 0, 0, "BorderLayout", true);} }
 
         // add components to their parent containers
+        board.add(nwContainer);
+        board.add(neContainer);
+        board.add(swContainer);
+        board.add(seContainer);
+
+        rightFiller.add(settings);
+
         rightContainer.add(rightFiller);
         rightContainer.add(capturedBlack2);
         rightContainer.add(capturedBlack1);
@@ -307,8 +352,15 @@ public class ChessBoard extends JFrame{
                                                 capturedWhite, capturedBlack1, capturedBlack2, board);
 
         // How can I make this representative of the layeredPane without getting LP clicks?
-        board.addMouseListener(mma);
-        board.addMouseMotionListener(mma);
+        nwContainer.addMouseListener(mma);
+        neContainer.addMouseListener(mma);
+        swContainer.addMouseListener(mma);
+        seContainer.addMouseListener(mma);
+
+        nwContainer.addMouseMotionListener(mma);
+        neContainer.addMouseMotionListener(mma);
+        swContainer.addMouseMotionListener(mma);
+        seContainer.addMouseMotionListener(mma);
 
         this.setVisible(true);
     }
@@ -375,5 +427,38 @@ public class ChessBoard extends JFrame{
     */
     public Dimension getLayeredSize(){
         return layeredPane.getSize();
+    }
+
+    private class SettingsButton extends JButton{
+
+        private ImageIcon _icon = new ImageIcon("Settings.png");;
+        private int _width;
+        private int _height;
+
+        public SettingsButton(int width, int height){
+            super();
+
+            _width = width;
+            _height = height;
+        }
+
+        @Override
+        public void paintComponent(Graphics g){
+            super.paintComponent(g);
+
+            Image image = _icon.getImage();
+            Image i = image.getScaledInstance(_width, _height, Image.SCALE_SMOOTH);
+            ImageIcon icon = new ImageIcon(i);
+            icon.paintIcon(this, g, 0, 0);
+
+            /*
+            BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), 
+                                                 BufferedImage.TYPE_INT_ARGB);
+            Graphics g = bi.createGraphics();
+            g.drawImage(image, 0, 0, width, height, null);
+            ImageIcon newIcon = new ImageIcon(bi);
+
+            newIcon.paintIcon(this, g, 0, 0);*/
+        }
     }
 }
