@@ -24,8 +24,13 @@ public class ChessBoard extends JFrame{
                      seContainer;
 
         JPanel capturedWhite,
+               rightContainer,
+               rightFiller,
+               leftFiller,
                capturedBlack1,
                capturedBlack2;
+
+        JPanel settingsFiller;
 
         // SettingsButton settings = new SettingsButton();
 
@@ -61,18 +66,27 @@ public class ChessBoard extends JFrame{
 
         defaultHolder = new JPanel(new GridBagLayout());
 
-        board = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        nwContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        neContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        swContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        seContainer = new RoundedPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        board = new RoundedPanel(30);
+        nwContainer = new RoundedPanel(30);
+        neContainer = new RoundedPanel(30);
+        swContainer = new RoundedPanel(30);
+        seContainer = new RoundedPanel(30);
 
-        JPanel rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        capturedWhite = new JPanel(new FlowLayout());
+        board.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        nwContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        neContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        swContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        seContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
-        JPanel rightFiller = new JPanel(new FlowLayout());
+        capturedWhite = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        leftFiller = new JPanel(new FlowLayout());
+
+        rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        rightFiller = new JPanel(new FlowLayout());
         capturedBlack1 = new JPanel(new FlowLayout());
         capturedBlack2 = new JPanel(new FlowLayout());
+
+        settingsFiller = new JPanel();
 
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
@@ -101,8 +115,13 @@ public class ChessBoard extends JFrame{
 
         defaultHolder.setLayout(new GridBagLayout());
 
+        BlackQueen myQueen = new BlackQueen();
         Dimension containerDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                     (int) (boardHeight * 0.7));
+                                                     (int) (boardHeight));
+        Dimension captureDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                     (int) (((double) myQueen.getHeight()) * ((double)
+                                                     (boardHeight / 40.0) / 
+                                                     (double) myQueen.getWidth()) + 5));
 
         board.setPreferredSize(new Dimension(boardHeight, boardHeight));
         nwContainer.setPreferredSize(new Dimension(boardHeight / 2, boardHeight / 2));
@@ -113,21 +132,15 @@ public class ChessBoard extends JFrame{
         capturedWhite.setPreferredSize(containerDimension);
         rightContainer.setPreferredSize(containerDimension);
 
-        BlackQueen myQueen = new BlackQueen();
-
+        leftFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                   (int) (boardHeight * 0.5)));
         rightFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                   (int) ((boardHeight * 0.7) - 
-                                                   (2 * ((int) (((double) myQueen.getHeight()) * 
-                                                   ((double) (boardHeight / 40.0) / 
-                                                   (double) myQueen.getWidth()) + 10)))))); 
-        capturedBlack1.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                     (int) (((double) myQueen.getHeight()) * ((double)
-                                                     (boardHeight / 40.0) / 
-                                                     (double) myQueen.getWidth()) + 5)));
-        capturedBlack2.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                     (int) (((double) myQueen.getHeight()) * ((double)
-                                                     (boardHeight / 40.0) / 
-                                                     (double) myQueen.getWidth()) + 5)));
+                                                   (int) ((boardHeight * 0.5) - 
+                                                   (captureDimension.height + 5 ))));
+        capturedBlack1.setPreferredSize(captureDimension);
+        capturedBlack2.setPreferredSize(captureDimension);
+
+        settingsFiller.setPreferredSize(new Dimension((int) (150), (int) (boardHeight / 12.0)));
 
         SettingsButton settings = new SettingsButton((int) (boardHeight / 12.0), 
                                                      (int) (boardHeight / 12.0));
@@ -142,22 +155,24 @@ public class ChessBoard extends JFrame{
         seContainer.setBackground(tan);
         defaultHolder.setBackground(darkGreen);
         capturedWhite.setBackground(darkGreen);
+        leftFiller.setBackground(darkGreen);
         rightContainer.setBackground(darkGreen);
-        rightFiller.setBackground(darkGreen);
+        // rightFiller.setBackground(darkGreen);
         capturedBlack1.setBackground(darkGreen);
         capturedBlack2.setBackground(darkGreen);
+        settingsFiller.setBackground(Color.blue);
 
         // add components of each square to the list
         list = new List(8);
 
-        RoundedPanel square0 = new RoundedPanel(); list.push(square0, null);
+        RoundedPanel square0 = new RoundedPanel(30); list.push(square0, null);
         JPanel square1 = new JPanel(); list.push(square1, null);
         JPanel square2 = new JPanel(); list.push(square2, null);
         JPanel square3 = new JPanel(); list.push(square3, null);
         JPanel square4 = new JPanel(); list.push(square4, null);
         JPanel square5 = new JPanel(); list.push(square5, null);
         JPanel square6 = new JPanel(); list.push(square6, null);
-        RoundedPanel square7 = new RoundedPanel(); list.push(square7, null);
+        RoundedPanel square7 = new RoundedPanel(30); list.push(square7, null);
 
         JPanel square8 = new JPanel(); list.push(square8, null);
         JPanel square9 = new JPanel(); list.push(square9, null);
@@ -213,14 +228,14 @@ public class ChessBoard extends JFrame{
         JPanel square54 = new JPanel(); list.push(square54, null);
         JPanel square55 = new JPanel(); list.push(square55, null);
 
-        RoundedPanel square56 = new RoundedPanel(); list.push(square56, null);
+        RoundedPanel square56 = new RoundedPanel(30); list.push(square56, null);
         JPanel square57 = new JPanel(); list.push(square57, null);
         JPanel square58 = new JPanel(); list.push(square58, null);
         JPanel square59 = new JPanel(); list.push(square59, null);
         JPanel square60 = new JPanel(); list.push(square60, null);
         JPanel square61 = new JPanel(); list.push(square61, null);
         JPanel square62 = new JPanel(); list.push(square62, null);
-        RoundedPanel square63 = new RoundedPanel(); list.push(square63, null);
+        RoundedPanel square63 = new RoundedPanel(30); list.push(square63, null);
 
         //Set properties of all the items
         // in the List
@@ -332,6 +347,9 @@ public class ChessBoard extends JFrame{
         board.add(swContainer);
         board.add(seContainer);
 
+        capturedWhite.add(leftFiller);
+
+        rightFiller.add(settingsFiller);
         rightFiller.add(settings);
 
         rightContainer.add(rightFiller);
@@ -429,7 +447,7 @@ public class ChessBoard extends JFrame{
         return layeredPane.getSize();
     }
 
-    private class SettingsButton extends JButton{
+    private class SettingsButton extends RoundedButton{
 
         private ImageIcon _icon = new ImageIcon("Settings.png");;
         private int _width;
