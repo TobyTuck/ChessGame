@@ -32,7 +32,7 @@ public class ChessBoard extends JFrame{
 
         JPanel settingsFiller;
 
-        // SettingsButton settings = new SettingsButton();
+        // SettingsButton settings;
 
         // holds list of all individual squares and their pieces
         List list;
@@ -55,7 +55,7 @@ public class ChessBoard extends JFrame{
 
         // set applet's tab icon
         this.setIconImage(new Logo().getImage());
-        this.setTitle("Pragmatic Chess");
+        this.setTitle("Chess");
 
         screenHeight = screenSize.height;
         screenWidth = screenSize.width;
@@ -142,10 +142,10 @@ public class ChessBoard extends JFrame{
 
         settingsFiller.setPreferredSize(new Dimension((int) (150), (int) (boardHeight / 12.0)));
 
-        SettingsButton settings = new SettingsButton((int) (boardHeight / 12.0), 
-                                                     (int) (boardHeight / 12.0));
-        settings.setPreferredSize(new Dimension((int) (boardHeight / 12.0), 
-                                                (int) (boardHeight / 12.0)));
+        SettingsButton settings = new SettingsButton((int) (boardHeight / 9.0), 
+                                                     (int) (boardHeight / 9.0));
+        // settings.setPreferredSize(new Dimension((int) (boardHeight / 12.0), 
+        //                                         (int) (boardHeight / 12.0)));
 
 
         // set the colors of JComponents
@@ -449,17 +449,35 @@ public class ChessBoard extends JFrame{
 
     private class SettingsButton extends RoundedButton{
 
-        private ImageIcon _icon = new ImageIcon("Settings.png");;
+        // private ImageIcon _icon = new ImageIcon("Settings.png");;
         private int _width;
         private int _height;
 
         public SettingsButton(int width, int height){
             super();
+            setBackground(Color.lightGray);
+            setPreferredSize(new Dimension(width, height));
+            // super();
 
             _width = width;
             _height = height;
         }
+        
+        protected void paintComponent(Graphics g) {
+            if (getModel().isArmed()){
+                // change the background image
 
+                setBackground(Color.gray);
+            } 
+            else{
+                g.setColor(getBackground());
+            } 
+    
+            g.fillOval(0, 0, getSize().width - 1, getSize().height - 1);
+                super.paintComponent(g);
+        }
+
+        /*
         @Override
         public void paintComponent(Graphics g){
             super.paintComponent(g);
@@ -469,14 +487,14 @@ public class ChessBoard extends JFrame{
             ImageIcon icon = new ImageIcon(i);
             icon.paintIcon(this, g, 0, 0);
 
-            /*
             BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), 
                                                  BufferedImage.TYPE_INT_ARGB);
             Graphics g = bi.createGraphics();
             g.drawImage(image, 0, 0, width, height, null);
             ImageIcon newIcon = new ImageIcon(bi);
 
-            newIcon.paintIcon(this, g, 0, 0);*/
+            newIcon.paintIcon(this, g, 0, 0);
         }
+        */
     }
 }
