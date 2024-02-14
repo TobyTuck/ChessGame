@@ -26,13 +26,12 @@ public class ChessBoard extends JFrame{
         JPanel capturedWhite,
                rightContainer,
                rightFiller,
+               rightFillerNorth,
+               rightFillerSouth,
                leftFiller,
                capturedBlack1,
-               capturedBlack2;
-
-        JPanel settingsFiller;
-
-        // SettingsButton settings;
+               capturedBlack2,
+               containerFiller;
 
         // holds list of all individual squares and their pieces
         List list;
@@ -82,11 +81,14 @@ public class ChessBoard extends JFrame{
         leftFiller = new JPanel(new FlowLayout());
 
         rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        rightFiller = new JPanel(new FlowLayout());
+        // rightFiller = new JPanel(new FlowLayout());
+        rightFiller = new JPanel(new BorderLayout());
+        rightFillerNorth = new JPanel(new GridBagLayout());
+        rightFillerSouth = new JPanel();
+
         capturedBlack1 = new JPanel(new FlowLayout());
         capturedBlack2 = new JPanel(new FlowLayout());
-
-        settingsFiller = new JPanel();
+        containerFiller = new JPanel();
 
         // ensure the board is square- and divides evenly into 8 
         int eightDivisible = 0;
@@ -129,24 +131,24 @@ public class ChessBoard extends JFrame{
         swContainer.setPreferredSize(new Dimension(boardHeight / 2, boardHeight / 2));
         seContainer.setPreferredSize(new Dimension(boardHeight / 2, boardHeight / 2));
 
-        capturedWhite.setPreferredSize(containerDimension);
+        capturedWhite.setPreferredSize(containerDimension); 
         rightContainer.setPreferredSize(containerDimension);
 
         leftFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                   (int) (boardHeight * 0.5)));
+                                                   (int) (boardHeight * 0.2)));
         rightFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                   (int) ((boardHeight * 0.5) - 
-                                                   (captureDimension.height + 5 ))));
+                                                   (int) (0.8 * boardHeight)));
+        rightFillerNorth.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 
+                                                        (int) (boardHeight / 9.0)));
+        rightFillerSouth.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                        (int) ((0.8 * boardHeight) - (2 * captureDimension.height) - (boardHeight / 9.0))));
         capturedBlack1.setPreferredSize(captureDimension);
         capturedBlack2.setPreferredSize(captureDimension);
 
-        settingsFiller.setPreferredSize(new Dimension((int) (150), (int) (boardHeight / 12.0)));
-
         SettingsButton settings = new SettingsButton((int) (boardHeight / 9.0), 
                                                      (int) (boardHeight / 9.0));
-        // settings.setPreferredSize(new Dimension((int) (boardHeight / 12.0), 
-        //                                         (int) (boardHeight / 12.0)));
-
+        containerFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                       ((int) (0.2 * boardHeight))));
 
         // set the colors of JComponents
         nwContainer.setBackground(tan);
@@ -156,11 +158,20 @@ public class ChessBoard extends JFrame{
         defaultHolder.setBackground(darkGreen);
         capturedWhite.setBackground(darkGreen);
         leftFiller.setBackground(darkGreen);
-        rightContainer.setBackground(darkGreen);
+
+        // rightContainer.setBackground(darkGreen);
         // rightFiller.setBackground(darkGreen);
-        capturedBlack1.setBackground(darkGreen);
-        capturedBlack2.setBackground(darkGreen);
-        settingsFiller.setBackground(Color.blue);
+        rightFiller.setBackground(Color.yellow);
+
+        // rightFillerNorth.setBackground(darkGreen);
+        rightFillerNorth.setBackground(Color.red);
+        // rightFillerSouth.setBackground(darkGreen);
+        rightFillerSouth.setBackground(Color.pink);
+        // capturedBlack1.setBackground(darkGreen);
+        capturedBlack1.setBackground(Color.blue);
+        // capturedBlack2.setBackground(darkGreen);
+        capturedBlack2.setBackground(Color.blue);
+        containerFiller.setBackground(Color.magenta);
 
         // add components of each square to the list
         list = new List(8);
@@ -349,15 +360,18 @@ public class ChessBoard extends JFrame{
 
         capturedWhite.add(leftFiller);
 
-        rightFiller.add(settingsFiller);
-        rightFiller.add(settings);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(0, 10, 0, 10);
+
+        rightFillerNorth.add(settings, gbc);
+        rightFiller.add(rightFillerNorth, BorderLayout.NORTH);
+        // rightFiller.add(rightFillerSouth, BorderLayout.SOUTH);
 
         rightContainer.add(rightFiller);
         rightContainer.add(capturedBlack2);
         rightContainer.add(capturedBlack1);
+        rightContainer.add(containerFiller);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0, 10, 0, 10);
         defaultHolder.add(capturedWhite, gbc);
         defaultHolder.add(board, gbc);
         defaultHolder.add(rightContainer, gbc);
@@ -453,6 +467,9 @@ public class ChessBoard extends JFrame{
         private int _width;
         private int _height;
 
+        private ImageIcon _image1;
+        private ImageIcon _image2;
+
         public SettingsButton(int width, int height){
             super();
             setBackground(Color.lightGray);
@@ -461,16 +478,30 @@ public class ChessBoard extends JFrame{
 
             _width = width;
             _height = height;
+
+            ImageIcon i1 = new ImageIcon("Settings1.png");
+            ImageIcon i2 = new ImageIcon("Settings2.png");
+
+            Image scaledImage1 = i1.getImage().getScaledInstance
+                                (width, height, Image.SCALE_SMOOTH);
+            Image scaledImage2 = i2.getImage().getScaledInstance
+                                (width, height, Image.SCALE_SMOOTH);
+
+            _image1 = new ImageIcon(scaledImage1);
+            _image2 = new ImageIcon(scaledImage2);
+
+            // set default image
+            setIcon(_image1);
         }
         
         protected void paintComponent(Graphics g) {
             if (getModel().isArmed()){
                 // change the background image
-
-                setBackground(Color.gray);
+                setIcon(_image2);
             } 
             else{
-                g.setColor(getBackground());
+                // revert image back to its default
+                setIcon(_image1);
             } 
     
             g.fillOval(0, 0, getSize().width - 1, getSize().height - 1);

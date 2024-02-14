@@ -51,7 +51,7 @@ public abstract class ChessPiece{
     Used for subclass to set desired image based on type of ChessPiece
     */
     protected void setImage(BufferedImage image){
-    _image = image;
+        _image = image;
     }
 
     /**
