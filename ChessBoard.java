@@ -137,11 +137,12 @@ public class ChessBoard extends JFrame{
         leftFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
                                                    (int) (boardHeight * 0.2)));
         rightFiller.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                   (int) (0.8 * boardHeight)));
+                                                   (int) ((0.8 * boardHeight) - (2 * captureDimension.height))));
         rightFillerNorth.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 
                                                         (int) (boardHeight / 9.0)));
         rightFillerSouth.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                        (int) ((0.8 * boardHeight) - (2 * captureDimension.height) - (boardHeight / 9.0))));
+                                                        (int) (((0.8 * boardHeight) - (2 * captureDimension.height)) -
+                                                               (boardHeight / 9.0))));
         capturedBlack1.setPreferredSize(captureDimension);
         capturedBlack2.setPreferredSize(captureDimension);
 
@@ -159,19 +160,14 @@ public class ChessBoard extends JFrame{
         capturedWhite.setBackground(darkGreen);
         leftFiller.setBackground(darkGreen);
 
-        // rightContainer.setBackground(darkGreen);
-        // rightFiller.setBackground(darkGreen);
-        rightFiller.setBackground(Color.yellow);
+        rightContainer.setBackground(darkGreen);
+        rightFiller.setBackground(darkGreen);
 
-        // rightFillerNorth.setBackground(darkGreen);
-        rightFillerNorth.setBackground(Color.red);
-        // rightFillerSouth.setBackground(darkGreen);
-        rightFillerSouth.setBackground(Color.pink);
-        // capturedBlack1.setBackground(darkGreen);
-        capturedBlack1.setBackground(Color.blue);
-        // capturedBlack2.setBackground(darkGreen);
-        capturedBlack2.setBackground(Color.blue);
-        containerFiller.setBackground(Color.magenta);
+        rightFillerNorth.setBackground(darkGreen);
+        rightFillerSouth.setBackground(darkGreen);
+        capturedBlack1.setBackground(darkGreen);
+        capturedBlack2.setBackground(darkGreen);
+        containerFiller.setBackground(darkGreen);
 
         // add components of each square to the list
         list = new List(8);
