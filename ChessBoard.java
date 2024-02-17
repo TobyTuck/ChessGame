@@ -31,7 +31,9 @@ public class ChessBoard extends JFrame{
                leftFiller,
                capturedBlack1,
                capturedBlack2,
-               containerFiller;
+               containerFiller,
+               rightFillerSouthN,
+               rightFillerSouthS;
 
         // holds list of all individual squares and their pieces
         List list;
@@ -81,10 +83,11 @@ public class ChessBoard extends JFrame{
         leftFiller = new JPanel(new FlowLayout());
 
         rightContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        // rightFiller = new JPanel(new FlowLayout());
         rightFiller = new JPanel(new BorderLayout());
         rightFillerNorth = new JPanel(new GridBagLayout());
-        rightFillerSouth = new JPanel();
+        rightFillerSouth = new JPanel(new BorderLayout());
+        rightFillerSouthN = new JPanel();
+        rightFillerSouthS = new JPanel();
 
         capturedBlack1 = new JPanel(new FlowLayout());
         capturedBlack2 = new JPanel(new FlowLayout());
@@ -140,9 +143,13 @@ public class ChessBoard extends JFrame{
                                                    (int) ((0.8 * boardHeight) - (2 * captureDimension.height))));
         rightFillerNorth.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 
                                                         (int) (boardHeight / 9.0)));
-        rightFillerSouth.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
-                                                        (int) (((0.8 * boardHeight) - (2 * captureDimension.height)) -
-                                                               (boardHeight / 9.0))));
+        Dimension rFSDimension = new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                               (int) (((0.8 * boardHeight) - (2 * captureDimension.height)) -
+                                                      (boardHeight / 9.0)));
+        rightFillerSouth.setPreferredSize(rFSDimension);
+        rightFillerSouthN.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)), 10));
+        rightFillerSouthS.setPreferredSize(new Dimension((int) (0.4 * (screenWidth - boardHeight)),
+                                                         (int) rFSDimension.height - 10));
         capturedBlack1.setPreferredSize(captureDimension);
         capturedBlack2.setPreferredSize(captureDimension);
 
@@ -165,6 +172,8 @@ public class ChessBoard extends JFrame{
 
         rightFillerNorth.setBackground(darkGreen);
         rightFillerSouth.setBackground(darkGreen);
+        rightFillerSouthN.setBackground(darkGreen);
+        rightFillerSouthS.setBackground(darkGreen);
         capturedBlack1.setBackground(darkGreen);
         capturedBlack2.setBackground(darkGreen);
         containerFiller.setBackground(darkGreen);
@@ -361,7 +370,9 @@ public class ChessBoard extends JFrame{
 
         rightFillerNorth.add(settings, gbc);
         rightFiller.add(rightFillerNorth, BorderLayout.NORTH);
-        // rightFiller.add(rightFillerSouth, BorderLayout.SOUTH);
+        rightFillerSouth.add(rightFillerSouthN, BorderLayout.NORTH);
+        rightFillerSouth.add(rightFillerSouthS, BorderLayout.SOUTH);
+        rightFiller.add(rightFillerSouth, BorderLayout.SOUTH);
 
         rightContainer.add(rightFiller);
         rightContainer.add(capturedBlack2);
@@ -376,8 +387,14 @@ public class ChessBoard extends JFrame{
         this.add(layeredPane);
 
         // instantiate and add MouseAdapter to chessboard
-        MyMouseAdapter mma = new MyMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
+        BoardMouseAdapter mma = new BoardMouseAdapter(list, boardHeight, screenWidth, layeredPane, 
                                                 capturedWhite, capturedBlack1, capturedBlack2, board);
+
+        // instantiate and add MouseAdapter to settings
+        Color myColor = new Color(155, 173, 183);
+        SettingsActionListener sma = new SettingsActionListener(settings, (int) (boardHeight / 9.0), 
+                                                                (int) (boardHeight / 9.0), rightFillerSouthS,
+                                                                myColor);
 
         // How can I make this representative of the layeredPane without getting LP clicks?
         nwContainer.addMouseListener(mma);
@@ -389,6 +406,8 @@ public class ChessBoard extends JFrame{
         neContainer.addMouseMotionListener(mma);
         swContainer.addMouseMotionListener(mma);
         seContainer.addMouseMotionListener(mma);
+
+        settings.addActionListener(sma);
 
         this.setVisible(true);
     }
@@ -468,7 +487,7 @@ public class ChessBoard extends JFrame{
 
         public SettingsButton(int width, int height){
             super();
-            setBackground(Color.lightGray);
+            // setBackground(Color.lightGray);
             setPreferredSize(new Dimension(width, height));
             // super();
 
@@ -476,52 +495,16 @@ public class ChessBoard extends JFrame{
             _height = height;
 
             ImageIcon i1 = new ImageIcon("Settings1.png");
-            ImageIcon i2 = new ImageIcon("Settings2.png");
-
             Image scaledImage1 = i1.getImage().getScaledInstance
-                                (width, height, Image.SCALE_SMOOTH);
-            Image scaledImage2 = i2.getImage().getScaledInstance
                                 (width, height, Image.SCALE_SMOOTH);
 
             _image1 = new ImageIcon(scaledImage1);
-            _image2 = new ImageIcon(scaledImage2);
-
-            // set default image
             setIcon(_image1);
         }
         
         protected void paintComponent(Graphics g) {
-            if (getModel().isArmed()){
-                // change the background image
-                setIcon(_image2);
-            } 
-            else{
-                // revert image back to its default
-                setIcon(_image1);
-            } 
-    
             g.fillOval(0, 0, getSize().width - 1, getSize().height - 1);
                 super.paintComponent(g);
         }
-
-        /*
-        @Override
-        public void paintComponent(Graphics g){
-            super.paintComponent(g);
-
-            Image image = _icon.getImage();
-            Image i = image.getScaledInstance(_width, _height, Image.SCALE_SMOOTH);
-            ImageIcon icon = new ImageIcon(i);
-            icon.paintIcon(this, g, 0, 0);
-
-            BufferedImage bi = new BufferedImage(image.getWidth(), image.getHeight(), 
-                                                 BufferedImage.TYPE_INT_ARGB);
-            Graphics g = bi.createGraphics();
-            g.drawImage(image, 0, 0, width, height, null);
-            ImageIcon newIcon = new ImageIcon(bi);
-
-            newIcon.paintIcon(this, g, 0, 0);
-        }
-        */
     }
 }

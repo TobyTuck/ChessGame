@@ -4,7 +4,7 @@ import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;  // used for MouseAdapter and MouseEvent
 
-public class MyMouseAdapter extends MouseAdapter{
+public class BoardMouseAdapter extends MouseAdapter{
     // field declaration
     private JPanel selectedPanel1;
     private JPanel selectedPanel2;
@@ -43,7 +43,7 @@ public class MyMouseAdapter extends MouseAdapter{
 
     private boolean optionsInterrupter;
 
-    public MyMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
+    public BoardMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
                           JPanel capBlack1, JPanel capBlack2, JPanel board){
         list = chessboard;
         boardHeight = bH;
