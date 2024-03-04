@@ -11,20 +11,13 @@ public class WhiteKing extends ChessPiece{
     private List _possibleMoves;
     private boolean _beenMoved;
 
-    public WhiteKing(){
+    public WhiteKing(BufferedImage image){
         // initialize fields
         _possibleMoves = new List(5);
         _beenMoved = false;
 
         // set file image
-        try{
-            // open image file
-            BufferedImage image = ImageIO.read(new File("WhiteKing.png"));
-
-            // pass image to parent class
-            super.setImage(image);
-        }catch(IOException exception){
-            System.out.println("Error locating the White King image file");}
+        super.setImage(image);
     }
 
     public List possibleMoves(int location, List chessboard, boolean considerCheck,

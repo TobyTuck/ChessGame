@@ -4,6 +4,9 @@ import java.awt.event.*;  // used for MouseAdapter and MouseEvent
 import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.io.IOException;
 
 public class ChessBoard extends JFrame{
 
@@ -316,38 +319,69 @@ public class ChessBoard extends JFrame{
             ++count;}
 
         // add chesspieces to their default starting points
-        list.addComponent(list.pop(0), new BlackRook());
-        list.addComponent(list.pop(1), new BlackKnight());
-        list.addComponent(list.pop(2), new BlackBishop());
-        list.addComponent(list.pop(3), new BlackQueen());
-        list.addComponent(list.pop(4), new BlackKing());
-        list.addComponent(list.pop(5), new BlackBishop());
-        list.addComponent(list.pop(6), new BlackKnight());
-        list.addComponent(list.pop(7), new BlackRook());
-        list.addComponent(list.pop(8), new BlackPawn());
-        list.addComponent(list.pop(9), new BlackPawn());
-        list.addComponent(list.pop(10), new BlackPawn());
-        list.addComponent(list.pop(11), new BlackPawn());
-        list.addComponent(list.pop(12), new BlackPawn());
-        list.addComponent(list.pop(13), new BlackPawn());
-        list.addComponent(list.pop(14), new BlackPawn());
-        list.addComponent(list.pop(15), new BlackPawn());
-        list.addComponent(list.pop(48), new WhitePawn());
-        list.addComponent(list.pop(49), new WhitePawn());
-        list.addComponent(list.pop(50), new WhitePawn());
-        list.addComponent(list.pop(51), new WhitePawn());
-        list.addComponent(list.pop(52), new WhitePawn());
-        list.addComponent(list.pop(53), new WhitePawn());
-        list.addComponent(list.pop(54), new WhitePawn());
-        list.addComponent(list.pop(55), new WhitePawn());
-        list.addComponent(list.pop(56), new WhiteRook());
-        list.addComponent(list.pop(57), new WhiteKnight());
-        list.addComponent(list.pop(58), new WhiteBishop());
-        list.addComponent(list.pop(59), new WhiteQueen());
-        list.addComponent(list.pop(60), new WhiteKing());
-        list.addComponent(list.pop(61), new WhiteBishop());
-        list.addComponent(list.pop(62), new WhiteKnight());
-        list.addComponent(list.pop(63), new WhiteRook());
+        try{
+            // classic chesspiece images
+            BufferedImage whitePawnImage = ImageIO.read(new File("WhitePawn.png"));
+            BufferedImage whiteRookImage = ImageIO.read(new File("WhiteRook.png"));
+            BufferedImage whiteKnightImage = ImageIO.read(new File("WhiteKnight.png"));
+            BufferedImage whiteBishopImage = ImageIO.read(new File("WhiteBishop.png"));
+            BufferedImage whiteQueenImage = ImageIO.read(new File("WhiteQueen.png"));
+            BufferedImage whiteKingImage = ImageIO.read(new File("WhiteKing.png"));
+            BufferedImage blackPawnImage = ImageIO.read(new File("BlackPawn.png"));
+            BufferedImage blackRookImage = ImageIO.read(new File("BlackRook.png"));
+            BufferedImage blackKnightImage = ImageIO.read(new File("BlackKnight.png"));
+            BufferedImage blackBishopImage = ImageIO.read(new File("BlackBishop.png"));
+            BufferedImage blackQueenImage = ImageIO.read(new File("BlackQueen.png"));
+            BufferedImage blackKingImage = ImageIO.read(new File("BlackKing.png"));
+
+            // "modern" chesspiece images
+            BufferedImage wPawnImage = ImageIO.read(new File("WPawn.png"));
+            BufferedImage wRookImage = ImageIO.read(new File("WRook.png"));
+            BufferedImage wKnightImage = ImageIO.read(new File("WKnight.png"));
+            BufferedImage wBishopImage = ImageIO.read(new File("WBishop.png"));
+            BufferedImage wQueenImage = ImageIO.read(new File("WQueen.png"));
+            BufferedImage wKingImage = ImageIO.read(new File("WKing.png"));
+            BufferedImage bPawnImage = ImageIO.read(new File("BPawn.png"));
+            BufferedImage bRookImage = ImageIO.read(new File("BRook.png"));
+            BufferedImage bKnightImage = ImageIO.read(new File("BKnight.png"));
+            BufferedImage bBishopImage = ImageIO.read(new File("BBishop.png"));
+            BufferedImage bQueenImage = ImageIO.read(new File("BQueen.png"));
+            BufferedImage bKingImage = ImageIO.read(new File("BKing.png"));
+
+            list.addComponent(list.pop(0), new BlackRook(bRookImage));
+            list.addComponent(list.pop(1), new BlackKnight(bKnightImage));
+            list.addComponent(list.pop(2), new BlackBishop(bBishopImage));
+            list.addComponent(list.pop(3), new BlackQueen(bQueenImage));
+            list.addComponent(list.pop(4), new BlackKing(bKingImage));
+            list.addComponent(list.pop(5), new BlackBishop(bBishopImage));
+            list.addComponent(list.pop(6), new BlackKnight(bKnightImage));
+            list.addComponent(list.pop(7), new BlackRook(bRookImage));
+            list.addComponent(list.pop(8), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(9), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(10), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(11), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(12), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(13), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(14), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(15), new BlackPawn(bPawnImage));
+            list.addComponent(list.pop(48), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(49), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(50), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(51), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(52), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(53), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(54), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(55), new WhitePawn(wPawnImage));
+            list.addComponent(list.pop(56), new WhiteRook(wRookImage));
+            list.addComponent(list.pop(57), new WhiteKnight(wKnightImage));
+            list.addComponent(list.pop(58), new WhiteBishop(wBishopImage));
+            list.addComponent(list.pop(59), new WhiteQueen(wQueenImage));
+            list.addComponent(list.pop(60), new WhiteKing(wKingImage));
+            list.addComponent(list.pop(61), new WhiteBishop(wBishopImage));
+            list.addComponent(list.pop(62), new WhiteKnight(wKnightImage));
+            list.addComponent(list.pop(63), new WhiteRook(wRookImage));
+        } catch(IOException exception) {
+            System.out.println("Error locating chesspiece image file(s)");}
 
         // add chesspiece images to their squares
         for(int index = 0; index < list.getSize(); ++index){
@@ -478,7 +512,6 @@ public class ChessBoard extends JFrame{
 
     private class SettingsButton extends RoundedButton{
 
-        // private ImageIcon _icon = new ImageIcon("Settings.png");;
         private int _width;
         private int _height;
 
@@ -487,14 +520,12 @@ public class ChessBoard extends JFrame{
 
         public SettingsButton(int width, int height){
             super();
-            // setBackground(Color.lightGray);
             setPreferredSize(new Dimension(width, height));
-            // super();
 
             _width = width;
             _height = height;
 
-            ImageIcon i1 = new ImageIcon("Settings1.png");
+            ImageIcon i1 = new ImageIcon("Settings.png");
             Image scaledImage1 = i1.getImage().getScaledInstance
                                 (width, height, Image.SCALE_SMOOTH);
 

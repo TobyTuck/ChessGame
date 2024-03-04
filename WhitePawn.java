@@ -10,18 +10,9 @@ public class WhitePawn extends ChessPiece{
 
     private List _moves;
 
-    public WhitePawn(){
+    public WhitePawn(BufferedImage image){
         _moves = new List(5);
-
-        // set image file
-        try{
-            // open image file
-            BufferedImage image = ImageIO.read(new File("WhitePawn.png"));
-
-            // pass image to parent class
-            super.setImage(image);
-        }catch(IOException exception){
-            System.out.println("Error locating White Pawn image file");}
+        super.setImage(image);
     }
 
     public List possibleMoves(int myLocation, List chessboard, boolean considerCheck,

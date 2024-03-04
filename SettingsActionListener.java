@@ -11,8 +11,7 @@ import javax.swing.*;
    private RoundedPanel _panel;
    private Color _panelColor;
    private int _count;
-   private ImageIcon _image1;
-   private ImageIcon _image2;
+   private ImageIcon _image;
     
    public SettingsActionListener(JButton button, int width, int height, JPanel host,
                                  Color panelColor){
@@ -26,26 +25,20 @@ import javax.swing.*;
         _count = 0;
 
         // get the image to use as a background
-        ImageIcon image1 = new ImageIcon("Settings1.png");
-        ImageIcon image2 = new ImageIcon("Settings2.png");
-        Image scaledImage1 = image1.getImage().getScaledInstance
+        ImageIcon image = new ImageIcon("Settings.png");
+        Image scaledImage = image.getImage().getScaledInstance
                                                 (width, height, Image.SCALE_SMOOTH);
-        Image scaledImage2 = image2.getImage().getScaledInstance
-                                                (width, height, Image.SCALE_SMOOTH);
-        _image1 = new ImageIcon(scaledImage1);
-        _image2 = new ImageIcon(scaledImage2); 
+        _image = new ImageIcon(scaledImage);
 
         // setup option panel
         _panel.setBackground(_panelColor);
-        _panel.setPreferredSize(_host.getPreferredSize());
+        _panel.setPreferredSize(new Dimension(_host.getPreferredSize().width, 
+                                              _host.getPreferredSize().height - 10));
    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(isEven(_count)){
-            // _button.setIcon(_image1);
-            _button.setIcon(_image2);
-
             // setup option panel
             _host.add(_panel);
             _host.repaint();
@@ -55,9 +48,6 @@ import javax.swing.*;
 
         // _count is odd
         else{
-            // _button.setIcon(_image2);
-            _button.setIcon(_image1);
-
             // remove the option panel
             _host.removeAll();
             _host.repaint();

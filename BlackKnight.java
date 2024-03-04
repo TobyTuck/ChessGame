@@ -11,18 +11,11 @@ public class BlackKnight extends ChessPiece{
 
     private List _moves;
 
-    public BlackKnight(){
+    public BlackKnight(BufferedImage image){
         _moves = new List(5);
 
         // set file image
-        try{
-            // open image file
-            BufferedImage image = ImageIO.read(new File("BlackKnight.png"));
-
-            // pass image to parent class
-            super.setImage(image);
-        }catch(IOException exception){
-            System.out.println("Error locating Black Knight image file");}
+        super.setImage(image);
     }
 
     public List possibleMoves(int myLocation, List chessboard, boolean routineCheck,

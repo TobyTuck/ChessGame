@@ -15,7 +15,7 @@ public class BlackRook extends ChessPiece{
     private BlackKing _king;
     private int _kingLocation;
 
-    public BlackRook(){
+    public BlackRook(BufferedImage image){
         _moves = new List(5);
         _chessboard = null;
         _beenMoved = false;
@@ -23,14 +23,7 @@ public class BlackRook extends ChessPiece{
         _kingLocation = 0;
 
         // set file image
-        try{ 
-            // open image file
-            BufferedImage image = ImageIO.read(new File("BlackRook.png"));
-           
-            // pass image to parent file
-            super.setImage(image);
-        }catch(IOException exception){
-            System.out.println("Error locating Black Rook image file");}
+        super.setImage(image);
     }
 
     public List possibleMoves(int myLocation, List chessboard, boolean considerCheck,

@@ -10,18 +10,13 @@ public class BlackPawn extends ChessPiece{
     
     private List _moves;
 
-    public BlackPawn(){
+    public BlackPawn(BufferedImage image){
         _moves = new List(5);
-        
-        // set image file
-        try{
-            // open image file
-            BufferedImage image = ImageIO.read(new File("BlackPawn.png"));
-           
-            // pass image to parent class 
-            super.setImage(image);
-        }catch(IOException exception){
-            System.out.println("Error locating Black Pawn image file");}
+        super.setImage(image);
+    }
+
+    public BlackPawn(){
+        // do nothing
     }
 
     public List possibleMoves(int myLocation, List chessboard, boolean considerCheck,

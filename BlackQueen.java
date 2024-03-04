@@ -14,6 +14,17 @@ public class BlackQueen extends ChessPiece{
     private BlackKing _king;
     private int _kingLocation;
 
+    public BlackQueen(BufferedImage image){
+        _moves = new List(5);
+        _chessboard = null;
+        _location = 0;
+        _king = null;
+        _kingLocation = 0;
+
+        // set file image
+        super.setImage(image);
+    }
+
     public BlackQueen(){
         _moves = new List(5);
         _chessboard = null;

@@ -14,7 +14,7 @@ public class BlackBishop extends ChessPiece{
     private BlackKing _king;
     private int _kingLocation;
 
-    public BlackBishop(){
+    public BlackBishop(BufferedImage image){
         _moves = new List(5);
         _chessboard = null;
         _location = 0;
@@ -22,14 +22,7 @@ public class BlackBishop extends ChessPiece{
         _kingLocation = 0;
 
         // set file image
-        try{
-            // open image file
-            BufferedImage image = ImageIO.read(new File("BlackBishop.png"));
-
-            // pass image to parent class
-            super.setImage(image);
-        }catch(IOException exception){
-            System.out.println("Error locating Black Bishop image file");}
+        super.setImage(image);
     }
 
     public List possibleMoves(int location, List chessboard, boolean considerCheck,

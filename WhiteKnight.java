@@ -10,18 +10,11 @@ public class WhiteKnight extends ChessPiece{
 
     List _moves;
 
-    public WhiteKnight(){
+    public WhiteKnight(BufferedImage image){
         _moves = new List(5);
 
         // set file image
-        try{
-            // open image file
-            BufferedImage image = ImageIO.read(new File("WhiteKnight.png"));
-
-            // pass image to parent class
-            super.setImage(image);
-        }catch(IOException exception){
-            System.out.println("Error locating White Knight image file");}
+        super.setImage(image);
     }
 
     public List possibleMoves(int myLocation, List chessboard, boolean routineCheck,

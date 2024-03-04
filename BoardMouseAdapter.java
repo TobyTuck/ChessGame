@@ -3,6 +3,8 @@ import java.awt.*;  // used for Dimension, GraphicsEnvironment, GraphicsDevice
 import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.event.*;  // used for MouseAdapter and MouseEvent
+import java.io.File;
+import javax.imageio.ImageIO;
 
 public class BoardMouseAdapter extends MouseAdapter{
     // field declaration
