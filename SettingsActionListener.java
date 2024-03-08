@@ -1,6 +1,8 @@
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class SettingsActionListener implements ActionListener {
 
@@ -81,6 +83,7 @@ public class SettingsActionListener implements ActionListener {
 
         // Set necessary Layout Managers for the jpanels
         panel3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        panel8.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         // make the components for the jpanels
         Font titleFont = new Font("Arial", Font.BOLD, 35);
@@ -111,7 +114,20 @@ public class SettingsActionListener implements ActionListener {
         label1.setFont(labelFont);
         label1.setForeground(Color.black);
 
-        JLabel label2 = new JLabel("0");
+        CustomJSlider slider1 = new CustomJSlider(400, 3000);
+        slider1.setOrientation(javax.swing.JSlider.HORIZONTAL);
+
+        JLabel label2 = new JLabel("1700");
+        slider1.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                JSlider source = (JSlider) e.getSource();
+                if (!source.getValueIsAdjusting()) {
+                    int value = source.getValue();
+                    String sliderValue = Integer.toString(value);
+                    label2.setText(sliderValue);
+                }
+            }
+        });
         label2.setFont(labelFont);
         label2.setForeground(Color.black);
 
@@ -120,8 +136,22 @@ public class SettingsActionListener implements ActionListener {
         title2.setForeground(Color.black);
 
         JButton button3 = new JButton();
+        button3.setPreferredSize(new Dimension(60, largePanelSize.height));
+        ImageIcon classic = new ImageIcon("Classic.png");
+        Image scaledClassic = classic.getImage().getScaledInstance(60, largePanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon scaledClassicIcon = new ImageIcon(scaledClassic);
+        button3.setIcon(scaledClassicIcon);
+
+        JPanel filler2 = new JPanel();
+        filler2.setBackground(panelColor);
+        filler2.setPreferredSize(new Dimension(40, largePanelSize.height));
 
         JButton button4 = new JButton();
+        button4.setPreferredSize(new Dimension(60, largePanelSize.height));
+        ImageIcon modern = new ImageIcon("Modern.png");
+        Image scaledModern = modern.getImage().getScaledInstance(60, largePanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon scaledModernIcon = new ImageIcon(scaledModern);
+        button4.setIcon(scaledModernIcon);
 
         JLabel title3 = new JLabel("Account");
         title3.setFont(titleFont);
@@ -160,7 +190,11 @@ public class SettingsActionListener implements ActionListener {
         panel3.add(button2);
         panel4.add(label1);
         panel4.add(label2);
+        panel5.add(slider1);
         panel7.add(title2);
+        panel8.add(button3);
+        panel8.add(filler2);
+        panel8.add(button4);
         panel10.add(title3);
         panel11.add(label3);
         panel11.add(label4);
