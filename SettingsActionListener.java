@@ -4,41 +4,46 @@ import javax.swing.*;
 
 public class SettingsActionListener implements ActionListener {
 
+    // Containers for the settings options
     private JPanel _host;
     private RoundedPanel _backdrop;
+    private JPanel _filler;
 
-    private int _count;
+    private int _count; // global counter
 
-    public SettingsActionListener(int width, int height, JPanel host, Color panelColor) {
+    public SettingsActionListener(int width, int height, JPanel host, Color panelColor, Color hostColor) {
         // set fields
         _host = host;
         _count = 0;
         _backdrop = new RoundedPanel(30);
 
+        _backdrop.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        _backdrop.setBackground(panelColor);
+
         // setup option panel
-        _backdrop.setPreferredSize(new Dimension(_host.getPreferredSize().width,
-                _host.getPreferredSize().height - 10));
+        int panelWidth = _host.getPreferredSize().width;
+        int panelHeight = _host.getPreferredSize().height - 10;
+        _backdrop.setPreferredSize(new Dimension(panelWidth, panelHeight));
 
         // make jpanels for the background panel
-        JPanel panel1 = new JPanel();
-        JPanel panel2 = new JPanel();
-        JPanel panel3 = new JPanel();
-        JPanel panel4 = new JPanel();
-        JPanel panel5 = new JPanel();
-        JPanel panel6 = new JPanel();
-        JPanel panel7 = new JPanel();
-        JPanel panel8 = new JPanel();
-        JPanel panel9 = new JPanel();
-        JPanel panel10 = new JPanel();
-        JPanel panel11 = new JPanel();
-        JPanel panel12 = new JPanel();
-        JPanel panel13 = new JPanel();
-        JPanel panel14 = new JPanel();
-        JPanel panel15 = new JPanel();
+        RoundedPanel panel1 = new RoundedPanel(30);
+        RoundedPanel panel2 = new RoundedPanel(30);
+        RoundedPanel panel3 = new RoundedPanel(30);
+        RoundedPanel panel4 = new RoundedPanel(30);
+        RoundedPanel panel5 = new RoundedPanel(30);
+        RoundedPanel panel6 = new RoundedPanel(30);
+        RoundedPanel panel7 = new RoundedPanel(30);
+        RoundedPanel panel8 = new RoundedPanel(30);
+        RoundedPanel panel9 = new RoundedPanel(30);
+        RoundedPanel panel10 = new RoundedPanel(30);
+        RoundedPanel panel11 = new RoundedPanel(30);
+        RoundedPanel panel12 = new RoundedPanel(30);
+        RoundedPanel panel13 = new RoundedPanel(30);
+        RoundedPanel panel14 = new RoundedPanel(30);
+        RoundedPanel panel15 = new RoundedPanel(30);
 
         // set the color of the jpanels
-        // panel1.setBackground(panelColor);
-        panel1.setBackground(Color.red);
+        panel1.setBackground(panelColor);
         panel2.setBackground(panelColor);
         panel3.setBackground(panelColor);
         panel4.setBackground(panelColor);
@@ -52,15 +57,12 @@ public class SettingsActionListener implements ActionListener {
         panel12.setBackground(panelColor);
         panel13.setBackground(panelColor);
         panel14.setBackground(panelColor);
-        // panel15.setBackground(panelColor);
-        panel15.setBackground(Color.red);
+        panel15.setBackground(panelColor);
 
         // set the size of the jpanels
-        int panelWidth = _backdrop.getPreferredSize().width;
-        int panelHeight = _backdrop.getPreferredSize().height;
-        Dimension smallPanelSize = new Dimension(panelWidth, (int) ((1 / 24) * panelHeight));
-        Dimension mediumPanelSize = new Dimension(panelWidth, (int) ((1 / 12) * panelHeight));
-        Dimension largePanelSize = new Dimension(panelWidth, (int) ((1 / 8) * panelHeight));
+        Dimension smallPanelSize = new Dimension(panelWidth, (int) ((1.0 / 24.0) * panelHeight));
+        Dimension mediumPanelSize = new Dimension(panelWidth, (int) ((1.0 / 12.0) * panelHeight));
+        Dimension largePanelSize = new Dimension(panelWidth, (int) ((1.0 / 8.0) * panelHeight));
         panel1.setPreferredSize(smallPanelSize);
         panel2.setPreferredSize(mediumPanelSize);
         panel3.setPreferredSize(largePanelSize);
@@ -77,20 +79,95 @@ public class SettingsActionListener implements ActionListener {
         panel14.setPreferredSize(mediumPanelSize);
         panel15.setPreferredSize(smallPanelSize);
 
+        // Set necessary Layout Managers for the jpanels
+        panel3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
         // make the components for the jpanels
-        JLabel title1 = new JLabel();
-        title1.setText("Game Mode");
+        Font titleFont = new Font("Arial", Font.BOLD, 35);
+        Font labelFont = new Font("Arial", Font.PLAIN, 13);
+        JLabel title1 = new JLabel("Game Mode");
+        title1.setFont(titleFont);
+        title1.setForeground(Color.black);
 
-        JLabel title2 = new JLabel();
-        title2.setText("Graphics");
+        JButton button1 = new JButton();
+        button1.setPreferredSize(new Dimension(60, largePanelSize.height));
+        ImageIcon bot = new ImageIcon("ComputerBot.png");
+        Image scaledBot = bot.getImage().getScaledInstance(60, largePanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon scaledBotIcon = new ImageIcon(scaledBot);
+        button1.setIcon(scaledBotIcon);
 
-        JLabel title3 = new JLabel();
-        title3.setText("Account");
+        JPanel filler1 = new JPanel();
+        filler1.setBackground(panelColor);
+        filler1.setPreferredSize(new Dimension(40, largePanelSize.height));
+
+        JButton button2 = new JButton();
+        button2.setPreferredSize(new Dimension(40, largePanelSize.height));
+        ImageIcon dual = new ImageIcon("TwoPlayer.png");
+        Image scaledDual = dual.getImage().getScaledInstance(40, largePanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon scaledDualIcon = new ImageIcon(scaledDual);
+        button2.setIcon(scaledDualIcon);
+
+        JLabel label1 = new JLabel("stockfish rating: ");
+        label1.setFont(labelFont);
+        label1.setForeground(Color.black);
+
+        JLabel label2 = new JLabel("0");
+        label2.setFont(labelFont);
+        label2.setForeground(Color.black);
+
+        JLabel title2 = new JLabel("Graphics");
+        title2.setFont(titleFont);
+        title2.setForeground(Color.black);
+
+        JButton button3 = new JButton();
+
+        JButton button4 = new JButton();
+
+        JLabel title3 = new JLabel("Account");
+        title3.setFont(titleFont);
+        title3.setForeground(Color.black);
+
+        JLabel label3 = new JLabel("username: ");
+        label3.setFont(labelFont);
+        label3.setForeground(Color.black);
+
+        JLabel label4 = new JLabel("X");
+        label4.setFont(labelFont);
+        label4.setForeground(Color.red);
+
+        JLabel label5 = new JLabel("rating: ");
+        label5.setFont(labelFont);
+        label5.setForeground(Color.black);
+
+        JLabel label6 = new JLabel("X");
+        label6.setFont(labelFont);
+        label6.setForeground(Color.red);
+
+        JButton button5 = new JButton();
+        button5.setPreferredSize(new Dimension(150, mediumPanelSize.height));
+        button5.setFont(labelFont);
+        button5.setText("View History");
+
+        JButton button6 = new JButton();
+        button6.setPreferredSize(new Dimension(100, mediumPanelSize.height));
+        button6.setFont(labelFont);
+        button6.setText("Logout");
 
         // add the components to the jpanels
         panel2.add(title1);
+        panel3.add(button1);
+        panel3.add(filler1);
+        panel3.add(button2);
+        panel4.add(label1);
+        panel4.add(label2);
         panel7.add(title2);
         panel10.add(title3);
+        panel11.add(label3);
+        panel11.add(label4);
+        panel12.add(label5);
+        panel12.add(label6);
+        panel13.add(button5);
+        panel14.add(button6);
 
         // add the jpanels to the background panel
         _backdrop.add(panel1);
@@ -108,6 +185,11 @@ public class SettingsActionListener implements ActionListener {
         _backdrop.add(panel13);
         _backdrop.add(panel14);
         _backdrop.add(panel15);
+
+        // Make filler panel for extra space in the host jpanel
+        _filler = new JPanel();
+        _filler.setPreferredSize(new Dimension(panelWidth, 10));
+        _filler.setBackground(hostColor);
     }
 
     @Override
@@ -115,6 +197,7 @@ public class SettingsActionListener implements ActionListener {
         if (isEven(_count)) {
             // setup option panel
             _host.add(_backdrop);
+            _host.add(_filler);
             _host.repaint();
             _host.revalidate();
         }

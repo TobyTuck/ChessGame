@@ -498,7 +498,7 @@ public class ChessBoard extends JFrame {
         // instantiate and add MouseAdapter to settings
         Color myColor = new Color(155, 173, 183);
         SettingsActionListener sma = new SettingsActionListener((int) (boardHeight / 9.0),
-                (int) (boardHeight / 9.0), rightFillerSouthS, myColor);
+                (int) (boardHeight / 9.0), rightFillerSouthS, myColor, darkGreen);
 
         // How can I make this representative of the layeredPane without getting LP
         nwContainer.addMouseListener(mma);
