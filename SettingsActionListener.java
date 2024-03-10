@@ -93,9 +93,11 @@ public class SettingsActionListener implements ActionListener {
         title1.setForeground(Color.black);
 
         JButton button1 = new JButton();
-        button1.setPreferredSize(new Dimension(60, largePanelSize.height));
+        button1.setPreferredSize(new Dimension((int) ((8.0 / 9) * largePanelSize.height),
+                                               largePanelSize.height));
         ImageIcon bot = new ImageIcon("ComputerBot.png");
-        Image scaledBot = bot.getImage().getScaledInstance(60, largePanelSize.height, Image.SCALE_SMOOTH);
+        Image scaledBot = bot.getImage().getScaledInstance((int) ((8.0 / 9) * largePanelSize.height),
+                                                           largePanelSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledBotIcon = new ImageIcon(scaledBot);
         button1.setIcon(scaledBotIcon);
 
@@ -104,9 +106,11 @@ public class SettingsActionListener implements ActionListener {
         filler1.setPreferredSize(new Dimension(40, largePanelSize.height));
 
         JButton button2 = new JButton();
-        button2.setPreferredSize(new Dimension(40, largePanelSize.height));
+        button2.setPreferredSize(new Dimension((int) ((15.0 / 23) * largePanelSize.height),
+                                               largePanelSize.height));
         ImageIcon dual = new ImageIcon("TwoPlayer.png");
-        Image scaledDual = dual.getImage().getScaledInstance(40, largePanelSize.height, Image.SCALE_SMOOTH);
+        Image scaledDual = dual.getImage().getScaledInstance((int) ((15.0 / 23) * largePanelSize.height), 
+                                                             largePanelSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledDualIcon = new ImageIcon(scaledDual);
         button2.setIcon(scaledDualIcon);
 
@@ -136,9 +140,10 @@ public class SettingsActionListener implements ActionListener {
         title2.setForeground(Color.black);
 
         JButton button3 = new JButton();
-        button3.setPreferredSize(new Dimension(60, largePanelSize.height));
+        button3.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
         ImageIcon classic = new ImageIcon("Classic.png");
-        Image scaledClassic = classic.getImage().getScaledInstance(60, largePanelSize.height, Image.SCALE_SMOOTH);
+        Image scaledClassic = classic.getImage().getScaledInstance(largePanelSize.height, 
+                                                    largePanelSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledClassicIcon = new ImageIcon(scaledClassic);
         button3.setIcon(scaledClassicIcon);
 
@@ -147,9 +152,10 @@ public class SettingsActionListener implements ActionListener {
         filler2.setPreferredSize(new Dimension(40, largePanelSize.height));
 
         JButton button4 = new JButton();
-        button4.setPreferredSize(new Dimension(60, largePanelSize.height));
+        button4.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
         ImageIcon modern = new ImageIcon("Modern.png");
-        Image scaledModern = modern.getImage().getScaledInstance(60, largePanelSize.height, Image.SCALE_SMOOTH);
+        Image scaledModern = modern.getImage().getScaledInstance(largePanelSize.height, 
+                                                    largePanelSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledModernIcon = new ImageIcon(scaledModern);
         button4.setIcon(scaledModernIcon);
 
