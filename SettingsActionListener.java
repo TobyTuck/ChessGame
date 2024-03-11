@@ -86,8 +86,8 @@ public class SettingsActionListener implements ActionListener {
         panel8.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         // make the components for the jpanels
-        Font titleFont = new Font("Arial", Font.BOLD, 35);
-        Font labelFont = new Font("Arial", Font.PLAIN, 13);
+        Font titleFont = new Font("Arial", Font.BOLD, 45);
+        Font labelFont = new Font("Arial", Font.PLAIN, 25);
         JLabel title1 = new JLabel("Game Mode");
         title1.setFont(titleFont);
         title1.setForeground(Color.black);
@@ -174,12 +174,12 @@ public class SettingsActionListener implements ActionListener {
         label6.setForeground(Color.red);
 
         JButton button5 = new JButton();
-        button5.setPreferredSize(new Dimension(150, mediumPanelSize.height));
+        button5.setPreferredSize(new Dimension(200, mediumPanelSize.height));
         button5.setFont(labelFont);
         button5.setText("View History");
 
         JButton button6 = new JButton();
-        button6.setPreferredSize(new Dimension(100, mediumPanelSize.height));
+        button6.setPreferredSize(new Dimension(150, mediumPanelSize.height));
         button6.setFont(labelFont);
         button6.setText("Logout");
 
