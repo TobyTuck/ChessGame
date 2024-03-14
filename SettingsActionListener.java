@@ -103,7 +103,7 @@ public class SettingsActionListener implements ActionListener {
         BotActionListener bal = new BotActionListener(largePanelSize.height, largePanelSize.height,
                 button1, bma);
         button1.addActionListener(bal);
-        bal.setRating(700); // set the initial value of the bot rating
+        bal.setRating(1700); // set the initial value of the bot rating
 
         JPanel filler1 = new JPanel();
         filler1.setBackground(panelColor);
