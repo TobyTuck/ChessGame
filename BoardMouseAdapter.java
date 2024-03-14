@@ -4,6 +4,8 @@ import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.event.*; // used for MouseAdapter and MouseEvent
 import java.io.File;
+import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 public class BoardMouseAdapter extends MouseAdapter {
@@ -20,11 +22,15 @@ public class BoardMouseAdapter extends MouseAdapter {
     private JPanel capturedWhite;
     private JPanel capturedBlack1;
     private JPanel capturedBlack2;
+    private JPanel _nePanel;
+    private JPanel _nwPanel;
+    private JPanel _sePanel;
+    private JPanel _swPanel;
 
     private List myMoves;
 
     private ChessPiece priorMove;
-    private int myLocation;
+    // private int myLocation;
 
     private boolean dragged;
     private JPanel pressedPanel;
@@ -44,7 +50,8 @@ public class BoardMouseAdapter extends MouseAdapter {
     private boolean optionsInterrupter;
 
     public BoardMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
-            JPanel capBlack1, JPanel capBlack2, JPanel board) {
+            JPanel capBlack1, JPanel capBlack2, JPanel board, JPanel ne, JPanel nw, JPanel se,
+            JPanel sw) {
         list = chessboard;
         boardHeight = bH;
         screenWidth = sW;
@@ -53,6 +60,10 @@ public class BoardMouseAdapter extends MouseAdapter {
         capturedBlack1 = capBlack1;
         capturedBlack2 = capBlack2;
         _board = board;
+        _nePanel = ne;
+        _nwPanel = nw;
+        _sePanel = se;
+        _swPanel = sw;
 
         _p1Location = 0;
         _p2Location = 0;
@@ -481,6 +492,21 @@ public class BoardMouseAdapter extends MouseAdapter {
     }
 
     /**
+     * Method that removes all JPanels Components from a chess square (JPanel)
+     */
+    private void stripPanels(JPanel panel) {
+        Component[] components = panel.getComponents();
+        for (Component c : components) {
+            // locate and remove the label
+            if (c instanceof JPanel)
+                panel.remove(c);
+        }
+
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    /**
      * Method that moves the selected piece to its location
      */
     private void move(JPanel firstSelected, JPanel secondSelected, ChessPiece firstPiece, ChessPiece secondPiece) {
@@ -836,6 +862,7 @@ public class BoardMouseAdapter extends MouseAdapter {
     }
 
     private void addSquare(JPanel panel, int x, Color color) {
+
         panel.setLayout(new BorderLayout());
 
         JLabel center = new JLabel();
@@ -1043,5 +1070,680 @@ public class BoardMouseAdapter extends MouseAdapter {
         }
 
         return false;
+    }
+
+    /**
+     * Method that updates the chessboard so that is "modern"
+     * Entails:
+     * 1. Rounded JPanels that represent the chessboard spaces
+     * 2. Modern chesspiece images
+     */
+    public void makeModern() {
+        // Step 1: Make the JPanels of the chessboard and its background rounded
+        // copy the contents of the first list into a new one, with rounded jpanels
+        List newList = new List(list.getSize());
+
+        RoundedPanel square0 = new RoundedPanel(30);
+        newList.push(square0, null);
+        RoundedPanel square1 = new RoundedPanel(30);
+        newList.push(square1, null);
+        RoundedPanel square2 = new RoundedPanel(30);
+        newList.push(square2, null);
+        RoundedPanel square3 = new RoundedPanel(30);
+        newList.push(square3, null);
+        RoundedPanel square4 = new RoundedPanel(30);
+        newList.push(square4, null);
+        RoundedPanel square5 = new RoundedPanel(30);
+        newList.push(square5, null);
+        RoundedPanel square6 = new RoundedPanel(30);
+        newList.push(square6, null);
+        RoundedPanel square7 = new RoundedPanel(30);
+        newList.push(square7, null);
+
+        RoundedPanel square8 = new RoundedPanel(30);
+        newList.push(square8, null);
+        RoundedPanel square9 = new RoundedPanel(30);
+        newList.push(square9, null);
+        RoundedPanel square10 = new RoundedPanel(30);
+        newList.push(square10, null);
+        RoundedPanel square11 = new RoundedPanel(30);
+        newList.push(square11, null);
+        RoundedPanel square12 = new RoundedPanel(30);
+        newList.push(square12, null);
+        RoundedPanel square13 = new RoundedPanel(30);
+        newList.push(square13, null);
+        RoundedPanel square14 = new RoundedPanel(30);
+        newList.push(square14, null);
+        RoundedPanel square15 = new RoundedPanel(30);
+        newList.push(square15, null);
+
+        RoundedPanel square16 = new RoundedPanel(30);
+        newList.push(square16, null);
+        RoundedPanel square17 = new RoundedPanel(30);
+        newList.push(square17, null);
+        RoundedPanel square18 = new RoundedPanel(30);
+        newList.push(square18, null);
+        RoundedPanel square19 = new RoundedPanel(30);
+        newList.push(square19, null);
+        RoundedPanel square20 = new RoundedPanel(30);
+        newList.push(square20, null);
+        RoundedPanel square21 = new RoundedPanel(30);
+        newList.push(square21, null);
+        RoundedPanel square22 = new RoundedPanel(30);
+        newList.push(square22, null);
+        RoundedPanel square23 = new RoundedPanel(30);
+        newList.push(square23, null);
+
+        RoundedPanel square24 = new RoundedPanel(30);
+        newList.push(square24, null);
+        RoundedPanel square25 = new RoundedPanel(30);
+        newList.push(square25, null);
+        RoundedPanel square26 = new RoundedPanel(30);
+        newList.push(square26, null);
+        RoundedPanel square27 = new RoundedPanel(30);
+        newList.push(square27, null);
+        RoundedPanel square28 = new RoundedPanel(30);
+        newList.push(square28, null);
+        RoundedPanel square29 = new RoundedPanel(30);
+        newList.push(square29, null);
+        RoundedPanel square30 = new RoundedPanel(30);
+        newList.push(square30, null);
+        RoundedPanel square31 = new RoundedPanel(30);
+        newList.push(square31, null);
+
+        RoundedPanel square32 = new RoundedPanel(30);
+        newList.push(square32, null);
+        RoundedPanel square33 = new RoundedPanel(30);
+        newList.push(square33, null);
+        RoundedPanel square34 = new RoundedPanel(30);
+        newList.push(square34, null);
+        RoundedPanel square35 = new RoundedPanel(30);
+        newList.push(square35, null);
+        RoundedPanel square36 = new RoundedPanel(30);
+        newList.push(square36, null);
+        RoundedPanel square37 = new RoundedPanel(30);
+        newList.push(square37, null);
+        RoundedPanel square38 = new RoundedPanel(30);
+        newList.push(square38, null);
+        RoundedPanel square39 = new RoundedPanel(30);
+        newList.push(square39, null);
+
+        RoundedPanel square40 = new RoundedPanel(30);
+        newList.push(square40, null);
+        RoundedPanel square41 = new RoundedPanel(30);
+        newList.push(square41, null);
+        RoundedPanel square42 = new RoundedPanel(30);
+        newList.push(square42, null);
+        RoundedPanel square43 = new RoundedPanel(30);
+        newList.push(square43, null);
+        RoundedPanel square44 = new RoundedPanel(30);
+        newList.push(square44, null);
+        RoundedPanel square45 = new RoundedPanel(30);
+        newList.push(square45, null);
+        RoundedPanel square46 = new RoundedPanel(30);
+        newList.push(square46, null);
+        RoundedPanel square47 = new RoundedPanel(30);
+        newList.push(square47, null);
+
+        RoundedPanel square48 = new RoundedPanel(30);
+        newList.push(square48, null);
+        RoundedPanel square49 = new RoundedPanel(30);
+        newList.push(square49, null);
+        RoundedPanel square50 = new RoundedPanel(30);
+        newList.push(square50, null);
+        RoundedPanel square51 = new RoundedPanel(30);
+        newList.push(square51, null);
+        RoundedPanel square52 = new RoundedPanel(30);
+        newList.push(square52, null);
+        RoundedPanel square53 = new RoundedPanel(30);
+        newList.push(square53, null);
+        RoundedPanel square54 = new RoundedPanel(30);
+        newList.push(square54, null);
+        RoundedPanel square55 = new RoundedPanel(30);
+        newList.push(square55, null);
+
+        RoundedPanel square56 = new RoundedPanel(30);
+        newList.push(square56, null);
+        RoundedPanel square57 = new RoundedPanel(30);
+        newList.push(square57, null);
+        RoundedPanel square58 = new RoundedPanel(30);
+        newList.push(square58, null);
+        RoundedPanel square59 = new RoundedPanel(30);
+        newList.push(square59, null);
+        RoundedPanel square60 = new RoundedPanel(30);
+        newList.push(square60, null);
+        RoundedPanel square61 = new RoundedPanel(30);
+        newList.push(square61, null);
+        RoundedPanel square62 = new RoundedPanel(30);
+        newList.push(square62, null);
+        RoundedPanel square63 = new RoundedPanel(30);
+        newList.push(square63, null);
+
+        // set the properties of the new rounded jpanels
+        // Set properties of all the items in the List
+        int cellRemainder,
+                count = 0;
+        RoundedPanel jpanel;
+
+        Color tan = new Color(210, 180, 140);
+        Color brown = new Color(139, 69, 19);
+
+        stripPanels(_nePanel);
+        stripPanels(_nwPanel);
+        stripPanels(_sePanel);
+        stripPanels(_swPanel);
+
+        for (int i = 0; i < newList.getSize(); ++i) {
+
+            jpanel = (RoundedPanel) newList.pop(i);
+
+            // set size of the JPanel
+            jpanel.setPreferredSize(new Dimension((int) (boardHeight / 8.0),
+                    (int) (boardHeight / 8.0)));
+
+            cellRemainder = i % 2;
+            if ((int) (count / 8) % 2 == 0) {
+                // test if index is even or odd
+                // even
+                if (cellRemainder == 0)
+                    jpanel.setBackground(tan);
+
+                // odd
+                else
+                    jpanel.setBackground(brown);
+            }
+
+            else {
+                // test if index is even or odd
+                // even
+                if (cellRemainder == 0)
+                    jpanel.setBackground(brown);
+
+                // odd
+                else
+                    jpanel.setBackground(tan);
+            }
+
+            // set the Layout manager for each jpanel
+            jpanel.setLayout(new BorderLayout());
+
+            // add components to respective container
+            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 8 || i == 9 ||
+                    i == 10 || i == 11 || i == 16 || i == 17 || i == 18 ||
+                    i == 19 || i == 24 || i == 25 || i == 26 || i == 27)
+                _nwPanel.add(jpanel);
+
+            else if (i == 4 || i == 5 || i == 6 || i == 7 || i == 12 ||
+                    i == 13 || i == 14 || i == 15 || i == 20 || i == 21 ||
+                    i == 22 || i == 23 || i == 28 || i == 29 || i == 30 ||
+                    i == 31)
+                _nePanel.add(jpanel);
+
+            else if (i == 32 || i == 33 || i == 34 || i == 35 || i == 40 ||
+                    i == 41 || i == 42 || i == 43 || i == 48 || i == 49 ||
+                    i == 50 || i == 51 || i == 56 || i == 57 || i == 58 ||
+                    i == 59)
+                _swPanel.add(jpanel);
+
+            else
+                _sePanel.add(jpanel);
+
+            ++count;
+        }
+
+        // copy the locations of the chesspieces of the first into the second
+        RoundedPanel currentPanel;
+        ChessPiece currentPiece;
+        for (int i = 0; i < newList.getSize(); ++i) {
+            currentPanel = (RoundedPanel) newList.pop(i);
+            currentPiece = (ChessPiece) list.getComponent(i);
+
+            newList.addComponent(currentPanel, currentPiece);
+        }
+
+        list = newList;
+
+        // Step 2: Update all the chesspiece images
+        try {
+            int labelCount = 0;
+            for (int i = 0; i < list.getSize(); ++i) {
+                currentPanel = (RoundedPanel) list.pop(i);
+                currentPiece = (ChessPiece) list.getComponent(i);
+
+                // copy JLabel indicators over to the new panels
+                Component[] components = currentPanel.getComponents();
+                for (Component c : components) {
+                    if (c instanceof JLabel) {
+                        ++labelCount;
+                    }
+                }
+
+                if (labelCount == 1) {
+                    System.out.println("addSquare()");
+                    addSquare(currentPanel, 20, new Color(127, 255, 0));
+                }
+
+                if (labelCount > 1) {
+                    outline(currentPanel, Color.blue, 5);
+                }
+
+                // decide what image file to use
+                if (currentPiece instanceof WhitePawn) {
+                    BufferedImage wPawnImage = ImageIO.read(new File("WPawn.png"));
+                    currentPiece.setImage(wPawnImage);
+                }
+
+                else if (currentPiece instanceof WhiteRook) {
+                    BufferedImage wRookImage = ImageIO.read(new File("WRook.png"));
+                    currentPiece.setImage(wRookImage);
+                }
+
+                else if (currentPiece instanceof WhiteKnight) {
+                    BufferedImage wKnightImage = ImageIO.read(new File("WKnight.png"));
+                    currentPiece.setImage(wKnightImage);
+                }
+
+                else if (currentPiece instanceof WhiteBishop) {
+                    BufferedImage wBishopImage = ImageIO.read(new File("WBishop.png"));
+                    currentPiece.setImage(wBishopImage);
+                }
+
+                else if (currentPiece instanceof WhiteQueen) {
+                    BufferedImage wQueenImage = ImageIO.read(new File("WQueen.png"));
+                    currentPiece.setImage(wQueenImage);
+                }
+
+                else if (currentPiece instanceof WhiteKing) {
+                    BufferedImage wKingImage = ImageIO.read(new File("WKing.png"));
+                    currentPiece.setImage(wKingImage);
+                }
+
+                else if (currentPiece instanceof BlackPawn) {
+                    BufferedImage bPawnImage = ImageIO.read(new File("BPawn.png"));
+                    currentPiece.setImage(bPawnImage);
+                }
+
+                else if (currentPiece instanceof BlackRook) {
+                    BufferedImage bRookImage = ImageIO.read(new File("BRook.png"));
+                    currentPiece.setImage(bRookImage);
+                }
+
+                else if (currentPiece instanceof BlackKnight) {
+                    BufferedImage bKnightImage = ImageIO.read(new File("BKnight.png"));
+                    currentPiece.setImage(bKnightImage);
+                }
+
+                else if (currentPiece instanceof BlackBishop) {
+                    BufferedImage bBishopImage = ImageIO.read(new File("BBishop.png"));
+                    currentPiece.setImage(bBishopImage);
+                }
+
+                else if (currentPiece instanceof BlackQueen) {
+                    BufferedImage bQueenImage = ImageIO.read(new File("BQueen.png"));
+                    currentPiece.setImage(bQueenImage);
+                }
+
+                else if (currentPiece instanceof BlackKing) {
+                    BufferedImage bKingImage = ImageIO.read(new File("BKing.png"));
+                    currentPiece.setImage(bKingImage);
+                }
+
+                // pin the new image on its panel
+                if (currentPiece != null && currentPiece instanceof ChessPiece) {
+                    pin(currentPiece, currentPanel, 0, 0, "BorderLayout", true);
+                }
+
+                // Substitute the JPanel of each square for a rounded one
+
+                currentPanel.revalidate();
+                currentPanel.repaint();
+            }
+        } catch (IOException exception) {
+            System.out.println("Error locating chesspiece image file(s)");
+        }
+
+        // Change the color of the background JPanels
+        _sePanel.setBackground(tan);
+        _swPanel.setBackground(tan);
+        _nePanel.setBackground(tan);
+        _nwPanel.setBackground(tan);
+        _board.setBackground(tan);
+    }
+
+    /**
+     * Method that updates a chessboard so that is is "classic"
+     * Entails:
+     * 1. Square JPanels that make up the 64 chessboard spaces
+     * 2. Classic chesspiece images
+     */
+    public void makeClassic() {
+        // Step 1: Make the JPanels of the chessboard and its background rounded
+        // copy the contents of the first list into a new one, with rounded jpanels
+        List newList = new List(list.getSize());
+
+        RoundedPanel square0 = new RoundedPanel(30);
+        newList.push(square0, null);
+        JPanel square1 = new JPanel();
+        newList.push(square1, null);
+        JPanel square2 = new JPanel();
+        newList.push(square2, null);
+        JPanel square3 = new JPanel();
+        newList.push(square3, null);
+        JPanel square4 = new JPanel();
+        newList.push(square4, null);
+        JPanel square5 = new JPanel();
+        newList.push(square5, null);
+        JPanel square6 = new JPanel();
+        newList.push(square6, null);
+        RoundedPanel square7 = new RoundedPanel(30);
+        newList.push(square7, null);
+
+        JPanel square8 = new JPanel();
+        newList.push(square8, null);
+        JPanel square9 = new JPanel();
+        newList.push(square9, null);
+        JPanel square10 = new JPanel();
+        newList.push(square10, null);
+        JPanel square11 = new JPanel();
+        newList.push(square11, null);
+        JPanel square12 = new JPanel();
+        newList.push(square12, null);
+        JPanel square13 = new JPanel();
+        newList.push(square13, null);
+        JPanel square14 = new JPanel();
+        newList.push(square14, null);
+        JPanel square15 = new JPanel();
+        newList.push(square15, null);
+
+        JPanel square16 = new JPanel();
+        newList.push(square16, null);
+        JPanel square17 = new JPanel();
+        newList.push(square17, null);
+        JPanel square18 = new JPanel();
+        newList.push(square18, null);
+        JPanel square19 = new JPanel();
+        newList.push(square19, null);
+        JPanel square20 = new JPanel();
+        newList.push(square20, null);
+        JPanel square21 = new JPanel();
+        newList.push(square21, null);
+        JPanel square22 = new JPanel();
+        newList.push(square22, null);
+        JPanel square23 = new JPanel();
+        newList.push(square23, null);
+
+        JPanel square24 = new JPanel();
+        newList.push(square24, null);
+        JPanel square25 = new JPanel();
+        newList.push(square25, null);
+        JPanel square26 = new JPanel();
+        newList.push(square26, null);
+        JPanel square27 = new JPanel();
+        newList.push(square27, null);
+        JPanel square28 = new JPanel();
+        newList.push(square28, null);
+        JPanel square29 = new JPanel();
+        newList.push(square29, null);
+        JPanel square30 = new JPanel();
+        newList.push(square30, null);
+        JPanel square31 = new JPanel();
+        newList.push(square31, null);
+
+        JPanel square32 = new JPanel();
+        newList.push(square32, null);
+        JPanel square33 = new JPanel();
+        newList.push(square33, null);
+        JPanel square34 = new JPanel();
+        newList.push(square34, null);
+        JPanel square35 = new JPanel();
+        newList.push(square35, null);
+        JPanel square36 = new JPanel();
+        newList.push(square36, null);
+        JPanel square37 = new JPanel();
+        newList.push(square37, null);
+        JPanel square38 = new JPanel();
+        newList.push(square38, null);
+        JPanel square39 = new JPanel();
+        newList.push(square39, null);
+
+        JPanel square40 = new JPanel();
+        newList.push(square40, null);
+        JPanel square41 = new JPanel();
+        newList.push(square41, null);
+        JPanel square42 = new JPanel();
+        newList.push(square42, null);
+        JPanel square43 = new JPanel();
+        newList.push(square43, null);
+        JPanel square44 = new JPanel();
+        newList.push(square44, null);
+        JPanel square45 = new JPanel();
+        newList.push(square45, null);
+        JPanel square46 = new JPanel();
+        newList.push(square46, null);
+        JPanel square47 = new JPanel();
+        newList.push(square47, null);
+
+        JPanel square48 = new JPanel();
+        newList.push(square48, null);
+        JPanel square49 = new JPanel();
+        newList.push(square49, null);
+        JPanel square50 = new JPanel();
+        newList.push(square50, null);
+        JPanel square51 = new JPanel();
+        newList.push(square51, null);
+        JPanel square52 = new JPanel();
+        newList.push(square52, null);
+        JPanel square53 = new JPanel();
+        newList.push(square53, null);
+        JPanel square54 = new JPanel();
+        newList.push(square54, null);
+        JPanel square55 = new JPanel();
+        newList.push(square55, null);
+
+        RoundedPanel square56 = new RoundedPanel(30);
+        newList.push(square56, null);
+        JPanel square57 = new JPanel();
+        newList.push(square57, null);
+        JPanel square58 = new JPanel();
+        newList.push(square58, null);
+        JPanel square59 = new JPanel();
+        newList.push(square59, null);
+        JPanel square60 = new JPanel();
+        newList.push(square60, null);
+        JPanel square61 = new JPanel();
+        newList.push(square61, null);
+        JPanel square62 = new JPanel();
+        newList.push(square62, null);
+        RoundedPanel square63 = new RoundedPanel(30);
+        newList.push(square63, null);
+
+        // set the properties of the new rounded jpanels
+        // Set properties of all the items in the List
+        int cellRemainder,
+                count = 0;
+        JPanel jpanel;
+
+        Color tan = new Color(210, 180, 140);
+        Color brown = new Color(139, 69, 19);
+
+        stripPanels(_nePanel);
+        stripPanels(_nwPanel);
+        stripPanels(_sePanel);
+        stripPanels(_swPanel);
+
+        for (int i = 0; i < newList.getSize(); ++i) {
+
+            jpanel = (JPanel) newList.pop(i);
+
+            // set size of the JPanel
+            jpanel.setPreferredSize(new Dimension((int) (boardHeight / 8.0),
+                    (int) (boardHeight / 8.0)));
+
+            cellRemainder = i % 2;
+            if ((int) (count / 8) % 2 == 0) {
+                // test if index is even or odd
+                // even
+                if (cellRemainder == 0)
+                    jpanel.setBackground(tan);
+
+                // odd
+                else
+                    jpanel.setBackground(brown);
+            }
+
+            else {
+                // test if index is even or odd
+                // even
+                if (cellRemainder == 0)
+                    jpanel.setBackground(brown);
+
+                // odd
+                else
+                    jpanel.setBackground(tan);
+            }
+
+            // set the Layout manager for each jpanel
+            jpanel.setLayout(new BorderLayout());
+
+            // add components to respective container
+            if (i == 0 || i == 1 || i == 2 || i == 3 || i == 8 || i == 9 ||
+                    i == 10 || i == 11 || i == 16 || i == 17 || i == 18 ||
+                    i == 19 || i == 24 || i == 25 || i == 26 || i == 27)
+                _nwPanel.add(jpanel);
+
+            else if (i == 4 || i == 5 || i == 6 || i == 7 || i == 12 ||
+                    i == 13 || i == 14 || i == 15 || i == 20 || i == 21 ||
+                    i == 22 || i == 23 || i == 28 || i == 29 || i == 30 ||
+                    i == 31)
+                _nePanel.add(jpanel);
+
+            else if (i == 32 || i == 33 || i == 34 || i == 35 || i == 40 ||
+                    i == 41 || i == 42 || i == 43 || i == 48 || i == 49 ||
+                    i == 50 || i == 51 || i == 56 || i == 57 || i == 58 ||
+                    i == 59)
+                _swPanel.add(jpanel);
+
+            else
+                _sePanel.add(jpanel);
+
+            ++count;
+        }
+
+        // copy the locations of the chesspieces of the first into the second
+        JPanel currentPanel;
+        ChessPiece currentPiece;
+        for (int i = 0; i < newList.getSize(); ++i) {
+            currentPanel = (JPanel) newList.pop(i);
+            currentPiece = (ChessPiece) list.getComponent(i);
+
+            newList.addComponent(currentPanel, currentPiece);
+        }
+
+        list = newList;
+
+        // Step 2: Update all the chesspiece images
+        try {
+            int labelCount = 0;
+            for (int i = 0; i < list.getSize(); ++i) {
+                currentPanel = (JPanel) list.pop(i);
+                currentPiece = (ChessPiece) list.getComponent(i);
+
+                // copy JLabel indicators over to the new panels
+                Component[] components = currentPanel.getComponents();
+                for (Component c : components) {
+                    if (c instanceof JLabel) {
+                        ++labelCount;
+                    }
+                }
+
+                if (labelCount == 1) {
+                    System.out.println("addSquare()");
+                    addSquare(currentPanel, 20, new Color(127, 255, 0));
+                }
+
+                if (labelCount > 1) {
+                    outline(currentPanel, Color.blue, 5);
+                }
+
+                // decide what image file to use
+                if (currentPiece instanceof WhitePawn) {
+                    BufferedImage wPawnImage = ImageIO.read(new File("WhitePawn.png"));
+                    currentPiece.setImage(wPawnImage);
+                }
+
+                else if (currentPiece instanceof WhiteRook) {
+                    BufferedImage wRookImage = ImageIO.read(new File("WhiteRook.png"));
+                    currentPiece.setImage(wRookImage);
+                }
+
+                else if (currentPiece instanceof WhiteKnight) {
+                    BufferedImage wKnightImage = ImageIO.read(new File("WhiteKnight.png"));
+                    currentPiece.setImage(wKnightImage);
+                }
+
+                else if (currentPiece instanceof WhiteBishop) {
+                    BufferedImage wBishopImage = ImageIO.read(new File("WhiteBishop.png"));
+                    currentPiece.setImage(wBishopImage);
+                }
+
+                else if (currentPiece instanceof WhiteQueen) {
+                    BufferedImage wQueenImage = ImageIO.read(new File("WhiteQueen.png"));
+                    currentPiece.setImage(wQueenImage);
+                }
+
+                else if (currentPiece instanceof WhiteKing) {
+                    BufferedImage wKingImage = ImageIO.read(new File("WhiteKing.png"));
+                    currentPiece.setImage(wKingImage);
+                }
+
+                else if (currentPiece instanceof BlackPawn) {
+                    BufferedImage bPawnImage = ImageIO.read(new File("BlackPawn.png"));
+                    currentPiece.setImage(bPawnImage);
+                }
+
+                else if (currentPiece instanceof BlackRook) {
+                    BufferedImage bRookImage = ImageIO.read(new File("BlackRook.png"));
+                    currentPiece.setImage(bRookImage);
+                }
+
+                else if (currentPiece instanceof BlackKnight) {
+                    BufferedImage bKnightImage = ImageIO.read(new File("BlackKnight.png"));
+                    currentPiece.setImage(bKnightImage);
+                }
+
+                else if (currentPiece instanceof BlackBishop) {
+                    BufferedImage bBishopImage = ImageIO.read(new File("BlackBishop.png"));
+                    currentPiece.setImage(bBishopImage);
+                }
+
+                else if (currentPiece instanceof BlackQueen) {
+                    BufferedImage bQueenImage = ImageIO.read(new File("BlackQueen.png"));
+                    currentPiece.setImage(bQueenImage);
+                }
+
+                else if (currentPiece instanceof BlackKing) {
+                    BufferedImage bKingImage = ImageIO.read(new File("BlackKing.png"));
+                    currentPiece.setImage(bKingImage);
+                }
+
+                // pin the new image on its panel
+                if (currentPiece != null && currentPiece instanceof ChessPiece) {
+                    pin(currentPiece, currentPanel, 0, 0, "BorderLayout", true);
+                }
+
+                // Substitute the JPanel of each square for a rounded one
+
+                currentPanel.revalidate();
+                currentPanel.repaint();
+            }
+        } catch (IOException exception) {
+            System.out.println("Error locating chesspiece image file(s)");
+        }
+
+        // Change the color of the background JPanels
+        _sePanel.setBackground(tan);
+        _swPanel.setBackground(brown);
+        _nePanel.setBackground(brown);
+        _nwPanel.setBackground(tan);
     }
 }

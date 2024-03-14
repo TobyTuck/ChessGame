@@ -13,7 +13,8 @@ public class SettingsActionListener implements ActionListener {
 
     private int _count; // global counter
 
-    public SettingsActionListener(int width, int height, JPanel host, Color panelColor, Color hostColor) {
+    public SettingsActionListener(int width, int height, JPanel host, Color panelColor, Color hostColor,
+            BoardMouseAdapter bma) {
         // set fields
         _host = host;
         _count = 0;
@@ -93,26 +94,33 @@ public class SettingsActionListener implements ActionListener {
         title1.setForeground(Color.black);
 
         JButton button1 = new JButton();
-        button1.setPreferredSize(new Dimension((int) ((8.0 / 9) * largePanelSize.height),
-                                               largePanelSize.height));
-        ImageIcon bot = new ImageIcon("ComputerBot.png");
-        Image scaledBot = bot.getImage().getScaledInstance((int) ((8.0 / 9) * largePanelSize.height),
-                                                           largePanelSize.height, Image.SCALE_SMOOTH);
+        button1.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
+        ImageIcon bot = new ImageIcon("ComputerBotUnselected.png");
+        Image scaledBot = bot.getImage().getScaledInstance(largePanelSize.height, largePanelSize.height,
+                Image.SCALE_SMOOTH);
         ImageIcon scaledBotIcon = new ImageIcon(scaledBot);
         button1.setIcon(scaledBotIcon);
+        BotActionListener bal = new BotActionListener(largePanelSize.height, largePanelSize.height,
+                button1, bma);
+        button1.addActionListener(bal);
+        bal.setRating(700); // set the initial value of the bot rating
 
         JPanel filler1 = new JPanel();
         filler1.setBackground(panelColor);
         filler1.setPreferredSize(new Dimension(40, largePanelSize.height));
 
         JButton button2 = new JButton();
-        button2.setPreferredSize(new Dimension((int) ((15.0 / 23) * largePanelSize.height),
-                                               largePanelSize.height));
-        ImageIcon dual = new ImageIcon("TwoPlayer.png");
-        Image scaledDual = dual.getImage().getScaledInstance((int) ((15.0 / 23) * largePanelSize.height), 
-                                                             largePanelSize.height, Image.SCALE_SMOOTH);
+        button2.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
+        ImageIcon dual = new ImageIcon("TwoPlayerSelected.png");
+        Image scaledDual = dual.getImage().getScaledInstance(largePanelSize.height, largePanelSize.height,
+                Image.SCALE_SMOOTH);
         ImageIcon scaledDualIcon = new ImageIcon(scaledDual);
         button2.setIcon(scaledDualIcon);
+        DualActionListener dal = new DualActionListener(largePanelSize.height, largePanelSize.height,
+                button2, bma);
+        button2.addActionListener(dal);
+        bal.addDualActionListener(dal);
+        dal.addBotActionListener(bal);
 
         JLabel label1 = new JLabel("stockfish rating: ");
         label1.setFont(labelFont);
@@ -129,6 +137,9 @@ public class SettingsActionListener implements ActionListener {
                     int value = source.getValue();
                     String sliderValue = Integer.toString(value);
                     label2.setText(sliderValue);
+
+                    // send the input to the computer bot button
+                    bal.setRating(value);
                 }
             }
         });
@@ -141,11 +152,14 @@ public class SettingsActionListener implements ActionListener {
 
         JButton button3 = new JButton();
         button3.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
-        ImageIcon classic = new ImageIcon("Classic.png");
-        Image scaledClassic = classic.getImage().getScaledInstance(largePanelSize.height, 
-                                                    largePanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon classic = new ImageIcon("ClassicSelected.png");
+        Image scaledClassic = classic.getImage().getScaledInstance(largePanelSize.height,
+                largePanelSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledClassicIcon = new ImageIcon(scaledClassic);
         button3.setIcon(scaledClassicIcon);
+        ClassicActionListener cal = new ClassicActionListener(largePanelSize.height, largePanelSize.height,
+                button3, bma);
+        button3.addActionListener(cal);
 
         JPanel filler2 = new JPanel();
         filler2.setBackground(panelColor);
@@ -153,11 +167,16 @@ public class SettingsActionListener implements ActionListener {
 
         JButton button4 = new JButton();
         button4.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
-        ImageIcon modern = new ImageIcon("Modern.png");
-        Image scaledModern = modern.getImage().getScaledInstance(largePanelSize.height, 
-                                                    largePanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon modern = new ImageIcon("ModernUnselected.png");
+        Image scaledModern = modern.getImage().getScaledInstance(largePanelSize.height,
+                largePanelSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledModernIcon = new ImageIcon(scaledModern);
         button4.setIcon(scaledModernIcon);
+        ModernActionListener mal = new ModernActionListener(largePanelSize.height, largePanelSize.height,
+                button4, bma);
+        button4.addActionListener(mal);
+        mal.addClassicActionListener(cal);
+        cal.addModernActionListener(mal);
 
         JLabel title3 = new JLabel("Account");
         title3.setFont(titleFont);
@@ -182,12 +201,12 @@ public class SettingsActionListener implements ActionListener {
         JButton button5 = new JButton();
         button5.setPreferredSize(new Dimension(200, mediumPanelSize.height));
         button5.setFont(labelFont);
-        button5.setText("View History");
+        button5.setText("Sign Up");
 
         JButton button6 = new JButton();
         button6.setPreferredSize(new Dimension(150, mediumPanelSize.height));
         button6.setFont(labelFont);
-        button6.setText("Logout");
+        button6.setText("Login");
 
         // add the components to the jpanels
         panel2.add(title1);
