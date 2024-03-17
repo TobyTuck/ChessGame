@@ -1,9 +1,7 @@
 import javax.swing.*;
 import java.awt.*; // used for Dimension, GraphicsEnvironment, GraphicsDevice
 import java.awt.event.*; // used for MouseAdapter and MouseEvent
-import java.util.Random;
 import java.awt.image.BufferedImage;
-import java.awt.geom.RoundRectangle2D;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -409,38 +407,38 @@ public class ChessBoard extends JFrame {
             BufferedImage bQueenImage = ImageIO.read(new File("BQueen.png"));
             BufferedImage bKingImage = ImageIO.read(new File("BKing.png"));
 
-            list.addComponent(list.pop(0), new BlackRook(blackRookImage));
-            list.addComponent(list.pop(1), new BlackKnight(blackKnightImage));
-            list.addComponent(list.pop(2), new BlackBishop(blackBishopImage));
-            list.addComponent(list.pop(3), new BlackQueen(blackQueenImage));
-            list.addComponent(list.pop(4), new BlackKing(blackKingImage));
-            list.addComponent(list.pop(5), new BlackBishop(blackBishopImage));
-            list.addComponent(list.pop(6), new BlackKnight(blackKnightImage));
-            list.addComponent(list.pop(7), new BlackRook(blackRookImage));
-            list.addComponent(list.pop(8), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(9), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(10), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(11), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(12), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(13), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(14), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(15), new BlackPawn(blackPawnImage));
-            list.addComponent(list.pop(48), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(49), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(50), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(51), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(52), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(53), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(54), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(55), new WhitePawn(whitePawnImage));
-            list.addComponent(list.pop(56), new WhiteRook(whiteRookImage));
-            list.addComponent(list.pop(57), new WhiteKnight(whiteKnightImage));
-            list.addComponent(list.pop(58), new WhiteBishop(whiteBishopImage));
-            list.addComponent(list.pop(59), new WhiteQueen(whiteQueenImage));
-            list.addComponent(list.pop(60), new WhiteKing(whiteKingImage));
-            list.addComponent(list.pop(61), new WhiteBishop(whiteBishopImage));
-            list.addComponent(list.pop(62), new WhiteKnight(whiteKnightImage));
-            list.addComponent(list.pop(63), new WhiteRook(whiteRookImage));
+            list.addComponent(list.pop(0), new BlackRook(blackRookImage, 1));
+            list.addComponent(list.pop(1), new BlackKnight(blackKnightImage, 2));
+            list.addComponent(list.pop(2), new BlackBishop(blackBishopImage, 3));
+            list.addComponent(list.pop(3), new BlackQueen(blackQueenImage, 4));
+            list.addComponent(list.pop(4), new BlackKing(blackKingImage, 5));
+            list.addComponent(list.pop(5), new BlackBishop(blackBishopImage, 6));
+            list.addComponent(list.pop(6), new BlackKnight(blackKnightImage, 7));
+            list.addComponent(list.pop(7), new BlackRook(blackRookImage, 8));
+            list.addComponent(list.pop(8), new BlackPawn(blackPawnImage, 9));
+            list.addComponent(list.pop(9), new BlackPawn(blackPawnImage, 10));
+            list.addComponent(list.pop(10), new BlackPawn(blackPawnImage, 11));
+            list.addComponent(list.pop(11), new BlackPawn(blackPawnImage, 12));
+            list.addComponent(list.pop(12), new BlackPawn(blackPawnImage, 13));
+            list.addComponent(list.pop(13), new BlackPawn(blackPawnImage, 14));
+            list.addComponent(list.pop(14), new BlackPawn(blackPawnImage, 15));
+            list.addComponent(list.pop(15), new BlackPawn(blackPawnImage, 16));
+            list.addComponent(list.pop(48), new WhitePawn(whitePawnImage, 49));
+            list.addComponent(list.pop(49), new WhitePawn(whitePawnImage, 50));
+            list.addComponent(list.pop(50), new WhitePawn(whitePawnImage, 51));
+            list.addComponent(list.pop(51), new WhitePawn(whitePawnImage, 52));
+            list.addComponent(list.pop(52), new WhitePawn(whitePawnImage, 53));
+            list.addComponent(list.pop(53), new WhitePawn(whitePawnImage, 54));
+            list.addComponent(list.pop(54), new WhitePawn(whitePawnImage, 55));
+            list.addComponent(list.pop(55), new WhitePawn(whitePawnImage, 56));
+            list.addComponent(list.pop(56), new WhiteRook(whiteRookImage, 57));
+            list.addComponent(list.pop(57), new WhiteKnight(whiteKnightImage, 58));
+            list.addComponent(list.pop(58), new WhiteBishop(whiteBishopImage, 59));
+            list.addComponent(list.pop(59), new WhiteQueen(whiteQueenImage, 60));
+            list.addComponent(list.pop(60), new WhiteKing(whiteKingImage, 61));
+            list.addComponent(list.pop(61), new WhiteBishop(whiteBishopImage, 62));
+            list.addComponent(list.pop(62), new WhiteKnight(whiteKnightImage, 63));
+            list.addComponent(list.pop(63), new WhiteRook(whiteRookImage, 64));
         } catch (IOException exception) {
             System.out.println("Error locating chesspiece image file(s)");
         }
@@ -607,203 +605,3 @@ public class ChessBoard extends JFrame {
         }
     }
 }
-
-/*
- * Method that updates the chessboard so that it is "modern"
- */
-/*
- * public void makePiecesModern() {
- * // delete
- * System.out.println("Reached makePiecesModern()");
- * 
- * ChessPiece currentPiece;
- * List board = bma.getChessboard();
- * JPanel piece;
- * RoundedPanel newPiece;
- * 
- * try {
- * for (int i = 0; i < board.getSize(); ++i) {
- * currentPiece = (ChessPiece) board.getComponent(i);
- * piece = (JPanel) board.pop(i);
- * 
- * // find the instance the piece belongs to, if any
- * if (currentPiece instanceof WhitePawn) {
- * BufferedImage wPawnImage = ImageIO.read(new File("WPawn.png"));
- * currentPiece.setImage(wPawnImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteRook) {
- * BufferedImage wRookImage = ImageIO.read(new File("WRook.png"));
- * currentPiece.setImage(wRookImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteKnight) {
- * BufferedImage wKnightImage = ImageIO.read(new File("WKnight.png"));
- * currentPiece.setImage(wKnightImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteBishop) {
- * BufferedImage wBishopImage = ImageIO.read(new File("WBishop.png"));
- * currentPiece.setImage(wBishopImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteQueen) {
- * BufferedImage wQueenImage = ImageIO.read(new File("WQueen.png"));
- * currentPiece.setImage(wQueenImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteKing) {
- * BufferedImage wKingImage = ImageIO.read(new File("WKing.png"));
- * currentPiece.setImage(wKingImage);
- * }
- * 
- * else if (currentPiece instanceof BlackPawn) {
- * BufferedImage bPawnImage = ImageIO.read(new File("BPawn.png"));
- * currentPiece.setImage(bPawnImage);
- * }
- * 
- * else if (currentPiece instanceof BlackRook) {
- * BufferedImage bRookImage = ImageIO.read(new File("BRook.png"));
- * currentPiece.setImage(bRookImage);
- * }
- * 
- * else if (currentPiece instanceof BlackKnight) {
- * BufferedImage bKnightImage = ImageIO.read(new File("BKnight.png"));
- * currentPiece.setImage(bKnightImage);
- * }
- * 
- * else if (currentPiece instanceof BlackBishop) {
- * BufferedImage bBishopImage = ImageIO.read(new File("BBishop.png"));
- * currentPiece.setImage(bBishopImage);
- * }
- * 
- * else if (currentPiece instanceof BlackQueen) {
- * BufferedImage bQueenImage = ImageIO.read(new File("BQueen.png"));
- * currentPiece.setImage(bQueenImage);
- * }
- * 
- * else if (currentPiece instanceof BlackKing) {
- * BufferedImage bKingImage = ImageIO.read(new File("BKing.png"));
- * currentPiece.setImage(bKingImage);
- * }
- * 
- * // remove images from their panel
- * 
- * // pin the corrersponding image on its jpanel
- * /*
- * if (piece != null) {
- * pin(currentPiece, piece, 0, 0, "BorderLayout", true);
- * }
- * 
- * 
- * piece.revalidate();
- * piece.repaint();
- * }
- * 
- * // change the color of the background color
- * Color tan = new Color(210, 180, 140);
- * nwContainer.setBackground(tan);
- * neContainer.setBackground(tan);
- * swContainer.setBackground(tan);
- * seContainer.setBackground(tan);
- * 
- * nwContainer.revalidate();
- * nwContainer.repaint();
- * neContainer.revalidate();
- * neContainer.repaint();
- * swContainer.revalidate();
- * swContainer.repaint();
- * seContainer.revalidate();
- * seContainer.repaint();
- * 
- * } catch (IOException exception) {
- * System.out.println("Error locating chesspiece image file(s)");
- * }
- * }
- * 
- * /*
- * Method that updates the chessboard so that it is "classic"
- * 
- * public void makePiecesClassic() {
- * // delete
- * System.out.println("Reached makePiecesClassic()");
- * 
- * ChessPiece currentPiece;
- * List board = bma.getChessboard();
- * JPanel piece;
- * 
- * try {
- * for (int i = 0; i < board.getSize(); ++i) {
- * currentPiece = (ChessPiece) board.getComponent(i);
- * piece = (JPanel) board.pop(i);
- * 
- * // find the instance the piece belongs to, if any
- * if (currentPiece instanceof WhitePawn) {
- * BufferedImage wPawnImage = ImageIO.read(new File("WhitePawn.png"));
- * currentPiece.setImage(wPawnImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteRook) {
- * BufferedImage wRookImage = ImageIO.read(new File("WhiteRook.png"));
- * currentPiece.setImage(wRookImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteKnight) {
- * BufferedImage wKnightImage = ImageIO.read(new File("WhiteKnight.png"));
- * currentPiece.setImage(wKnightImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteBishop) {
- * BufferedImage wBishopImage = ImageIO.read(new File("WhiteBishop.png"));
- * currentPiece.setImage(wBishopImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteQueen) {
- * BufferedImage wQueenImage = ImageIO.read(new File("WhiteQueen.png"));
- * currentPiece.setImage(wQueenImage);
- * }
- * 
- * else if (currentPiece instanceof WhiteKing) {
- * BufferedImage wKingImage = ImageIO.read(new File("WhiteKing.png"));
- * currentPiece.setImage(wKingImage);
- * }
- * 
- * else if (currentPiece instanceof BlackPawn) {
- * BufferedImage bPawnImage = ImageIO.read(new File("BlackPawn.png"));
- * currentPiece.setImage(bPawnImage);
- * }
- * 
- * else if (currentPiece instanceof BlackRook) {
- * BufferedImage bRookImage = ImageIO.read(new File("BlackRook.png"));
- * currentPiece.setImage(bRookImage);
- * }
- * 
- * else if (currentPiece instanceof BlackKnight) {
- * BufferedImage bKnightImage = ImageIO.read(new File("BlackKnight.png"));
- * currentPiece.setImage(bKnightImage);
- * }
- * 
- * else if (currentPiece instanceof BlackBishop) {
- * BufferedImage bBishopImage = ImageIO.read(new File("BlackBishop.png"));
- * currentPiece.setImage(bBishopImage);
- * }
- * 
- * else if (currentPiece instanceof BlackQueen) {
- * BufferedImage bQueenImage = ImageIO.read(new File("BlackQueen.png"));
- * currentPiece.setImage(bQueenImage);
- * }
- * 
- * else if (currentPiece instanceof BlackKing) {
- * BufferedImage bKingImage = ImageIO.read(new File("BlackKing.png"));
- * currentPiece.setImage(bKingImage);
- * }
- * 
- * piece.revalidate();
- * piece.repaint();
- * }
- * } catch (IOException exception) {
- * System.out.println("Error locating chesspiece image file(s)");
- * }
- * }
- * }
- */

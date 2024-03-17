@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*; // used for Dimension, GraphicsEnvironment, GraphicsDevice
-import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.event.*; // used for MouseAdapter and MouseEvent
 import java.io.File;
@@ -33,7 +32,6 @@ public class BoardMouseAdapter extends MouseAdapter {
     // private int myLocation;
 
     private boolean dragged;
-    private JPanel pressedPanel;
     private JPanel _board;
     private JLabel pressedLabel;
     private int offsetX;
@@ -48,6 +46,7 @@ public class BoardMouseAdapter extends MouseAdapter {
     private int _p2PriorLocation;
 
     private boolean optionsInterrupter;
+    private boolean _isClassic; // determines what images are used
 
     public BoardMouseAdapter(List chessboard, int bH, int sW, JLayeredPane jlay, JPanel capWhite,
             JPanel capBlack1, JPanel capBlack2, JPanel board, JPanel ne, JPanel nw, JPanel se,
@@ -69,6 +68,7 @@ public class BoardMouseAdapter extends MouseAdapter {
         _p2Location = 0;
         _p1PriorLocation = 0;
         _p2PriorLocation = 0;
+        _isClassic = true;
 
         // first move is made by white side
         priorMove = new BlackPawn();
@@ -83,9 +83,6 @@ public class BoardMouseAdapter extends MouseAdapter {
      * Separate from the mouseReleased() method
      */
     public void mousePressed(MouseEvent e) {
-        // get the pressed Chess Square panel
-        pressedPanel = getChessSquare(e);
-
         // get the pressed label
         pressedLabel = getChessLabel(getChessSquare(e));
 
@@ -102,8 +99,6 @@ public class BoardMouseAdapter extends MouseAdapter {
      * His selected piece
      */
     public void mouseDragged(MouseEvent e) {
-        JComponent comp = (JComponent) e.getComponent();
-        ChessPiece pressedPiece = (ChessPiece) list.getComponent(pressedPanel);
 
         int newX = e.getXOnScreen() - offsetX;
         int newY = e.getYOnScreen() - offsetY;
@@ -221,8 +216,6 @@ public class BoardMouseAdapter extends MouseAdapter {
 
         // user did not drag the selected piece before release- give options
         else {
-            int possibleLocation = 0;
-
             // Determine if a piece has been selected for movement yet or not
             // First click to chose piece to move, second to indicate sqaure to move to
             if (selectedPanel1 != null) {
@@ -264,8 +257,15 @@ public class BoardMouseAdapter extends MouseAdapter {
                     move(selectedPanel1, selectedPanel2, selectedPiece, selectedPiece2);
 
                     // remove outline from suggested move panels
-                    for (int index = 0; index < myMoves.getSize(); ++index) {
-                        removeOutline((JPanel) list.pop((int) myMoves.pop(index)));
+                    for (int index = 0; index < list.getSize(); ++index) {
+                        // delete
+                        try {
+                            removeOutline((JPanel) list.pop(index), (ChessPiece) list.getComponent(index),
+                                    selectedPiece);
+                        } catch (NullPointerException NPE) {
+                            System.out.println("Error at position " + index);
+                            NPE.printStackTrace();
+                        }
                     }
 
                     // if pawn reaches the end of the board- make it a queen
@@ -315,6 +315,7 @@ public class BoardMouseAdapter extends MouseAdapter {
                             _p2PriorLocation);
                     for (int index = 0; index < myMoves.getSize(); ++index) {
                         possibleMove = (int) myMoves.pop(index);
+
                         // if move is opponent, highlight it for user
                         if (isOpponent((ChessPiece) list.getComponent(_p1Location),
                                 (ChessPiece) list.getComponent(possibleMove))) {
@@ -341,11 +342,11 @@ public class BoardMouseAdapter extends MouseAdapter {
                                 &&
                                 (_p1PriorLocation == _p2PriorLocation + 16 ||
                                         _p1PriorLocation == _p2PriorLocation - 16))
-                            addSquare((JPanel) list.pop(possibleMove), 20, Color.red);
+                            addCircle((JPanel) list.pop(possibleMove), 40, Color.red);
 
                         // standard move
                         else
-                            addSquare((JPanel) list.pop(possibleMove), 20, option);
+                            addCircle((JPanel) list.pop(possibleMove), 40, option);
                     }
 
                     // throw flag so a dragged option is not able to interrupt
@@ -657,14 +658,48 @@ public class BoardMouseAdapter extends MouseAdapter {
     private void pawnReplacement(int position) {
         // if pawn reaches the end of the board- make it a queen
         if (selectedPiece instanceof BlackPawn && findRow(position) == 8) {
-            list.addComponent(selectedPanel2, new BlackQueen());
-            pin(new BlackQueen(), selectedPanel2, 0, 0, "BorderLayout", true);
+            BlackQueen queenPiece = new BlackQueen();
+            if (_isClassic) {
+                try {
+                    queenPiece.setImage(ImageIO.read(new File("BlackQueen.png")));
+                } catch (IOException exception) {
+                    System.out.println("Error Black Queen image file");
+                }
+            }
+
+            // board is using modern pieces
+            else {
+                try {
+                    queenPiece.setImage(ImageIO.read(new File("BQueen.png")));
+                } catch (IOException exception) {
+                    System.out.println("Error Black Queen image file");
+                }
+            }
+            list.addComponent(selectedPanel2, queenPiece);
+            pin(queenPiece, selectedPanel2, 0, 0, "BorderLayout", true);
         }
 
         // if pawn reaches the end of the board- make it a queen
         if (selectedPiece instanceof WhitePawn && findRow(position) == 1) {
-            list.addComponent(selectedPanel2, new WhiteQueen());
-            pin(new WhiteQueen(), selectedPanel2, 0, 0, "BorderLayout", true);
+            WhiteQueen queenPiece = new WhiteQueen();
+            if (_isClassic) {
+                try {
+                    queenPiece.setImage(ImageIO.read(new File("WhiteQueen.png")));
+                } catch (IOException exception) {
+                    System.out.println("Error White Queen image file");
+                }
+            }
+
+            // board is using modern pieces
+            else {
+                try {
+                    queenPiece.setImage(ImageIO.read(new File("WQueen.png")));
+                } catch (IOException exception) {
+                    System.out.println("Error White Queen image file");
+                }
+            }
+            list.addComponent(selectedPanel2, queenPiece);
+            pin(queenPiece, selectedPanel2, 0, 0, "BorderLayout", true);
         }
     }
 
@@ -735,6 +770,8 @@ public class BoardMouseAdapter extends MouseAdapter {
     private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,
             boolean dimensionDecider) {
 
+        panel.setLayout(new BorderLayout());
+
         // default height and width for each chesspiece
         if (width == 0 && height == 0) {
             if (piece instanceof BlackPawn || piece instanceof WhitePawn) {
@@ -804,138 +841,187 @@ public class BoardMouseAdapter extends MouseAdapter {
      * The width of this outline is specified w/ in the methods parameters
      */
     private void outline(JPanel panel, Color color, int depth) {
-        panel.setLayout(new BorderLayout());
+        panel.setLayout(new GridBagLayout());
 
         // get the contents of the current square
         Component[] pComponents = panel.getComponents();
         JLabel myLabel = null;
+
         for (Component c : pComponents) {
             if (c instanceof JLabel)
                 myLabel = (JLabel) c;
         }
+        stripLabels(panel);
 
-        // create the jlabels that acts as the outline
-        JLabel northOutliner = new JLabel();
-        JLabel southOutliner = new JLabel();
-        JLabel eastOutliner = new JLabel();
-        JLabel westOutliner = new JLabel();
+        Color previousColor = panel.getBackground();
+        panel.setBackground(color);
 
-        northOutliner.setBackground(color);
-        southOutliner.setBackground(color);
-        eastOutliner.setBackground(color);
-        westOutliner.setBackground(color);
-
-        // set Dimensions of the outline panels
-        northOutliner.setPreferredSize(new Dimension(panel.getWidth(), depth));
-        southOutliner.setPreferredSize(new Dimension(panel.getWidth(), depth));
-        eastOutliner.setPreferredSize(new Dimension(depth, panel.getHeight()));
-        westOutliner.setPreferredSize(new Dimension(depth, panel.getHeight()));
-
-        northOutliner.setOpaque(true);
-        southOutliner.setOpaque(true);
-        eastOutliner.setOpaque(true);
-        westOutliner.setOpaque(true);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.CENTER;
 
         if (myLabel != null) {
-            panel.add(myLabel, BorderLayout.CENTER);
-            panel.add(northOutliner, BorderLayout.NORTH);
-            panel.add(southOutliner, BorderLayout.SOUTH);
-            panel.add(eastOutliner, BorderLayout.EAST);
-            panel.add(westOutliner, BorderLayout.WEST);
-        }
+            // Board is made of RoundedPanels
+            if (!_isClassic) {
+                RoundedPanel front = new RoundedPanel(30);
+                front.setLayout(new GridBagLayout());
+                front.setBackground(previousColor);
 
-        else {
-            Color myColor = panel.getBackground();
-            JLabel center = new JLabel();
-            center.setPreferredSize(new Dimension(panel.getWidth() - (2 * depth),
-                    panel.getHeight() - (2 * depth)));
-            center.setBackground(myColor);
-            panel.add(center, BorderLayout.CENTER);
-            panel.add(northOutliner, BorderLayout.NORTH);
-            panel.add(southOutliner, BorderLayout.SOUTH);
-            panel.add(eastOutliner, BorderLayout.EAST);
-            panel.add(westOutliner, BorderLayout.WEST);
+                Dimension pDim = panel.getPreferredSize();
+                Dimension fDim = new Dimension(pDim.width - (2 * depth), pDim.height - (2 * depth));
+                front.setPreferredSize(fDim);
+
+                front.add(myLabel, gbc);
+                panel.add(front, gbc);
+            }
+
+            // Board is made of square JPanels
+            else {
+                JPanel front = new JPanel();
+                front.setLayout(new GridBagLayout());
+                front.setBackground(previousColor);
+
+                Dimension pDim = panel.getPreferredSize();
+                Dimension fDim = new Dimension(pDim.width - (2 * depth), pDim.height - (2 * depth));
+                front.setPreferredSize(fDim);
+
+                front.add(myLabel, gbc);
+                panel.add(front, gbc);
+
+                // Help the graphics look better- change background color if corner square
+                JPanel square1 = (JPanel) list.pop(0);
+                JPanel square8 = (JPanel) list.pop(7);
+                JPanel square57 = (JPanel) list.pop(56);
+                JPanel square64 = (JPanel) list.pop(63);
+
+                if (panel == square1) {
+                    _nwPanel.setBackground(color);
+                    _nwPanel.revalidate();
+                    _nwPanel.repaint();
+                }
+
+                else if (panel == square8) {
+                    _nePanel.setBackground(color);
+                    _nePanel.revalidate();
+                    _nePanel.repaint();
+                }
+
+                else if (panel == square57) {
+                    _swPanel.setBackground(color);
+                    _swPanel.revalidate();
+                    _swPanel.repaint();
+                }
+
+                else if (panel == square64) {
+                    _sePanel.setBackground(color);
+                    _sePanel.revalidate();
+                    _sePanel.repaint();
+                }
+            }
         }
 
         panel.revalidate();
         panel.repaint();
     }
 
-    private void addSquare(JPanel panel, int x, Color color) {
-
-        panel.setLayout(new BorderLayout());
-
-        JLabel center = new JLabel();
-        JLabel north = new JLabel();
-        JLabel south = new JLabel();
-        JLabel east = new JLabel();
-        JLabel west = new JLabel();
-
-        center.setBackground(color);
-
-        Color panelColor = panel.getBackground();
-        north.setBackground(panelColor);
-        south.setBackground(panelColor);
-        east.setBackground(panelColor);
-        west.setBackground(panelColor);
-
+    private void addCircle(JPanel panel, int x, Color color) {
+        RoundLabel center = new RoundLabel(40);
         center.setPreferredSize(new Dimension(x, x));
-        north.setPreferredSize(new Dimension(panel.getWidth(), (int) (0.5 * (panel.getHeight() - x))));
-        south.setPreferredSize(new Dimension(panel.getWidth(), (int) (0.5 * (panel.getHeight() - x))));
-        east.setPreferredSize(new Dimension((int) (0.5 * (panel.getWidth() - x)), panel.getHeight()));
-        west.setPreferredSize(new Dimension((int) (0.5 * (panel.getWidth() - x)), panel.getHeight()));
-
+        center.setBackground(color);
         center.setOpaque(true);
-        north.setOpaque(true);
-        south.setOpaque(true);
-        east.setOpaque(true);
-        west.setOpaque(true);
 
-        panel.add(center, BorderLayout.CENTER);
-        panel.add(north, BorderLayout.NORTH);
-        panel.add(south, BorderLayout.SOUTH);
-        panel.add(east, BorderLayout.EAST);
-        panel.add(west, BorderLayout.WEST);
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.anchor = GridBagConstraints.CENTER;
+
+        panel.add(center, gbc);
 
         panel.revalidate();
         panel.repaint();
     }
 
-    private void removeOutline(JPanel panel) {
-        // sort through components and strip all of panel
-        Component[] cComponents = panel.getComponents();
+    private void removeOutline(JPanel currentPanel, ChessPiece currentPiece, ChessPiece selectedPiece) {
         JLabel label = null;
-        for (Component c : cComponents) {
-            if (c instanceof JLabel)
+        JLabel pieceIcon = null;
+
+        JPanel panel = null;
+        Component[] pComponents = currentPanel.getComponents();
+        for (Component c : pComponents) {
+            if (c instanceof JLabel) {
                 label = (JLabel) c;
-            if (label.getIcon() == null)
-                panel.remove(c);
+                if (label.getIcon() == null)
+                    currentPanel.remove(c);
+                else
+                    pieceIcon = label;
+
+                currentPanel.revalidate();
+                currentPanel.repaint();
+            }
         }
 
-        panel.revalidate();
-        panel.repaint();
+        // remove the outline of any chesspiece
+        pComponents = currentPanel.getComponents();
+        for (Component c : pComponents) {
+            if (c instanceof JPanel) {
+                panel = (JPanel) c;
+                // if (currentPiece != null && sameColor(currentPiece, selectedPiece)) {
+                if (currentPiece != null) {
+                    if (pieceIcon != null) {
+                        GridBagConstraints gbc = new GridBagConstraints();
+                        gbc.gridx = 0;
+                        gbc.gridy = 0;
+                        gbc.weightx = 1.0;
+                        gbc.weighty = 1.0;
+                        gbc.anchor = GridBagConstraints.CENTER;
+                        currentPanel.setLayout(new GridBagLayout());
+
+                        currentPanel.add(pieceIcon, gbc);
+                        stripPanels(currentPanel);
+                    }
+                } else {
+                    stripLabels(currentPanel);
+                    stripPanels(currentPanel);
+                }
+
+                currentPanel.setBackground(panel.getBackground());
+
+                currentPanel.revalidate();
+                currentPanel.repaint();
+            }
+        }
+
+        if (_isClassic) {
+            Color tan = new Color(210, 180, 140);
+            Color brown = new Color(139, 69, 19);
+            _nePanel.setBackground(brown);
+            _nwPanel.setBackground(tan);
+            _sePanel.setBackground(tan);
+            _swPanel.setBackground(brown);
+        }
     }
 
     /**
      * Chess rules that apply to piece movements are the following:
      * 1.In order to move a chesspiece, the piece moved must first be clicked, then
-     * the square to
-     * which the user wants to move
+     * the square to which the user wants to move
      * 2.A chesspiece may not be moved to any square in which a piece of the same
      * color resides
      * 3.Each chesspiece has a certain pattern they are able to move in, as defined
-     * in their
-     * respective classes
+     * in their respective classes
      * 4.If a chesspiece is moved onto a square occupied by a chesspiece of the
-     * opposite color,
-     * the latter is deemed 'captured' and removed from the board, while the former
-     * now
-     * occupies that square
+     * opposite color, the latter is deemed 'captured' and removed from the board,
+     * while the former now occupies that square
      * 5.If a king is put in check, he is required to remove himself from this
      * situation if possible
      * 6.If a chesspiece is in a position that blocks his King from being in check,
-     * that piece is
-     * unable to be moved by his player
+     * that piece is unable to be moved by his player
      */
     /*
      * Method that checks to see if two chesspieces are of the same color
@@ -1079,6 +1165,9 @@ public class BoardMouseAdapter extends MouseAdapter {
      * 2. Modern chesspiece images
      */
     public void makeModern() {
+
+        _isClassic = false;
+
         // Step 1: Make the JPanels of the chessboard and its background rounded
         // copy the contents of the first list into a new one, with rounded jpanels
         List newList = new List(list.getSize());
@@ -1291,6 +1380,13 @@ public class BoardMouseAdapter extends MouseAdapter {
             ++count;
         }
 
+        // Change the color of the background JPanels
+        _sePanel.setBackground(tan);
+        _swPanel.setBackground(tan);
+        _nePanel.setBackground(tan);
+        _nwPanel.setBackground(tan);
+        _board.setBackground(tan);
+
         // copy the locations of the chesspieces of the first into the second
         RoundedPanel currentPanel;
         ChessPiece currentPiece;
@@ -1298,34 +1394,30 @@ public class BoardMouseAdapter extends MouseAdapter {
             currentPanel = (RoundedPanel) newList.pop(i);
             currentPiece = (ChessPiece) list.getComponent(i);
 
+            // copy the chesspiece represenations over
             newList.addComponent(currentPanel, currentPiece);
         }
 
-        list = newList;
-
         // Step 2: Update all the chesspiece images
+        JPanel pastPanel;
+        ChessPiece pastPiece;
         try {
-            int labelCount = 0;
-            for (int i = 0; i < list.getSize(); ++i) {
-                currentPanel = (RoundedPanel) list.pop(i);
-                currentPiece = (ChessPiece) list.getComponent(i);
+            for (int i = 0; i < newList.getSize(); ++i) {
+                currentPanel = (RoundedPanel) newList.pop(i);
+                currentPiece = (ChessPiece) newList.getComponent(i);
 
-                // copy JLabel indicators over to the new panels
-                Component[] components = currentPanel.getComponents();
-                for (Component c : components) {
-                    if (c instanceof JLabel) {
-                        ++labelCount;
-                    }
-                }
+                pastPanel = (JPanel) list.pop(i);
+                pastPiece = (ChessPiece) list.getComponent(i);
 
-                if (labelCount == 1) {
-                    System.out.println("addSquare()");
-                    addSquare(currentPanel, 20, new Color(127, 255, 0));
-                }
+                // update the fields
+                if (pastPanel == selectedPanel1)
+                    selectedPanel1 = currentPanel;
 
-                if (labelCount > 1) {
-                    outline(currentPanel, Color.blue, 5);
-                }
+                else if (pastPanel == selectedPanel2)
+                    selectedPanel2 = currentPanel;
+
+                else if (pastPiece == selectedPiece)
+                    selectedPiece = currentPiece;
 
                 // decide what image file to use
                 if (currentPiece instanceof WhitePawn) {
@@ -1402,12 +1494,58 @@ public class BoardMouseAdapter extends MouseAdapter {
             System.out.println("Error locating chesspiece image file(s)");
         }
 
-        // Change the color of the background JPanels
-        _sePanel.setBackground(tan);
-        _swPanel.setBackground(tan);
-        _nePanel.setBackground(tan);
-        _nwPanel.setBackground(tan);
-        _board.setBackground(tan);
+        // Step 3- copy the labels over
+        // labels indicate possible moves and selections
+        // copy JLabel indicators over to the new panels
+        int labelCount,
+                panelCount;
+        for (int i = 0; i < newList.getSize(); ++i) {
+            currentPanel = (RoundedPanel) newList.pop(i);
+            currentPiece = (ChessPiece) list.getComponent(i);
+
+            pastPanel = (JPanel) list.pop(i);
+            labelCount = panelCount = 0;
+
+            Component[] components = pastPanel.getComponents();
+            for (Component c : components) {
+                if (c instanceof JLabel) {
+                    ++labelCount;
+                }
+
+                if (c instanceof JPanel) {
+                    ++panelCount;
+                }
+            }
+
+            // copy over possible moves
+            if (currentPiece == null && labelCount == 1) {
+                addCircle(currentPanel, 40, new Color(127, 255, 0));
+            }
+
+            // copy over moves that overlap with other pieces
+            // includes- opponent captures and moves with pieces of the same color
+            if (currentPiece != null && panelCount > 0) {
+                // piece selection
+                if (currentPiece == selectedPiece) {
+                    if (isWhite(currentPiece))
+                        outline(currentPanel, Color.white, 5);
+
+                    // piece is black
+                    else
+                        outline(currentPanel, Color.black, 5);
+                }
+
+                // opponent captures
+                if (isOpponent(currentPiece, selectedPiece))
+                    outline(currentPanel, Color.red, 5);
+
+                // castling
+                if (sameColor(currentPiece, selectedPiece) && currentPiece != selectedPiece)
+                    outline(currentPanel, (new Color(127, 255, 0)), 5);
+            }
+        }
+
+        list = newList;
     }
 
     /**
@@ -1417,6 +1555,9 @@ public class BoardMouseAdapter extends MouseAdapter {
      * 2. Classic chesspiece images
      */
     public void makeClassic() {
+
+        _isClassic = true;
+
         // Step 1: Make the JPanels of the chessboard and its background rounded
         // copy the contents of the first list into a new one, with rounded jpanels
         List newList = new List(list.getSize());
@@ -1629,6 +1770,12 @@ public class BoardMouseAdapter extends MouseAdapter {
             ++count;
         }
 
+        // Change the color of the background JPanels
+        _sePanel.setBackground(tan);
+        _swPanel.setBackground(brown);
+        _nePanel.setBackground(brown);
+        _nwPanel.setBackground(tan);
+
         // copy the locations of the chesspieces of the first into the second
         JPanel currentPanel;
         ChessPiece currentPiece;
@@ -1639,31 +1786,26 @@ public class BoardMouseAdapter extends MouseAdapter {
             newList.addComponent(currentPanel, currentPiece);
         }
 
-        list = newList;
-
         // Step 2: Update all the chesspiece images
+        JPanel pastPanel;
+        ChessPiece pastPiece;
         try {
-            int labelCount = 0;
-            for (int i = 0; i < list.getSize(); ++i) {
-                currentPanel = (JPanel) list.pop(i);
-                currentPiece = (ChessPiece) list.getComponent(i);
+            for (int i = 0; i < newList.getSize(); ++i) {
+                currentPanel = (JPanel) newList.pop(i);
+                currentPiece = (ChessPiece) newList.getComponent(i);
 
-                // copy JLabel indicators over to the new panels
-                Component[] components = currentPanel.getComponents();
-                for (Component c : components) {
-                    if (c instanceof JLabel) {
-                        ++labelCount;
-                    }
-                }
+                pastPanel = (JPanel) list.pop(i);
+                pastPiece = (ChessPiece) list.getComponent(i);
 
-                if (labelCount == 1) {
-                    System.out.println("addSquare()");
-                    addSquare(currentPanel, 20, new Color(127, 255, 0));
-                }
+                // update the fields
+                if (pastPanel == selectedPanel1)
+                    selectedPanel1 = currentPanel;
 
-                if (labelCount > 1) {
-                    outline(currentPanel, Color.blue, 5);
-                }
+                else if (pastPanel == selectedPanel2)
+                    selectedPanel2 = currentPanel;
+
+                else if (pastPiece == selectedPiece)
+                    selectedPiece = currentPiece;
 
                 // decide what image file to use
                 if (currentPiece instanceof WhitePawn) {
@@ -1740,10 +1882,59 @@ public class BoardMouseAdapter extends MouseAdapter {
             System.out.println("Error locating chesspiece image file(s)");
         }
 
-        // Change the color of the background JPanels
-        _sePanel.setBackground(tan);
-        _swPanel.setBackground(brown);
-        _nePanel.setBackground(brown);
-        _nwPanel.setBackground(tan);
+        // Step 3- copy the labels over
+        // labels indicate possible moves and selections
+        // copy JLabel indicators over to the new panels
+        int labelCount,
+                panelCount;
+        RoundedPanel pastRPanel;
+        for (int i = 0; i < newList.getSize(); ++i) {
+            currentPanel = (JPanel) newList.pop(i);
+            currentPiece = (ChessPiece) list.getComponent(i);
+
+            pastRPanel = (RoundedPanel) list.pop(i);
+            labelCount = panelCount = 0;
+
+            // Get the number of labels and panels attached to the parent panbel
+            Component[] components = pastRPanel.getComponents();
+            for (Component c : components) {
+                if (c instanceof JLabel) {
+                    ++labelCount;
+                }
+
+                if (c instanceof JPanel) {
+                    ++panelCount;
+                }
+            }
+
+            // copy over possible moves that don't capture
+            if (currentPiece == null && labelCount == 1) {
+                addCircle(currentPanel, 40, new Color(127, 255, 0));
+            }
+
+            // copy over moves that overlap with other pieces
+            // includes- opponent captures and moves with pieces of the same color
+            if (currentPiece != null && panelCount > 0) {
+                // piece selection
+                if (currentPiece == selectedPiece) {
+                    if (isWhite(currentPiece))
+                        outline(currentPanel, Color.white, 5);
+
+                    // piece is black
+                    else
+                        outline(currentPanel, Color.black, 5);
+                }
+
+                // opponent captures
+                if (isOpponent(currentPiece, selectedPiece))
+                    outline(currentPanel, Color.red, 5);
+
+                // castling
+                if (sameColor(currentPiece, selectedPiece) && currentPiece != selectedPiece)
+                    outline(currentPanel, (new Color(127, 255, 0)), 5);
+            }
+        }
+
+        list = newList;
     }
 }
