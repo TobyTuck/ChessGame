@@ -6,8 +6,6 @@ template for all types of Chess-pieces
 
 import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
-import java.awt.image.AffineTransformOp;
-import java.awt.geom.AffineTransform;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JPanel;
@@ -22,13 +20,6 @@ public abstract class ChessPiece {
      * parameters
      */
     public void scaleImage(int newWidth, int newHeight) {
-
-        // Make sure the aspect ratio is maintained, so the image is not distorted
-        double thumbRatio = (double) newWidth / (double) newHeight;
-        int imageWidth = _image.getWidth();
-        int imageHeight = _image.getHeight();
-        double aspectRatio = (double) imageWidth / (double) imageHeight;
-
         // Draw the scaled image
         BufferedImage newImage = new BufferedImage(newWidth, newHeight,
                 BufferedImage.TYPE_INT_ARGB);
@@ -386,4 +377,13 @@ public abstract class ChessPiece {
      */
     public abstract List possibleMoves(int myLocation, List chessboard, boolean hold,
             int startLastMove, int endLastMove);
+
+    /**
+     * Method that returns a String representation, and includes the following:
+     * 1. String representation of a chesspiece
+     * - Eg., "Black King"
+     * 2. The position of the piece on the chessboard
+     * - Eg., "52"
+     */
+    public abstract String toString();
 }
