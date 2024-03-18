@@ -75,6 +75,7 @@ public class BoardMouseAdapter extends MouseAdapter {
 
         dragged = false;
         optionsInterrupter = false;
+        selectedPiece = null;
     }
 
     @Override
@@ -225,12 +226,6 @@ public class BoardMouseAdapter extends MouseAdapter {
                 // move must be deemed valid
                 if (validMove(location, selectedPiece, selectedPiece2)) {
 
-                    /*
-                     * if(selectedPiece != selectedPiece2){
-                     * _p1PriorLocation = possibleLocation;
-                     * _p2PriorLocation = _p2Location;}
-                     */
-
                     _p2Location = location;
 
                     Component[] jcomponents = selectedPanel1.getComponents();
@@ -262,9 +257,9 @@ public class BoardMouseAdapter extends MouseAdapter {
                         try {
                             removeOutline((JPanel) list.pop(index), (ChessPiece) list.getComponent(index),
                                     selectedPiece);
-                        } catch (NullPointerException NPE) {
+                        } catch (NullPointerException npe) {
                             System.out.println("Error at position " + index);
-                            NPE.printStackTrace();
+                            npe.printStackTrace();
                         }
                     }
 
@@ -301,53 +296,9 @@ public class BoardMouseAdapter extends MouseAdapter {
                     selectedPanel1 = clickedPanel;
                     selectedPiece = piece;
 
-                    if (isBlack(selectedPiece))
-                        outline(selectedPanel1, Color.black, 5);
-                    else
-                        outline(selectedPanel1, Color.white, 5);
-
                     // provide suggestions
-                    int possibleMove;
-                    ChessPiece past = (ChessPiece) list.getComponent(_p2PriorLocation);
-                    Color option = new Color(127, 255, 0);
-                    Color captureKing = new Color(128, 0, 128);
-                    myMoves = selectedPiece.possibleMoves(_p1Location, list, true, _p1PriorLocation,
-                            _p2PriorLocation);
-                    for (int index = 0; index < myMoves.getSize(); ++index) {
-                        possibleMove = (int) myMoves.pop(index);
-
-                        // if move is opponent, highlight it for user
-                        if (isOpponent((ChessPiece) list.getComponent(_p1Location),
-                                (ChessPiece) list.getComponent(possibleMove))) {
-                            if (!isKing((ChessPiece) list.getComponent(possibleMove)))
-                                outline((JPanel) list.pop(possibleMove), Color.red, 5);
-                            else
-                                outline((JPanel) list.pop(possibleMove), captureKing, 5);
-                        }
-
-                        // castle
-                        else if (sameColor((ChessPiece) list.getComponent(_p1Location),
-                                (ChessPiece) list.getComponent(possibleMove)))
-                            outline((JPanel) list.pop(possibleMove), option, 5);
-
-                        // en passant move to capture opponent
-                        else if ((selectedPiece instanceof BlackPawn ||
-                                selectedPiece instanceof WhitePawn) &&
-                                (past instanceof BlackPawn || past instanceof WhitePawn) &&
-                                (possibleMove == _p2PriorLocation + 8 ||
-                                        possibleMove == _p2PriorLocation - 8)
-                                &&
-                                (_p1Location == possibleMove + 7 || _p1Location == possibleMove + 9 ||
-                                        _p1Location == possibleMove - 7 || _p1Location == possibleMove - 9)
-                                &&
-                                (_p1PriorLocation == _p2PriorLocation + 16 ||
-                                        _p1PriorLocation == _p2PriorLocation - 16))
-                            addCircle((JPanel) list.pop(possibleMove), 40, Color.red);
-
-                        // standard move
-                        else
-                            addCircle((JPanel) list.pop(possibleMove), 40, option);
-                    }
+                    getMoves();
+                    selectPanel(selectedPanel1, selectedPiece);
 
                     // throw flag so a dragged option is not able to interrupt
                     optionsInterrupter = true;
@@ -1008,6 +959,70 @@ public class BoardMouseAdapter extends MouseAdapter {
     }
 
     /**
+     * Method that takes the possible moves and places them on the board
+     */
+    private void getMoves() {
+        // ensure panel is selected before getting the possible moves
+        if (selectedPiece != null) {
+            int possibleMove;
+            ChessPiece past = (ChessPiece) list.getComponent(_p2PriorLocation);
+            Color option = new Color(127, 255, 0);
+            Color captureKing = new Color(128, 0, 128);
+            myMoves = selectedPiece.possibleMoves(_p1Location, list, true, _p1PriorLocation,
+                    _p2PriorLocation);
+            for (int index = 0; index < myMoves.getSize(); ++index) {
+                possibleMove = (int) myMoves.pop(index);
+
+                // if move is opponent, highlight it for user
+                if (isOpponent((ChessPiece) list.getComponent(_p1Location),
+                        (ChessPiece) list.getComponent(possibleMove))) {
+                    if (!isKing((ChessPiece) list.getComponent(possibleMove)))
+                        outline((JPanel) list.pop(possibleMove), Color.red, 5);
+                    else
+                        outline((JPanel) list.pop(possibleMove), captureKing, 5);
+                }
+
+                // castle
+                else if (sameColor((ChessPiece) list.getComponent(_p1Location),
+                        (ChessPiece) list.getComponent(possibleMove)))
+                    outline((JPanel) list.pop(possibleMove), option, 5);
+
+                // en passant move to capture opponent
+                else if ((selectedPiece instanceof BlackPawn ||
+                        selectedPiece instanceof WhitePawn) &&
+                        (past instanceof BlackPawn || past instanceof WhitePawn) &&
+                        (possibleMove == _p2PriorLocation + 8 ||
+                                possibleMove == _p2PriorLocation - 8)
+                        &&
+                        (_p1Location == possibleMove + 7 || _p1Location == possibleMove + 9 ||
+                                _p1Location == possibleMove - 7 || _p1Location == possibleMove - 9)
+                        &&
+                        (_p1PriorLocation == _p2PriorLocation + 16 ||
+                                _p1PriorLocation == _p2PriorLocation - 16))
+                    addCircle((JPanel) list.pop(possibleMove), 40, Color.red);
+
+                // standard move
+                else
+                    addCircle((JPanel) list.pop(possibleMove), 40, option);
+            }
+        }
+    }
+
+    /**
+     * Method that outlines the selected panel
+     */
+    private void selectPanel(JPanel panel, ChessPiece piece) {
+        // ensure that a panel is physically selected before outlining it
+        if (selectedPiece != null) {
+            if (isWhite(piece))
+                outline(panel, Color.white, 5);
+
+            else
+                outline(panel, Color.black, 5);
+        }
+    }
+
+    /**
      * Chess rules that apply to piece movements are the following:
      * 1.In order to move a chesspiece, the piece moved must first be clicked, then
      * the square to which the user wants to move
@@ -1122,38 +1137,6 @@ public class BoardMouseAdapter extends MouseAdapter {
     private boolean isKing(ChessPiece piece) {
         if (piece instanceof BlackKing || piece instanceof WhiteKing)
             return true;
-
-        return false;
-    }
-
-    /**
-     * Method that checks if a piece is eligible to be captured
-     */
-    private boolean isCheck(List chessboard, ChessPiece king, int myLocation) {
-        ChessPiece piece;
-        List myMoves;
-        int location = 0;
-        // sort through all chess squares
-        for (int index = 0; index < chessboard.getSize(); ++index) {
-            piece = (ChessPiece) chessboard.getComponent(index);
-            // if chespiece is an opponent
-            if (isOpponent(piece, king) && piece != null) {
-                // get my location
-                for (int count = 0; count < chessboard.getSize(); ++count) {
-                    if (chessboard.getComponent(count) == piece)
-                        location = count;
-                }
-
-                // find legal moves
-                myMoves = piece.possibleMoves(location, chessboard, true, _p1PriorLocation,
-                        _p2PriorLocation);
-                for (int count = 0; count < myMoves.getSize(); ++count) {
-                    // is one of the opponents move on the piece specified in the parameters
-                    if ((int) myMoves.pop(count) == myLocation)
-                        return true;
-                }
-            }
-        }
 
         return false;
     }
@@ -1494,58 +1477,11 @@ public class BoardMouseAdapter extends MouseAdapter {
             System.out.println("Error locating chesspiece image file(s)");
         }
 
-        // Step 3- copy the labels over
-        // labels indicate possible moves and selections
-        // copy JLabel indicators over to the new panels
-        int labelCount,
-                panelCount;
-        for (int i = 0; i < newList.getSize(); ++i) {
-            currentPanel = (RoundedPanel) newList.pop(i);
-            currentPiece = (ChessPiece) list.getComponent(i);
-
-            pastPanel = (JPanel) list.pop(i);
-            labelCount = panelCount = 0;
-
-            Component[] components = pastPanel.getComponents();
-            for (Component c : components) {
-                if (c instanceof JLabel) {
-                    ++labelCount;
-                }
-
-                if (c instanceof JPanel) {
-                    ++panelCount;
-                }
-            }
-
-            // copy over possible moves
-            if (currentPiece == null && labelCount == 1) {
-                addCircle(currentPanel, 40, new Color(127, 255, 0));
-            }
-
-            // copy over moves that overlap with other pieces
-            // includes- opponent captures and moves with pieces of the same color
-            if (currentPiece != null && panelCount > 0) {
-                // piece selection
-                if (currentPiece == selectedPiece) {
-                    if (isWhite(currentPiece))
-                        outline(currentPanel, Color.white, 5);
-
-                    // piece is black
-                    else
-                        outline(currentPanel, Color.black, 5);
-                }
-
-                // opponent captures
-                if (isOpponent(currentPiece, selectedPiece))
-                    outline(currentPanel, Color.red, 5);
-
-                // castling
-                if (sameColor(currentPiece, selectedPiece) && currentPiece != selectedPiece)
-                    outline(currentPanel, (new Color(127, 255, 0)), 5);
-            }
-        }
-
         list = newList;
+
+        // copy over the moves on the chessboard
+        getMoves();
+        selectPanel(selectedPanel1, selectedPiece);
     }
 
     /**
@@ -1882,59 +1818,10 @@ public class BoardMouseAdapter extends MouseAdapter {
             System.out.println("Error locating chesspiece image file(s)");
         }
 
-        // Step 3- copy the labels over
-        // labels indicate possible moves and selections
-        // copy JLabel indicators over to the new panels
-        int labelCount,
-                panelCount;
-        RoundedPanel pastRPanel;
-        for (int i = 0; i < newList.getSize(); ++i) {
-            currentPanel = (JPanel) newList.pop(i);
-            currentPiece = (ChessPiece) list.getComponent(i);
-
-            pastRPanel = (RoundedPanel) list.pop(i);
-            labelCount = panelCount = 0;
-
-            // Get the number of labels and panels attached to the parent panbel
-            Component[] components = pastRPanel.getComponents();
-            for (Component c : components) {
-                if (c instanceof JLabel) {
-                    ++labelCount;
-                }
-
-                if (c instanceof JPanel) {
-                    ++panelCount;
-                }
-            }
-
-            // copy over possible moves that don't capture
-            if (currentPiece == null && labelCount == 1) {
-                addCircle(currentPanel, 40, new Color(127, 255, 0));
-            }
-
-            // copy over moves that overlap with other pieces
-            // includes- opponent captures and moves with pieces of the same color
-            if (currentPiece != null && panelCount > 0) {
-                // piece selection
-                if (currentPiece == selectedPiece) {
-                    if (isWhite(currentPiece))
-                        outline(currentPanel, Color.white, 5);
-
-                    // piece is black
-                    else
-                        outline(currentPanel, Color.black, 5);
-                }
-
-                // opponent captures
-                if (isOpponent(currentPiece, selectedPiece))
-                    outline(currentPanel, Color.red, 5);
-
-                // castling
-                if (sameColor(currentPiece, selectedPiece) && currentPiece != selectedPiece)
-                    outline(currentPanel, (new Color(127, 255, 0)), 5);
-            }
-        }
-
         list = newList;
+
+        // copy over the moves on the chessboard
+        getMoves();
+        selectPanel(selectedPanel1, selectedPiece);
     }
 }

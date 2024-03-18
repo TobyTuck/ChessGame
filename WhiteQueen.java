@@ -34,28 +34,23 @@ public class WhiteQueen extends ChessPiece {
         _kingLocation = 0;
 
         // set file image
-        /*
-         * BufferedImage image = super.getImage();
-         * if (image != null) {
-         * // delete
-         * System.out.println("Made it to the White Queen pre-conceived piece");
-         * 
-         * // pass image to parent class
-         * super.setImage(image);
-         * }
-         * 
-         * else {
-         * try {
-         * // open image file
-         * image = ImageIO.read(new File("WhiteQueen.png"));
-         * 
-         * // pass image to parent class
-         * setImage(image);
-         * } catch (IOException exception) {
-         * System.out.println("Error locating White Queen image file");
-         * }
-         * }
-         */
+        BufferedImage image = super.getImage();
+        if (image != null) {
+            // pass image to parent class
+            super.setImage(image);
+        }
+
+        else {
+            try {
+                // open image file
+                image = ImageIO.read(new File("WhiteQueen.png"));
+
+                // pass image to parent class
+                setImage(image);
+            } catch (IOException exception) {
+                System.out.println("Error locating White Queen image file");
+            }
+        }
     }
 
     public List possibleMoves(int myLocation, List chessboard, boolean considerCheck,
