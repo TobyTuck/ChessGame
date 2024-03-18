@@ -93,7 +93,9 @@ public class SettingsActionListener implements ActionListener {
         title1.setFont(titleFont);
         title1.setForeground(Color.black);
 
-        JButton button1 = new JButton();
+        // JButton button1 = new JButton();
+        RoundedButton button1 = new RoundedButton(30);
+        button1.setBackground(Color.red);
         button1.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
         ImageIcon bot = new ImageIcon("ComputerBotUnselected.png");
         Image scaledBot = bot.getImage().getScaledInstance(largePanelSize.height, largePanelSize.height,
@@ -109,7 +111,8 @@ public class SettingsActionListener implements ActionListener {
         filler1.setBackground(panelColor);
         filler1.setPreferredSize(new Dimension(40, largePanelSize.height));
 
-        JButton button2 = new JButton();
+        // JButton button2 = new JButton();
+        RoundedButton button2 = new RoundedButton(30);
         button2.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
         ImageIcon dual = new ImageIcon("TwoPlayerSelected.png");
         Image scaledDual = dual.getImage().getScaledInstance(largePanelSize.height, largePanelSize.height,
