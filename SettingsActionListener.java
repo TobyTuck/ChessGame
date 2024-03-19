@@ -93,7 +93,6 @@ public class SettingsActionListener implements ActionListener {
         title1.setFont(titleFont);
         title1.setForeground(Color.black);
 
-        // JButton button1 = new JButton();
         RoundedButton button1 = new RoundedButton(30);
         button1.setBackground(Color.red);
         button1.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
@@ -111,7 +110,6 @@ public class SettingsActionListener implements ActionListener {
         filler1.setBackground(panelColor);
         filler1.setPreferredSize(new Dimension(40, largePanelSize.height));
 
-        // JButton button2 = new JButton();
         RoundedButton button2 = new RoundedButton(30);
         button2.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
         ImageIcon dual = new ImageIcon("TwoPlayerSelected.png");
@@ -153,7 +151,7 @@ public class SettingsActionListener implements ActionListener {
         title2.setFont(titleFont);
         title2.setForeground(Color.black);
 
-        JButton button3 = new JButton();
+        RoundedButton button3 = new RoundedButton(30);
         button3.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
         ImageIcon classic = new ImageIcon("ClassicSelected.png");
         Image scaledClassic = classic.getImage().getScaledInstance(largePanelSize.height,
@@ -168,7 +166,7 @@ public class SettingsActionListener implements ActionListener {
         filler2.setBackground(panelColor);
         filler2.setPreferredSize(new Dimension(40, largePanelSize.height));
 
-        JButton button4 = new JButton();
+        RoundedButton button4 = new RoundedButton(30);
         button4.setPreferredSize(new Dimension(largePanelSize.height, largePanelSize.height));
         ImageIcon modern = new ImageIcon("ModernUnselected.png");
         Image scaledModern = modern.getImage().getScaledInstance(largePanelSize.height,
