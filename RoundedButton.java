@@ -25,12 +25,12 @@ public class RoundedButton extends JButton {
         g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, _cornerRadius, _cornerRadius);
 
         // draw the icon (if applicable)
-        // Icon icon = getIcon();
-        // if (icon != null) {
-        // int x = (getWidth() - icon.getIconWidth()) / 2;
-        // int y = (getHeight() - icon.getIconHeight()) / 2;
-        // icon.paintIcon(this, g2d, x, y);
-        // }
+        Icon icon = getIcon();
+        if (icon != null) {
+            int x = (getWidth() - icon.getIconWidth()) / 2;
+            int y = (getHeight() - icon.getIconHeight()) / 2;
+            icon.paintIcon(this, g2d, x, y);
+        }
 
         g2d.dispose();
     }
