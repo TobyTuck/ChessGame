@@ -200,18 +200,21 @@ public class SettingsActionListener implements ActionListener {
         label6.setForeground(Color.red);
 
         RoundedButton button5 = new RoundedButton(80);
-        button5.setPreferredSize(new Dimension(200, mediumPanelSize.height));
-        button5.setBackground(Color.white);
-        button5.setFont(labelFont);
-        button5.setText("Sign Up");
-        button5.setForeground(Color.black);
+        button5.setPreferredSize(new Dimension((9 * mediumPanelSize.height),
+            mediumPanelSize.height));
+        ImageIcon register = new ImageIcon("Register.png");
+        Image scaledRegister = register.getImage().getScaledInstance
+            ((9 * mediumPanelSize.height), mediumPanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon scaledRegisterIcon = new ImageIcon(scaledRegister);
+        button5.setIcon(scaledRegisterIcon);
 
         RoundedButton button6 = new RoundedButton(65);
-        button6.setPreferredSize(new Dimension(150, mediumPanelSize.height));
-        button6.setBackground(Color.white);
-        button6.setFont(labelFont);
-        button6.setText("Login");
-        button6.setForeground(Color.black);
+        button6.setPreferredSize(new Dimension((6 * mediumPanelSize.height), mediumPanelSize.height));
+        ImageIcon login = new ImageIcon("Login.png");
+        Image scaledLogin = login.getImage().getScaledInstance
+            ((6 * mediumPanelSize.height), mediumPanelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon scaledLoginIcon = new ImageIcon(scaledLogin);
+        button6.setIcon(scaledLoginIcon);
 
         // add the components to the jpanels
         panel2.add(title1);
