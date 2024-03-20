@@ -4,7 +4,7 @@ import java.awt.*;
 public class RoundedButton extends JButton {
 
     private int _cornerRadius;
-    private Icon _icon;
+    private Color _background;
 
     public RoundedButton(int cornerRadius) {
         super();
@@ -13,10 +13,13 @@ public class RoundedButton extends JButton {
 
         // set field value
         _cornerRadius = cornerRadius;
+        _background = null;
     }
 
     @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -31,6 +34,13 @@ public class RoundedButton extends JButton {
             int y = (getHeight() - icon.getIconHeight()) / 2;
             icon.paintIcon(this, g2d, x, y);
         }
+
+        // color the background (if applicable)
+        if (_background != null) {
+            g2d.setColor(_background);
+        }
+
+        g.setColor(Color.blue);
 
         g2d.dispose();
     }
@@ -74,5 +84,10 @@ public class RoundedButton extends JButton {
             }
         }
         return false;
+    }
+
+    public void setBackground(Color color) {
+        _background = color;
+        super.setBackground(color);
     }
 }
