@@ -200,19 +200,19 @@ public class SettingsActionListener implements ActionListener {
         label6.setForeground(Color.red);
 
         RoundedButton button5 = new RoundedButton(80);
-        button5.setPreferredSize(new Dimension((9 * mediumPanelSize.height),
-            mediumPanelSize.height));
+        button5.setPreferredSize(new Dimension((3 * mediumPanelSize.height),
+                mediumPanelSize.height));
         ImageIcon register = new ImageIcon("Register.png");
-        Image scaledRegister = register.getImage().getScaledInstance
-            ((9 * mediumPanelSize.height), mediumPanelSize.height, Image.SCALE_SMOOTH);
+        Image scaledRegister = register.getImage().getScaledInstance((9 * mediumPanelSize.height),
+                mediumPanelSize.height, Image.SCALE_SMOOTH);
         ImageIcon scaledRegisterIcon = new ImageIcon(scaledRegister);
         button5.setIcon(scaledRegisterIcon);
 
         RoundedButton button6 = new RoundedButton(65);
-        button6.setPreferredSize(new Dimension((6 * mediumPanelSize.height), mediumPanelSize.height));
+        button6.setPreferredSize(new Dimension((3 * mediumPanelSize.height), mediumPanelSize.height));
         ImageIcon login = new ImageIcon("Login.png");
-        Image scaledLogin = login.getImage().getScaledInstance
-            ((6 * mediumPanelSize.height), mediumPanelSize.height, Image.SCALE_SMOOTH);
+        Image scaledLogin = login.getImage().getScaledInstance((6 * mediumPanelSize.height), mediumPanelSize.height,
+                Image.SCALE_SMOOTH);
         ImageIcon scaledLoginIcon = new ImageIcon(scaledLogin);
         button6.setIcon(scaledLoginIcon);
 
