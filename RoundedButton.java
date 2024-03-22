@@ -55,37 +55,6 @@ public class RoundedButton extends JButton {
         super.setIcon(icon);
     }
 
-    @Override
-    /*
-     * Method that chages where a mouse click is registered
-     */
-    public boolean contains(int x, int y) {
-        // Get the dimensions of the button
-        Dimension size = getSize();
-        // Check if the point is within the rectangle bounds
-        if (super.contains(x, y)) {
-            // Calculate the dimensions of the rectangle excluding the rounded corners
-            int width = size.width - _cornerRadius * 2;
-            int height = size.height - _cornerRadius * 2;
-
-            // Calculate the distance from the click point to the nearest edge of the
-            // rectangle
-            int dx = Math.min(Math.abs(x - _cornerRadius), Math.abs(x - width - _cornerRadius));
-            int dy = Math.min(Math.abs(y - _cornerRadius), Math.abs(y - height - _cornerRadius));
-
-            // Calculate the distance from the click point to the nearest corner of the
-            // rectangle
-            double distanceToCorner = Math.sqrt(dx * dx + dy * dy);
-
-            // If the distance to the corner is less than the corner radius, the point is
-            // within the rounded corner
-            if (distanceToCorner <= _cornerRadius) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void setBackground(Color color) {
         _background = color;
         super.setBackground(color);
