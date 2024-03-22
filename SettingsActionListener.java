@@ -89,7 +89,7 @@ public class SettingsActionListener implements ActionListener {
                 // make the components for the jpanels
                 JLabel title1 = new JLabel("Game Mode");
                 Font tFont = new Font("Arial", Font.BOLD, 45);
-                Font smallTFont = findMaximumFontSize(title1, "Game Mode", tFont, mediumPanelSize.width,
+                Font smallTFont = findMaximumFontSize(title1, "Game Mode", tFont, mediumPanelSize.width - 20,
                                 mediumPanelSize.height);
                 Font titleFont = smallTFont.deriveFont(Font.BOLD);
                 title1.setFont(titleFont);
