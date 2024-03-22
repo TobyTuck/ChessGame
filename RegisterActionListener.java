@@ -74,17 +74,17 @@ public class RegisterActionListener implements ActionListener {
         label1.setFont(_labelFont);
         label1.setForeground(Color.black);
 
-        JLabel label2 = new JLabel("X");
+        JLabel label2 = new JLabel("TobyTuck");
         label2.setFont(_labelFont);
-        label2.setForeground(Color.red);
+        label2.setForeground(Color.black);
 
         JLabel label3 = new JLabel("rating: ");
         label3.setFont(_labelFont);
         label3.setForeground(Color.black);
 
-        JLabel label4 = new JLabel("X");
+        JLabel label4 = new JLabel("1120");
         label4.setFont(_labelFont);
-        label4.setForeground(Color.red);
+        label4.setForeground(Color.black);
 
         RoundedButton button1 = new RoundedButton(65);
         button1.setPreferredSize(new Dimension((3 * _mediumPanelSize.height),

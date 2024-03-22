@@ -87,9 +87,11 @@ public class SettingsActionListener implements ActionListener {
                 panel8.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
                 // make the components for the jpanels
-                Font titleFont = new Font("Arial", Font.BOLD, 45);
-                Font labelFont = new Font("Arial", Font.PLAIN, 25);
                 JLabel title1 = new JLabel("Game Mode");
+                Font tFont = new Font("Arial", Font.BOLD, 45);
+                Font smallTFont = findMaximumFontSize(title1, "Game Mode", tFont, mediumPanelSize.width,
+                                mediumPanelSize.height);
+                Font titleFont = smallTFont.deriveFont(Font.BOLD);
                 title1.setFont(titleFont);
                 title1.setForeground(Color.black);
 
@@ -124,11 +126,15 @@ public class SettingsActionListener implements ActionListener {
                 dal.addBotActionListener(bal);
 
                 JLabel label1 = new JLabel("stockfish rating: ");
+                Font lFont = new Font("Arial", Font.PLAIN, 25);
+                Font labelFont = findMaximumFontSize(label1, "stockfish rating", lFont, smallPanelSize.width,
+                                smallPanelSize.height);
                 label1.setFont(labelFont);
                 label1.setForeground(Color.black);
 
                 CustomJSlider slider1 = new CustomJSlider(400, 3000);
                 slider1.setOrientation(javax.swing.JSlider.HORIZONTAL);
+                slider1.setPreferredSize(new Dimension((40 + (2 * (largePanelSize.height))), smallPanelSize.height));
 
                 JLabel label2 = new JLabel("1700");
                 slider1.addChangeListener(new ChangeListener() {
@@ -294,5 +300,22 @@ public class SettingsActionListener implements ActionListener {
                         return true;
 
                 return false;
+        }
+
+        /**
+         * Method that discovers the largest font size that will fit on the label
+         */
+        private Font findMaximumFontSize(JLabel label, String text, Font font,
+                        int width, int height) {
+                int size = 1;
+                FontMetrics fontMetrics;
+
+                do {
+                        font = font.deriveFont(Font.PLAIN, size);
+                        fontMetrics = label.getFontMetrics(font);
+                        size++;
+                } while (fontMetrics.stringWidth(text) < width && fontMetrics.getHeight() < height);
+
+                return font.deriveFont(Font.PLAIN, size - 2);
         }
 }
