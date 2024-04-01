@@ -965,27 +965,37 @@ public class BoardMouseAdapter extends MouseAdapter {
         // ensure panel is selected before getting the possible moves
         if (selectedPiece != null) {
             int possibleMove;
+
             ChessPiece past = (ChessPiece) list.getComponent(_p2PriorLocation);
+            JPanel currentPanel;
+
             Color option = new Color(127, 255, 0);
             Color captureKing = new Color(128, 0, 128);
             myMoves = selectedPiece.possibleMoves(_p1Location, list, true, _p1PriorLocation,
                     _p2PriorLocation);
+
+            // get the size of the circle or outline to be used
+            final int diameter = (int) ((1.0 / 2) * (selectedPanel1.getPreferredSize().height));
+            final int width = (int) ((1.0 / 13) * (selectedPanel1.getPreferredSize().height));
+
             for (int index = 0; index < myMoves.getSize(); ++index) {
+                // get the components corresponding to the current square
                 possibleMove = (int) myMoves.pop(index);
+                currentPanel = (JPanel) list.pop(possibleMove);
 
                 // if move is opponent, highlight it for user
                 if (isOpponent((ChessPiece) list.getComponent(_p1Location),
                         (ChessPiece) list.getComponent(possibleMove))) {
                     if (!isKing((ChessPiece) list.getComponent(possibleMove)))
-                        outline((JPanel) list.pop(possibleMove), Color.red, 5);
+                        outline(currentPanel, Color.red, width);
                     else
-                        outline((JPanel) list.pop(possibleMove), captureKing, 5);
+                        outline(currentPanel, captureKing, width);
                 }
 
                 // castle
                 else if (sameColor((ChessPiece) list.getComponent(_p1Location),
                         (ChessPiece) list.getComponent(possibleMove)))
-                    outline((JPanel) list.pop(possibleMove), option, 5);
+                    outline(currentPanel, option, width);
 
                 // en passant move to capture opponent
                 else if ((selectedPiece instanceof BlackPawn ||
@@ -999,11 +1009,12 @@ public class BoardMouseAdapter extends MouseAdapter {
                         &&
                         (_p1PriorLocation == _p2PriorLocation + 16 ||
                                 _p1PriorLocation == _p2PriorLocation - 16))
-                    addCircle((JPanel) list.pop(possibleMove), 40, Color.red);
+                    addCircle(currentPanel, diameter, Color.red);
 
                 // standard move
-                else
-                    addCircle((JPanel) list.pop(possibleMove), 40, option);
+                else {
+                    addCircle(currentPanel, diameter, option);
+                }
             }
         }
     }
@@ -1014,11 +1025,13 @@ public class BoardMouseAdapter extends MouseAdapter {
     private void selectPanel(JPanel panel, ChessPiece piece) {
         // ensure that a panel is physically selected before outlining it
         if (selectedPiece != null) {
+            final int width = (int) ((1.0 / 13) * (selectedPanel1.getPreferredSize().height));
+
             if (isWhite(piece))
-                outline(panel, Color.white, 5);
+                outline(panel, Color.white, width);
 
             else
-                outline(panel, Color.black, 5);
+                outline(panel, Color.black, width);
         }
     }
 
