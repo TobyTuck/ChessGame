@@ -879,7 +879,7 @@ public class BoardMouseAdapter extends MouseAdapter {
     }
 
     private void addCircle(JPanel panel, int x, Color color) {
-        RoundLabel center = new RoundLabel(40);
+        RoundLabel center = new RoundLabel(x);
         center.setPreferredSize(new Dimension(x, x));
         center.setBackground(color);
         center.setOpaque(true);

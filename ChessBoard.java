@@ -35,10 +35,12 @@ public class ChessBoard extends JFrame {
                 settingsPanel,
                 leftContainer,
                 leftFiller1,
-                capturedWhite,
-                leftFiller2,
-                capturedBlack1,
-                capturedBlack2;
+                leftFiller2;
+
+        RoundedPanel capturedWhite,
+                     capturedBlackHolder,
+                     capturedBlack1,
+                     capturedBlack2;
 
         SettingsButton settings;
 
@@ -53,6 +55,7 @@ public class ChessBoard extends JFrame {
         Color darkGreen = new Color(25, 45, 25);
         Color tan = new Color(210, 180, 140);
         Color brown = new Color(139, 69, 19);
+        Color lightGray = new Color(155, 173, 183);
 
         this.getContentPane().setBackground(darkGreen);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,10 +96,16 @@ public class ChessBoard extends JFrame {
 
         leftContainer = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         leftFiller1 = new JPanel();
-        capturedWhite = new JPanel(new FlowLayout());
+        capturedWhite = new RoundedPanel(30);
         leftFiller2 = new JPanel();
-        capturedBlack1 = new JPanel(new FlowLayout());
-        capturedBlack2 = new JPanel(new FlowLayout());
+        capturedBlackHolder = new RoundedPanel(30);
+        capturedBlack1 = new RoundedPanel(30);
+        capturedBlack2 = new RoundedPanel(30);
+
+        capturedWhite.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        capturedBlackHolder.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        capturedBlack1.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        capturedBlack2.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         // ensure the board is square- and divides evenly into 8
         int eightDivisible = 0;
@@ -141,9 +150,9 @@ public class ChessBoard extends JFrame {
         leftContainer.setPreferredSize(containerDimension);
         leftFiller1.setPreferredSize(new Dimension(containerWidth, (int) (0.1 * boardHeight)));
         capturedWhite.setPreferredSize(new Dimension(containerWidth, captureDimension.height * 2));
-        leftFiller2
-                .setPreferredSize(new Dimension(containerWidth, (int) ((boardHeight - ((4 * captureDimension.height) +
-                        (2 * (0.1 * boardHeight)))))));
+        leftFiller2.setPreferredSize(new Dimension(containerWidth, (int) ((boardHeight - 
+                                            ((4 * captureDimension.height) + (2 * (0.1 * boardHeight)))))));
+        capturedBlackHolder.setPreferredSize(new Dimension(containerWidth, captureDimension.height * 2));
         capturedBlack1.setPreferredSize(captureDimension);
         capturedBlack2.setPreferredSize(captureDimension);
 
@@ -167,10 +176,11 @@ public class ChessBoard extends JFrame {
         settingsFiller.setBackground(darkGreen);
         settingsPanel.setBackground(darkGreen);
         leftContainer.setBackground(darkGreen);
-        capturedWhite.setBackground(darkGreen);
+        capturedWhite.setBackground(lightGray);
         leftFiller1.setBackground(darkGreen);
-        capturedBlack1.setBackground(darkGreen);
-        capturedBlack2.setBackground(darkGreen);
+        capturedBlackHolder.setBackground(lightGray);
+        capturedBlack1.setBackground(lightGray);
+        capturedBlack2.setBackground(lightGray);
         leftFiller2.setBackground(darkGreen);
 
         // add components of each square to the list
@@ -462,12 +472,15 @@ public class ChessBoard extends JFrame {
         board.add(swContainer);
         board.add(seContainer);
 
+        // add the panels that hold the captured black pieces to their holder
+        capturedBlackHolder.add(capturedBlack2);
+        capturedBlackHolder.add(capturedBlack1);
+
         // add the panels where captured pieces are placed
         leftContainer.add(leftFiller1);
         leftContainer.add(capturedWhite);
         leftContainer.add(leftFiller2);
-        leftContainer.add(capturedBlack2);
-        leftContainer.add(capturedBlack1);
+        leftContainer.add(capturedBlackHolder);
 
         // add panels where settings options are placed
         rightFiller.add(settings, gbc);
@@ -490,9 +503,8 @@ public class ChessBoard extends JFrame {
                 nwContainer, seContainer, swContainer);
 
         // instantiate and add MouseAdapter to settings
-        Color myColor = new Color(155, 173, 183);
         SettingsActionListener sma = new SettingsActionListener((int) (boardHeight / 9.0),
-                (int) (boardHeight / 9.0), settingsPanel, myColor, darkGreen, bma);
+                (int) (boardHeight / 9.0), settingsPanel, lightGray, darkGreen, bma);
 
         // How can I make this representative of the layeredPane without getting LP
         nwContainer.addMouseListener(bma);
