@@ -26,10 +26,9 @@ public class BoardMouseAdapter extends MouseAdapter {
     private JPanel _sePanel;
     private JPanel _swPanel;
 
-    private List myMoves;
+    private List myMoves, capturedWPieces, capturedBPieces;
 
     private ChessPiece priorMove;
-    // private int myLocation;
 
     private boolean dragged;
     private JPanel _board;
@@ -76,6 +75,9 @@ public class BoardMouseAdapter extends MouseAdapter {
         dragged = false;
         optionsInterrupter = false;
         selectedPiece = null;
+
+        capturedWPieces = new List(5);
+        capturedBPieces = new List(5);
     }
 
     @Override
@@ -383,6 +385,9 @@ public class BoardMouseAdapter extends MouseAdapter {
             int capturedWidth = 0,
                     capturedHeight = 0;
             if (isBlack(capturedPiece) && capturedPanel != null && firstSelected != capturedPanel) {
+                // add the piece to list of captured pieces
+                capturedBPieces.push(capturedPiece, null);
+
                 capturedWidth = (int) (boardHeight / 40.0);
                 capturedHeight = (int) (((double) capturedPiece.getHeight())
                         * ((double) capturedWidth / (double) capturedPiece.getWidth()));
@@ -411,6 +416,9 @@ public class BoardMouseAdapter extends MouseAdapter {
             // captured piece is white
             else if (isWhite(capturedPiece) && capturedPiece != null &&
                     firstSelected != capturedPanel) {
+                // add the piece to the list of captured pieces
+                capturedWPieces.push(capturedPiece, null);
+
                 // determine height and width
                 int offset = 0;
                 do {
@@ -427,6 +435,10 @@ public class BoardMouseAdapter extends MouseAdapter {
             }
         }
     }
+
+    /**
+     * Method that
+     */
 
     /**
      * Method that removes all JLabel Components from a chess square (JPanel)
@@ -721,7 +733,9 @@ public class BoardMouseAdapter extends MouseAdapter {
     private void pin(ChessPiece piece, JPanel panel, int width, int height, String layoutDecider,
             boolean dimensionDecider) {
 
-        panel.setLayout(new BorderLayout());
+        if (layoutDecider.equals("BorderLayout")) {
+            panel.setLayout(new BorderLayout());
+        }
 
         // default height and width for each chesspiece
         if (width == 0 && height == 0) {
@@ -976,7 +990,7 @@ public class BoardMouseAdapter extends MouseAdapter {
 
             // get the size of the circle or outline to be used
             final int diameter = (int) ((1.0 / 2) * (selectedPanel1.getPreferredSize().height));
-            final int width = (int) ((1.0 / 13) * (selectedPanel1.getPreferredSize().height));
+            final int width = (int) ((1.0 / 20) * (selectedPanel1.getPreferredSize().height));
 
             for (int index = 0; index < myMoves.getSize(); ++index) {
                 // get the components corresponding to the current square
@@ -1025,7 +1039,7 @@ public class BoardMouseAdapter extends MouseAdapter {
     private void selectPanel(JPanel panel, ChessPiece piece) {
         // ensure that a panel is physically selected before outlining it
         if (selectedPiece != null) {
-            final int width = (int) ((1.0 / 13) * (selectedPanel1.getPreferredSize().height));
+            final int width = (int) ((1.0 / 20) * (selectedPanel1.getPreferredSize().height));
 
             if (isWhite(piece))
                 outline(panel, Color.white, width);
@@ -1495,6 +1509,11 @@ public class BoardMouseAdapter extends MouseAdapter {
         // copy over the moves on the chessboard
         getMoves();
         selectPanel(selectedPanel1, selectedPiece);
+
+        // Step 3: update the captured pieces to the classic image
+        stripLabels(capturedWhite);
+        stripLabels(capturedBlack2);
+        stripLabels(capturedBlack1);
     }
 
     /**
@@ -1502,6 +1521,7 @@ public class BoardMouseAdapter extends MouseAdapter {
      * Entails:
      * 1. Square JPanels that make up the 64 chessboard spaces
      * 2. Classic chesspiece images
+     * 3. Update the captured pieces
      */
     public void makeClassic() {
 
@@ -1836,5 +1856,10 @@ public class BoardMouseAdapter extends MouseAdapter {
         // copy over the moves on the chessboard
         getMoves();
         selectPanel(selectedPanel1, selectedPiece);
+
+        // Step 3: update the captured pieces to the classic image
+        stripLabels(capturedWhite);
+        stripLabels(capturedBlack2);
+        stripLabels(capturedBlack1);
     }
 }

@@ -38,9 +38,9 @@ public class ChessBoard extends JFrame {
                 leftFiller2;
 
         RoundedPanel capturedWhite,
-                     capturedBlackHolder,
-                     capturedBlack1,
-                     capturedBlack2;
+                capturedBlackHolder,
+                capturedBlack1,
+                capturedBlack2;
 
         SettingsButton settings;
 
@@ -102,10 +102,10 @@ public class ChessBoard extends JFrame {
         capturedBlack1 = new RoundedPanel(30);
         capturedBlack2 = new RoundedPanel(30);
 
-        capturedWhite.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        capturedWhite.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         capturedBlackHolder.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        capturedBlack1.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        capturedBlack2.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        capturedBlack1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        capturedBlack2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
         // ensure the board is square- and divides evenly into 8
         int eightDivisible = 0;
@@ -150,8 +150,8 @@ public class ChessBoard extends JFrame {
         leftContainer.setPreferredSize(containerDimension);
         leftFiller1.setPreferredSize(new Dimension(containerWidth, (int) (0.1 * boardHeight)));
         capturedWhite.setPreferredSize(new Dimension(containerWidth, captureDimension.height * 2));
-        leftFiller2.setPreferredSize(new Dimension(containerWidth, (int) ((boardHeight - 
-                                            ((4 * captureDimension.height) + (2 * (0.1 * boardHeight)))))));
+        leftFiller2.setPreferredSize(new Dimension(containerWidth, (int) ((boardHeight -
+                ((4 * captureDimension.height) + (2 * (0.1 * boardHeight)))))));
         capturedBlackHolder.setPreferredSize(new Dimension(containerWidth, captureDimension.height * 2));
         capturedBlack1.setPreferredSize(captureDimension);
         capturedBlack2.setPreferredSize(captureDimension);
